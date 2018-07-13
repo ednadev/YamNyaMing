@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="members">
+
+	<insert id="insertMember" parameterType="member">
+		insert into member_entire_tb values(member_entire_tb_SEQ.nextval,#{memberId},#{memberPw},#{memberName},
+											#{memberNickName},#{memberGender},#{memberBirth},#{memberEmail},#{memberPhone},
+											sysdate,#{memberAvatar})
+	</insert>
+	
+	<select id="selectOneMember" resultType="member">
+		select 
+			mb_entire_pk as memberEntire,
+			mb_id as memberId,
+			mb_pw as memberPw,
+			mb_name as memberName,
+			mb_nickname as memberNickName,
+			mb_gender as memberGender,
+			mb_birth as memberBirth,
+			mb_email as memberEmail,
+			mb_phone as memberPhone,
+			mb_regDate as memberRegDate,
+			mb_avatar as memberAvatar
+			
+			from member_entire_tb
+			
+			where mb_id=#{memberId} and mb_pw=#{memberPw}
+			
+	</select>
+	
 	
 </mapper>

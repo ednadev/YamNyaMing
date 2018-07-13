@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
-<body>11
+<body>
 	<a href="/ynmMemberTest.do">일반 사용자용 쿼리 테스트 페이지</a><br>
 	<a href="/ownerQuery.do">점주용 쿼리 테스트 페이지</a><br>
 	<a href="/adminQuery.do">관리자용 쿼리 테스트 페이지</a><br>

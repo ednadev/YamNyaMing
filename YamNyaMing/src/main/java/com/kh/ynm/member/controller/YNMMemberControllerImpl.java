@@ -28,7 +28,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@RequestMapping(value="/login.do")
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
