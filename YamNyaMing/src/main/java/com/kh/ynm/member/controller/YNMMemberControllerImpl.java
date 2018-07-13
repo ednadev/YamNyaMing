@@ -1,0 +1,48 @@
+package com.kh.ynm.member.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+
+@Controller
+public class YNMMemberControllerImpl implements YNMMemberController{
+
+	@Autowired
+	@Qualifier(value="ynmMemberService")
+	private YNMMemberServiceImpl ynmMemberServiceImpl;
+	
+
+	@Override
+	@RequestMapping(value="/ynmMemberTest.do")
+	public String testMemberQueryTest() {
+		return "ynmMember/ynmMemberTest";
+	}
+	
+	@Override
+	@RequestMapping(value="/login.do")
+	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String signUpMember(HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String signOutMember(HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}
