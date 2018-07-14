@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<title>Л√▄К┐░К╟█</title>
 </head>
-<body>11
-	<a href="/ynmMemberTest.do">юо╧щ ╩Г©Кюз©К дУ╦╝ ев╫╨ф╝ фДюлаЖ</a><br>
-	<a href="/ownerQuery.do">а║аж©К дУ╦╝ ев╫╨ф╝ фДюлаЖ</a><br>
-	<a href="/adminQuery.do">╟Э╦╝юз©К дУ╦╝ ев╫╨ф╝ фДюлаЖ</a><br>
+<body>
+	
 </body>
 </html>
