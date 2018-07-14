@@ -1,17 +1,21 @@
 package com.kh.ynm.common;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.vo.YNMMember;
 
+@Service
+@Aspect
 public class MemberPasswordAdvice {
 	
-	@Pointcut("execution(* org.kh.member.model.service.*ServiceImpl.signUpMember(..))")
+	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.signUpMember(..))")
 	public void encrytionPass() {}
 	
-	@Pointcut("execution(* org.kh.member.model.service.*ServiceImpl.selectOneMember(..))")
+	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.selectOneMember(..))")
 	public void login() {}
 	
 	@Before("login()")

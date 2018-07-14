@@ -33,8 +33,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@RequestMapping(value="/login.do")
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
-		
-		return null;
+		YNMMember vo=new YNMMember();
+		vo.setMemberId(request.getParameter("memberId"));
+		vo.setMemberPw(request.getParameter("memberPw"));
+		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
+		HttpSession session=request.getSession();
+		if(ym!=null) {
+			session.setAttribute("member", ym);
+			return "ynmMember/suc";
+		}else {
+			return "ynmMember/fail";
+		}
+
 	}
 	
 	//mb_id 프라이머리키 설정

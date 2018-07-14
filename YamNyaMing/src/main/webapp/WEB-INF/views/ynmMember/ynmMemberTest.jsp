@@ -19,5 +19,11 @@
 		<input type="text" name="memberAvatar" placeholder="가입할 avatar입력"/>
 		<input type="submit" value="가입">
 	</form>
+	
+	<form action="/login.do" method="post">
+	<input type="text" name="memberId" placeholder="아이디 입력"/>
+		<input type="text" name="memberPw" placeholder="PW 입력"/>
+	<input type="submit" value="로그인">
+	</form>
 </body>
 </html>

@@ -24,4 +24,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return result;
 		
 	}
+
+
+	public YNMMember selectOneMember(YNMMember vo) {
+		YNMMember ym=memberDAO.selectOneMember(sqlSession,vo);
+		return ym;
+		
+	}
 }

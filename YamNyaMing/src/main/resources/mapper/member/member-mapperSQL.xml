@@ -28,5 +28,9 @@
 			
 	</select>
 	
+	<delete id="deleteMember">
+		delete from member_entire_tb where mb_id=#{memberId} and mb_pw=#{memberPw}
+	</delete>
+	
 	
 </mapper>

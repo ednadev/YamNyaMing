@@ -11,5 +11,9 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public int signUpMember(SqlSessionTemplate sqlSession, YNMMember ym) {
 		return sqlSession.insert("members.signUpMember",ym);
 	}
+
+	public YNMMember selectOneMember(SqlSessionTemplate sqlSession, YNMMember vo) {
+		return sqlSession.selectOne("members.selectOneMember",vo);
+	}
 	
 }
