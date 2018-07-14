@@ -1,0 +1,141 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+
+*{margin:0;color:#fb0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
+
+#member-main-header{
+	background-image: url('../image/main-header.jpg');
+	background-size:cover;
+    background-position:center;
+	height:600px;
+	padding:20px;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+#member-main-header>h1{
+	position:absolute;
+	top:20px;
+	left:20px;
+}
+#member-main-header>ul{
+	position:absolute;
+	top:20px;
+	right:20px;
+}
+#member-main-header>ul>li{
+	float:left;
+	margin-left:20px;
+	font-weight:bold;
+}
+#member-main-header>h2{
+	align-items:center;
+	font-size:2em;
+}
+#member-main-header>form>input[type="text"]{
+	background-color:rgba(255,255,255,0.5);
+	border:none;
+	padding:15px;
+	width:300px;
+	font-size:1em;
+	border-radius:5px;
+	margin-top:20px;
+	font-weight:bold;
+	color:white;
+}
+#member-main-header>form>input[type="submit"]{
+	background-color:#fb0;
+	color:white;
+	border:none;
+	padding:15px;
+	font-size:1em;
+	cursor:pointer;
+	border-radius:5px;
+	font-weight:bold;
+}
+#member-main-section>article{
+	display:flex;
+	justify-content:center;
+}
+#member-main-section>article:nth-child(1){
+	flex-direction:column;
+	text-align:center;
+	margin-top:50px;
+}
+#member-main-section>article:nth-child(1)>h3{
+	margin-bottom:10px;
+	color:black;
+}
+#member-main-section>article:nth-child(1)>p{
+	color:black;
+}
+#member-main-section>article>div{
+	background-color:black;
+	width:200px;
+	text-align:center;
+	padding:20px;
+	height:200px;
+	line-height:200px;
+	border-radius:10px;
+	margin:7px;
+	cursor:pointer;
+	font-size:1.5em;
+	letter-spacing:0.3em;
+	font-weight:bold;
+	background-size:cover;
+    background-position:center;
+}
+#member-main-section>article>div>a{
+	color:white;
+	text-decoration:none;
+	width:100%;
+	height:100%;
+	display:block;
+}
+#member-main-section>article>div>a:hover{
+	text-decoration:none;
+}
+#member-main-section>article:nth-child(2)>div{
+	margin-top:50px;
+}
+#member-main-section>article:nth-child(3)>div{
+	width:400px;
+	padding:20px 47px;
+}
+#member-main-section>article:nth-child(2)>div:nth-child(1){
+	background-image:url('../image/hansik.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(1):hover{
+	background-image:url('../image/hansik-hover.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(2){
+	background-image:url('../image/yangsik.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(2):hover{
+	background-image:url('../image/yangsik-hover.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(3){
+	background-image:url('../image/ilsik.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(3):hover{
+	background-image:url('../image/ilsik-hover.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(4){
+	background-image:url('../image/jungsik.jpg');
+}
+#member-main-section>article:nth-child(2)>div:nth-child(4):hover{
+	background-image:url('../image/jungsik-hover.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(1){
+	background-image:url('../image/cafe.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(1):hover{
+	background-image:url('../image/cafe-hover.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(2){
+	background-image:url('../image/backery.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(2):hover{
+	background-image:url('../image/backery-hover.jpg');
+}
