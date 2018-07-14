@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="members">
 
-	<insert id="insertMember" parameterType="member">
+	<insert id="signUpMember" parameterType="member">
 		insert into member_entire_tb values(member_entire_tb_SEQ.nextval,#{memberId},#{memberPw},#{memberName},
 											#{memberNickName},#{memberGender},#{memberBirth},#{memberEmail},#{memberPhone},
 											sysdate,#{memberAvatar})

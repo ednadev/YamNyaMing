@@ -4,9 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.ynm.member.model.vo.YNMMember;
+
 public interface YNMMemberController {
-	public String testMemberQueryTest();// Å×½ºÆ® Äõ¸®
-	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// È¸¿ø °Ë»ö
-	public String signUpMember(HttpSession session);// È¸¿ø°¡ÀÔ
-	public String signOutMember(HttpSession session);// È¸¿øÅ»Åð
+	public String testMemberQueryTest();// ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// È¸ï¿½ï¿½ ï¿½Ë»ï¿½
+//	public String signUpMember(YNMMember ym);// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public String signUpMember(HttpServletRequest request, HttpServletResponse response);// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public String signOutMember(HttpSession session);// È¸ï¿½ï¿½Å»ï¿½ï¿½
 }

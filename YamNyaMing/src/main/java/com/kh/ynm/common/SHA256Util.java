@@ -3,20 +3,20 @@ package com.kh.ynm.common;
 import java.security.MessageDigest;
 
 public class SHA256Util {
-	public String encryData(String data) throws Exception{
-		// MessageDigest °´Ã¼¸¦ »ç¿ëÇØ¼­ SHA-256À¸·Î ¾ÏÈ£È­ ÇÒ ¼öÀÖµµ·Ï °´Ã¼ »ý¼º
+	public static String encryData(String data) throws Exception{
+		// MessageDigest ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ SHA-256ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£È­ ï¿½ï¿½ ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 		MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
 		
-		// ¾ÏÈ£È­¿¡ »ç¿ëÇÒ µ¥ÀÌÅÍ¸¦ ¹ÙÀÌÆ® ¹è¿­·Î ¹Ù²Ù¾î¼­ MessageDigest°´Ã¼¿¡ ³Ö¾îÁÜ
-		// update ¸Þ¼ÒµåÀÇ ¸Å°³º¯¼ö°¡ byte ¹è¿­À» ÇÊ¿ä·Î ÇÔ
+		// ï¿½ï¿½È£È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½è¿­ï¿½ï¿½ ï¿½Ù²Ù¾î¼­ MessageDigestï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½
+		// update ï¿½Þ¼Òµï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ byte ï¿½è¿­ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½
 		mDigest.update(data.getBytes());
 		
-		// ÇØ´ç °ªµéÀ» SHA-256 À¸·Î  ¾ÏÈ£È­ÇÑ °ªµéÀ» Byte·Î ²¨³¿
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SHA-256 ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½È£È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Byteï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		byte[] msgStr = mDigest.digest();
 		
 		StringBuffer sbuf = new StringBuffer();
 		
-		//²¨³½ °ªµéÀ» 16Áø¼ö·Î ¹Ù²Ù¾î ÁÖ±â À§ÇÑ ¾Ë°í¸®Áò
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 16ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù¾ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë°ï¿½ï¿½ï¿½
 		for(int i = 0; i<msgStr.length;i++)
 		{
 			byte tmpStrByte = msgStr[i];
