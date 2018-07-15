@@ -54,6 +54,9 @@
 	border-radius:5px;
 	font-weight:bold;
 }
+#member-main-section{
+	margin-bottom:50px;
+}
 #member-main-section>article{
 	display:flex;
 	justify-content:center;
@@ -139,3 +142,29 @@
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
 	background-image:url('../image/backery-hover.jpg');
 }
+#member-main-footer{
+	background-color:rgba(0,0,0,0.8);
+	padding:20px;
+	overflow:hidden;
+}
+#member-main-footer>div{
+	float:left;
+}
+#member-main-footer>div>h2{
+	color:white;
+}
+#member-main-footer>div>p{
+	color:white;
+}
+#member-main-footer>div>address{
+	color:white;
+	font-size:0.7rem;
+	font-style:normal;
+	margin-top:15px;
+}
+#member-main-footer>a{
+	float:right;
+	border:2px solid #fb0;
+	padding:10px;
+}
+
