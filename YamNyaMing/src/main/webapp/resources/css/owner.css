@@ -1,0 +1,152 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+*{margin:0;color:black;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
+
+#owner-signUp-header{
+	background-color:#fb0;
+}
+#owner-signUp-header>h1{
+	font-size:1em;
+	padding:10px;
+}
+#owner-signUp-header>h1>a{
+	color:white;
+}
+#owner-signUp-header>h1>a:visited{
+	color:white;
+}
+.wrapper{
+	width:960px;
+	margin:0 auto;
+}
+#owner-signUp-nav{
+	height:42px;
+}
+#owner-signUp-nav>h2{
+	float:left;
+	line-height:80px;
+}
+#owner-signUp-nav>p{
+	float:right;
+	line-height:80px;
+	color:#555;
+}
+#owner-signUp-nav>p>span{
+	font-weight:bold;
+	color:black;
+}
+#owner-signUp-section{
+	border:1px solid #cecece;
+	clear:both;
+}
+#owner-signUp-section>h3{
+	margin:20px;
+}
+.owner-text{
+	border:1px solid #cecece;
+	height:200px;
+	overflow:auto;
+	margin:20px;
+	padding:10px;
+}
+.owner-text>p{
+	font-size:0.9em;
+}
+.check{
+	overflow:hidden;
+	margin-bottom:20px;
+	margin-right:20px;
+}
+.check>input[type="checkbox"]{
+	display:none;
+}
+.check>label{
+	float:right;
+	cursor:pointer;
+}
+.check>label:before{
+	content:' ';
+	display:inline-block;
+	width:17px;
+	height:17px;
+	line-height:17px;
+	margin:-2px 8px 0 0;
+	text-align:center;
+	vertical-align:middle;
+	border:1px solid #cacece;
+	border-radius:3px;
+}
+.check>input[type="checkbox"]:checked+label:before{
+	content:'\2714';
+	color:white;
+	background-color:#fb0;
+	border:1px solid #fb0;
+}
+.wrapper>a{
+	background-color:#fb0;
+	color:white;
+	width:150px;
+	display:block;
+	margin:20px auto;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+#owner-signUp-footer{
+	background-color:rgba(0,0,0,0.8);
+	padding:20px;
+	overflow:hidden;
+}
+#owner-signUp-footer>div{
+	float:left;
+}
+#owner-signUp-footer>div>h2{
+	color:white;
+}
+#owner-signUp-footer>div>p{
+	color:white;
+}
+#owner-signUp-footer>div>address{
+	color:white;
+	font-size:0.7rem;
+	font-style:normal;
+	margin-top:15px;
+}
+
+/* 정보입력 */
+#owner-signUp-section>form>h3{
+	margin:20px;
+}
+.signUp-table{
+	display:flex;
+	align-items:center;
+	padding-bottom:10px;
+}
+.signUp-table>div{
+	color:black;
+	padding-top:10px;
+}
+.signUp-table>div:nth-child(1){
+	width:120px;
+	font-weight:bold;
+	color:#555;
+	font-size:0.9em;
+	margin-left:20px;
+}
+.signUp-table>div:nth-child(2){
+	width:79%;
+	padding-left:1%;
+}
+.signUp-table>div:nth-child(2)>p{
+	margin-top:10px;
+	color:black;
+	font-size:0.8em;
+}
+.signUp-table>div:nth-child(2)>input[type="text"],
+.signUp-table>div:nth-child(2)>input[type="email"],
+.signUp-table>div:nth-child(2)>input[type="password"],
+.signUp-table>div:nth-child(2)>input[type="tel"]{
+	color:#555;
+	padding:10px;
+	width:50%;
+}

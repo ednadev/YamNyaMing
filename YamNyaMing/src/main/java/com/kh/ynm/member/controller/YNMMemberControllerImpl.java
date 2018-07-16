@@ -31,11 +31,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	@Override
-	@RequestMapping(value="/enrollMember.do")
-	public String enrollMember() {
-		return "ynmMember/signUpMember";
-	}	
+	
 
 	@Override
 	public String signUpMember(HttpSession session) {
@@ -48,5 +44,23 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	//사용자 : 회원가입 페이지로 이동
+	@Override
+	@RequestMapping(value="/enrollMember.do")
+	public String enrollMember() {
+		return "ynmMember/signUpMember";
+	}	
+	
+	//점장 : 입점신청 약관동의 페이지로 이동
+	@RequestMapping(value="/enrollOwner.do")
+	public String enrollOwner() {
+		return "ynmOwner/enrollOwner";
+	}
+	
+	//점장 : 입점신청 정보입력 페이지로 이동
+	@RequestMapping(value="/enterInfo.do")
+	public String signUpOwner() {
+		return "ynmOwner/signUpOwner";
+	}
 }
