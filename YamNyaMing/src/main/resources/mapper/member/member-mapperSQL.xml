@@ -32,5 +32,13 @@
 		delete from member_entire_tb where mb_id=#{memberId} and mb_pw=#{memberPw}
 	</delete>
 	
+	<update id="updateMember">
+		update member_entire_tb set mb_pw=#{memberPw}, mb_nickname=#{memberNickName}, 
+											mb_email=#{memberEmail}, mb_phone=#{memberPhone}
+											mb_avatar=#{memberAvatar}
+											
+	</update>
+	
+	
 	
 </mapper>
