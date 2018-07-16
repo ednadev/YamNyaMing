@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 	
+<select id="selectAllMember" parameterType="YNMMember" resultType="YNMMember">
+  SELECT 
+  mb_id as mbId,
+  mb_name as mbName,
+  mb_nickname as mbNickName,
+  mb_gender as mbGenger,
+  mb_birth as mbBirth,
+  mb_email as mbEmail,
+  mb_phone as mbPhone,
+  mb_regDate as mbRegdate,
+  mb_avatar as mbAvatar
+  from YNMMember
+</select>
+
+<select id="selectAllOwner" parameterType="YNMOwner" resultType="YNMOwner">
+  SELECT 
+  ow_id as ownerId,
+  ow_name as ownerName,
+  ow_email as ownerEmail,
+  ow_phone as ownerPhone,
+  ow_regDate as ownerRegdate,
+  ow_bank_account as ownerBank
+  from YNMOwner
+</select>
+
+
+
+
 </mapper>
