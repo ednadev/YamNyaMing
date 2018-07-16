@@ -12,4 +12,7 @@ Servers/
 
 YamNyaMing/build/
 
-YamNyaMing/Target/
+YamNyaMing/target/
+
+
+YamNyaMing/.settings/

@@ -12,5 +12,10 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	public int ynmOwnerSignUp(SqlSessionTemplate sqlSession, YNMOwner owner) {	
 		return sqlSession.insert("owners.ownerSignUp", owner);
 	}
+	
+	@Override
+	public YNMOwner selectOneOwner(SqlSessionTemplate sqlSession, String ownerid) {
+		return sqlSession.selectOne("owners.ownerCheckId", ownerid);
+	}
 
 }

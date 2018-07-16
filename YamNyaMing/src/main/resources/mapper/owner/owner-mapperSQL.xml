@@ -4,5 +4,7 @@
 	<insert id="ownerSignUp" parameterType="owner">
 		insert into owner_entire_tb values(OWNER_ENTIRE_TB_SEQ.nextval, 
 										#{owId}, #{owPw}, #{owName}, #{owEmail}, #{phone},#{owBankAccount},sysdate)
-	</insert> 
+	</insert>
+	
+	<select id="ownerCheckId" resultType="owner"> select ow_id as owId from owner_entire_tb where ow_id=#{ownerid} </select> 
 </mapper>

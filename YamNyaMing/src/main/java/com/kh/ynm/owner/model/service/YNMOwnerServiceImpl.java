@@ -21,4 +21,16 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		int result = ynmOwnerDAO.ynmOwnerSignUp(sqlSession, owner);
 		return result;
 	}
+
+	@Override
+	public YNMOwner selectOneOwner(YNMOwner owner) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public YNMOwner selectOneOwner(String ownerId) {
+		YNMOwner owner = ynmOwnerDAO.selectOneOwner(sqlSession, ownerId);
+		return owner;
+	}
 }
