@@ -17,16 +17,16 @@
         <li><a href="/login.do">로그인</a></li>
         <li><a href="/signUpMember.do">회원가입</a></li>
     </ul>
-    <h2>맛있는 가이드, 얌냐밍</h2>
+    <h2>맛있는 가이드, <span>얌냐밍</span></h2>
     <form action="/search.do" method="get">
-    	<input type="text" name="search" value="검색할 키워드를 입력해주세요" onfocus="this.value=''">
+    	<input type="text" name="search" value="키워드를 입력해주세요" onfocus="this.value=''">
     	<input type="submit" value="검색">
     </form>
 </header>
 <section id="member-main-section">
 	<article>
 		<h3>얌냐밍과 함께 찾는 맛집</h3>
-		<p>기다리지 않는 즐거움, 얌냐밍이 진짜 맛집을 추천합니다</p>
+		<p>기다리지 않는 즐거움, <span>얌냐밍이 진짜 맛집을 추천합니다</span></p>
 	</article>
 	<article>
 		<div><a href="/search.do?search=한식">한식</a></div>
