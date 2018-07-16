@@ -39,6 +39,14 @@
 											
 	</update>
 	
+	<insert id="reservationMember">
+		insert into member_book_tb values(member_book_tb_SEQ.nextval,#{memberEntire},#{가게인덱스},sysdate,'현재순번',);
+	
+	</insert>
+	
+	
+
+		
 	
 	
 </mapper>
