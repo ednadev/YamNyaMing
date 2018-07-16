@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="book">
+	<!-- 예약 정보 쿼리 -->
+	
+	<insert id="bookInfo">
+		insert into member_book_tb values(member_book_tb_SEQ.nextval,23,1,
+																		sysdate,#{bookOrderCount},#{bookPartyCount},
+																		#{bookType},#{bookOption},1,#{bookDeposit})
+	</insert>
+	
+	
+	<!--To_char(mb_regDate,'YYYY-MM-DD HH24:MI:SS') -->
+	
+	<select id="bookCheck" resultType="books">
+		select 
+		
+		
+		from member_book_tb m,owner_store_info_tb o
+		 
+		 where m.ow_entire_fk=o.ow_entire_fk and mb_entire_fk=#{memberEntireNo}
+		
+	</select>
+	
+
+
+</mapper>

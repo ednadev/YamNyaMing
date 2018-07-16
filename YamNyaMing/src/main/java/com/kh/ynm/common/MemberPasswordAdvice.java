@@ -18,6 +18,10 @@ public class MemberPasswordAdvice {
 	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.selectOneMember(..))")
 	public void login() {}
 	
+	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.signOutMember(..))")
+	public void deleteMember() {}
+	
+	
 	@Before("login()")
 	public void login(JoinPoint jp)throws Exception{
 		YNMMember ym=(YNMMember)(jp.getArgs()[0]);
@@ -29,9 +33,18 @@ public class MemberPasswordAdvice {
 	@Before("encrytionPass()")
 	public void passwordEncrytion(JoinPoint jp)throws Exception{
 		YNMMember ym=(YNMMember)(jp.getArgs()[0]);
-		
 		String userPw=ym.getMemberPw();
 		String encryPw=SHA256Util.encryData(userPw);
 		ym.setMemberPw(encryPw);
 	}
+	
+	@Before("deleteMember()")
+	public void deleteMember(JoinPoint jp)throws Exception{
+		YNMMember ym=(YNMMember)(jp.getArgs()[0]);
+		String userPw=ym.getMemberPw();
+		String encryPw=SHA256Util.encryData(userPw);
+		ym.setMemberPw(encryPw);
+	}
+	
+	
 }

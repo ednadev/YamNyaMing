@@ -20,10 +20,48 @@
 		<input type="submit" value="가입">
 	</form>
 	
+	
+	
+	
 	<form action="/login.do" method="post">
 	<input type="text" name="memberId" placeholder="아이디 입력"/>
 		<input type="text" name="memberPw" placeholder="PW 입력"/>
 	<input type="submit" value="로그인">
 	</form>
+	
+	<hr>
+	
+	회원 탈퇴
+	<form action="signOutMember.do">
+		<input type="text" name="memberPw">
+		<input type="submit" value="탈퇴">
+		
+ 	</form>
+ 	
+ 	<hr>
+ 	
+ 	<form action="memberInfo.do">
+ 	내정보 보기
+ 	<input type="text" name="memberPw" value="비밀번호 입력">
+ 	<input type="submit" value="보기">
+	</form>
+	
+		
+		<hr>
+		
+	<form action="bookInsert.do">
+		<input type="text" name="bookOrderCount">
+		<input type="text" name="bookPartyCount">
+		<input type="text" name="bookType">
+		<input type="text" name="bookOption">
+		<input type="text" name="bookDeposit">
+		<input type="submit" value="예약">
+	</form>
+	
+	 <form action="bookselect.do">
+ 	예약 정보 보기
+ 	<input type="submit" value="보기">
+	</form>
+	
 </body>
 </html>

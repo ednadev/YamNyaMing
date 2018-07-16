@@ -14,10 +14,7 @@ public class YNMMember {
 	private String memberPhone;
 	private Date memberRegDate;
 	private String memberAvatar;
-	
-	
-	
-	
+
 	public YNMMember() {
 		super();
 	}

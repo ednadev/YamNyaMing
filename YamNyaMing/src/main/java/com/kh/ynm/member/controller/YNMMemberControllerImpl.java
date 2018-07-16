@@ -1,5 +1,6 @@
 package com.kh.ynm.member.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 
 @Controller
@@ -40,7 +43,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		HttpSession session=request.getSession();
 		if(ym!=null) {
 			session.setAttribute("member", ym);
-			return "ynmMember/suc";
+			return "redirect:/index.jsp";
 		}else {
 			return "ynmMember/fail";
 		}
@@ -80,10 +83,76 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 
 	@Override
-	public String signOutMember(HttpSession session) {
-		// TODO Auto-generated method stub
+	@RequestMapping(value="/signOutMember.do")
+	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		YNMMember ym=new YNMMember();
+		session=request.getSession(false);
+		ym.setMemberId(((YNMMember)session.getAttribute("member")).getMemberId());
+		ym.setMemberPw(request.getParameter("memberPw"));
+
+		int result=ynmMemberServiceImpl.signOutMember(ym);
+		
+		if(result>0) {
+			session.invalidate();
+			return "redirect:/index.jsp";
+		}
+		
 		return null;
 	}
+	
+	@Override
+	@RequestMapping(value="/memberInfo.do")
+	public Object memberInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		YNMMember vo=new YNMMember();
+		session=request.getSession(false);
+		vo.setMemberId(((YNMMember)session.getAttribute("member")).getMemberId());
+		vo.setMemberPw(request.getParameter("memberPw"));
+		
+		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
+		ModelAndView view=new ModelAndView();
+	if(ym!=null) {
+			
+			view.addObject("info",ym);
+			view.setViewName("ynmMember/info");
+			return view;
+		}
+		else {
+			
+		}
+		return null;
+	}
+	
+	//예약하기 table
+	
+	@Override
+	@RequestMapping(value="/bookInsert.do")
+	public String bookInsert(YNMBook yb) {
+		ynmMemberServiceImpl.bookInsert(yb);
+		return null;
+	}
+	
+	
+	@Override
+	@RequestMapping(value="/bookselect.do")
+	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		session=request.getSession(false);
+		YNMBook vo=new YNMBook();
+		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntire());
+		ArrayList list=ynmMemberServiceImpl.bookselect(vo);
+		ModelAndView view=new ModelAndView();
+		if(!list.isEmpty()) {
+				
+				view.addObject("bookInfo",list);
+				view.setViewName("ynmMember/info");
+				return view;
+			}
+			else {
+				
+			}
+			return null;
+	}
+	
+	
 
 
 }

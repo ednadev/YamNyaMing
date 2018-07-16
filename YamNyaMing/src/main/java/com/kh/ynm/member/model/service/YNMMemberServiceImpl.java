@@ -1,5 +1,7 @@
 package com.kh.ynm.member.model.service;
 
+import java.util.ArrayList;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
+import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 
 @Service("ynmMemberService")
 public class YNMMemberServiceImpl implements YNMMemberService{
+	
 	@Resource(name="ynmMemberDAO")
 	private YNMMemberDAOImpl memberDAO;
 	
@@ -22,13 +26,29 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int signUpMember(YNMMember ym) {
 		int result=memberDAO.signUpMember(sqlSession,ym);
 		return result;
-		
 	}
-
 
 	public YNMMember selectOneMember(YNMMember vo) {
 		YNMMember ym=memberDAO.selectOneMember(sqlSession,vo);
 		return ym;
 		
 	}
+
+	public int signOutMember(YNMMember ym) {
+		int result=memberDAO.signOutMember(sqlSession,ym);
+		return result;
+	}
+
+	public int bookInsert(YNMBook yb) {
+		int result=memberDAO.bookInsert(sqlSession,yb);
+		return result;
+		
+	}
+
+	public ArrayList bookselect(YNMBook vo) {
+		ArrayList list=memberDAO.bookselect(sqlSession,vo);
+		return list;
+		
+	}
+
 }
