@@ -2,6 +2,8 @@ package com.kh.ynm.member.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -12,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
@@ -49,7 +53,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
-	
 	//mb_id 프라이머리키 설정
 	//DAO수정
 	//생일에 대하여 생각해보아야함....
@@ -122,6 +125,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/idCheck.do")
+	public String idCheck(HttpServletRequest request, HttpServletResponse response,Model model) {
+		String memberId=request.getParameter("memberId");
+		YNMMember ym=ynmMemberServiceImpl.idCheck(memberId);
+		
+		if(ym==null) {
+			String chk="0";
+			return chk;
+		}else {
+			String chk="1";
+			return chk;
+			
+		}
+		
+	}
+	
 	//예약하기 table
 	
 	@Override
@@ -152,7 +173,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return null;
 	}
 	
-	
+
 
 
 }

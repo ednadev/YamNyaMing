@@ -51,4 +51,9 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		
 	}
 
+	public YNMMember idCheck(String memberId) {
+		YNMMember ym=memberDAO.idCheck(sqlSession,memberId);
+		return ym;
+	}
+
 }

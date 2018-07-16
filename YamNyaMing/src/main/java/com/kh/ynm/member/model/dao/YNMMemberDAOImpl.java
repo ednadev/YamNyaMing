@@ -32,5 +32,9 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		List list=sqlSession.selectList("book.bookCheck",vo);
 		return (ArrayList<YNMBook>)list;
 	}
+
+	public YNMMember idCheck(SqlSessionTemplate sqlSession, String memberId) {
+		return sqlSession.selectOne("members.idCheck",memberId);
+	}
 	
 }

@@ -41,5 +41,13 @@
 											
 	</update>
 
+<select id="idCheck" resultType="member">
+	select 
+			mb_id as memberId
+	from member_entire_tb
+	where mb_id=#{memberId}
+	
+	</select>
+	
 
 </mapper>
