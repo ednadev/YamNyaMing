@@ -18,7 +18,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
 	
-
 	@Override
 	@RequestMapping(value="/ynmMemberTest.do")
 	public String testMemberQueryTest() {
@@ -31,6 +30,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	@RequestMapping(value="/enrollMember.do")
+	public String enrollMember() {
+		return "ynmMember/signUpMember";
+	}	
 
 	@Override
 	public String signUpMember(HttpSession session) {
@@ -43,6 +48,5 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }
