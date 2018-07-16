@@ -19,13 +19,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@Qualifier(value="ynmOwnerService")
 	private YNMOwnerServiceImpl ynmOwnerServiceImpl;
 	
-	@Override
-	@RequestMapping(value="/ynmOwnerTest.do")
-	public String ynmOwnerTest()
-	{
-		return "ynmOwner/ynmOwnerTest";
-	}
-	
 	
 	@Override
 	@RequestMapping(value="/ownerLogin.do")
@@ -33,6 +26,13 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		
 		return null;
 	}
+	
+	@Override
+	public String ynmOwnerSignOut(HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	@Override
 	@RequestMapping(value="/ownerAddStore.do")
@@ -48,5 +48,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		int result = ynmOwnerServiceImpl.ynmOwnerSignUp(owner);
 		return "ynmOwner/ynmOwnerTest";
 	}
+
+	
 
 }

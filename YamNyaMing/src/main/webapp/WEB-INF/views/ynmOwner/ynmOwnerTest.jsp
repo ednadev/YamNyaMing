@@ -1,20 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>а║аж дУ╦╝ ев╫╨ф╝ фДюлаЖ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Л═░Лё╪ Л©╪К╕╛ М┘▄Л┼╓М┼╦ М▌≤Л²╢Л╖─</title>
 </head>
 <body>
+    <h2>Л═░Лё╪ М ▄Л⌡░Й╟─Л·┘</h2>
 	<form action="/ownerSignUp.do" method="post">
-		ID : <input type="text" name="owId"/>
-		PW : <input type="password" name="owPass"/>
-		Name : <input type="text" name="owName"/>
-		email : <input type="email" name="owEmail"/>
-		phone : <input type="text" name="owPhone"/>
-		bankAcc : <input type="text" name="owBankAccount"/>
-		<input type="submit" value="а║аж ╟║ют"/>
+		ID : <input type="text" name="owId"/><br>
+		PW : <input type="password" name="owPw"/><br>
+		Name : <input type="text" name="owName"/><br>
+		email : <input type="email" name="owEmail"/><br>
+		phone : <input type="text" name="phone"/><br>
+		bankAcc : <input type="text" name="owBankAccount"/><br>
+		<input type="submit" value="Л═░Лё╪ Й╟─Л·┘"/><br>
 	</form>
+	<hr>
 </body>
 </html>

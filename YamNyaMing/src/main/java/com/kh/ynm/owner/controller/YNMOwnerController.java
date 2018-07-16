@@ -7,13 +7,19 @@ import javax.servlet.http.HttpSession;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 
 public interface YNMOwnerController {
-	// Á¡ÁÖ Å×½ºÆ® ÆäÀÌÁö
-	public String ynmOwnerTest();
-	// Á¡ÁÖ È¸¿ø °¡ÀÔ
+	
+	// ì ì£¼ íšŒì›ê°€ì…
 	public String ynmOwnerSignUp(HttpSession session, YNMOwner owner);
 	
-	// Á¡ÁÖ Á¤º¸ ºÒ·¯¿À±â, ·Î±×ÀÎ
+	// ì ì£¼ íšŒì›íƒˆí‡´
+	public String ynmOwnerSignOut(HttpSession session);
+	
+	
+	// ì ì£¼ ì„ íƒ( ë¡œê·¸ì¸, ì•„ì´ë”” ì²´í¬, ì ì£¼ ì •ë³´ ê°€ì ¸ì˜¤ê¸°)
 	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response);
-	// »óÁ¡ Ãß°¡ÇÏ±â
+	
+	// ì ì£¼ ì¿ í° ì¶”ê°€ ê¸°ëŠ¥
+	
+	// ê°€ê²Œ ë“±ë¡
 	public String addStore(HttpSession session );
 }

@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/ynmMemberTest.do">ÀÏ¹Ý »ç¿ëÀÚ¿ë Äõ¸® Å×½ºÆ® ÆäÀÌÁö</a><br>
-	<a href="/ynmOwnerTest.do">Á¡ÁÖ¿ë Äõ¸® Å×½ºÆ® ÆäÀÌÁö</a><br>
-	<a href="/adminQuery.do">°ü¸®ÀÚ¿ë Äõ¸® Å×½ºÆ® ÆäÀÌÁö</a><br>
+	<a href="/ynmMemberTest.do">ì¼ë°˜ ì‚¬ìš©ìžìš© ì¿¼ë¦¬ í…ŒìŠ¤íŠ¸ íŽ˜ì´ì§€</a><br>
+	<a href="/ynmOwnerTest.do">ì ì£¼ìš© ì¿¼ë¦¬ í…ŒìŠ¤íŠ¸ íŽ˜ì´ì§€</a><br>
+	<a href="/adminQuery.do">ê´€ë¦¬ìžìš© ì¿¼ë¦¬ í…ŒìŠ¤íŠ¸ íŽ˜ì´ì§€</a><br>
 </body>
 </html>
