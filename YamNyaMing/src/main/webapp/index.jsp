@@ -8,7 +8,6 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=1">
-<script src="${pageContext.request.contextPath}/resources/js/member.js"></script>
 </head>
 <body>
 <header id="member-main-header">
@@ -19,7 +18,7 @@
     </ul>
     <h2>맛있는 가이드, <span>얌냐밍</span></h2>
     <form action="/search.do" method="get">
-    	<input type="text" name="search" value="키워드를 입력해주세요" onfocus="this.value=''">
+    	<input type="text" name="search" placeholder="키워드를 입력해주세요">
     	<input type="submit" value="검색">
     </form>
 </header>
