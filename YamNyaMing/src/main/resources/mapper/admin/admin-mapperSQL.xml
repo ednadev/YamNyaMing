@@ -2,7 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 	
-<select id="selectAllMember" parameterType="YNMMember" resultType="YNMMember">
+<insert id="insertAdmin" parameterType="Admin">
+insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade})  
+</insert>
+	
+	
+	
+	<!-- 
+<select id="selectAllMember" parameterType="Member" resultType="Member">
   SELECT 
   mb_id as mbId,
   mb_name as mbName,
@@ -16,6 +23,7 @@
   from YNMMember
 </select>
 
+
 <select id="selectAllOwner" parameterType="YNMOwner" resultType="YNMOwner">
   SELECT 
   ow_id as ownerId,
@@ -26,7 +34,7 @@
   ow_bank_account as ownerBank
   from YNMOwner
 </select>
-
+ -->
 
 
 

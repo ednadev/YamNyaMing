@@ -3,8 +3,13 @@
 Servers/
 
 .classpath
-
+.class
 .project
 
 YamNyaMing/build/
+YamNyaMing/.classpath
+YamNyaMing/.settings
+YamNyaMing/target/
+
+
 

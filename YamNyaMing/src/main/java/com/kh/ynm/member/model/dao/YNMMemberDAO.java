@@ -1,5 +1,10 @@
 package com.kh.ynm.member.model.dao;
 
-public interface YNMMemberDAO {
+import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.ynm.member.model.vo.YNMAdmin;
+
+public interface YNMMemberDAO {
+	public int insertAdmin(YNMAdmin vo, SqlSessionTemplate sqlSession);
+	public int adminIdCheck(String id, SqlSessionTemplate sqlSession);
 }
