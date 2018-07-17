@@ -544,7 +544,7 @@
 			<address>㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
 			주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing Co. All rights reserved</address>
 		</div>
-		<a href="/signUpOwner.do">얌냐밍 입점 신청하기</a>
+		<a href="/enrollOwner.do">얌냐밍 입점 신청하기</a>
 	</footer>
 </div>
 </body>

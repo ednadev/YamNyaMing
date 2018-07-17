@@ -451,6 +451,7 @@
 	padding:20px 60px;
 	font-size:1em;
 	font-weight:bold;
+	cursor:pointer;
 }
 @media (max-width:660px){
 	.signUp-table{

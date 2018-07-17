@@ -114,12 +114,8 @@
 }
 
 /* 정보입력 */
-#owner-signUp-section>form>h3{
-	margin:20px;
-}
 .signUp-table{
 	display:flex;
-	align-items:center;
 	padding-bottom:10px;
 }
 .signUp-table>div{
@@ -132,6 +128,7 @@
 	color:#555;
 	font-size:0.9em;
 	margin-left:20px;
+	margin-top:10px;
 }
 .signUp-table>div:nth-child(2){
 	width:79%;
@@ -145,8 +142,26 @@
 .signUp-table>div:nth-child(2)>input[type="text"],
 .signUp-table>div:nth-child(2)>input[type="email"],
 .signUp-table>div:nth-child(2)>input[type="password"],
-.signUp-table>div:nth-child(2)>input[type="tel"]{
+.signUp-table>div:nth-child(2)>input[type="tel"],
+.signUp-table>div:nth-child(2)>input[type="url"],
+.signUp-table>div:nth-child(2)>input[type="time"]{
 	color:#555;
 	padding:10px;
 	width:50%;
+}
+.signUp-table>div:nth-child(2)>select{
+	padding:10px;
+	font-size:0.8em;
+	cursor:pointer;
+}
+.wrapper>form>input[type="submit"]{
+	background-color:#fb0;
+	color:white;
+	border:none;
+	margin:20px auto;
+	display:block;
+	padding:20px 60px;
+	font-size:1em;
+	font-weight:bold;
+	cursor:pointer;
 }
