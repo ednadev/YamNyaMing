@@ -1,12 +1,17 @@
 package com.kh.ynm.member.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,16 +21,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+
 
 @Controller
 public class YNMMemberControllerImpl implements YNMMemberController{
 
+	@Autowired
+	ServletContext context;
+	
+	
 	@Autowired
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
@@ -66,7 +80,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	@Override
 	@RequestMapping(value="/signUpMember.do")
-	public String signUpMember(HttpServletRequest request, HttpServletResponse response) {
+	public String signUpMember(@RequestParam("avatar") MultipartFile file,HttpServletRequest request, HttpServletResponse response) {
 		YNMMember ym=new YNMMember();
 		ym.setMemberId(request.getParameter("memberId"));
 		ym.setMemberPw(request.getParameter("memberPw"));
@@ -80,10 +94,44 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		ym.setMemberEmail(request.getParameter("memberEmail"));
 		ym.setMemberPhone(request.getParameter("memberPhone"));
-		ym.setMemberAvatar(request.getParameter("memberAvatar"));
+		
+		String OriginName=file.getOriginalFilename();
+		String remakeName=System.currentTimeMillis()+"_"+OriginName;
+		String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
+		String photoViewRoute="\\memberPhoto\\"+remakeName;
+		File f=new File(photoRoute);
+		try {
+			file.transferTo(f);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
+		ymup.setOriginName(OriginName);
+		ymup.setRemakeName(remakeName);
+		ymup.setPhotoRoute(photoRoute);
+		ymup.setPhotoViewRoute(photoViewRoute);
+		
+		int result=ynmMemberServiceImpl.memberUploadPhoto(ymup);
+		System.out.println(remakeName);
+		
+		YNMMemberUploadPhoto ymupIndex=ynmMemberServiceImpl.memberIndexSelect(remakeName);
+		
+		
+		ym.setMemberAvatar(ymupIndex.getUploadPhotoNo());
+		
 		ynmMemberServiceImpl.signUpMember(ym);
+		
+		
 		return null;
 	}
+	
+	
 
 	@Override
 	@RequestMapping(value="/signOutMember.do")
@@ -116,6 +164,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	if(ym!=null) {
 			
 			view.addObject("info",ym);
+			view.addObject("img","\\memberPhoto\\1531815232521_Koala.jpg");
 			view.setViewName("ynmMember/info");
 			return view;
 		}
@@ -142,6 +191,25 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		
 	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/nickCheck.do")
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response,Model model) {
+		String memberNickName=request.getParameter("memberNickName");
+		YNMMember ym=ynmMemberServiceImpl.nickCheck(memberNickName);
+		
+		if(ym==null) {
+			String chk="0";
+			return chk;
+		}else {
+			String chk="1";
+			return chk;
+			
+		}
+		
+	}
+	
 	
 	//예약하기 table
 	

@@ -21,8 +21,7 @@
 			mb_birth as memberBirth,
 			mb_email as memberEmail,
 			mb_phone as memberPhone,
-			mb_regdate as memberRegDate,
-			mb_avatar as memberAvatar
+			mb_regdate as memberRegDate
 			
 			from member_entire_tb
 			
@@ -37,17 +36,26 @@
 	<update id="updateMember">
 		update member_entire_tb set mb_pw=#{memberPw}, mb_nickname=#{memberNickName}, 
 											mb_email=#{memberEmail}, mb_phone=#{memberPhone}
-											mb_avatar=#{memberAvatar}
 											
 	</update>
 
-<select id="idCheck" resultType="member">
+	
+	<select id="idCheck" resultType="member">
 	select 
 			mb_id as memberId
 	from member_entire_tb
 	where mb_id=#{memberId}
 	
 	</select>
+	
+	<select id="nickCheck" resultType="member">
+	select 
+			mb_nickname as memberNickName
+	from member_entire_tb
+	where mb_nickname=#{memberNickName}
+	
+	</select>
+	
 	
 
 </mapper>

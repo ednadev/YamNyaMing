@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="photo">
+	<!-- 사진 등록 쿼리 -->
+	
+	<insert id="avatarPhoto">
+		insert into member_upload_photo_tb values(member_upload_photo_tb_SEQ.nextval,2,#{OriginName},#{remakeName},#{photoRoute},sysdate,#{photoViewRoute})
+	</insert>
+	
+	<select id="indexSearch" resultType="photos">
+		select 
+			mb_upload_photo_pk as uploadPhotoNo
+		from member_upload_photo_tb
+		where mb_remake_name=#{remakeName}
+	
+	</select>
+
+	
+
+
+</mapper>

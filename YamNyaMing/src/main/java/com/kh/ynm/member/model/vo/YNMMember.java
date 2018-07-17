@@ -13,15 +13,17 @@ public class YNMMember {
 	private String memberEmail;
 	private String memberPhone;
 	private Date memberRegDate;
-	private String memberAvatar;
+	private int memberAvatar;
 
+
+	
 	public YNMMember() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-
 	public YNMMember(int memberEntire, String memberId, String memberPw, String memberName, String memberNickName,
 			String memberGender, Date memberBirth, String memberEmail, String memberPhone, Date memberRegDate,
-			String memberAvatar) {
+			int memberAvatar) {
 		super();
 		this.memberEntire = memberEntire;
 		this.memberId = memberId;
@@ -35,7 +37,12 @@ public class YNMMember {
 		this.memberRegDate = memberRegDate;
 		this.memberAvatar = memberAvatar;
 	}
-	
+	public int getMemberAvatar() {
+		return memberAvatar;
+	}
+	public void setMemberAvatar(int memberAvatar) {
+		this.memberAvatar = memberAvatar;
+	}
 	public int getMemberEntire() {
 		return memberEntire;
 	}
@@ -96,12 +103,5 @@ public class YNMMember {
 	public void setMemberRegDate(Date memberRegDate) {
 		this.memberRegDate = memberRegDate;
 	}
-	public String getMemberAvatar() {
-		return memberAvatar;
-	}
-	public void setMemberAvatar(String memberAvatar) {
-		this.memberAvatar = memberAvatar;
-	}
-	
 	
 }

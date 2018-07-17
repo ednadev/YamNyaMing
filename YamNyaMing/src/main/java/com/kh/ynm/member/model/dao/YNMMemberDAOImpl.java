@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 
 @Repository("ynmMemberDAO")
 public class YNMMemberDAOImpl implements YNMMemberDAO{
@@ -35,6 +36,18 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public YNMMember idCheck(SqlSessionTemplate sqlSession, String memberId) {
 		return sqlSession.selectOne("members.idCheck",memberId);
+	}
+
+	public YNMMember nickCheck(SqlSessionTemplate sqlSession, String memberNickName) {
+		return sqlSession.selectOne("members.nickCheck",memberNickName);
+	}
+
+	public int memberUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
+		return sqlSession.insert("photo.avatarPhoto",ymup);
+	}
+
+	public YNMMemberUploadPhoto memberIndexSelect(SqlSessionTemplate sqlSession, String remakeName) {
+		return sqlSession.selectOne("photo.indexSearch",remakeName);
 	}
 	
 }

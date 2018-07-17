@@ -18,8 +18,9 @@
 	<input type="text" value="${info.memberEmail}">
 	<input type="text" value="${info.memberPhone}">
 	<input type="text" value="${info.memberRegDate}">
-	<input type="text" value="${info.memberAvatar}">
 	<input type="submit" value="변경">
+	
+	<img src='${pageContext.request.contextPath}/resources/${img}'>
 	
 	</form>
 	
