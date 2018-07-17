@@ -12,7 +12,7 @@
 	
 	<select id="selectOneMember" resultType="member">
 		select 
-			mb_entire_pk as memberEntire,
+			mb_entire_pk as memberEntireNo,
 			mb_id as memberId,
 			mb_pw as memberPw,
 			mb_name as memberName,

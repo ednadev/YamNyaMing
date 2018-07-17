@@ -13,6 +13,7 @@ import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 @Service("ynmMemberService")
 public class YNMMemberServiceImpl implements YNMMemberService{
@@ -70,6 +71,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public YNMMemberUploadPhoto memberIndexSelect(String remakeName) {
 		YNMMemberUploadPhoto ymup=memberDAO.memberIndexSelect(sqlSession,remakeName);
 		return ymup;
+	}
+
+	public int storeReviewInsert(YNMStoreReview ysr) {
+		int result=memberDAO.storeReviewInsert(sqlSession,ysr);
+		return result;
 	}
 
 }

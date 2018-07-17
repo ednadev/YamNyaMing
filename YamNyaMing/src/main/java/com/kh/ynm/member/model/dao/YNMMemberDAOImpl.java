@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 @Repository("ynmMemberDAO")
 public class YNMMemberDAOImpl implements YNMMemberDAO{
@@ -48,6 +49,10 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public YNMMemberUploadPhoto memberIndexSelect(SqlSessionTemplate sqlSession, String remakeName) {
 		return sqlSession.selectOne("photo.indexSearch",remakeName);
+	}
+
+	public int storeReviewInsert(SqlSessionTemplate sqlSession, YNMStoreReview ysr) {
+		return sqlSession.insert("review.storeReviewInsert",ysr);
 	}
 	
 }

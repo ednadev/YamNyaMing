@@ -3,7 +3,7 @@ package com.kh.ynm.member.model.vo;
 import java.sql.Date;
 
 public class YNMMember {
-	private int memberEntire;
+	private int memberEntireNo;
 	private String memberId;
 	private String memberPw;
 	private String memberName;
@@ -21,11 +21,11 @@ public class YNMMember {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public YNMMember(int memberEntire, String memberId, String memberPw, String memberName, String memberNickName,
+	public YNMMember(int memberEntireNo, String memberId, String memberPw, String memberName, String memberNickName,
 			String memberGender, Date memberBirth, String memberEmail, String memberPhone, Date memberRegDate,
 			int memberAvatar) {
 		super();
-		this.memberEntire = memberEntire;
+		this.memberEntireNo = memberEntireNo;
 		this.memberId = memberId;
 		this.memberPw = memberPw;
 		this.memberName = memberName;
@@ -43,11 +43,11 @@ public class YNMMember {
 	public void setMemberAvatar(int memberAvatar) {
 		this.memberAvatar = memberAvatar;
 	}
-	public int getMemberEntire() {
-		return memberEntire;
+	public int getMemberEntireNo() {
+		return memberEntireNo;
 	}
-	public void setMemberEntire(int memberEntire) {
-		this.memberEntire = memberEntire;
+	public void setMemberEntireNo(int memberEntire) {
+		this.memberEntireNo = memberEntire;
 	}
 	public String getMemberId() {
 		return memberId;
