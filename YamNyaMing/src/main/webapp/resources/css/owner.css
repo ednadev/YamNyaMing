@@ -38,9 +38,13 @@
 #owner-signUp-section{
 	border:1px solid #cecece;
 	clear:both;
+	padding-bottom:10px;
 }
 #owner-signUp-section>h3{
 	margin:20px;
+}
+.signUp-table{
+	margin-left:30px;
 }
 .owner-text{
 	border:1px solid #cecece;
@@ -89,8 +93,9 @@
 	display:block;
 	margin:20px auto;
 	text-align:center;
-	padding-top:10px;
-	padding-bottom:10px;
+	padding-top:20px;
+	padding-bottom:20px;
+	font-weight:bold;
 }
 #owner-signUp-footer{
 	background-color:rgba(0,0,0,0.8);

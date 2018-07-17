@@ -19,9 +19,9 @@
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
-			<p>01 약관 동의 > <span>02 정보입력</span></p>
+			<p>01 약관 동의 > <span>02 계정 정보 입력</span> > 03 음식점 정보 입력</p>
 		</nav>
-		<form action="signUpOwnder.do" method="post">
+		<form action="signUpOwner2.do" method="post">
 			<section id="owner-signUp-section">
 				<h3>계정 정보 입력</h3>
 				<div class="signUp-table">
@@ -72,70 +72,9 @@
 						<input type="text" name="owBankAccount" placeholder="계좌번호">
 						<p>계좌번호를 입력해주세요.</p>
 					</div>
-				</div>				
-				<h3>음식점 정보 입력</h3>	
-				<div class="signUp-table">
-					<div>사업자 등록번호</div>
-					<div>
-						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호">
-						<p>사업자 등록번호를 입력해주세요.</p>
-					</div>
-				</div>	
-				<div class="signUp-table">
-					<div>상호명</div>
-					<div>
-						<input type="text" name="owStoreName" placeholder="상호명">
-						<p>상호명을 입력해주세요.</p>
-					</div>
-				</div>
-				<div class="signUp-table">
-					<div>전화번호</div>
-					<div>
-						<input type="tel" name="owPhone" placeholder="휴대폰">
-						<p>연락 가능한 휴대폰 번호를 입력해주세요.</p>
-					</div>
-				</div>
-				<div class="signUp-table">
-					<div>휴대폰</div>
-					<div>
-						<input type="tel" name="owPhone" placeholder="휴대폰">
-						<p>연락 가능한 휴대폰 번호를 입력해주세요.</p>
-					</div>
-				</div>
-				<div class="signUp-table">
-					<div>업종</div>
-					<div>
-						<select name="owStoreBigType" id="firstSelect" onchange="changeSelect()">
-							<option>대분류</option>
-						</select>
-						<select name="owStoreSmallType" id="finalSelect">
-							<option>소분류</option>
-						</select>
-					</div>
-				</div>	
-				<div class="signUp-table">
-					<div>웹사이트</div>
-					<div>
-						<input type="url" name="owStoreUrl" placeholder="웹사이트">
-						<p>웹사이트를 입력해주세요.</p>
-					</div>
-				</div>
-				<div class="signUp-table">
-					<div>주소</div>
-					<div>
-						<input type="text" name="owStoreMapinfo" placeholder="주소">
-						<p>주소를 입력해주세요.</p>
-					</div>
-				</div>
-				<div class="signUp-table">
-					<div>영업시간</div>
-					<div>
-						<input type="time" name="owStoreWorkingTime">
-						<p>영업시간을 입력해주세요.</p>
-					</div>
-				</div>																														
+				</div>																													
 			</section>
-			<input type="submit" value="입점 신청하기">
+			<input type="submit" value="다음">
 		</form>
 	</div>
 	<footer id="owner-signUp-footer">

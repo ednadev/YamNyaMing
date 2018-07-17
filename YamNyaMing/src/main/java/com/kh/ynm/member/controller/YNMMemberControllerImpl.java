@@ -58,9 +58,15 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmOwner/enrollOwner";
 	}
 	
-	//점장 : 입점신청 정보입력 페이지로 이동
-	@RequestMapping(value="/enterInfo.do")
+	//점장 : 입점신청 계정정보입력 페이지로 이동
+	@RequestMapping(value="/signUpOwner.do")
 	public String signUpOwner() {
 		return "ynmOwner/signUpOwner";
+	}
+	
+	//점장 : 입점신청 음식점정보입력 페이지로 이동
+	@RequestMapping(value="/signUpOwner2.do")
+	public String signUpOwner2() {
+		return "ynmOwner/signUpOwner2";
 	}
 }

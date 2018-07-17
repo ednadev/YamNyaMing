@@ -16,7 +16,7 @@
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
-			<p><span>01 약관 동의</span> > 02 정보입력</p>
+			<p><span>01 약관 동의</span> > 02 계정 정보 입력 > 03 음식점 정보 입력</p>
 		</nav>
 		<section id="owner-signUp-section">
 			<h3>서비스 이용약관 (사업자용)</h3>
@@ -435,7 +435,7 @@
 				<label for="check2">개인정보처리방침에 동의합니다</label>
 			</div>			
 		</section>
-		<a href="enterInfo.do">다음</a>
+		<a href="signUpOwner.do">다음</a>
 	</div>
 	<footer id="owner-signUp-footer">
 		<div>
