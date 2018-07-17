@@ -1,3 +1,4 @@
+// 이용약관
 function openCheck1(){
 	var element = document.getElementById("checkText1");
 	element.classList.toggle("open");

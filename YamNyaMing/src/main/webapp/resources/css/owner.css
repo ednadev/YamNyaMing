@@ -149,15 +149,20 @@
 .signUp-table>div:nth-child(2)>input[type="password"],
 .signUp-table>div:nth-child(2)>input[type="tel"],
 .signUp-table>div:nth-child(2)>input[type="url"],
-.signUp-table>div:nth-child(2)>input[type="time"]{
+.signUp-table>div:nth-child(2)>input[type="time"],
+.signUp-table>div:nth-child(2)>div>input[type="text"]{
 	color:#555;
 	padding:10px;
 	width:50%;
+}
+.signUp-table>div:nth-child(2)>input[type="time"]{
+	width:15%;
 }
 .signUp-table>div:nth-child(2)>select{
 	padding:10px;
 	font-size:0.8em;
 	cursor:pointer;
+	padding:13px;
 }
 .wrapper>form>input[type="submit"]{
 	background-color:#fb0;
@@ -169,4 +174,83 @@
 	font-size:1em;
 	font-weight:bold;
 	cursor:pointer;
+}
+/* 음식점 상세 정보 입력 추가 내용 */
+.signUp-table>div:nth-child(2)>input[type="text"].keywordStyle{
+	width:10%;
+}
+.signUp-table>div:nth-child(2)>div>input[type="text"].menuStyle{
+	width:20%;
+}
+.signUp-table>div:nth-child(2)>div>input[type="text"].priceStyle{
+	width:10%;
+}
+.signUp-table>div:nth-child(2)>div>span,
+.signUp-table>div:nth-child(2)>div>label{
+	font-size:0.9em;
+}
+.signUp-table>div:nth-child(2)>div>label.checkStyle{
+	margin-left:15px;
+	margin-right:5px;
+}
+.detailStyle{
+	display:block;
+	font-weight:bold;
+	margin-top:15px;
+	margin-bottom:10px;
+	color:#555;
+}
+#menuDesc{
+	width:60%;
+	height:80px;
+	resize:none;
+	padding:10px;
+}
+#menu-file{
+	display:none;
+}
+#menu-file-text{
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:#cecece;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
+.signUp-table>.menuPriceInfo{
+	display:block;
+}
+.signUp-table>#menuPriceInfo>.menuInfo>button{
+	border:1px solid #cecece;
+	color:#cecece;
+	padding:10px;
+	display:inline-block;
+	background-color:white;
+	position:absolute;
+	bottom:5px;
+	cursor:pointer;
+}
+.signUp-table>#menuPriceInfo>.menuInfo{
+	position:relative;
+	margin-bottom:20px;
+}
+.signUp-table>#menuPriceInfo>.menuInfo>#menu-file-text{
+	position:absolute;
+	right:140px;
+	bottom:5px;
+	cursor:pointer;
+}
+.signUp-table>#menuPriceInfo>.menuInfo>#addButton{
+	right:85px;
+}
+.signUp-table>#menuPriceInfo>.menuInfo>#delButton{
+	right:30px;
+}
+.signUp-table>#timeStyle>input[type="text"]{
+	font-size:0.8em;
+	padding:13px;
+	width:175px;
 }

@@ -1,3 +1,4 @@
+// 업종
 var firstList = new Array("한식","중식","일식","양식","뷔페","카페,디저트","기타");
 
 var finalList1 = new Array("백반,가정식","한정식","쌈밥","보리밥","비빔밥","죽","국밥","국수","냉면","막국수","찌개,전골","추어탕","감자탕","해장국","곰탕,설렁탕","갈비탕","두부요리","칼국수,만두","전,빈대떡","고기요리");
@@ -57,3 +58,15 @@ function finalSelect(idx){
 	}
 	finalSelect.style.display = "";
 }
+
+// 메뉴 정보 - 가격 정보
+$(document).ready(function(){
+	$('#checkPrice').click(function(){
+		if($(this).is(':checked')){
+			$('input[name=owRecommandMenuPrice]').attr('disabled',true);
+		}else{
+			$('input[name=owRecommandMenuPrice]').attr('disabled',false);
+		}
+	});
+});
+
