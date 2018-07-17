@@ -100,7 +100,7 @@
 				</div>	
 				<h3>상세 정보 입력</h3>	
 				<div class="signUp-table">
-					<div>대표키워드</div>
+					<div>대표 키워드</div>
 					<div>
 						<input type="text" name="owStoreTip" class="keywordStyle">
 						<input type="text" name="owStoreTip" class="keywordStyle">
@@ -109,7 +109,22 @@
 						<input type="text" name="owStoreTip" class="keywordStyle">
 						<p>업체를 대표하는 메뉴명, 서비스명, 상품명 등을 입력하세요. (최대 5개까지 가능)</p>
 					</div>
-				</div>				
+				</div>	
+				<div class="signUp-table">
+					<div>대표 이미지</div>
+					<div>
+						<input type="file" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="loadFile(event)">
+						<label for="mainImage">이미지 추가</label>
+						<img id="output"/>
+						<p>업체를 대표하는 이미지를 추가해주세요.</p>
+					</div>
+				</div>			
+				<script>
+					var loadFile = function(event){
+						var output = document.getElementById('output');
+						output.src = URL.createObjectURL(event.target.files[0]);
+					};
+				</script>				
 				<div class="signUp-table">
 					<div>가격 정보</div>
 					<div id="menuPriceInfo">
@@ -125,8 +140,7 @@
 							<button id="addButton" type="button" onclick="menuInfoAdd();">추가</button>
 						</div>
 					</div>
-					
-				</div>	
+				</div>				
 				<div class="signUp-table">
 					<div>테이블 정보</div>
 					<div>
