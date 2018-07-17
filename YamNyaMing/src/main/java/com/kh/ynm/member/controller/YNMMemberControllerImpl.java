@@ -69,4 +69,16 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	public String signUpOwner2() {
 		return "ynmOwner/signUpOwner2";
 	}
+	
+	//관리자 : 관리자 로그인 페이지로 이동
+	@RequestMapping(value="/ynmAdmin.do")
+	public String ynmAdmin() {
+		return "ynmAdmin/ynmAdmin";
+	}
+	
+	//관리자 : 관리자 메인 페이지로 이동
+	@RequestMapping(value="/mainAdmin.do")
+	public String adminMain() {
+		return "ynmAdmin/mainAdmin";
+	}
 }
