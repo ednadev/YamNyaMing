@@ -24,8 +24,8 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 
 	@Override
 	public YNMOwner selectOneOwner(YNMOwner owner) {
-		// TODO Auto-generated method stub
-		return null;
+		YNMOwner resultOwner = ynmOwnerDAO.selectOneOwner(sqlSession, owner);
+		return resultOwner;
 	}
 
 	@Override

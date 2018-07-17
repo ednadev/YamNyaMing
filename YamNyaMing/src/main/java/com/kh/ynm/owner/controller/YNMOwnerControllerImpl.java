@@ -10,8 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
@@ -27,16 +29,33 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	
 	@Override
 	@RequestMapping(value="/ownerLogin.do")
-	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response) {
+	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String owId = request.getParameter("owId");
+		String owPw = request.getParameter("owPw");
+		YNMOwner owner = new YNMOwner();
+		owner.setOwId(owId);
+		owner.setOwPw(owPw);
+		YNMOwner resultOwner = ynmOwnerServiceImpl.selectOneOwner(owner);
+		if(resultOwner!=null)
+		{
+			session.setAttribute("owner", resultOwner);
+			return "ynmOwner/ynmOwnerTest.do";
+		}
+		else
+		{
+			return "ynmOwner/ynmOwnerTest.do";
+		}
+		
+	}
+	
+	@Override
+	@RequestMapping(value="/ownerSignOut.do")
+	public String ynmOwnerSignOut(HttpSession session, @RequestParam String owId, @RequestParam String owPw) {
+		
 		
 		return null;
 	}
 	
-	@Override
-	public String ynmOwnerSignOut(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
 	@Override
@@ -51,21 +70,28 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping(value="/ownerSignUp.do")
 	public String ynmOwnerSignUp(HttpSession session, YNMOwner owner) {
 		int result = ynmOwnerServiceImpl.ynmOwnerSignUp(owner);
-		return "ynmOwner/ynmOwnerTest";
+		return "redirect:/";
 	}
 	
 	
 	@Override
+	@ResponseBody
 	@RequestMapping(value="/ownerIdChk.do")
 	public String idCheck(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String ownerId = request.getParameter("ownerId");
-		System.out.println("아이디 체크 " + ownerId);
-//		YNMOwner owner = ynmOwnerServiceImpl.selectOneOwner(ownerId);
-//		System.out.println(owner.getOwId());
-		response.getWriter().println("y");
-		return "y";
-//		if(owner!=null) return "ynmOwner/ynmOwnerTest?ownerId=y";
-//		else return "ynmOwner/ynmOwnerTest?ownerId=n";
+		YNMOwner owner = ynmOwnerServiceImpl.selectOneOwner(ownerId);
+		if(owner!=null) return "y";
+		else return "n";
+	}
+
+	@Override
+	@RequestMapping(value="/ownerLogout.do")
+	public String ynmOwnerLogout(HttpSession session) {
+		if(session.getAttribute("owner")!=null)
+		{
+			session.removeAttribute("owner");
+		}
+		return "ynmOwner/ynmOwnerTest.do";
 	}
 	
 

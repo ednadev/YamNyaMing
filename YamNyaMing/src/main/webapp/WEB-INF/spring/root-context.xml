@@ -19,6 +19,7 @@
 		<property name="defaultAutoCommit" value="false"/>
 	</bean>
 	
+	
 			
 	<!-- Mybatis추가 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -50,4 +51,28 @@
 		<aop:pointcut id="tranPointcut" expression="execution(* com.kh.ynm.owner.model.service.YNMOwnerServiceImpl.*(..))"/>
 		<aop:advisor pointcut-ref="tranPointcut" advice-ref="txAdvice"/>
 	</aop:config>
+	
+	<!-- 메일 보내기 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="ynmmanger@gmail.com" />
+		<property name="password" value="ynm1q2w3e4r%T" />
+
+
+	<!-- email 요청시는 SMTP -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id = "transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name = "dataSource" ref = "dataSource"></property>
+	</bean>
+	<tx:annotation-driven/>
 </beans>
