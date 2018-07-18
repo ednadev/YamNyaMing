@@ -11,13 +11,11 @@ function resultStyleChk(resultChk,chk)
 // 아이디 체크
 function ownerIdChk()
 {
-	var idCheckResult = $('#ownerIdChk');
+	var idCheckResult = $('#owIdResult');
 	var insertId  = $("input[name=owId]").val(); // 아이디 입력 결과
-	
 	var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 	
 	var rightFormChk  = true;
-	console.log("아이디 중복 체크");
 	$.ajax({
 			url:"/ownerIdChk.do",
 			data : {
@@ -78,9 +76,8 @@ function ownerIdChk()
 
 // 비밀번호 체크
 
-function ownerPwChk()
-{
-	var pwCheckResult = $('#ownerPwChk');
+function owPwCheck(){
+	var pwCheckResult = $('#owPwResult');
 	var insertPw  = $("input[name=owPw]").val(); // 아이디 입력 결과
 	
 	var rightFormChk  = true;
@@ -117,13 +114,13 @@ function ownerPwChk()
     
     if(rightFormChk)pwCheckResult.html("사용할 수 있는 비밀번호 입니다.");	
 	resultStyleChk(pwCheckResult,rightFormChk);
-}	
+}
 
 
 function ownerPwReChk()
 {
 	var insertPw =  $("input[name=owPw]").val();
-	var insertRePw  = $("input[name=owPwRe]").val(); // 아이디 입력 결과
+	var insertRePw  = $("input[name=owPw2]").val(); // 아이디 입력 결과
 	var pwCheckReResult = $('#ownerPwReChk');
 	var rightFormChk  = true;
 	

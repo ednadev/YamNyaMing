@@ -10,7 +10,6 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public int ynmOwnerSignUp(SqlSessionTemplate sqlSession, YNMOwner owner) {	
-		System.out.println("회원가입 ");
 		return sqlSession.insert("owners.ownerSignUp", owner);
 	}
 	
