@@ -4,34 +4,15 @@ import java.sql.Date;
 
 public class YNMStoreReview {
 	private int storeReviewNo;
-	private int ownerEntireNo;
+	private int ownerStoreEntireNo;
 	private int memberEntireNo;
 	private String reviewTitle;
 	private String reviewContent;
 	private String reviewStar;
 	private char jjimCheck;
 	private Date reviewDate;
-	private String reviewOpenCheck;
-	
-	
-	
-	
-	public YNMStoreReview() {
-		super();
-	}
-	public YNMStoreReview(int storeReviewNo, int ownerEntireNo, int memberEntireNo, String reviewTitle,
-			String reviewContent, String reviewStar, char jjimCheck, Date reviewDate, String reviewOpenCheck) {
-		super();
-		this.storeReviewNo = storeReviewNo;
-		this.ownerEntireNo = ownerEntireNo;
-		this.memberEntireNo = memberEntireNo;
-		this.reviewTitle = reviewTitle;
-		this.reviewContent = reviewContent;
-		this.reviewStar = reviewStar;
-		this.jjimCheck = jjimCheck;
-		this.reviewDate = reviewDate;
-		this.reviewOpenCheck = reviewOpenCheck;
-	}
+	private char reviewOpenCheck;
+	private String reviewImgList;
 	public int getStoreReviewNo() {
 		return storeReviewNo;
 	}
@@ -39,10 +20,10 @@ public class YNMStoreReview {
 		this.storeReviewNo = storeReviewNo;
 	}
 	public int getOwnerEntireNo() {
-		return ownerEntireNo;
+		return ownerStoreEntireNo;
 	}
 	public void setOwnerEntireNo(int ownerEntireNo) {
-		this.ownerEntireNo = ownerEntireNo;
+		this.ownerStoreEntireNo = ownerEntireNo;
 	}
 	public int getMemberEntireNo() {
 		return memberEntireNo;
@@ -80,12 +61,22 @@ public class YNMStoreReview {
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
 	}
-	public String getReviewOpenCheck() {
+	public char getReviewOpenCheck() {
 		return reviewOpenCheck;
 	}
-	public void setReviewOpenCheck(String reviewOpenCheck) {
+	public void setReviewOpenCheck(char reviewOpenCheck) {
 		this.reviewOpenCheck = reviewOpenCheck;
+	}
+	public String getReviewImgList() {
+		return reviewImgList;
+	}
+	public void setReviewImgList(String reviewImgList) {
+		this.reviewImgList = reviewImgList;
 	}
 	
 	
+	
+	
+	
+
 }

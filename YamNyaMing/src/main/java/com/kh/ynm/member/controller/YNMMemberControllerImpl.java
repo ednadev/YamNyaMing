@@ -32,6 +32,7 @@ import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 
 @Controller
@@ -51,6 +52,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/ynmMemberTest";
 	}
 	
+	//로그인
 	@Override
 	@RequestMapping(value="/login.do")
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
@@ -67,17 +69,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
-	//mb_id 프라이머리키 설정
-	//DAO수정
-	//생일에 대하여 생각해보아야함....
 	
-//	@Override
-//	@RequestMapping(value="/signUpMember.do")
-//	public String signUpMember(YNMMember ym) {
-//		ynmMemberServiceImpl.signUpMember(ym);
-//		return null;
-//	}
-	
+	//회원 가입
 	@Override
 	@RequestMapping(value="/signUpMember.do")
 	public String signUpMember(@RequestParam("avatar") MultipartFile file,HttpServletRequest request, HttpServletResponse response) {
@@ -118,7 +111,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ymup.setPhotoViewRoute(photoViewRoute);
 		
 		int result=ynmMemberServiceImpl.memberUploadPhoto(ymup);
-		System.out.println(remakeName);
 		
 		YNMMemberUploadPhoto ymupIndex=ynmMemberServiceImpl.memberIndexSelect(remakeName);
 		
@@ -132,7 +124,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 	
 	
-
+	//회원 탈퇴
 	@Override
 	@RequestMapping(value="/signOutMember.do")
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -151,6 +143,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
+	//내정보 확인
 	@Override
 	@RequestMapping(value="/memberInfo.do")
 	public Object memberInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -173,7 +166,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		return null;
 	}
-	
+	//회원 가입시 아이디 유효성 검사
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/idCheck.do")
@@ -191,7 +184,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		
 	}
-	
+	//회원 가입시 닉네임 유효성 검사
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/nickCheck.do")
@@ -212,7 +205,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	
 	//예약하기 table
-	
+	//예약 하기
 	@Override
 	@RequestMapping(value="/bookInsert.do")
 	public String bookInsert(YNMBook yb) {
@@ -220,13 +213,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	
+	//예약 정보 확인
 	@Override
 	@RequestMapping(value="/bookselect.do")
 	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		session=request.getSession(false);
 		YNMBook vo=new YNMBook();
-		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntire());
+		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ArrayList list=ynmMemberServiceImpl.bookselect(vo);
 		ModelAndView view=new ModelAndView();
 		if(!list.isEmpty()) {
@@ -238,6 +231,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			else {
 				
 			}
+			return null;
+	}
+	
+	
+	
+	//리뷰 table
+	@Override
+	@RequestMapping(value="/storeReviewInsert.do")
+	public String storeReviewInsert(HttpSession session,HttpServletRequest request, HttpServletResponse response,YNMStoreReview ysr) {
+		session=request.getSession(false);
+		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+		int result=ynmMemberServiceImpl.storeReviewInsert(ysr);
 			return null;
 	}
 	

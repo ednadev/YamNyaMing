@@ -229,6 +229,15 @@ function pwCheck(){
  	예약 정보 보기
  	<input type="submit" value="보기">
 	</form>
+	<hr>
+	<form action="storeReviewInsert.do">
+		<input type="text" name="ownerStoreEntireNo">
+		<input type="text" name="reviewTitle">
+		<input type="text" name="reviewContent">
+		<input type="text" name="reviewStar">
+		<input type="text" name="reviewImgList">
+		<input type="submit" value="댓글 등록">
+	</form>
 	
 </body>
 </html>
