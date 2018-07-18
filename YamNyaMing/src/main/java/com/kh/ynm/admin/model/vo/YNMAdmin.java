@@ -1,4 +1,4 @@
-package com.kh.ynm.member.model.vo;
+package com.kh.ynm.admin.model.vo;
 
 public class YNMAdmin {
 	private int admin_info_pk; 

@@ -6,7 +6,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Service;
 
-import com.kh.ynm.member.model.vo.YNMAdmin;
+import com.kh.ynm.admin.model.vo.YNMAdmin;
 
 @Service
 @Aspect

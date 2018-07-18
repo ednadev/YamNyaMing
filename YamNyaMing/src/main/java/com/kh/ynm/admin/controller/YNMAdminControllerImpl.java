@@ -1,4 +1,4 @@
-package com.kh.ynm.member.controller;
+package com.kh.ynm.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
-import com.kh.ynm.member.model.vo.YNMAdmin;
+import com.kh.ynm.admin.model.service.YNMAdminServiceImpl;
+import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 
 @Controller
-public class YNMMemberControllerImpl implements YNMMemberController{
+public class YNMAdminControllerImpl implements YNMAdminController{
 
 	@Autowired
-	@Qualifier(value="ynmMemberService")
-	private YNMMemberServiceImpl ynmMemberServiceImpl;
+	@Qualifier(value="YNMAdminService")
+	private YNMAdminServiceImpl ynmAdminServiceImpl;
 	
 
 	@Override
@@ -72,7 +72,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		System.out.println(vo.getAd_nickname());
 		System.out.println(vo.getAd_password());
 		System.out.println(vo.getAd_grade());
-			int result = ynmMemberServiceImpl.enrollAdmin(vo);
+			int result = ynmAdminServiceImpl.enrollAdmin(vo);
 			if(result>0)
 			{
 				return "ynmAdmin/enrollSuccess";	
@@ -84,7 +84,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		@RequestMapping(value="/allMemberView.do")
 		public String allMemberView(HttpServletRequest request, HttpSession session,YNMAdmin vo) 
 		{
-			List<Object> list = ynmMemberServiceImpl.allMemberView(vo);
+			List<Object> list = ynmAdminServiceImpl.allMemberView(vo);
 			return "ynmAdmin/allMemberView";
 		}
 
@@ -95,7 +95,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	    public String adminIdCheck(HttpServletRequest request, HttpServletResponse response,YNMAdmin vo) {
 	        String ad_id = request.getParameter("ad_id");
 	        vo.setAd_id(ad_id); 
-	        YNMAdmin yd = ynmMemberServiceImpl.adminIdCheck(vo);
+	        YNMAdmin yd = ynmAdminServiceImpl.adminIdCheck(vo);
 	        if(yd!=null)
 	        {
 	        	String data="1";
@@ -107,4 +107,62 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	            return data;   
 	        }        
 	    }
+		@RequestMapping(value="/allOwnerView.do")
+		public String allOwnerView(HttpServletRequest request, HttpSession session,YNMAdmin vo) 
+		{
+			List<Object> list = ynmAdminServiceImpl.allOwnerView(vo);
+			return "ynmAdmin/allOwnerView";
+		}
+		
+		@RequestMapping(value="/OwnerSearch.do")
+		public String OwnerSearch(HttpServletRequest request, HttpSession session,YNMAdmin vo) 
+		{
+			String search = request.getParameter("search");
+			List<Object> list = ynmAdminServiceImpl.OwnerSearch(search);
+			return "ynmAdmin/allOwnerView";
+		}
+		
+		@RequestMapping(value="/MemberSearch.do")
+		public String MemberSearch(HttpServletRequest request, HttpSession session,YNMAdmin vo) 
+		{
+			String search = request.getParameter("search");
+			List<Object> list = ynmAdminServiceImpl.MemberSearch(search);
+			return "ynmAdmin/allMemberView";
+		}
+		
+		@RequestMapping(value="/adminLogin.do")
+		public String adminLogin(HttpSession session,YNMAdmin vo) 
+		{
+			
+			return "ynmAdmin/ynmAdmin";	
+		}
+		@RequestMapping(value="/adminLogin2.do")
+		public String adminLogin2(HttpServletRequest request,HttpSession session,YNMAdmin vo,
+									   @RequestParam String ad_id,@RequestParam String ad_pw) 
+		{
+			
+			vo.setAd_id(ad_id);
+			vo.setAd_password(ad_pw);
+			System.out.println(ad_id);
+			System.out.println(ad_pw);
+			YNMAdmin admin = ynmAdminServiceImpl.adminLogin(vo);
+			session = request.getSession();
+			if(admin!=null)
+			{
+				session.setAttribute("admin", admin);
+				return "ynmAdmin/adminMain";	
+			}else
+			{
+				return "ynmAdmin/enrollFailed";
+			}
+			
+			
+		}
+		
+		
+		
+     
+	    
+	    
+	    
 }

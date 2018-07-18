@@ -2,7 +2,8 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.kh.ynm.member.model.vo.YNMMember" alias="member"/>
-		<typeAlias type="com.kh.ynm.member.model.vo.YNMAdmin" alias="Admin"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMMember" alias="Member"/>
+		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="Admin"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="Owner"/>
 	</typeAliases>
 </configuration>
