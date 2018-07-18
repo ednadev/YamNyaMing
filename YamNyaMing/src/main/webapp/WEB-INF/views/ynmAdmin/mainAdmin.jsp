@@ -94,7 +94,7 @@
 				<td>보칼리노</td><td>56</td><td>3.9</td><td>502</td><td>7</td>
 			</tr>	
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
 			</tr>
 			<tr>
 				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
