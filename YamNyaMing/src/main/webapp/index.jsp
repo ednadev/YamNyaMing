@@ -13,7 +13,7 @@
 <header id="member-main-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
 	<ul>
-        <li><a href="/login.do">로그인</a></li>
+        <li><a href="/loginMember.do">로그인</a></li>
         <li><a href="/enrollMember.do">회원가입</a></li>
     </ul>
     <h2>맛있는 가이드, <span>얌냐밍</span></h2>
