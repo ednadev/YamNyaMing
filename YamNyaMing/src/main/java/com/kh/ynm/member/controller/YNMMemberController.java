@@ -12,17 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 public interface YNMMemberController {
 	public String testMemberQueryTest();// �׽�Ʈ ����
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// ȸ�� �˻�
 //	public String signUpMember(YNMMember ym);// ȸ������
-	public String signUpMember(MultipartFile file,HttpServletRequest request, HttpServletResponse response);// ȸ������
+	public String signUpMember(@RequestParam("avatar") MultipartFile file,HttpServletRequest request, HttpServletResponse response);
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response);// ȸ��Ż��
-	public Object memberInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public Object memberInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response);
 	public String bookInsert(YNMBook yb);
 	
 	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
-	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
-	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
+	public String idCheck(HttpServletRequest request, HttpServletResponse response,Model model);
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response,Model model);
+	public String enrollMember();
 }

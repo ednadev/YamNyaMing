@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.common.MyFileRenamePolicy;
+import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
@@ -44,7 +45,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
 	
-
 	@Override
 	@RequestMapping(value="/ynmMemberTest.do")
 	public String testMemberQueryTest() {
@@ -243,5 +243,41 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 
 
+	//사용자 : 회원가입 페이지로 이동
+	@Override
+	@RequestMapping(value="/enrollMember.do")
+	public String enrollMember() {
+		return "ynmMember/signUpMember";
+	}	
+	
+	//점장 : 입점신청 약관동의 페이지로 이동
+	@RequestMapping(value="/enrollOwner.do")
+	public String enrollOwner() {
+		return "ynmOwner/enrollOwner";
+	}
+	
+	//점장 : 입점신청 계정정보입력 페이지로 이동
+	@RequestMapping(value="/signUpOwner.do")
+	public String signUpOwner() {
+		return "ynmOwner/signUpOwner";
+	}
+	
+	//점장 : 입점신청 음식점정보입력 페이지로 이동
+	@RequestMapping(value="/signUpOwner2.do")
+	public String signUpOwner2() {
+		return "ynmOwner/signUpOwner2";
+	}
+	
+	//관리자 : 관리자 로그인 페이지로 이동
+	@RequestMapping(value="/ynmAdmin.do")
+	public String ynmAdmin() {
+		return "ynmAdmin/ynmAdmin";
+	}
+	
+	//관리자 : 관리자 메인 페이지로 이동
+	@RequestMapping(value="/mainAdmin.do")
+	public String adminMain() {
+		return "ynmAdmin/mainAdmin";
+	}
 
 }
