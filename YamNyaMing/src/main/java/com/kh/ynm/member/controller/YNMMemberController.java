@@ -1,12 +1,28 @@
 package com.kh.ynm.member.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMMember;
+
 public interface YNMMemberController {
-	public String testMemberQueryTest();// Å×½ºÆ® Äõ¸®
-	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// È¸¿ø °Ë»ö
-	public String signUpMember(HttpSession session);// È¸¿ø°¡ÀÔ
-	public String signOutMember(HttpSession session);// È¸¿øÅ»Åð
+	public String testMemberQueryTest();// ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// È¸ï¿½ï¿½ ï¿½Ë»ï¿½
+//	public String signUpMember(YNMMember ym);// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public String signUpMember(MultipartFile file,HttpServletRequest request, HttpServletResponse response);// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response);// È¸ï¿½ï¿½Å»ï¿½ï¿½
+	public Object memberInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public String bookInsert(YNMBook yb);
+	
+	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
+	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 }
