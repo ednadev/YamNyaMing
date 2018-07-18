@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css?ver=1">
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
 </head>
 <body>
 	<header id="admin-login-header">
@@ -32,6 +32,7 @@
 		</ul>
 	</nav>
 	<section id="admin-main-section">
+	<div>
 		<div id="main-section-member">
 			<h4>회원 현황</h4>
 			<table border="1">
@@ -118,20 +119,105 @@
 			</tbody>
 			</table>
 		</div>
-		
-		
-		
-		
+		<div id="admin-main-board">
+			<h4>문의/답변관리</h4>
+			<table>
+			<tr>
+				<th>후기</th><td>0건</td>
+			</tr>
+			<tr>
+				<th>고객문의</th><td>0건</td>
+			</tr>
+			<tr>
+				<th>점장문의</th><td>0건</td>
+			</tr>			
+			</table>
+		</div>		
+	</div>
 		<div>
 			<div id="admin-main-stat">
 				<h4>통계</h4>
-				<canvas id="pie-chart" width="800" height="450"></canvas>
+				<div>
+					<canvas id="gender-chart"></canvas>
+					<canvas id="year-chart"></canvas>
+					<canvas id="time-chart"></canvas>
+					<canvas id="store-chart"></canvas>
+				</div>
+				<script>
+				new Chart(document.getElementById("gender-chart"), {
+				    type: 'pie',
+				    data: {
+				      labels: ["남자", "여자"],
+				      datasets: [{
+				    	label: "성별",
+				        backgroundColor: ["#64B5F6", "#E57373"],
+				        data: [2005,3006]
+				      }]
+				    },options: {
+				      title: {
+				        display: true,
+				        text: '성별'
+				      }
+				    }
+				});	
+				new Chart(document.getElementById("year-chart"), {
+				    type: 'pie',
+				    data: {
+				      labels: ["10대","20대","30대","40대","50대","60대 이상"],
+				      datasets: [{
+				        label: "연령대별",
+				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
+				        data: [2005,3006,1200,4003,2000,1342]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: false,
+				        text: '연령별'
+				      }
+				    }
+				});		
+				new Chart(document.getElementById("time-chart"), {
+				    type: 'bar',
+				    data: {
+				      labels: ["3-7시","7-11시","11-15시","15-19시","19-23시","23-3시"],
+				      datasets: [{
+				        label: "시간대별",
+				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
+				        data: [2005,3006,1200,4003,2000,1342]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: false,
+				        text: '시간대별'
+				      }
+				    }
+				});	
+				new Chart(document.getElementById("store-chart"), {
+				    type: 'bar',
+				    data: {
+				      labels: ["한식","중식","일식","양식","디저트"],
+				      datasets: [{
+				        label: "업종별",
+				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
+				        data: [2005,3006,1200,4003,2000]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: false,
+				        text: '업종별'
+				      }
+				    }
+				});					
+				</script>
+			</div>
 
-			</div>
-			<div id="admin-main-stat">
-				<h4>게시판</h4>
-			</div>
 		</div>
+		
+		
+
 	</section>
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
