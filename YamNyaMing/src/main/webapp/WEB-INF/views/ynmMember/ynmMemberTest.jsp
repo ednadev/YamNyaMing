@@ -247,7 +247,7 @@ function pwCheck(){
 	</form>
 	
 	<form action="/logout.do">
-		
+		<input type="submit" value="로그아웃">
 	</form>
 	
 	<hr>
