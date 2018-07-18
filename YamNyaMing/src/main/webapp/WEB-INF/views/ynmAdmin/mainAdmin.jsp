@@ -6,10 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
@@ -80,42 +78,42 @@
 		</div>
 		<div id="main-section-owner">
 			<h4>음식점 현황 (Top10)</h4>
-			<table border="1">
+			<table border="1" class="sortable">
 			<thead>
 			<tr>
-				<th>상호명</th><th>예약수</th><th>평점</th><th>추천수</th><th>즐겨찾기</th>
+				<th>상호명</th><th class="sorting">예약수</th><th class="sorting">평점</th><th class="sorting">추천수</th><th class="sorting">즐겨찾기</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>피에르 가니에르 서울</td><td>41</td><td>4.5</td><td>219</td><td>68</td>
 			</tr>
 			<tr>
-				<td>보칼리노</td><td>56</td><td>3.9</td><td>502</td><td>7</td>
+				<td>더 파크뷰</td><td>28</td><td>5.0</td><td>157</td><td>14</td>
 			</tr>	
 			<tr>
-				<td>하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>야마야 (여의도점)</td><td>35</td><td>4.0</td><td>16</td><td>14</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>청미심</td><td>28</td><td>4.0</td><td>72</td><td>19</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>장 스테이크 하우스</td><td>35</td><td>3.5</td><td>86</td><td>25</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>하동관 (여의도직영1호점)</td><td>1</td><td>4.0</td><td>16</td><td>11</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>할매집</td><td>6</td><td>3.5</td><td>89</td><td>4</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>비스트로 드 욘트빌</td><td>14</td><td>4.5</td><td>86</td><td>1070</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>뎐</td><td>14</td><td>3.5</td><td>15</td><td>4</td>
 			</tr>
 			<tr>
-				<td>볼트스테이크하우스</td><td>100</td><td>4.1</td><td>521</td><td>3</td>
+				<td>사대부집 곳간</td><td>11</td><td>3.5</td><td>64</td><td>35</td>
 			</tr>																										
 			</tbody>
 			</table>

@@ -112,6 +112,7 @@ html,body{height:100%;}
 }
 
 /* section */
+.clickable{cursor:pointer;}
 /*
 #admin-main-section{
 	display:flex;
