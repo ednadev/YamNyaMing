@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 
 public interface YNMAdminController {
-	
 	public String allMemberView(HttpServletRequest request, HttpSession session,YNMAdmin vo);
 
 }
