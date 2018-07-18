@@ -2,7 +2,7 @@ package com.kh.ynm.member.model.vo;
 
 import java.sql.Date;
 
-public class YNMMember {
+public class YNMMemberCheck {
 	private int memberEntireNo;
 	private String memberId;
 	private String memberPw;
@@ -14,22 +14,18 @@ public class YNMMember {
 	private String memberPhone;
 	private Date memberRegDate;
 	private int memberUploadPhotoNo;
-
-
-	
-
-
-	public int getMemberUploadPhotoNo() {
-		return memberUploadPhotoNo;
-	}
-	public void setMemberUploadPhotoNo(int memberUploadPhotoNo) {
-		this.memberUploadPhotoNo = memberUploadPhotoNo;
-	}
+	private int uploadPhotoNo;
+	private int photoType;
+	private String OriginName;
+	private String remakeName;
+	private String photoRoute;
+	private Date photoUploadDate;
+	private String photoViewRoute;
 	public int getMemberEntireNo() {
 		return memberEntireNo;
 	}
-	public void setMemberEntireNo(int memberEntire) {
-		this.memberEntireNo = memberEntire;
+	public void setMemberEntireNo(int memberEntireNo) {
+		this.memberEntireNo = memberEntireNo;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -85,5 +81,54 @@ public class YNMMember {
 	public void setMemberRegDate(Date memberRegDate) {
 		this.memberRegDate = memberRegDate;
 	}
+	public int getMemberUploadPhotoNo() {
+		return memberUploadPhotoNo;
+	}
+	public void setMemberUploadPhotoNo(int memberUploadPhotoNo) {
+		this.memberUploadPhotoNo = memberUploadPhotoNo;
+	}
+	public int getUploadPhotoNo() {
+		return uploadPhotoNo;
+	}
+	public void setUploadPhotoNo(int uploadPhotoNo) {
+		this.uploadPhotoNo = uploadPhotoNo;
+	}
+	public int getPhotoType() {
+		return photoType;
+	}
+	public void setPhotoType(int photoType) {
+		this.photoType = photoType;
+	}
+	public String getOriginName() {
+		return OriginName;
+	}
+	public void setOriginName(String originName) {
+		OriginName = originName;
+	}
+	public String getRemakeName() {
+		return remakeName;
+	}
+	public void setRemakeName(String remakeName) {
+		this.remakeName = remakeName;
+	}
+	public String getPhotoRoute() {
+		return photoRoute;
+	}
+	public void setPhotoRoute(String photoRoute) {
+		this.photoRoute = photoRoute;
+	}
+	public Date getPhotoUploadDate() {
+		return photoUploadDate;
+	}
+	public void setPhotoUploadDate(Date photoUploadDate) {
+		this.photoUploadDate = photoUploadDate;
+	}
+	public String getPhotoViewRoute() {
+		return photoViewRoute;
+	}
+	public void setPhotoViewRoute(String photoViewRoute) {
+		this.photoViewRoute = photoViewRoute;
+	}
+	
 	
 }
