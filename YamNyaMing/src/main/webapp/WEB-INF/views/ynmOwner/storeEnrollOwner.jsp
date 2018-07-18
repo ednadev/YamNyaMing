@@ -18,9 +18,8 @@
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
-			<p>01 약관 동의 > 02 계정 정보 입력 > <span>03 음식점 정보 입력</span></p>
 		</nav>
-		<form action="joinusOwner.do" method="post">
+		<form action="storeJoinOwner.do" method="post">
 			<section id="owner-signUp-section">	
 				<h3>음식점 정보 입력</h3>	
 				<div class="signUp-table">

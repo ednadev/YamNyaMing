@@ -18,10 +18,10 @@
 	</header>
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">
-			<h2>입점 신청하기</h2>
-			<p>01 약관 동의 > <span>02 계정 정보 입력</span> > 03 음식점 정보 입력</p>
+			<h2>점장 가입하기</h2>
+			<p>01 약관 동의 > <span>02 정보 입력</span></p>
 		</nav>
-		<form action="signUpOwner2.do" method="post">
+		<form action="joinusOwner.do" method="post">
 			<section id="owner-signUp-section">
 				<h3>계정 정보 입력</h3>
 				<div class="signUp-table">
@@ -74,7 +74,7 @@
 					</div>
 				</div>																													
 			</section>
-			<input type="submit" value="다음">
+			<input type="submit" value="가입신청">
 		</form>
 	</div>
 	<footer id="owner-signUp-footer">

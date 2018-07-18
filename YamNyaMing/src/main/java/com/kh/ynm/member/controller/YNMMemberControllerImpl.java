@@ -255,24 +255,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/signUpMember";
 	}	
 	
-	//점장 : 입점신청 약관동의 페이지로 이동
-	@RequestMapping(value="/enrollOwner.do")
-	public String enrollOwner() {
-		return "ynmOwner/enrollOwner";
-	}
-	
-	//점장 : 입점신청 계정정보입력 페이지로 이동
-	@RequestMapping(value="/signUpOwner.do")
-	public String signUpOwner() {
-		return "ynmOwner/signUpOwner";
-	}
-	
-	//점장 : 입점신청 음식점정보입력 페이지로 이동
-	@RequestMapping(value="/signUpOwner2.do")
-	public String signUpOwner2() {
-		return "ynmOwner/signUpOwner2";
-	}
-	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
 	public String ynmAdmin() {
