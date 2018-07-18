@@ -54,7 +54,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	//로그인
 	@Override
-	@RequestMapping(value="/login.do")
+	@RequestMapping(value="/memberLogin.do")
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
 		YNMMember vo=new YNMMember();
 		vo.setMemberId(request.getParameter("memberId"));
@@ -169,7 +169,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	//회원 가입시 아이디 유효성 검사
 	@Override
 	@ResponseBody
-	@RequestMapping(value="/idCheck.do")
+	@RequestMapping(value="/memberIdCheck.do")
 	public String idCheck(HttpServletRequest request, HttpServletResponse response,Model model) {
 		String memberId=request.getParameter("memberId");
 		YNMMember ym=ynmMemberServiceImpl.idCheck(memberId);

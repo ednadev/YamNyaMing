@@ -34,30 +34,6 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	private YNMAdminServiceImpl ynmAdminServiceImpl;
 	
 
-	@Override
-	@RequestMapping(value="/ynmMemberTest.do")
-	public String testMemberQueryTest() {
-		return "ynmMember/ynmMemberTest";
-	}
-	
-	@Override
-	@RequestMapping(value="/login.do")
-	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String signUpMember(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String signOutMember(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	@RequestMapping(value="/enrollAdmin.do")
 	public String insertAdmin(HttpSession session,YNMAdmin vo) 
 	{
@@ -91,7 +67,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 
 	    
 	    @ResponseBody
-	    @RequestMapping(value="/idCheck.do")
+	    @RequestMapping(value="/adminIdCheck.do")
 	    public String adminIdCheck(HttpServletRequest request, HttpServletResponse response,YNMAdmin vo) {
 	        String ad_id = request.getParameter("ad_id");
 	        vo.setAd_id(ad_id); 
