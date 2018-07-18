@@ -6,5 +6,4 @@ import com.kh.ynm.member.model.vo.YNMAdmin;
 
 public interface YNMMemberDAO {
 	public int insertAdmin(YNMAdmin vo, SqlSessionTemplate sqlSession);
-	public int adminIdCheck(String id, SqlSessionTemplate sqlSession);
 }

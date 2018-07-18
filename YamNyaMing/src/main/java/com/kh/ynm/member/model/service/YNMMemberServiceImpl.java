@@ -1,5 +1,8 @@
 package com.kh.ynm.member.model.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.YNMAdmin;
+import com.kh.ynm.member.model.vo.YNMMember;
 
 @Service("ynmMemberService")
 public class YNMMemberServiceImpl implements YNMMemberService{
@@ -26,10 +30,25 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	}
 
 
-	public int adminIdCheck(String id) {
-		int result = memberDAO.adminIdCheck(id,sqlSession);
-		if(result>0){return result;}
-		else {return 0;}
+    public YNMAdmin adminIdCheck(YNMAdmin vo) {
+    	YNMAdmin yd = memberDAO.adminIdCheck(sqlSession,vo);
+        return yd;
+    }
+
+
+
+	public List<Object> allMemberView(YNMAdmin vo) {
+		List<Object> list = memberDAO.allMemberView(vo,sqlSession);
+		return list;
 	}
+
+
+
+
+
+
+
+
+
 
 }

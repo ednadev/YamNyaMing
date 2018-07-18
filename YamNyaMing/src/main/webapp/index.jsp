@@ -11,5 +11,6 @@
 	<a href="/ownerQuery.do">점주용 쿼리 테스트 페이지</a><br>
 	<a href="/adminQuery.do">관리자용 쿼리 테스트 페이지</a><br>
 	<a href="/enrollAdmin.do">관리자 가입</a><br>
+	<a href="/allMemberView.do">관리자 가입</a><br>
 </body>
 </html>

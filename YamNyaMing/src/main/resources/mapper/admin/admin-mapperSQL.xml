@@ -5,6 +5,12 @@
 <insert id="insertAdmin" parameterType="Admin">
 insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade})  
 </insert>
+
+
+<select id="adminIdCheck" parameterType="Admin" resultType="Admin">
+      SELECT ADMIN_NICKNAME as ad_nickname FROM admin_info_tb
+      WHERE ADMIN_ID = #{ad_id}
+</select>
 	
 	
 	
