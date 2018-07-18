@@ -16,9 +16,9 @@
 </header>
 <section id="admin-login-section">
 	<h2>로그인</h2>
-	<form action="mainAdmin.do" method="post">
-		<input type="text" placeholder="아이디">
-		<input type="password" placeholder="비밀번호">
+	<form action="/adminLogin2.do" method="post">
+		<input type="text" id="ad_id" placeholder="아이디">
+		<input type="password" id="ad_pw" placeholder="비밀번호">
 		<input type="submit" value="로그인">
 	</form>
 </section>

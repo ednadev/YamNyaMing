@@ -3,7 +3,7 @@
 Servers/
 
 .classpath
-
+.class
 .project
 
 .metadata
@@ -11,6 +11,11 @@ Servers/
 .recommenders
 
 YamNyaMing/build/
+YamNyaMing/.classpath
+YamNyaMing/.settings
+YamNyaMing/target/
+
+
 
 YamNyaMing/target/
 

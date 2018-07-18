@@ -2,4 +2,83 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 	
+<insert id="insertAdmin" parameterType="Admin">
+insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade})  
+</insert>
+
+
+<select id="adminIdCheck" parameterType="Admin" resultType="Admin">
+      SELECT ADMIN_NICKNAME as ad_nickname FROM admin_info_tb
+      WHERE ADMIN_ID = #{ad_id}
+</select>
+	
+<select id="allMemberView" parameterType="Member" resultType="Member">
+  SELECT 
+  mb_id as memberId,
+  mb_name as memberName,
+  mb_nickname as memberNickName,
+  mb_gender as memberGender,
+  mb_birth as memberBirth,
+  mb_email as memberEmail,
+  mb_phone as memberPhone,
+  mb_regDate as memberRegDate,
+  mb_avatar as memberAvatar
+  from member_entire_tb
+</select>
+
+<select id="allOwnerView" parameterType="Owner" resultType="Owner">
+  SELECT 
+  OW_ID as owId,
+  OW_NAME as owName,
+  OW_EMAIL as owEmail,
+  OW_PHONE as phone,
+  OW_REGDATE as owRegDate,
+  OW_BANK_ACCOUNT as owBankAccount
+  from OWNER_ENTIRE_TB
+</select>
+
+
+<select id="OwnerSearch" parameterType="Owner" resultType="Owner">
+SELECT  
+  OW_ID as owId,
+  OW_NAME as owName,
+  OW_EMAIL as owEmail,
+  OW_PHONE as phone,
+  OW_REGDATE as owRegDate,
+  OW_BANK_ACCOUNT as owBankAccount 
+  FROM OWNER_ENTIRE_TB
+  WHERE OW_NAME LIKE '%'||#search#||'%' 
+</select>
+
+<select id="MemberSearch" parameterType="Member" resultType="Member"> 
+  SELECT 
+  mb_id as memberId,
+  mb_name as memberName,
+  mb_nickname as memberNickName,
+  mb_gender as memberGender,
+  mb_birth as memberBirth,
+  mb_email as memberEmail,
+  mb_phone as memberPhone,
+  mb_regDate as memberRegDate,
+  mb_avatar as memberAvatar
+  from member_entire_tb
+  WHERE mb_name LIKE '%'||#search#||'%' 
+</select>
+
+
+<select id="adminLogin" parameterType="Admin" resultType="Admin">
+      SELECT 
+      ADMIN_INFO_PK as admin_info_pk,
+      ADMIN_ID as ad_id,
+      ADMIN_PASSWORD as ad_password,
+      ADMIN_NICKNAME as ad_nickname,
+      ADMIN_ACCESS_GRADE_FK as
+      from admin_info_tb 
+      where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
+</select>
+
+
+
+
+
 </mapper>
