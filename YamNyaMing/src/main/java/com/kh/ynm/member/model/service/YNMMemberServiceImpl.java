@@ -94,4 +94,15 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return ymc;
 	}
 
+	public int updateUploadPhoto(YNMMemberUploadPhoto ymup) {
+		int result=memberDAO.updateUploadPhoto(sqlSession,ymup);
+		return result;
+	}
+
+	public int updateMember(YNMMember ym) {
+		int result=memberDAO.updateMember(sqlSession,ym);
+		return result;
+	}
+
+
 }

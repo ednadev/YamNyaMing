@@ -207,24 +207,8 @@ function pwCheck(){
 </script>
 
 <body>
+	<!-- 회원가입 -->
 	<form action="/signUpMember.do" method="post" enctype="multipart/form-data">
-		<input type="text" id="memberId" name="memberId" placeholder="가입할 아이디 입력" onChange="idCheck();"/>
-
-		<span id="id_check">5~12자의 영문 소문자와 숫자만 사용 가능합니다.</span>
-		
-		<input type="text" id="memberPw" name="memberPw" placeholder="가입할 PW 입력" "/>
-		<span id="pw_check">영어 대소문자 ,특수문자 포함 하여야 합니다.</span>
-		
-		<input type="text" name="memberName" placeholder="가입할 name 입력"/>
-		
-		
-		<input type="text" id="memberNickName" name="memberNickName" placeholder="가입할 nickname 입력" onChange="nickCheck();"/>
-		<span id="nick_check">영어 대소문자 ,특수문자 포함 하여야 합니다.</span>
-		
-		<input type="text" name="memberGender" placeholder="가입할 gender 입력"/>
-		<input type="text" name="memberBirth" placeholder="가입할 birth 입력"/>
-		<input type="text" name="memberEmail" placeholder="가입할 email 입력"/>
-		<input type="text" name="memberPhone" placeholder="가입할 phone 입력"/>
 		
 		<a href="javascript:" onclick="avatarFilesUpload();">파일업로드</a>
 		<input type="file"  style="display:none;" id="input_avatarPhoto" name="avatarPhoto"/>

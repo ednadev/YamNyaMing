@@ -90,34 +90,42 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@RequestMapping(value="/signUpMember.do")
 	public String signUpMember(@RequestParam("avatarPhoto") MultipartFile file,HttpServletRequest request, HttpServletResponse response) {
-		YNMMember ym=new YNMMember();
-		ym.setMemberId(request.getParameter("memberId"));
-		ym.setMemberPw(request.getParameter("memberPw"));
-		ym.setMemberName(request.getParameter("memberName"));
-		ym.setMemberNickName(request.getParameter("memberNickName"));
-		ym.setMemberGender(request.getParameter("memberGender"));
-		//yyyy-mm-dd 형태로 받아야함
-		String memberBirth=request.getParameter("memberBirth"); 
-		java.sql.Date birth = java.sql.Date.valueOf(memberBirth);
-		ym.setMemberBirth(birth);
 		
-		ym.setMemberEmail(request.getParameter("memberEmail"));
-		ym.setMemberPhone(request.getParameter("memberPhone"));
-		
-		String OriginName=file.getOriginalFilename();
-		String remakeName=System.currentTimeMillis()+"_"+OriginName;
-		String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
-		String photoViewRoute="\\memberPhoto\\"+remakeName;
-		File f=new File(photoRoute);
-		try {
-			file.transferTo(f);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+			YNMMember ym=new YNMMember();
+			ym.setMemberId(request.getParameter("memberId"));
+			ym.setMemberPw(request.getParameter("memberPw"));
+			ym.setMemberName(request.getParameter("memberName"));
+			ym.setMemberNickName(request.getParameter("memberNickName"));
+			ym.setMemberGender(request.getParameter("memberGender"));
+			//yyyy-mm-dd 형태로 받아야함
+			String mbBirthYear=request.getParameter("mbBirthYear");
+			String mbBirthMonth=request.getParameter("mbBirthMonth");
+			String mbBirthDay=request.getParameter("mbBirthDay");
+			
+			String memberBirth=mbBirthYear+"-"+mbBirthMonth+"-"+mbBirthDay;
+			java.sql.Date birth = java.sql.Date.valueOf(memberBirth);
+			ym.setMemberBirth(birth);
+			
+			ym.setMemberEmail(request.getParameter("memberEmail"));
+			ym.setMemberPhone(request.getParameter("memberPhone"));
+			
+			
+			if(file.getSize()>0) {
+			String OriginName=file.getOriginalFilename();
+			String remakeName=System.currentTimeMillis()+"_"+OriginName;
+			String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
+			String photoViewRoute="\\memberPhoto\\"+remakeName;
+			File f=new File(photoRoute);
+			try {
+				file.transferTo(f);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		
 		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
@@ -133,8 +141,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		ym.setMemberUploadPhotoNo(ymupIndex.getUploadPhotoNo());
 		
-		ynmMemberServiceImpl.signUpMember(ym);
-		
+		int result2=ynmMemberServiceImpl.signUpMember(ym);
+		}
+		else {
+			int memberUploadPhotoNo=1;
+			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
+			
+			int result=ynmMemberServiceImpl.signUpMember(ym);
+		}
 		
 		return null;
 	}
@@ -183,6 +197,58 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		return null;
 	}
+	
+	//내정보 수정
+	@Override
+	@RequestMapping(value="/updateMember.do")
+	public String updateMember(@RequestParam("avatarPhoto") MultipartFile file,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		session=request.getSession(false);
+		
+		YNMMember ym=new YNMMember();
+		ym.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+		ym.setMemberNickName(request.getParameter("memberNickName"));
+		ym.setMemberEmail(request.getParameter("memberEmail"));
+		//이미지 등록 테이블 수정
+		if(file.getSize()>0) {
+			int uploadPhotoNo=((YNMMember)session.getAttribute("member")).getMemberUploadPhotoNo();
+			String OriginName=file.getOriginalFilename();
+			String remakeName=System.currentTimeMillis()+"_"+OriginName;
+			String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
+			String photoViewRoute="\\memberPhoto\\"+remakeName;
+			File f=new File(photoRoute);
+			try {
+				file.transferTo(f);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
+		ymup.setUploadPhotoNo(uploadPhotoNo);
+		ymup.setOriginName(OriginName);
+		ymup.setRemakeName(remakeName);
+		ymup.setPhotoRoute(photoRoute);
+		ymup.setPhotoViewRoute(photoViewRoute);
+		
+		int result=ynmMemberServiceImpl.updateUploadPhoto(ymup);
+		
+		int result2=ynmMemberServiceImpl.updateMember(ym);
+		}
+		else {
+			int memberUploadPhotoNo=1;
+			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
+			
+			int result=ynmMemberServiceImpl.updateMember(ym);
+		}
+		
+		return null;
+
+	}
+	
 	//회원 가입시 아이디 유효성 검사
 	@Override
 	@ResponseBody

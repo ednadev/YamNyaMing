@@ -25,9 +25,11 @@ public interface YNMMemberController {
 	public String signUpMember(MultipartFile file,HttpServletRequest request, HttpServletResponse response);// ȸ������
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response);// ȸ��Ż��
 	public Object memberInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public String updateMember(MultipartFile file, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response);
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
-	
+
 	
 	//예약 table
 	public String bookInsert(YNMBook yb);
@@ -36,6 +38,9 @@ public interface YNMMemberController {
 	//리뷰 table
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
+
+
+
 
 	
 
