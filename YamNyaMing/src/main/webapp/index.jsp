@@ -13,7 +13,7 @@
 <header id="member-main-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
 	<ul>
-        <li><a href="/login.do">로그인</a></li>
+        <li><a href="/loginMember.do">로그인</a></li>
         <li><a href="/enrollMember.do">회원가입</a></li>
     </ul>
     <h2>맛있는 가이드, <span>얌냐밍</span></h2>
@@ -45,7 +45,7 @@
 		<address>㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
 		주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing Co. All rights reserved</address>
 	</div>
-	<a href="/enrollOwner.do">얌냐밍 입점 신청하기</a>
+	<a href="/enrollOwner.do">점장 가입하기</a>
 </footer>
 </body>
 </html>

@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 *{margin:0;color:#fb0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
 
+html, body{
+	height:100%;
+}
+
 #member-main-header{
 	background-image: url('../image/main-header.jpg');
 	background-size:cover;
@@ -497,4 +501,26 @@
 		width:92%;
 		margin-bottom:5px;
 	}
+}
+
+
+/* 로그인 페이지 */
+#member-login-footer{
+	position:absolute;
+	bottom:0;
+	background-color:rgba(0,0,0,0.8);
+	width:100%;
+}
+#member-login-footer>div{
+	margin:10px;
+}
+#member-login-footer>div>h2,
+#member-login-footer>div>p{
+	color:white;
+}
+#member-login-footer>div>address{
+	color:white;
+	font-size:0.7em;
+	font-style:normal;
+	margin-top:15px;
 }

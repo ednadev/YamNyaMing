@@ -52,6 +52,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/ynmMemberTest";
 	}
 	
+	//사용자 : 로그인 페이지로 이동
+	@RequestMapping(value="/loginMember.do")
+	public String loginMember() {
+		return "ynmMember/loginMember";
+	}
+	
 	//로그인
 	@Override
 	@RequestMapping(value="/memberLogin.do")
@@ -69,6 +75,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
+	
+	//사용자 : 회원가입 페이지로 이동
+	@Override
+	@RequestMapping(value="/enrollMember.do")
+	public String enrollMember() {
+		return "ynmMember/signUpMember";
+	}	
 	
 	//회원 가입
 	@Override
@@ -248,30 +261,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 
 
-	//사용자 : 회원가입 페이지로 이동
-	@Override
-	@RequestMapping(value="/enrollMember.do")
-	public String enrollMember() {
-		return "ynmMember/signUpMember";
-	}	
 	
-	//점장 : 입점신청 약관동의 페이지로 이동
-	@RequestMapping(value="/enrollOwner.do")
-	public String enrollOwner() {
-		return "ynmOwner/enrollOwner";
-	}
-	
-	//점장 : 입점신청 계정정보입력 페이지로 이동
-	@RequestMapping(value="/signUpOwner.do")
-	public String signUpOwner() {
-		return "ynmOwner/signUpOwner";
-	}
-	
-	//점장 : 입점신청 음식점정보입력 페이지로 이동
-	@RequestMapping(value="/signUpOwner2.do")
-	public String signUpOwner2() {
-		return "ynmOwner/signUpOwner2";
-	}
 	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
