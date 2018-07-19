@@ -12,7 +12,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/ownerTest.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerTest.js?ver=1"></script>
 </head>
 <body>
     <h2>점주 회원가입</h2>

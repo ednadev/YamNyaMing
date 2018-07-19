@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/prettydropdowns?ver=1">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
@@ -29,7 +29,7 @@
 				<div class="signUp-table">
 					<div>아이디</div>
 					<div>
-                        <input type="text" name="owId" placeholder="아이디" onchange="ownerIdChk();">
+                        <input type="text" name="owId" placeholder="아이디" onchange="ownerIdChk();" onkeydown="ownerIdChk();">
                         <p id="owIdResult">아이디를 입력해주세요. 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</p>
 					</div>
 				</div>

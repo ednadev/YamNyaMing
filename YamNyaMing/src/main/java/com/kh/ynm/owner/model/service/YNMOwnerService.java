@@ -1,6 +1,7 @@
 package com.kh.ynm.owner.model.service;
 
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 public interface YNMOwnerService {
 	// 회원가입
@@ -11,4 +12,7 @@ public interface YNMOwnerService {
 		
 	// 아이디 체크
 	public YNMOwner selectOneOwner(String ownerId);
+	
+	// 가게 추가
+	public int ynmStoreAdd(YNMStoreInfo storeInfo);
 }

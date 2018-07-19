@@ -35,12 +35,6 @@ public class CommonControllerImpl implements CommonController {
 //		create(email);
 //		return "confirm";
 //	}
-//
-//	@Override
-//	public String emailChk(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 //	
 //	@Inject
 //	private JavaMailSender mailSender;
@@ -51,7 +45,7 @@ public class CommonControllerImpl implements CommonController {
 //		String key = new TempKey().getKey(50, false); // 인증키 생성
 //		authReturn = key;
 //		MailHandler sendMail = new MailHandler(mailSender);
-//		sendMail.setSubject("[ALMOM 서비스 이메일 인증]");
+//		sendMail.setSubject("[얌냐밍 서비스 이메일 인증]");
 //		sendMail.setText(
 //				new StringBuffer().append("<h1>메일인증</h1>").append(
 //						"<a href='http://localhost/user/emailConfirm?user_email=").append(mailSender).

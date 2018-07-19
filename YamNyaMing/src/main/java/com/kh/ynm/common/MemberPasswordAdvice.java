@@ -26,11 +26,11 @@ public class MemberPasswordAdvice {
 	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.memberInfo(..))")
 	public void myInfo() {}
 	
-	@Pointcut("execution(* com.kh.ynm.admin.model.service.*ServiceImpl.ynmOwnerSignUp(..))")
+	@Pointcut("execution(* com.kh.ynm.owner.model.service.*ServiceImpl.ynmOwnerSignUp(..))")
 	public void ownerSignUp() {}
 	
-	@Pointcut("execution(* com.kh.ynm.admin.model.service.*ServiceImpl.selectOneOwner(..))")
-	public void ownerLogin() {}
+	@Pointcut("execution(* com.kh.ynm.owner.model.service.*ServiceImpl.selectOneOwner(..))")
+	public void selectOneOwner() {}
 
 	
 	
@@ -70,11 +70,12 @@ public class MemberPasswordAdvice {
 		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
 		String ownerPw=yo.getOwPw();
 		String encryPw=SHA256Util.encryData(ownerPw);
+		System.out.println("암호화");
 		yo.setOwPw(encryPw);
 	}
 	
-	@Before("ownerLogin()")
-	public void ownerLogin(JoinPoint jp)throws Exception{
+	@Before("selectOneOwner()")
+	public void selectOneOwner(JoinPoint jp)throws Exception{
 		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
 		String ownerPw=yo.getOwPw();
 		String encryPw=SHA256Util.encryData(ownerPw);

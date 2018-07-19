@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.owner.model.dao.YNMOwnerDAOImpl;
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmOwnerService")
 public class YNMOwnerServiceImpl implements YNMOwnerService{
@@ -32,5 +33,11 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	public YNMOwner selectOneOwner(String ownerId) {
 		YNMOwner owner = ynmOwnerDAO.selectOneOwner(sqlSession, ownerId);
 		return owner;
+	}
+
+	@Override
+	public int ynmStoreAdd(YNMStoreInfo storeInfo) {
+		int result =  ynmOwnerDAO.ynmStoreAdd(sqlSession, storeInfo);
+		return result;
 	}
 }

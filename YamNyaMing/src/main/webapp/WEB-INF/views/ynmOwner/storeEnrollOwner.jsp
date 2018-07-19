@@ -7,9 +7,12 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+
 </head>
 <body>
 	<header id="owner-signUp-header">
@@ -19,28 +22,47 @@
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
 		</nav>
-		<form action="/storeJoinOwner.do" method="post">
+		<form action="/ownerAddStore.do" method="post">
 			<section id="owner-signUp-section">	
 				<h3>음식점 정보 입력</h3>	
 				<div class="signUp-table">
 					<div>사업자 등록번호</div>
 					<div>
-						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호">
-						<p>사업자 등록번호를 입력해주세요.</p>
+						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호" onkeydown="owStoreBizCheck();" onchange="owStoreBizCheck();">
+						<p id="owStoreBizNumResult">사업자 등록번호를 입력해주세요.</p>
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>상호명</div>
 					<div>
-						<input type="text" name="owStoreName" placeholder="상호명">
-						<p>상호명을 입력해주세요.</p>
+						<input type="text" name="owStoreName" placeholder="상호명" onkeydown="owStoreNameCheck();" onchange="owStoreNameCheck();">
+						<p id="owStoreNameResult">상호명을 입력해주세요.</p>
 					</div>
 				</div>
 				<div class="signUp-table">
 					<div>전화번호</div>
 					<div>
-						<input type="tel" name="owTel" placeholder="전화번호">
-						<p>연락 가능한 전화번호를 입력해주세요.</p>
+						<select name="regionTel" onchange="telCheck();">
+						    <option value="02">02</option>
+						    <option value="051">051</option>
+						    <option value="053">053</option>
+						    <option value="032">032</option>
+						    <option value="062">062</option>
+						    <option value="042">042</option>
+						    <option value="052">052</option>
+						    <option value="044">044</option>
+						    <option value="031">031</option>
+						    <option value="033">033</option>
+						    <option value="041">041</option>
+						    <option value="043">043</option>
+						    <option value="061">061</option>
+						    <option value="063">063</option>
+						    <option value="054">054</option>
+						    <option value="055">055</option>
+						    <option value="064">064</option>
+						</select>
+						<input type="tel" name="owTel" placeholder="전화번호" onkeydown="telCheck();" onchange="telCheck();">
+						<p id="owStoreTel">연락 가능한 전화번호를 입력해주세요.</p>
 					</div>
 				</div>
 				<div class="signUp-table">
@@ -70,9 +92,12 @@
 				</div>
 				<div class="signUp-table">
 					<div>주소</div>
-					<div>
-						<input type="text" name="owStoreMapinfo" placeholder="주소">
-						<p>주소를 입력해주세요.</p>
+					<div>					
+					<input type="text" id="storePostCode" placeholder="우편번호" onfocus="storeAddress();">
+					<input type="text" id="storeRoadAddr" placeholder="도로명주소">
+					<input type="text" id="storeJibunAddr" placeholder="지번주소">
+					<span id="guide" style="color:#999"></span>
+					<p id="addressOwner">주소를 입력해주세요.</p>
 					</div>
 				</div>
 				<div class="signUp-table">
@@ -106,7 +131,7 @@
 						<input type="text" name="owStoreTip" class="keywordStyle">
 						<input type="text" name="owStoreTip" class="keywordStyle">
 						<input type="text" name="owStoreTip" class="keywordStyle">
-						<p>업체를 대표하는 메뉴명, 서비스명, 상품명 등을 입력하세요. (최대 5개까지 가능)</p>
+						<p id="tipResult">업체를 대표하는 메뉴명, 서비스명, 상품명 등을 입력하세요. (최대 5개까지 가능)</p>
 					</div>
 				</div>	
 				<div class="signUp-table">

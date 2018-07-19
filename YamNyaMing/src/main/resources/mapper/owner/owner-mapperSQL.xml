@@ -20,4 +20,10 @@
 		 where ow_id=#{owId} and ow_pw=#{owPw} 
 	 
 	 </select> 
+	 
+	 <insert id="storeAdd" parameterType="storeInfo">
+	 	 insert into owner_store_info_tb valus(owner_store_info_tb_SEQ.nextval,
+	 	 #{owEntireFk}, #{owStoreBizNum}, #{owStoreNum}, #{owStoreTel}, #{owStorePhone}, 
+	 	 #{owStoreBigTypeFk}, #{owStoreDetailTypeFk}, #{owStoreUrl}, sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
+	 </insert>
 </mapper>

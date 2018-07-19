@@ -11,10 +11,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailHandler {
 
-//    private JavaMailSender mailSender;
-//    private MimeMessage message;
-//    private MimeMessageHelper messageHelper;
-//
+    private JavaMailSender mailSender;
+    private MimeMessage message;
+    private MimeMessageHelper messageHelper;
+
 //    public MailHandler(JavaMailSender mailSender) throws MessagingException {
 //        this.mailSender = mailSender;
 //        message = this.mailSender.createMimeMessage();

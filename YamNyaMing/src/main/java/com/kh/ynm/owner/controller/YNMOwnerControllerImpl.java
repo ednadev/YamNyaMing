@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
 public class YNMOwnerControllerImpl implements YNMOwnerController{
@@ -60,8 +61,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 
 	@Override
 	@RequestMapping(value="/ownerAddStore.do")
-	public String addStore(HttpSession session) {
-		// TODO Auto-generated method stub
+	public String addStore(HttpSession session, YNMStoreInfo storeInfo) {
+		if(session.getAttribute("owner")!=null) {
+			int result = ynmOwnerServiceImpl.ynmStoreAdd(storeInfo);
+			
+			return null;
+		}
 		return null;
 	}
 
@@ -91,7 +96,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		{
 			session.removeAttribute("owner");
 		}
-		return "ynmOwner/ynmOwnerTest.do";
+		return "redirect:/";
 	}
 	
 

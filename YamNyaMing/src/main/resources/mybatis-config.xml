@@ -9,5 +9,6 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreReview" alias="reviews"/>
 		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
 	</typeAliases>
 </configuration>

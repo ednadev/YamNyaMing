@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 public interface YNMOwnerController {
 	
@@ -25,8 +26,9 @@ public interface YNMOwnerController {
 	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response, HttpSession session);
 	
 	// 가게 추가
-	public String addStore(HttpSession session );
+	public String addStore(HttpSession session, YNMStoreInfo storeInfo );
 	
 	// 로그아웃
 	public String ynmOwnerLogout(HttpSession session);
+	
 }
