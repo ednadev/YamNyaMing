@@ -12,6 +12,7 @@ import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 
@@ -76,6 +77,21 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int storeReviewInsert(YNMStoreReview ysr) {
 		int result=memberDAO.storeReviewInsert(sqlSession,ysr);
 		return result;
+	}
+
+	public int reviewUploadPhoto(YNMMemberUploadPhoto ymup) {
+		int result=memberDAO.reviewUploadPhoto(sqlSession,ymup);
+		return result;
+	}
+
+	public YNMMemberUploadPhoto reviewIndexSelect(String remakeName) {
+		YNMMemberUploadPhoto ymup=memberDAO.reviewIndexSelect(sqlSession,remakeName);
+		return ymup;
+	}
+
+	public YNMMemberCheck memberInfo(YNMMemberCheck vo) {
+		YNMMemberCheck ymc=memberDAO.memberInfo(sqlSession,vo);
+		return ymc;
 	}
 
 }

@@ -134,10 +134,14 @@ function pwCheck(){
 	
 	var sel_file;
 	$(document).ready(function(){
-		$("#input_avatar").on("change",avatarSelect);
+		$("#input_avatarPhoto").on("change",avatarPhotoSelect);
 	});
 	
-	function avatarSelect(e){
+	function avatarFilesUpload(){
+		$("#input_avatarPhoto").trigger('click');
+	}
+	
+	function avatarPhotoSelect(e){
 		var files=e.target.files;
 		var filesArr=Array.prototype.slice.call(files);
 		
@@ -154,6 +158,51 @@ function pwCheck(){
 			reader.readAsDataURL(f);
 		});
 	}
+	
+	var sel_files=[];
+	$(document).ready(function(){
+		$("#input_reviewPhoto").on("change",reviewPhotoSelect);
+	});
+	
+	function reviewFilesUpload(){
+		$("#input_reviewPhoto").trigger('click');
+	}
+	
+	function reviewPhotoSelect(e){
+		sel_files=[];
+		
+		
+		$(".imgs_wrap").empty();
+		
+		var files=e.target.files;
+		var filesArr=Array.prototype.slice.call(files);
+		
+		var index=0;
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+			sel_files.push(f);
+			
+			var reader=new FileReader();
+			reader.onload=function(e){
+				var html="<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\""+e.target.result+"\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+				$(".imgs_wrap").append(html);
+				index++;
+			}
+			reader.readAsDataURL(f);
+		});
+		
+	}
+	function deleteImageAction(index){
+		sel_files.splice(index,1);
+		var img_id="#img_id_"+index;
+		$(img_id).remove();
+		
+	}
+
+	
 	
 </script>
 
@@ -177,7 +226,8 @@ function pwCheck(){
 		<input type="text" name="memberEmail" placeholder="가입할 email 입력"/>
 		<input type="text" name="memberPhone" placeholder="가입할 phone 입력"/>
 		
-		<input type="file" id="input_avatar" name="avatar"/>
+		<a href="javascript:" onclick="avatarFilesUpload();">파일업로드</a>
+		<input type="file"  style="display:none;" id="input_avatarPhoto" name="avatarPhoto"/>
 		<div>
 			<div class="img_wrap">
 				<img id="img" />
@@ -194,6 +244,10 @@ function pwCheck(){
 	<input type="text" name="memberId" placeholder="아이디 입력"/>
 		<input type="text" name="memberPw" placeholder="PW 입력"/>
 	<input type="submit" value="로그인">
+	</form>
+	
+	<form action="/logout.do">
+		<input type="submit" value="로그아웃">
 	</form>
 	
 	<hr>
@@ -230,14 +284,21 @@ function pwCheck(){
  	<input type="submit" value="보기">
 	</form>
 	<hr>
-	<form action="storeReviewInsert.do">
-		<input type="text" name="ownerStoreEntireNo">
-		<input type="text" name="reviewTitle">
-		<input type="text" name="reviewContent">
-		<input type="text" name="reviewStar">
-		<input type="text" name="reviewImgList">
-		<input type="submit" value="댓글 등록">
-	</form>
+		<form id="fileForm" action="/storeReviewInsert.do" enctype="multipart/form-data" method="post">
+		<input type="text" id="ownerStoreEntireNo" name="ownerStoreEntireNo">
+		<input type="text" id="reviewTitle" name="reviewTitle">
+		<input type="text" id="reviewContent" name="reviewContent">
+		<input type="text" id="reviewStar" name="reviewStar">
+			
+			<a href="javascript:" onclick="reviewFilesUpload();">파일업로드</a>
+			<input type="file" style="display:none;" id="input_reviewPhoto" name="reviewImgList" multiple/>
+		<div>
+			<div class="imgs_wrap">
+				<img id="img" />
+			</div>
+		</div>
+		<input type="submit" value="댓글등록">
+		</form>
 	
 </body>
 </html>
