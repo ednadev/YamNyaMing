@@ -23,6 +23,7 @@ span{
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script type="text/javascript" src="httpRequest.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<% boolean allcheck = false;%>
 <script type="text/javascript">  //아이디 체크여부 확인 
 function idCheck(){
     var regExp;
@@ -36,7 +37,7 @@ function idCheck(){
         document.getElementById('subbtn').disabled;
     }else{
         $.ajax({
-             url : "/idCheck.do",
+             url : "/adminIdCheck.do",
              data : {ad_id : ad_id},
              dataType:'json',
              success : function(data){
@@ -88,6 +89,12 @@ function idCheck(){
   document.getElementById('checkPwd').innerHTML = "영문,숫자,특수문자 합쳐서 ";
   return false;
   }
+  
+  
+  
+  
+  
+  
 
   else
   {
@@ -96,10 +103,14 @@ function idCheck(){
    return true;
   } 
  }
+ 
+ function allcheck(){
+	 var check = allcheck;
+ }
 </script>
 </head>
 <body>
-<form name="search" onsubmit="return check()" action="/enrollAdmin2.do" method="post">
+<form name="search" onsubmit="return allcheck()" action="/enrollAdmin2.do" method="post">
 <div>
   <h4>관리자 가입</h4>
 </div>
@@ -108,7 +119,7 @@ function idCheck(){
      <td align="center"><span>아이디</span></td>
      <td>
         <input type="text" name="ad_id" id="ad_id" required/>
-        <input type="button" name="idck" id="idck" value="췍" onclick="idCheck()"/>  
+        <input type="button" name="idck" id="idck" value="췍" onclick="return idCheck()"/>  
         <div id="idch">아이디를 입력하세요.</div>
           <input type="hidden" value="0" name="use"/>
      </td>
