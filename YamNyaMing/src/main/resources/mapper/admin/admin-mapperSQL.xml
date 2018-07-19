@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 	
-<insert id="insertAdmin" parameterType="Admin">
+<insert id="insertAdmin" parameterType="admin">
 insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade})  
 </insert>
 
 
-<select id="adminIdCheck" parameterType="Admin" resultType="Admin">
+<select id="adminIdCheck" parameterType="admin" resultType="admin">
       SELECT ADMIN_NICKNAME as ad_nickname FROM admin_info_tb
       WHERE ADMIN_ID = #{ad_id}
 </select>
 	
-<select id="allMemberView" parameterType="Member" resultType="Member">
+<select id="allMemberView" parameterType="member" resultType="member">
   SELECT 
   mb_id as memberId,
   mb_name as memberName,
@@ -26,7 +26,7 @@ insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_passwo
   from member_entire_tb
 </select>
 
-<select id="allOwnerView" parameterType="Owner" resultType="Owner">
+<select id="allOwnerView" parameterType="owner" resultType="owner">
   SELECT 
   OW_ID as owId,
   OW_NAME as owName,
@@ -38,7 +38,7 @@ insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_passwo
 </select>
 
 
-<select id="OwnerSearch" parameterType="Owner" resultType="Owner">
+<select id="OwnerSearch" parameterType="owner" resultType="owner">
 SELECT  
   OW_ID as owId,
   OW_NAME as owName,
@@ -50,7 +50,7 @@ SELECT
   WHERE OW_NAME LIKE '%'||#search#||'%' 
 </select>
 
-<select id="MemberSearch" parameterType="Member" resultType="Member"> 
+<select id="MemberSearch" parameterType="member" resultType="member"> 
   SELECT 
   mb_id as memberId,
   mb_name as memberName,
@@ -66,7 +66,7 @@ SELECT
 </select>
 
 
-<select id="adminLogin" parameterType="Admin" resultType="Admin">
+<select id="adminLogin" parameterType="admin" resultType="admin">
       SELECT 
       ADMIN_INFO_PK as admin_info_pk,
       ADMIN_ID as ad_id,

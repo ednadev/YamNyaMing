@@ -61,7 +61,7 @@
 			(읽기 전용은 트랜잭션 처리가 필요 없는 메소드를 말함 ex.로그인 등..)
 		 -->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.kh.ynm.member.model.service.YNMMemberServiceImpl.*(..))"
+		<aop:pointcut expression="execution(* com.kh.ynm.member.model.service.*ServiceImpl.*(..))"
 		 id="tranPointcut"/>
 		 <aop:advisor advice-ref="txAdvice" pointcut-ref="tranPointcut"/>
 	</aop:config>
