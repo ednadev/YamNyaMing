@@ -39,11 +39,11 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(resultOwner!=null)
 		{
 			session.setAttribute("owner", resultOwner);
-			return "ynmOwner/ynmOwnerTest.do";
+			return "redirect:/";
 		}
 		else
-		{
-			return "ynmOwner/ynmOwnerTest.do";
+		{// 로그인 실패.
+			return "ynmOwner/ynmOwnerError/ownerLoginFail";
 		}
 		
 	}

@@ -9,7 +9,7 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner.css?ver=1">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
 </head>
 <body>
 	<header id="owner-signUp-header">

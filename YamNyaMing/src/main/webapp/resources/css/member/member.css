@@ -7,7 +7,7 @@ html, body{
 }
 
 #member-main-header{
-	background-image: url('../image/main-header.jpg');
+	background-image: url('../../image/main-header.jpg');
 	background-size:cover;
     background-position:center;
 	height:600px;
@@ -113,40 +113,40 @@ html, body{
 	padding:20px 47px;
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1){
-	background-image:url('../image/hansik.jpg');
+	background-image:url('../../image/hansik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1):hover{
-	background-image:url('../image/hansik-hover.jpg');
+	background-image:url('../../image/hansik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2){
-	background-image:url('../image/yangsik.jpg');
+	background-image:url('../../image/yangsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2):hover{
-	background-image:url('../image/yangsik-hover.jpg');
+	background-image:url('../../image/yangsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3){
-	background-image:url('../image/ilsik.jpg');
+	background-image:url('../../image/ilsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3):hover{
-	background-image:url('../image/ilsik-hover.jpg');
+	background-image:url('../../image/ilsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4){
-	background-image:url('../image/jungsik.jpg');
+	background-image:url('../../image/jungsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4):hover{
-	background-image:url('../image/jungsik-hover.jpg');
+	background-image:url('../../image/jungsik-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1){
-	background-image:url('../image/cafe.jpg');
+	background-image:url('../../image/cafe.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1):hover{
-	background-image:url('../image/cafe-hover.jpg');
+	background-image:url('../../image/cafe-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2){
-	background-image:url('../image/backery.jpg');
+	background-image:url('../../image/backery.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
-	background-image:url('../image/backery-hover.jpg');
+	background-image:url('../../image/backery-hover.jpg');
 }
 #member-main-footer{
 	background-color:rgba(0,0,0,0.8);
@@ -327,7 +327,7 @@ html, body{
 	width:20%;
 }
 #profile-img{
-	background-image:url('../image/profile.png');
+	background-image:url('../../image/profile.png');
 	width:110px;
 	height:110px;
 	background-color:#555;

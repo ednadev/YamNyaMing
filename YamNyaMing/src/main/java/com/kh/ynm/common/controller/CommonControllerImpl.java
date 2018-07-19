@@ -22,6 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CommonControllerImpl implements CommonController {
 	private static String authReturn = "";
 
+	@Override
+	public String emailChk(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 //	@RequestMapping(value = "/emailConCheck.do", method = RequestMethod.POST)
 //	public String RegisterPost(RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
 //		rttr.addFlashAttribute("authmsg" , "가입시 사용한 이메일로 인증해줌");

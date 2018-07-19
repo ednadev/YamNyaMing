@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
+import com.kh.ynm.owner.model.vo.YNMOwner;
 
 @Service
 @Aspect
@@ -24,6 +25,13 @@ public class MemberPasswordAdvice {
 	
 	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.memberInfo(..))")
 	public void myInfo() {}
+	
+	@Pointcut("execution(* com.kh.ynm.admin.model.service.*ServiceImpl.ynmOwnerSignUp(..))")
+	public void ownerSignUp() {}
+	
+	@Pointcut("execution(* com.kh.ynm.admin.model.service.*ServiceImpl.selectOneOwner(..))")
+	public void ownerLogin() {}
+
 	
 	
 	@Before("login()")
@@ -55,6 +63,22 @@ public class MemberPasswordAdvice {
 		String userPw=ymc.getMemberPw();
 		String encryPw=SHA256Util.encryData(userPw);
 		ymc.setMemberPw(encryPw);
+	}
+	
+	@Before("ownerSignUp()")
+	public void ownerSignUp(JoinPoint jp)throws Exception{
+		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
+		String ownerPw=yo.getOwPw();
+		String encryPw=SHA256Util.encryData(ownerPw);
+		yo.setOwPw(encryPw);
+	}
+	
+	@Before("ownerLogin()")
+	public void ownerLogin(JoinPoint jp)throws Exception{
+		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
+		String ownerPw=yo.getOwPw();
+		String encryPw=SHA256Util.encryData(ownerPw);
+		yo.setOwPw(encryPw);
 	}
 	
 	

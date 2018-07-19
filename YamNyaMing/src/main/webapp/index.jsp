@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 </head>
 <body>
 <header id="member-main-header">
@@ -48,6 +48,11 @@
 	</div>
 	<c:if test="${sessionScope.owner==null}" var="result">
 		<a href="/enrollOwner.do">점장 가입하기</a>
+		<form action="/ownerLogin.do" method="post">
+			<input type="text" name="owId" placeholder="점주 아이디 입력"/>
+			<input type="password" name="owPw" placeholder="비밀번호 입력"/>
+			<input type="submit" value="로그인"/>
+		</form>
 	</c:if>
 	<c:if test="${sessionScope.owner!=null}" var="result">
 		<a href="/storeEnrollOwner.do">얌냐밍 입점 신청하기</a>

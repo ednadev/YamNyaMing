@@ -10,7 +10,7 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	@RequestMapping(value="/ynmOwnerTest.do")
 	public String ynmOwnerTest() {
 		return "ynmOwner/ynmOwnerTest";
-	}
+	}	
 	
 	//점장 : 입점신청 약관동의 페이지로 이동
 	@RequestMapping(value="/enrollOwner.do")
