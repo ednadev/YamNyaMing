@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,12 @@
 		<address>㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
 		주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing Co. All rights reserved</address>
 	</div>
-	<a href="/enrollOwner.do">점장 가입하기</a>
+	<c:if test="${sessionScope.owner==null}" var="result">
+		<a href="/enrollOwner.do">점장 가입하기</a>
+	</c:if>
+	<c:if test="${sessionScope.owner!=null}" var="result">
+		<a href="/storeEnrollOwner.do">얌냐밍 입점 신청하기</a>
+	</c:if>
 </footer>
 </body>
 </html>

@@ -19,7 +19,7 @@
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
 		</nav>
-		<form action="storeJoinOwner.do" method="post">
+		<form action="/storeJoinOwner.do" method="post">
 			<section id="owner-signUp-section">	
 				<h3>음식점 정보 입력</h3>	
 				<div class="signUp-table">
