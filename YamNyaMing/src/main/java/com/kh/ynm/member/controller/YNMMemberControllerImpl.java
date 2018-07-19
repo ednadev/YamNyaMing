@@ -260,6 +260,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 	
 
+	// 음식점 검색
+	@RequestMapping(value="/search.do")
+	public String search() {
+		return "ynmMember/search";
+	}
+	
+	
 
 	
 	
