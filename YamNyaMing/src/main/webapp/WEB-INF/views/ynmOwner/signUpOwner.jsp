@@ -58,7 +58,7 @@
 					<div>이메일</div>
 					<div>
                         <input type="email" name="owEmail" placeholder="이메일" onkeydown="ownerEmailChk();" onchange="ownerEmailChk();">
-						<p>이메일을 입력해주세요.</p>
+						<p id="ownerEmailChk">이메일을 입력해주세요.</p>
 					</div>
 				</div>
 				<div class="signUp-table">

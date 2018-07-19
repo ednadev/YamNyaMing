@@ -190,14 +190,14 @@ function ownerEmailChk()
 	}	
 	
 	if(rightFormChk){
-		emailCheckResult.html("이메일 인증 대기상태<button onclick='emailConfirm();'>인증 메일 보내기<button>");
+		emailCheckResult.html("이메일 인증 대기상태<button type='button' onclick='emailConfirm();'>인증 메일 보내기<button>");
 	}
 	resultStyleChk(emailCheckResult,rightFormChk);
 }
 
 function emailConfirm()
 {
-	var insertEmail  = $("input[name=owEmail]").val(); // 이름 입력 결과
+	var insertEmail  = $("input[name=owEmail]").val(); // 이메일 입력 결과
 	$.ajax({
 		url:"/emailConCheck.do",
 		data : {

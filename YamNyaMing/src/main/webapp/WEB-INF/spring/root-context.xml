@@ -65,4 +65,20 @@
 		 id="tranPointcut"/>
 		 <aop:advisor advice-ref="txAdvice" pointcut-ref="tranPointcut"/>
 	</aop:config>
+	
+   <bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="ynm.manager@gmail.com" />
+      <property name="password" value="ynm1q2w3e4r%T" />
+      <property name="javaMailProperties">
+         <props>
+               <prop key="mail.transport.protocol">smtp</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+ 
+   </bean>
 </beans>
