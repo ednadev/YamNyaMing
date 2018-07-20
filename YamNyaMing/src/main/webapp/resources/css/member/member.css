@@ -3,7 +3,7 @@
 *{margin:0;color:#fb0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
 
 #member-main-header{
-	background-image: url('../image/memberMain/main-header.jpg');
+	background-image: url('../../image/memberMain/main-header.jpg');
 	background-size:cover;
     background-position:center;
 	height:600px;
@@ -109,40 +109,40 @@
 	padding:20px 47px;
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1){
-	background-image:url('../image/memberMain/hansik.jpg');
+	background-image:url('../../image/memberMain/hansik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1):hover{
-	background-image:url('../image/memberMain/hansik-hover.jpg');
+	background-image:url('../../image/memberMain/hansik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2){
-	background-image:url('../image/memberMain/yangsik.jpg');
+	background-image:url('../../image/memberMain/yangsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2):hover{
-	background-image:url('../image/memberMain/yangsik-hover.jpg');
+	background-image:url('../../image/memberMain/yangsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3){
-	background-image:url('../image/memberMain/ilsik.jpg');
+	background-image:url('../../image/memberMain/ilsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3):hover{
-	background-image:url('../image/memberMain/ilsik-hover.jpg');
+	background-image:url('../../image/memberMain/ilsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4){
-	background-image:url('../image/memberMain/jungsik.jpg');
+	background-image:url('../../image/memberMain/jungsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4):hover{
-	background-image:url('../image/memberMain/jungsik-hover.jpg');
+	background-image:url('../../image/memberMain/jungsik-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1){
-	background-image:url('../image/memberMain/cafe.jpg');
+	background-image:url('../../image/memberMain/cafe.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1):hover{
-	background-image:url('../image/memberMain/cafe-hover.jpg');
+	background-image:url('../../image/memberMain/cafe-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2){
-	background-image:url('../image/memberMain/backery.jpg');
+	background-image:url('../../image/memberMain/backery.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
-	background-image:url('../image/memberMain/backery-hover.jpg');
+	background-image:url('../../image/memberMain/backery-hover.jpg');
 }
 #member-main-footer{
 	background-color:rgba(0,0,0,0.8);
@@ -325,7 +325,7 @@
 	width:20%;
 }
 #profile-img{
-	background-image:url('../image/profile.png');
+	background-image:url('../../image/profile.png');
 	width:110px;
 	height:110px;
 	background-color:#555;
