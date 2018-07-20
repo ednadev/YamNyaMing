@@ -453,13 +453,19 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-
+	
+	
 	// 음식점 검색
 	@RequestMapping(value="/search.do")
-	public String search() {
+	public String search(HttpSession session, HttpServletRequest request) {
+		String keyword = request.getParameter("keyword");
+		String food = request.getParameter("food");
+		String place = request.getParameter("place");
+		session.setAttribute("keyword",keyword);
+		session.setAttribute("food", food);
+		session.setAttribute("place", place);
 		return "ynmMember/search";
 	}
-	
 	
 
 
