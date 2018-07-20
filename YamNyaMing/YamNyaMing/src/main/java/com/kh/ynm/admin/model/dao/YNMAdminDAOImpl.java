@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.admin.model.vo.AdminStatistics;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -46,21 +48,24 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 
 	public ArrayList<YNMMember> MemberSearch(SqlSessionTemplate sqlSession,String combo,String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("Member map넣기전:"+combo);
-		System.out.println("Member map넣기전:"+keyword);
 		map.put("combo", combo);
 		map.put("keyword", keyword);
-		System.out.println("Member map 넣은후:"+map.get(combo));
-		System.out.println("Member map 넣은후"+map.get(keyword));
 		List list = sqlSession.selectList("Admin.MemberSearch",map);
 		return (ArrayList<YNMMember>) list;
 	}
 
 	public YNMAdmin adminLogin(SqlSessionTemplate sqlSession, YNMAdmin vo) {
-		System.out.println(vo.getAd_id());
-		System.out.println(vo.getAd_password());
 		return sqlSession.selectOne("Admin.adminLogin",vo);
 	}
 
+	public int ownerBlock(YNMOwner vo, SqlSessionTemplate sqlSession) {
+		System.out.println(vo.getOwId());
+		return sqlSession.update("Admin.ownerBlock",vo);
+	}
+	
 
+	public ArrayList<AdminStatistics> statAdmin(SqlSessionTemplate sqlSession, AdminStatistics vo) {
+		List list = sqlSession.selectList("Admin.statAdmin",vo);
+		return (ArrayList<AdminStatistics>) list;
+	}
 }

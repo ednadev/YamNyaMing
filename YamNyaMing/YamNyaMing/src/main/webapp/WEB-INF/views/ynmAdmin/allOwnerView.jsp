@@ -19,19 +19,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-<script  type="text/javascript">
-$('#ownerBlock').click(function() {
-	var dno = $('#dno').val();
-	$.ajax({url:"UpdateDept?cmd=3&dno="+dno, success:function(data){
-		var r = eval("("+data+")");
-		if(r.result == "1"){
-			loadDept();
-		}else{
-			alert("삭제 실패");
-		}	
-		$('input').val("");
-	}})
-})
+
+
+<script type="text/javascript">  //아이디 체크여부 확인 
+function blockBtn(){
+    var block = $('#block').value;
+        $.ajax({
+             url : "/ownerBlock.do",
+             data : {block : block},
+             dataType:'json',
+             success : function(data){
+                 console.log(data);
+                 if(data>0){
+                	 alert("실패했어욧..");
+                    return false;
+                 } else{
+                    alert("블락성공 ^-^"); 
+                 }   
+             }
+         });    
+}    
+
 </script>
 
 </head>
@@ -109,7 +117,7 @@ $('#ownerBlock').click(function() {
 					<td class="col-xs-3">${o.owEmail} </td>
 					<td class="col-xs-3">0${o.phone}</td>
 					<td class="col-xs-3">${o.owBankAccount} </td>
-					<td class="col-xs-3"><input type="button" value="삭제" id ="ownerBlock"/>
+					<td class="col-xs-3"><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
 				</tr>
 			</c:forEach>
 			</tbody>

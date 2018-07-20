@@ -57,7 +57,7 @@
     						<OPTION value="MemberNickName">닉네임으로 검색</OPTION>
     						<OPTION value="MemberId">아이디로 검색</OPTION>
 						</SELECT>
-                      <input type="text" name="keyword" id="keyword">
+                      <input type="text" name="keyword" id="keyword" required>
                       <input type="submit" value="검색" />
                   </form>
                     

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.admin.model.service.YNMAdminServiceImpl;
+import com.kh.ynm.admin.model.vo.AdminStatistics;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -183,9 +184,9 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		}
 
 		@RequestMapping(value="/statAdmin.do")
-		public String statAdmin(HttpSession session,YNMAdmin vo) 
+		public String statAdmin(HttpSession session,AdminStatistics vo) 
 		{
-			
+			ArrayList<AdminStatistics> list =  ynmAdminServiceImpl.statAdmin(vo);
 			return "ynmAdmin/statAdmin";	
 		}
 		@RequestMapping(value="/adminInfo.do")
@@ -196,16 +197,18 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		}
 
 		@RequestMapping(value="/ownerBlock.do")
-		public String adminInfo(HttpSession session,YNMOwner vo)
+		public String ownerBlock(HttpSession session,YNMOwner vo)
 		{
-			return "ynmAdmin/allOwnerView";
+			int result = ynmAdminServiceImpl.ownerBlock(vo);
+			if(result>0)
+			{
+				return "ynmAdmin/allOwnerView";	
+			}
+			else
+			{
+				return "ynmAdmin/enrollFailed";	
+			}
 		}
 		
 		
-
-		
-		
-     
-	
-	    
 }

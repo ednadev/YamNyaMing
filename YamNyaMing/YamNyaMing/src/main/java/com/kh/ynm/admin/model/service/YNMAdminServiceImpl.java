@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.admin.model.dao.YNMAdminDAO;
 import com.kh.ynm.admin.model.dao.YNMAdminDAOImpl;
+import com.kh.ynm.admin.model.vo.AdminStatistics;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -67,6 +68,19 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	public YNMAdmin adminLogin(YNMAdmin vo) {
 		YNMAdmin admin = adminDAO.adminLogin(sqlSession,vo);
 		return admin;
+	}
+
+
+	public int ownerBlock(YNMOwner vo) {
+		int result = adminDAO.ownerBlock(vo,sqlSession);
+		if(result>0){return result;}
+		else {return 0;}
+	}
+
+
+	public ArrayList<AdminStatistics> statAdmin(AdminStatistics vo) {
+		ArrayList<AdminStatistics>list = adminDAO.statAdmin(sqlSession,vo);
+		return list;
 	}
 
 
