@@ -70,7 +70,6 @@ public class MemberPasswordAdvice {
 		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
 		String ownerPw=yo.getOwPw();
 		String encryPw=SHA256Util.encryData(ownerPw);
-		System.out.println("암호화");
 		yo.setOwPw(encryPw);
 	}
 	

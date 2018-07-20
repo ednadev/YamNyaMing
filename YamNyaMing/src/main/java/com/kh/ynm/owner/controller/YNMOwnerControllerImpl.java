@@ -31,8 +31,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@Override
 	@RequestMapping(value="/ownerLogin.do")
 	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-		String owId = request.getParameter("owId");
-		String owPw = request.getParameter("owPw");
+		String owId = request.getParameter("memberId");
+		String owPw = request.getParameter("memberPw");
 		YNMOwner owner = new YNMOwner();
 		owner.setOwId(owId);
 		owner.setOwPw(owPw);
@@ -84,7 +84,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping(value="/ownerIdChk.do")
 	public String idCheck(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String ownerId = request.getParameter("ownerId");
-		YNMOwner owner = ynmOwnerServiceImpl.selectOneOwner(ownerId);
+		YNMOwner owner = ynmOwnerServiceImpl.idCheck(ownerId);
 		if(owner!=null) return "y";
 		else return "n";
 	}

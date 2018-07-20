@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=2">
-<script src="${pageContext.request.contextPath}/resources/js/member.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=2">
+<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
 </head>
 <body>
 <header id="member-signUp-header">
@@ -16,13 +16,13 @@
 </header>
 <section id="member-login-section">
 	<h2>로그인</h2>
-	<form action="login.do" method="post">
+	<form action="/login.do" method="post" id="loginForm">
 		<p>
-			<input type="radio" name="loginSelect" id="memberSelect" checked><label for="memberSelect">사용자</label>
-			<input type="radio" name="loginSelect" id="ownerSelect"><label for="ownerSelect">점장</label>
+			<input type="radio" name="loginSelect" id="memberSelect" value="member" checked onclick="radioLoginType(this);"><label for="memberSelect">사용자</label>
+			<input type="radio" name="loginSelect" id="ownerSelect" value="owner" onclick="radioLoginType(this);"><label for="ownerSelect">점장</label>
 		</p>
-		<input type="text" placeholder="아이디"> 
-		<input type="password" placeholder="비밀번호">
+		<input type="text" name="memberId" placeholder="아이디"> 
+		<input type="password" name="memberPw" placeholder="비밀번호">
 		<p>
 			<input type="checkbox" id="idCheck" checked><label for="idCheck">아이디 기억하기</label>
 		</p>

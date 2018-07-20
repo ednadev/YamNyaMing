@@ -36,6 +36,8 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
+import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
+import com.kh.ynm.owner.model.vo.YNMOwner;
 
 
 @Controller
@@ -48,6 +50,10 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Autowired
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
+	
+	@Autowired
+	@Qualifier(value="ynmOwnerService")
+	private YNMOwnerServiceImpl ynmOwnerServiceImpl;
 	
 
 	@Override

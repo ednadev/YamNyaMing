@@ -20,7 +20,13 @@
 		<a href="/ynmMemberTest.do">맴버test</a>
 
 		<ul>
-			<li><a href="/loginMember.do">로그인</a></li>
+			<c:if test="${sessionScope.owner!=null}" var="result">
+				<li>${sessionScope.owner.owName} 사장님 환영합니다. </li>
+				<li><a href="/storeEnrollOwner.do">마이페이지</a></li>
+			</c:if>
+			<c:if test="${sessionScope.owner==null}" var="result">
+				<li><a href="/loginMember.do">로그인</a></li>
+			</c:if>
 			<li><a href="/enrollMember.do">회원가입</a></li>
 		</ul>
 		<h2>

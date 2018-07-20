@@ -10,7 +10,6 @@ public class YNMMemberViewControllerImpl implements YNMMemberViewController{
 	//메인 : 로그인 페이지 이동
 	@RequestMapping(value="/loginMember.do")
 	public String signUpOwner() {
-		System.out.println("gd");
 		return "ynmMember/loginMember";
 	}
 	

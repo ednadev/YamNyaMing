@@ -6,6 +6,8 @@
 var timer = 180;
 window.onload = function()
 {
+	$('#check1').attr("checked", false);
+	$('#check2').attr("checked", false);
 	startAlert = function() {
 		  $('#emailConfirmInput').attr('readonly', false);
 		  playAlert = setInterval(function() {
@@ -56,6 +58,7 @@ function ownerIdChk()
 	var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 	
 	var rightFormChk  = true;
+
 	$.ajax({
 			url:"/ownerIdChk.do",
 			data : {
@@ -105,8 +108,12 @@ function ownerIdChk()
 				    }
 				}
 				
-				if(rightFormChk)idCheckResult.html("사용할 수 있는 아이디 입니다.");	
+				if(rightFormChk){
+					idCheckResult.html("사용할 수 있는 아이디 입니다.");
+					return true;
+				}
 				resultStyleChk(idCheckResult,rightFormChk);
+				idChk = rightFormChk ;
 			},
 		error : function(){
 			console.log("실패");	
@@ -277,6 +284,18 @@ function emailKeyMatchCheck()
 			
 		},
 	});
+}
+
+var idChk = false;
+var passChk = false;
+var passReChk =false;
+var nameChk = false;
+var emailChk = false;
+var phoneChk = false;
+var accountChk = false;
+function signUpValidChk()
+{
+	return idChk&&passChk&&passReChk&&nameChk&&emailChk&&phoneChk&&accountChk;
 }
 
 

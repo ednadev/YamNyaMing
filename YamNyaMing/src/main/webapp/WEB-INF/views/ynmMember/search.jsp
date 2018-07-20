@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css">
 </head>
 <body>
 <header id="member-search-header">

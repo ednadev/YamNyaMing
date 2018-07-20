@@ -34,6 +34,13 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		YNMOwner owner = ynmOwnerDAO.selectOneOwner(sqlSession, ownerId);
 		return owner;
 	}
+	
+	@Override
+	public YNMOwner idCheck(String ownerId) {
+		YNMOwner owner = ynmOwnerDAO.selectOneOwner(sqlSession, ownerId);
+		return owner;
+	}
+	
 
 	@Override
 	public int ynmStoreAdd(YNMStoreInfo storeInfo) {
