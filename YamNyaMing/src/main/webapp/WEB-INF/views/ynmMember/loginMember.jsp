@@ -7,23 +7,37 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
-<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
-<style>
-html,body{height:100%;}
-</style>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=2">
+<script src="${pageContext.request.contextPath}/resources/js/member.js"></script>
 </head>
 <body>
 <header id="member-signUp-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
 </header>
-<section id="admin-login-section">
+<section id="member-login-section">
 	<h2>로그인</h2>
-	<form action="mainAdmin.do" method="post">
-		<input type="text" placeholder="아이디">
+	<form action="login.do" method="post">
+		<p>
+			<input type="radio" name="loginSelect" id="memberSelect" checked><label for="memberSelect">사용자</label>
+			<input type="radio" name="loginSelect" id="ownerSelect"><label for="ownerSelect">점장</label>
+		</p>
+		<input type="text" placeholder="아이디"> 
 		<input type="password" placeholder="비밀번호">
+		<p>
+			<input type="checkbox" id="idCheck" checked><label for="idCheck">아이디 기억하기</label>
+		</p>
 		<input type="submit" value="로그인">
 	</form>
+	<p>
+		<a href="idFindMember.do">아이디 찾기</a>
+		&nbsp;|&nbsp; 
+		<a href="pwFindMember.do">비밀번호 찾기</a>
+	</p>
+	<div>
+		<p><img src="${pageContext.request.contextPath}/resources/image/facebookLoginIcon.jpg" height="40px;" align="center"></p>
+		<p><img src="${pageContext.request.contextPath}/resources/image/googleLoginIcon.jpg" height="40px;"  align="center"></p>
+		<p><img src="${pageContext.request.contextPath}/resources/image/naverLoginIcon.jpg" height="40px;"  align="center"></p>
+	</div>
 </section>
 <footer id="member-login-footer">
 	<div>

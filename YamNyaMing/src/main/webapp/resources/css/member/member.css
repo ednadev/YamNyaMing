@@ -2,12 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 *{margin:0;color:#fb0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
 
-html, body{
-	height:100%;
-}
-
 #member-main-header{
-	background-image: url('../../image/main-header.jpg');
+	background-image: url('../image/memberMain/main-header.jpg');
 	background-size:cover;
     background-position:center;
 	height:600px;
@@ -113,40 +109,40 @@ html, body{
 	padding:20px 47px;
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1){
-	background-image:url('../../image/hansik.jpg');
+	background-image:url('../image/memberMain/hansik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(1):hover{
-	background-image:url('../../image/hansik-hover.jpg');
+	background-image:url('../image/memberMain/hansik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2){
-	background-image:url('../../image/yangsik.jpg');
+	background-image:url('../image/memberMain/yangsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(2):hover{
-	background-image:url('../../image/yangsik-hover.jpg');
+	background-image:url('../image/memberMain/yangsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3){
-	background-image:url('../../image/ilsik.jpg');
+	background-image:url('../image/memberMain/ilsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(3):hover{
-	background-image:url('../../image/ilsik-hover.jpg');
+	background-image:url('../image/memberMain/ilsik-hover.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4){
-	background-image:url('../../image/jungsik.jpg');
+	background-image:url('../image/memberMain/jungsik.jpg');
 }
 #member-main-section>article:nth-child(2)>div:nth-child(4):hover{
-	background-image:url('../../image/jungsik-hover.jpg');
+	background-image:url('../image/memberMain/jungsik-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1){
-	background-image:url('../../image/cafe.jpg');
+	background-image:url('../image/memberMain/cafe.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1):hover{
-	background-image:url('../../image/cafe-hover.jpg');
+	background-image:url('../image/memberMain/cafe-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2){
-	background-image:url('../../image/backery.jpg');
+	background-image:url('../image/memberMain/backery.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
-	background-image:url('../../image/backery-hover.jpg');
+	background-image:url('../image/memberMain/backery-hover.jpg');
 }
 #member-main-footer{
 	background-color:rgba(0,0,0,0.8);
@@ -280,8 +276,9 @@ html, body{
 	color:white;
 	border:none;
 	cursor:pointer;
-	padding:10px 40px;
-	display:block;
+	padding:10px 30px;
+	display:inline;
+	margin-left:5px;
 }
 .signUp-table>div:nth-child(2)>p{
 	margin-top:10px;
@@ -290,7 +287,8 @@ html, body{
 }
 .signUp-table>div:nth-child(2)>input[type="text"],
 .signUp-table>div:nth-child(2)>input[type="email"],
-.signUp-table>div:nth-child(2)>input[type="password"]{
+.signUp-table>div:nth-child(2)>input[type="password"],
+.signUp-table>div:nth-child(2)>input[type="tel"]{
 	color:#555;
 	padding:10px;
 	width:50%;
@@ -327,7 +325,7 @@ html, body{
 	width:20%;
 }
 #profile-img{
-	background-image:url('../../image/profile.png');
+	background-image:url('../image/profile.png');
 	width:110px;
 	height:110px;
 	background-color:#555;
@@ -504,15 +502,18 @@ html, body{
 }
 
 
-/* 로그인 페이지 */
+/* loginPage */
+html,body{height:100%;}
 #member-login-footer{
+	background-color:rgba(0,0,0,0.8);
 	position:absolute;
 	bottom:0;
-	background-color:rgba(0,0,0,0.8);
 	width:100%;
+	overflow:hidden;
 }
 #member-login-footer>div{
-	margin:10px;
+	padding:20px;
+	float:left;
 }
 #member-login-footer>div>h2,
 #member-login-footer>div>p{
@@ -523,4 +524,216 @@ html, body{
 	font-size:0.7em;
 	font-style:normal;
 	margin-top:15px;
+}
+#member-login-footer>a{
+	float:right;
+	margin:20px;
+	padding:10px;
+	border:2px solid #fb0;
+}
+
+
+#member-login-section{
+	padding-top:60px;
+}
+#member-login-section>h2{
+	text-align:center;
+	color:black;
+	margin-top:80px;
+	margin-bottom:30px;
+}
+#member-login-section>form>input[type="text"],
+#member-login-section>form>input[type="password"]{
+	display:block;
+	margin:0 auto 10px;
+	padding:10px;
+	width:300px;
+}
+#member-login-section>form>input[type="submit"]{
+	display:block;
+	margin:0 auto;
+	background-color:#fb0;
+	color:white;
+	border:none;
+	width:208px;
+	padding:10px;
+	font-weight:bold;
+	margin-top:30px;
+	cursor:pointer;
+	border-radius:3px;
+}
+
+
+#member-login-section>p{
+	display:flex;
+	justify-content:center;
+	margin-bottom:7px;
+	position:relative;
+}
+#member-login-section>p>button{
+	width:180px;
+	text-align:left;
+	color:white;
+	border:none;
+	position:relative;
+	left:-3px;
+	height:32px;
+	padding-left:13px;
+	border-top-right-radius:3px;
+	border-bottom-right-radius:3px;
+	cursor:pointer;
+}
+
+
+@media (max-width:856px){
+	#member-login-footer>a{
+		float:left;
+		margin-top:0px;
+	}
+	#member-login-footer{
+		position:static;
+	}
+}
+
+/* 로그인 추가 사항 : 아이디 기억하기, 아이디 찾기, 비밀번호 찾기, 점주/사용자 구분 기능*/
+#member-login-section>form>p{
+	width:313px;
+	margin:0 auto;
+	font-size:0.9em;
+	margin-bottom:8px;
+}
+#member-login-section>form>p>label{
+	color:black;
+	margin-left:5px;
+	margin-right:10px;
+	cursor:pointer;
+	font-size:0.9em;
+}
+#member-login-section>form>p>input[type="checkbox"]{
+	display:none;
+}
+#member-login-section>form>p:nth-child(4){
+	width:333px;
+}
+#member-login-section>form>p:nth-child(4)>label:before{
+	content:' ';
+	display:inline-block;
+	width:18px;
+	height:18px;
+	line-height:18px;
+	margin:-2px 8px 0 0;
+	text-align:center;
+	vertical-align:middle;
+	border:1px solid #cacece;
+	border-radius:3px;
+}
+#member-login-section>form>p:nth-child(4)>input[type="checkbox"]:checked+label:before{
+	content:'\2714';
+	color:white;
+	background-color:black;
+	border:black;
+}
+#member-login-section>p:nth-child(3){
+	font-size:0.8em;
+	color:#555;
+	margin-top:5px;
+	margin-bottom:10px;
+}
+#member-login-section>p:nth-child(3)>a{
+	color:#555;
+}
+#member-login-section>p:nth-child(3)>a:visited{
+	color:#555;
+}
+
+/* 소셜 로그인 */
+#member-login-section>div{
+	display:flex;
+	justify-content:center;
+	margin-bottom:80px;
+}
+#member-login-section>div>p{
+	width:106px;
+	height:40px;
+	margin:2px;
+	border-radius:3px;
+	cursor:pointer;
+}
+#member-login-section>div>p>img{
+	margin-left:29px;
+}
+#member-login-section>div>p:nth-child(1){
+	background-color:#3b5998;
+}
+#member-login-section>div>p:nth-child(2){
+	background-color:#dd4f43;
+}
+#member-login-section>div>p:nth-child(3){
+	background-color:#00c73c;
+}
+
+
+/* search.jsp - 검색 */
+#member-search-header{
+	background-color:#fb0;
+}
+#member-search-header>h1{
+	padding:20px;
+}
+#member-search-header>h1>a{
+	color:white;
+}
+
+#member-main-header{
+	background-image: url('../image/memberMain/main-header.jpg');
+	background-size:cover;
+    background-position:center;
+	height:600px;
+	padding:20px;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+#member-main-header>h1{
+	position:absolute;
+	top:20px;
+	left:20px;
+}
+#member-main-header>ul{
+	position:absolute;
+	top:20px;
+	right:20px;
+}
+#member-main-header>ul>li{
+	float:left;
+	margin-left:20px;
+	font-weight:bold;
+}
+#member-main-header>h2{
+	align-items:center;
+	font-size:2em;
+}
+#member-main-header>form>input[type="text"]{
+	background-color:rgba(255,255,255,0.5);
+	border:none;
+	padding:15px;
+	font-size:1em;
+	border-radius:5px;
+	margin-top:20px;
+	font-weight:bold;
+	color:white;
+}
+#member-main-header>form>input[type="text"]::placeholder{
+	color:white;
+}
+#member-main-header>form>input[type="submit"]{
+	background-color:#fb0;
+	color:white;
+	border:none;
+	padding:15px;
+	font-size:1em;
+	cursor:pointer;
+	border-radius:5px;
+	font-weight:bold;
 }
