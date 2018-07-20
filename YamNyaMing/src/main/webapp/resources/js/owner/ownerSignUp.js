@@ -3,6 +3,46 @@
  */
 
 
+var timer = 180;
+window.onload = function()
+{
+	startAlert = function() {
+		  $('#emailConfirmInput').attr('readonly', false);
+		  playAlert = setInterval(function() {
+			  timer-=1;
+			  var minute = Math.floor(timer/60);
+			  var second = Math.floor(timer%60);
+			  
+			  if(minute<=0 && second <=0)
+			  {
+				 clearInterval(playAlert); 
+				 timer = 180;
+				 $('#emailChkTimer').text("인증번호 재발급");
+			  }else{
+				  $('#emailChkTimer').text( (minute>9?minute:"0"+minute) +":"+ (second>9?second:"0"+second) );
+				  $('#emailConfirmInput').show();
+			  }
+		  }, 1000);
+	};
+}
+
+function serviceAgreeChk()
+{
+	if($('#check1').is(":checked") && $('#check2').is(":checked") )
+	{
+		$('#ownerSignUpStartLink').attr("href", "/signUpOwner.do");
+	}
+	else
+	{		
+		$('#ownerSignUpStartLink').attr("href", "#");
+	}
+}
+function signUpStartBtn(){
+	if(!$('#check1').is(":checked") || !$('#check2').is(":checked") )
+	alert("약관에 모두 동의해야 회원가입을 할 수 있습니다.");
+}
+
+
 function resultStyleChk(resultChk,chk)
 {
 	if(!chk)resultChk.css('color','red');
@@ -190,22 +230,48 @@ function ownerEmailChk()
 	}	
 	
 	if(rightFormChk){
-		emailCheckResult.html("이메일 인증 대기상태<button type='button' onclick='emailConfirm();'>인증 메일 보내기<button>");
+		emailCheckResult.html("이메일 인증 대기상태<button id='emailChkTimer' type='button' style='background-color:black;color:white;border:none;cursor:pointer;padding:10px 30px;display:inline;margin-left:5px;' onclick='emailConfirm();'>인증 메일 보내기</button>");
 	}
 	resultStyleChk(emailCheckResult,rightFormChk);
 }
 
+
+
 function emailConfirm()
 {
 	var insertEmail  = $("input[name=owEmail]").val(); // 이메일 입력 결과
+	if(timer==180){
+		$.ajax({
+			url:"/emailConCheck.do",
+			data : {
+						ownerEmail:insertEmail,
+				   },
+			type : "post",
+			success : function(data){	
+				console.log("이메일 결과" + data);
+			},
+			error : function(){
+				
+			},
+		});
+		timer = 180;
+		startAlert();
+	}
+}
+
+function emailKeyMatchCheck()
+{
+	var emailConfirmInput = $('#emailConfirmInput').val();
 	$.ajax({
-		url:"/emailConCheck.do",
-		data : {
-					ownerEmail:insertEmail,
-			   },
+		url:"/emailAccessKey.do",
 		type : "post",
 		success : function(data){	
-			console.log("이메일 결과" + data);
+			if(emailConfirmInput==data){
+				$('#ownerEmailChk').html("이메일 인증 완료");
+				$('#emailConfirmInput').attr('readonly', true);
+				timer = 180;
+				clearInterval(playAlert); 
+			}
 		},
 		error : function(){
 			

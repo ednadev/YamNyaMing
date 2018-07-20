@@ -59,6 +59,8 @@
 					<div>
                         <input type="email" name="owEmail" placeholder="이메일" onkeydown="ownerEmailChk();" onchange="ownerEmailChk();">
 						<p id="ownerEmailChk">이메일을 입력해주세요.</p>
+						<br>
+						<input type="text" id="emailConfirmInput" placeholder="인증번호 입력" onchange="emailKeyMatchCheck();" onkeydown="emailKeyMatchCheck();" style="display:none"/>
 					</div>
 				</div>
 				<div class="signUp-table">

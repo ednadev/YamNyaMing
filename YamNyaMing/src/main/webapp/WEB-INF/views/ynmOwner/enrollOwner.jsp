@@ -7,7 +7,10 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerSignUp.js?ver=1"></script>
+
 </head>
 <body>
 	<header id="owner-signUp-header">
@@ -290,7 +293,7 @@
 ② 회사와 음식점 사업자는 제1항과 관련하여 향후 민∙형사상 법적 책임을 묻지 아니할 것을 확약합니다.</p>		
 			</div>
 			<div class="check">
-				<input type="checkbox" id="check1">
+				<input type="checkbox" id="check1" onclick="serviceAgreeChk();">
 				<label for="check1">서비스 이용약관에 동의합니다</label>
 			</div>
 			<h3>개인정보처리방침 </h3>
@@ -431,11 +434,11 @@
 따라서, 회사가 포함하고 있는 링크를 클릭하여 타 사이트의 페이지로 이동할 경우에는 새로 방문한 사이트의 개인정보처리방침을 반드시 확인하시기 바랍니다.</p>
 			</div>
 			<div class="check">
-				<input type="checkbox" id="check2">
+				<input type="checkbox" id="check2" onclick="serviceAgreeChk();">
 				<label for="check2">개인정보처리방침에 동의합니다</label>
 			</div>			
 		</section>
-		<a href="signUpOwner.do">다음</a>
+		<a id="ownerSignUpStartLink" href="#" onclick="signUpStartBtn();">다음</a>
 	</div>
 	<footer id="owner-signUp-footer">
 		<div>

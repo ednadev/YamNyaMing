@@ -146,14 +146,14 @@ function storeAddress() {
               } else {
                   document.getElementById('guide').innerHTML = '';
               }
-              if( document.getElementById('storePostCode').length==0 ||
-              		document.getElementById('storeRoadAddr').length==0 ||
-              		document.getElementById('storeJibunAddr').length==0)
-          	{
-          		result = false;	
-          	}
-              ownerResult.html("주소입력");
-              $('#sample4_postcode').blur();
+          	  if( document.getElementById('storePostCode').length==0 ||
+          		document.getElementById('storeRoadAddr').length==0 ||
+          		document.getElementById('storeJibunAddr').length==0)
+			  {
+				result = false;	
+			  }
+	          ownerResult.html("주소입력");
+	          $('#sample4_postcode').blur();
           }
       }).open();
   }
