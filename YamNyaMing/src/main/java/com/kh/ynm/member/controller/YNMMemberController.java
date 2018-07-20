@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
+import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 
 public interface YNMMemberController {
 	public String testMemberQueryTest();// �׽�Ʈ ����
@@ -29,6 +30,7 @@ public interface YNMMemberController {
 			HttpServletResponse response);
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
+	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 	
 	//예약 table
@@ -38,6 +40,13 @@ public interface YNMMemberController {
 	//리뷰 table
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
+	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
+	
+	//대댓글 table
+	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			YNMStoreUnderReview ysur);
+
+
 
 
 

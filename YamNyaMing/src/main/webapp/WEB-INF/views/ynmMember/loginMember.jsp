@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=2">
-<script src="${pageContext.request.contextPath}/resources/js/member.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=2">
+<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
 </head>
 <body>
 <header id="member-signUp-header">

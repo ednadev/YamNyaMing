@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class YNMStoreReview {
 	private int storeReviewNo;
@@ -13,6 +14,17 @@ public class YNMStoreReview {
 	private Date reviewDate;
 	private char reviewOpenCheck;
 	private String reviewImgList;
+	private String[] reviewImgArr;
+	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
+	
+	
+	
+	public String[] getReviewImgArr() {
+		return reviewImgArr;
+	}
+	public void setReviewImgArr(String reviewImgArr) {
+		this.reviewImgArr = reviewImgArr.split(",");
+	}
 	public int getStoreReviewNo() {
 		return storeReviewNo;
 	}
@@ -72,6 +84,19 @@ public class YNMStoreReview {
 	}
 	public void setReviewImgList(String reviewImgList) {
 		this.reviewImgList = reviewImgList;
+		setReviewImgArr(this.reviewImgList);
+	}
+	public int getOwnerStoreEntireNo() {
+		return ownerStoreEntireNo;
+	}
+	public void setOwnerStoreEntireNo(int ownerStoreEntireNo) {
+		this.ownerStoreEntireNo = ownerStoreEntireNo;
+	}
+	public ArrayList<YNMMemberUploadPhoto> getPhotoObjList() {
+		return photoObjList;
+	}
+	public void setPhotoObjList(YNMMemberUploadPhoto photoObj) {
+		this.photoObjList.add(photoObj);
 	}
 	
 	

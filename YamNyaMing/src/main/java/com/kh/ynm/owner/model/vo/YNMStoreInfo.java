@@ -15,6 +15,10 @@ public class YNMStoreInfo {
 	private String owStoreMapInfo;
 	private String owStoreWorkingTime;
 	
+	
+	public YNMStoreInfo() {
+		super();
+	}
 	public YNMStoreInfo(int owStoreInfoPk, int owEntireFk, String owStoreBizNum, String owStoreName,
 			String owStorePhone, int owBigTypeFk, int owStoreTypeFk, String owStoreUrl, Date owStoreRegDate,
 			String owStoreMapInfo, String owStoreWorkingTime) {

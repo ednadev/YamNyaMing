@@ -36,6 +36,8 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
+import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 
 @Controller
@@ -142,15 +144,20 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ym.setMemberUploadPhotoNo(ymupIndex.getUploadPhotoNo());
 		
 		int result2=ynmMemberServiceImpl.signUpMember(ym);
+		
+		//회원가입 성공시
+		return null;
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 			
 			int result=ynmMemberServiceImpl.signUpMember(ym);
+			//회원가입 성공시
+			return null;
 		}
 		
-		return null;
+		
 	}
 	
 	
@@ -189,12 +196,21 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			
 			view.addObject("info",ymc);
 			view.addObject("img",ymc.getPhotoViewRoute());
-			view.setViewName("ynmMember/info");
+			view.setViewName("ynmMember/infoTest");
 			return view;
 		}
 		else {
 			
+			return null;
 		}
+	}
+	
+	//비밀번호 변경
+	@Override
+	@RequestMapping(value="/passwordUpdateMember.do")
+	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		
+		
 		return null;
 	}
 	
@@ -237,15 +253,20 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		int result=ynmMemberServiceImpl.updateUploadPhoto(ymup);
 		
 		int result2=ynmMemberServiceImpl.updateMember(ym);
+		
+		//수정 성공시
+		return null;
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 			
 			int result=ynmMemberServiceImpl.updateMember(ym);
+			//수정 실패시
+			return null;
 		}
 		
-		return null;
+		
 
 	}
 	
@@ -320,6 +341,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	
 	//리뷰 table
+	
+	//댓글 등록
+	@Override
 	@RequestMapping(value="/storeReviewInsert.do")
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException {
@@ -364,6 +388,67 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		
 		int result=ynmMemberServiceImpl.storeReviewInsert(ysr);
+	
+		return null;
+	}
+	
+	//댓글 불러오기
+	@Override
+	@RequestMapping(value="/reviewCheck.do")
+	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response) {
+		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
+		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("OwnerStoreEntireNo"));
+	
+		YNMStoreInfo ysi=ynmMemberServiceImpl.storeInfo(OwnerStoreEntireNo);
+		ArrayList<YNMStoreReview> ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
+		StringBuilder strBuilder = new StringBuilder();
+		String[] imgArr;
+		for(int i=0; i<ysrList.size(); i++) {
+			if(i<ysrList.size()-1)strBuilder.append(ysrList.get(i).getReviewImgList()+","); 
+			else strBuilder.append(ysrList.get(i).getReviewImgList()); 
+		}
+		imgArr = strBuilder.toString().split(",");
+		
+		ArrayList<YNMMemberUploadPhoto> imgList = ynmMemberServiceImpl.reviewImageList(imgArr);
+		
+		for(int i = 0; i<ysrList.size();i++)
+		{
+			YNMStoreReview tempStoreReview = ysrList.get(i);
+			if(imgList!=null && !imgList.isEmpty())
+			{
+				for(int j =0 ; j<imgList.size();j++) 
+				{
+					YNMMemberUploadPhoto tempPhoto = imgList.get(j);
+					for(int s = 0; s<tempStoreReview.getReviewImgArr().length;s++)
+					{
+						String[] tempImgArr = tempStoreReview.getReviewImgArr();
+						if(tempImgArr[s].equals(tempPhoto.getUploadPhotoNo()+""))
+						{
+							ysrList.get(i).setPhotoObjList(imgList.get(j));
+						}
+					}
+				}
+			}
+		}
+	
+
+		ModelAndView view=new ModelAndView();
+		if(ysi!=null && !ysrList.isEmpty()) {
+			view.addObject("storeInfo",ysi);
+			view.addObject("review",ysrList);
+			view.setViewName("ynmMember/reviewTest");
+			return view;
+			
+		}
+		return null;
+		
+	}
+	
+	//대댓글 등록
+	@Override
+	@RequestMapping(value="/storeUnderReviewInsert.do")
+	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+		int result=ynmMemberServiceImpl.storeUnderReviewInsert(ysur);
 	
 		return null;
 	}

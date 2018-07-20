@@ -41,7 +41,7 @@ function avatarDelete(){
 </script>
 
 <body>
-	<form action="updateMember.do">
+	<form action="updateMember.do" method="post" enctype="multipart/form-data">
 	<input type="text" value="${info.memberId}">
 	<input type="text" value="">
 	<input type="text" value="${info.memberName}">
