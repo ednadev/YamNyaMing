@@ -12,7 +12,7 @@ insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_passwo
       WHERE ADMIN_ID = #{ad_id}
 </select>
 	
-<select id="allMemberView" parameterType="member" resultType="member">
+<select id="allMemberView" parameterType="members" resultType="members">
   SELECT 
   mb_id as memberId,
   mb_name as memberName,
@@ -50,7 +50,7 @@ SELECT
   WHERE OW_NAME LIKE '%'||#search#||'%' 
 </select>
 
-<select id="MemberSearch" parameterType="member" resultType="member"> 
+<select id="MemberSearch" parameterType="members" resultType="members"> 
   SELECT 
   mb_id as memberId,
   mb_name as memberName,
