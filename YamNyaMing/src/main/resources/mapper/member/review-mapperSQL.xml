@@ -6,5 +6,21 @@
 		insert into member_store_review_tb values(member_store_review_tb_SEQ.nextval,#{ownerStoreEntireNo},#{memberEntireNo},
 													#{reviewTitle},#{reviewContent},#{reviewStar},default,sysdate,default,#{reviewImgList})
 	</insert>
+	
+	<select id="storeReviewCheck" resultType="reviews">
+		select
+			mb_store_review_pk as storeReviewNo,
+			ow_entire_fk as ownerStoreEntireNo,
+			mb_entire_fk as memberEntireNo,
+			ow_store_review_title as reviewTitle,
+			ow_store_review_content as reviewContent,
+			ow_store_review_star as reviewStar,
+			ow_store_jjim_check as jjimCheck,
+			ow_store_review_date as reviewDate,
+			ow_store_review_open_check as reviewOpenCheck,
+			ow_store_review_img_list as reviewImgList
+			from member_store_review_tb
+			where ow_entire_fk=#{ownerStoreEntireNo}
+	</select>
 
 </mapper>

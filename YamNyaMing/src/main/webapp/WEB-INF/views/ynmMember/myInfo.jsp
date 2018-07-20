@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-성공
-
-
+내정보 보기
 </body>
 </html>

@@ -11,6 +11,8 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
+import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmMemberDAO")
 public class YNMMemberDAOImpl implements YNMMemberDAO{
@@ -74,6 +76,24 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int updateMember(SqlSessionTemplate sqlSession, YNMMember ym) {
 		return sqlSession.insert("member.updateMember",ym);
+	}
+
+	public ArrayList<YNMStoreReview> storeReviewCheck(SqlSessionTemplate sqlSession, int ownerStoreEntireNo) {
+		List list=sqlSession.selectList("review.storeReviewCheck",ownerStoreEntireNo);
+		return (ArrayList<YNMStoreReview>) list;
+	}
+
+	public YNMStoreInfo storeInfo(SqlSessionTemplate sqlSession, int ownerStoreEntireNo) {
+		return sqlSession.selectOne("member.selectOneStore",ownerStoreEntireNo);
+	}
+
+	public ArrayList<YNMMemberUploadPhoto> reviewImageList(SqlSessionTemplate sqlSession, String[] imgArr) {
+		List list=sqlSession.selectList("photo.storeReviewPhoto",imgArr);
+		return (ArrayList<YNMMemberUploadPhoto>) list;
+	}
+
+	public int storeUnderReviewInsert(SqlSessionTemplate sqlSession, YNMStoreUnderReview ysur) {
+		return sqlSession.insert("underReview.storeUnderReviewInsert",ysur);
 	}
 	
 }
