@@ -1,4 +1,4 @@
-package com.kh.ynm.common.controller;
+﻿package com.kh.ynm.common.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -61,7 +61,6 @@ public class CommonControllerImpl implements CommonController {
 	public void normalEmail(String email)
 	{
 		   //일반 텍스트메일
-
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
         simpleMailMessage.setFrom("ynmmanager@gmail.com");
@@ -78,6 +77,4 @@ public class CommonControllerImpl implements CommonController {
 
 
 	}
-
-
 }

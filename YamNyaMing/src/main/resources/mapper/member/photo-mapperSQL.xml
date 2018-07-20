@@ -14,6 +14,11 @@
 		where mb_remake_name=#{remakeName}
 	
 	</select>
+	
+	<update id="updatePhoto">
+		update member_upload_photo_tb set mb_origin_name=#{}, mb_remake_name=#{}, mb_photo_upload_date=sysdate, mb_photo_route=#{}, mb_photo_view_route=#{}
+			where me_upload_photo_pk=#{}
+	</update>
 
 	<!-- 리뷰 이미지 등록 -->
 	<insert id="reviewPhoto">
