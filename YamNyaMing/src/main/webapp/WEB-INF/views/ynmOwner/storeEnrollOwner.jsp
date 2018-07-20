@@ -22,7 +22,7 @@
 		<nav id="owner-signUp-nav">
 			<h2>입점 신청하기</h2>
 		</nav>
-		<form action="/ownerAddStore.do" method="post">
+		<form id="fileForm" action="/ownerAddStore.do" enctype="multipart/form-data" method="post">
 			<section id="owner-signUp-section">	
 				<h3>음식점 정보 입력</h3>	
 				<div class="signUp-table">
@@ -137,22 +137,23 @@
 				<div class="signUp-table">
 					<div>대표 이미지</div>
 					<div>
-						<input type="file" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="loadFile(event)">
+						<input type="file" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" maxlength="10" multiple/>
 						<label for="mainImage">이미지 추가</label>
+						<div>
+							<div class="imgs_wrap">
+								<img id="img"/>
+							</div>
+						</div>
 						<img id="output"/>
 						<p>업체를 대표하는 이미지를 추가해주세요.</p>
 					</div>
-				</div>			
-				<script>
-					var loadFile = function(event){
-						var output = document.getElementById('output');
-						output.src = URL.createObjectURL(event.target.files[0]);
-					};
-				</script>				
+				</div>							
 				<div class="signUp-table">
-					<div>가격 정보</div>
+					<div>메뉴 정보</div>
 					<div id="menuPriceInfo">
 						<div class="menuInfo">
+							<input type="text" name="owMenuType" placeholder="예) 꽃등심" class="menuStyle">
+							<br>
 							<input type="text" name="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
 							<input type="text" name="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
 							<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
@@ -160,7 +161,7 @@
 							<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
 							<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
 							<label for="menu-file" id="menu-file-text">사진등록/편집</label>
-							<input type="file" name="owRecommandMenuFile" id="menu-file">
+							<input type="file" style="display:none;" id="menu-file" name="owRecommandMenuFile" multiple/>
 							<button id="addButton" type="button" onclick="menuInfoAdd();">추가</button>
 						</div>
 					</div>

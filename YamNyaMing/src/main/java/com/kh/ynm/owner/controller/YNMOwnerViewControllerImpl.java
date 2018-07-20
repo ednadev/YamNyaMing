@@ -28,5 +28,11 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	@RequestMapping(value="/storeEnrollOwner.do")
 	public String storeEnrollOwner() {
 		return "ynmOwner/storeEnrollOwner";
+	}
+
+	@Override
+	@RequestMapping(value="/ownerMyPage.do")
+	public String ownerMyPage() {
+		return "ynmOwner/ownerMyPage";
 	}	
 }

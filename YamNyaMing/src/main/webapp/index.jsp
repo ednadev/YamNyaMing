@@ -22,7 +22,7 @@
 		<ul>
 			<c:if test="${sessionScope.owner!=null}" var="result">
 				<li>${sessionScope.owner.owName} 사장님 환영합니다. </li>
-				<li><a href="/storeEnrollOwner.do">마이페이지</a></li>
+				<li><a href="/ownerMyPage.do">마이페이지</a></li>
 			</c:if>
 			<c:if test="${sessionScope.owner==null}" var="result">
 				<li><a href="/loginMember.do">로그인</a></li>
@@ -79,11 +79,6 @@
 		</div>
 		<c:if test="${sessionScope.owner==null}" var="result">
 			<a href="/enrollOwner.do">점장 가입하기</a>
-			<form action="/ownerLogin.do" method="post">
-				<input type="text" name="owId" placeholder="점주 아이디 입력" /> <input
-					type="password" name="owPw" placeholder="비밀번호 입력" /> <input
-					type="submit" value="로그인" />
-			</form>
 		</c:if>
 		<c:if test="${sessionScope.owner!=null}" var="result">
 			<a href="/storeEnrollOwner.do">얌냐밍 입점 신청하기</a>

@@ -12,4 +12,7 @@ public interface YNMOwnerViewController {
 	
 	// 점주 가게 등록
 	public String storeEnrollOwner();
+	
+	// 점주 마이페이지
+	public String ownerMyPage();
 }

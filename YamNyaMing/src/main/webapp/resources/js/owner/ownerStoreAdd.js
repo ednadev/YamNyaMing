@@ -153,7 +153,7 @@ function storeAddress() {
 				result = false;	
 			  }
 	          ownerResult.html("주소입력");
-	          $('#sample4_postcode').blur();
+	          $('#storePostCode').blur();
           }
       }).open();
   }
@@ -171,3 +171,52 @@ function keyWord()
 		}
 	}
 }
+
+var sel_files=[];
+var html;
+$(document).ready(function(){
+	$("#mainImage").on("change",reviewPhotoSelect);
+});
+
+function reviewFilesUpload(){
+	$("#mainImage").trigger('click');
+}
+
+function reviewPhotoSelect(e){
+	
+//	$(".imgs_wrap").empty();
+	
+	var files=e.target.files;
+	var filesArr=Array.prototype.slice.call(files);
+	
+	var index=sel_files.length;
+	filesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("확장자는 이미지 확장자만 가능합니다.");
+			return;
+		}
+		if(sel_files.length<30){
+			sel_files.push(f);
+			
+			var reader=new FileReader();
+			reader.onload=function(e){
+				html="<a href=\"javascript:void(0);\"  onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img style='width:120px; height:120px;' src=\""+e.target.result+"\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+				$(".imgs_wrap").append(html);
+				index++;
+			}
+			reader.readAsDataURL(f);
+		}else
+		{
+			alert("대표 사진은 30개 이하만 등록할수 있습니다.");
+		}
+	});
+	
+}
+function deleteImageAction(index){
+	sel_files.splice(index,1);
+	var img_id="#img_id_"+index;
+	$(img_id).remove();
+	
+}
+
+
