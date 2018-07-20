@@ -273,6 +273,11 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/search";
 	}
 	
+	// 음식점 상세 페이지
+	@RequestMapping(value="/detailPage.do")
+	public String detailPage() {
+		return "ynmMember/detailPage";	
+	}
 
 	
 	

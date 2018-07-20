@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=4">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=6">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
 <body>
@@ -146,7 +146,30 @@
 </header>
 <section id="member-search-section">
 <div id="map"></div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member.js?ver=3"></script>
+<h2>자세하게 검색</h2>
+<div>
+	<h3>세부 음식 선택</h3>
+	<div></div>
+</div>
+<div>
+	<h3>예산(2인 기준)</h3>
+</div>
+<div>
+	<h3>부가 정보</h3>
+</div>
+<div>
+	<h3>테이블 종류</h3>
+</div>
+<div>
+	<h3>판매 주류 종류</h3>
+	<div>
+		<input type="checkbox"><label>전체선택</label>
+		<input type="checkbox"><label>소주</label>
+		<input type="checkbox"><label>맥주</label>
+	</div>
+</div>
+총 0개가 검색되었습니다
 </section>
 <footer id="member-main-footer">
 	<div>

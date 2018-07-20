@@ -54,17 +54,17 @@
 					<div>업종</div>
 					<div>
 						<select name="owStoreBigType" id="firstSelect" onchange="changeSelect()">
-							<option>대분류</option>
+							<option disabled selected>대분류</option>
 						</select>
 						<select name="owStoreSmallType" id="finalSelect">
-							<option>소분류</option>
+							<option disabled selected>소분류</option>
 						</select>
 					</div>
 				</div>				
 				<div class="signUp-table">
 					<div>웹사이트</div>
 					<div>
-						<input type="url" name="owStoreUrl" placeholder="웹사이트">
+						<input type="url" name="owStoreUrl" placeholder="http://">
 						<p>웹사이트를 입력해주세요.</p>
 					</div>
 				</div>
@@ -149,19 +149,19 @@
 				<div class="signUp-table">
 					<div>예산 정보</div>
 					<div>
-						<input type="text" name="owBudget" placeholder="예산 정보 입력">
+						<input type="text" name="owBudget" placeholder="ex. 2인기준  20,000원">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>부가 정보</div>
 					<div>
-						<input type="text" name="owSubInfo" placeholder="부가 정보 입력 (ex. 아이동반 가능여부, 연장영업, 기타 정보사항 )">
+						<input type="text" name="owSubInfo" placeholder="ex. 아이동반 가능여부, 연장영업, 기타 정보사항 ">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>주류 정보</div>
 					<div>
-						<input type="text" name="owDrinkListInfo" placeholder="주류 정보 입력">
+						<input type="text" name="owDrinkListInfo" placeholder="판매 중인 주류 입력  (ex. 소주, 맥주)">
 					</div>
 				</div>																																																										
 			</section>
