@@ -269,8 +269,56 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		String place = request.getParameter("place");
 		session.setAttribute("keyword",keyword);
 		session.setAttribute("food", food);
-		session.setAttribute("place", place);
+		session.setAttribute("place", place);		
+		
+		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
+		String [] owBudget = request.getParameterValues("owBudget");
+		String [] owSubInfo = request.getParameterValues("owSubInfo");
+		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+		
+		
+		
+		
+		
+
+		if(storeCateDetailName!=null) {
+			for(int i=0;i<storeCateDetailName.length;i++) {
+				System.out.println(storeCateDetailName[i]);
+			}
+		}
+		if(owBudget!=null) {
+			for(int i=0;i<owBudget.length;i++) {
+				System.out.println(owBudget[i]);
+			}			
+		}
+		if(owSubInfo!=null) {
+			for(int i=0;i<owSubInfo.length;i++) {
+				System.out.println(owSubInfo[i]);
+			}			
+		}
+		if(owDrinkListInfo!=null) {
+			for(int i=0;i<owDrinkListInfo.length;i++) {
+				System.out.println(owDrinkListInfo);
+			}			
+		}
+
+		
+
+
 		return "ynmMember/search";
+	}
+	
+	@RequestMapping(value="/testPage.do")
+	public String testPage(HttpServletRequest request) {
+		String[] storeCateDetailName=null;
+		String [] owBudget=null;
+		storeCateDetailName = request.getParameterValues("storeCateDetailName");
+		owBudget = request.getParameterValues("owBudget");
+		String [] owSubInfo = request.getParameterValues("owSubInfo");
+		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+		
+		System.out.println(storeCateDetailName.length);
+		return null;
 	}
 	
 	// 음식점 상세 페이지

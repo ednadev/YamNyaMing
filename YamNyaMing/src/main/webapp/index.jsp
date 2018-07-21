@@ -18,7 +18,7 @@
     </ul>
     <h2>맛있는 가이드, <span>얌냐밍</span></h2>
     <form action="/search.do" method="get">
-    	<input type="hidden" name="place" value="홍대">
+    	<input type="hidden" name="place" value="지역 선택">
     	<input type="hidden" name="food" value="음식 종류 선택">
     	<input type="text" name="keyword" placeholder="키워드를 입력해주세요">
     	<input type="submit" value="검색">
@@ -30,14 +30,14 @@
 		<p>기다리지 않는 즐거움, <span>얌냐밍이 진짜 맛집을 추천합니다</span></p>
 	</article>
 	<article>
-		<div><a href="/search.do?place=홍대&food=한식&keyword=">한식</a></div>
-		<div><a href="/search.do?place=홍대&food=양식&keyword=">양식</a></div>
-		<div><a href="/search.do?place=홍대&food=일식&keyword=">일식</a></div>
-		<div><a href="/search.do?place=홍대&food=중식&keyword=">중식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=한식&keyword=">한식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=양식&keyword=">양식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=일식&keyword=">일식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=중식&keyword=">중식</a></div>
 	</article>
 	<article>
-		<div><a href="/search.do?place=홍대&food=디저트&keyword=">디저트</a></div>
-		<div><a href="/search.do?place=홍대&food=술집&keyword=">술집</a></div>
+		<div><a href="/search.do?place=지역 선택&food=디저트&keyword=">디저트</a></div>
+		<div><a href="/search.do?place=지역 선택&food=술집&keyword=">술집</a></div>
 	</article>
 </section>
 <footer id="member-main-footer">
