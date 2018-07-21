@@ -143,7 +143,7 @@
 				<div class="signUp-table">
 					<div>테이블 정보</div>
 					<div>
-						<input type="text" name="owStoreTableInfo" placeholder="테이블 정보 입력 (최대 인원)">
+						<input type="text" name="owStoreTableInfo" placeholder="최대 인원수 입력">
 					</div>
 				</div>	
 				<div class="signUp-table">
@@ -155,13 +155,13 @@
 				<div class="signUp-table">
 					<div>부가 정보</div>
 					<div>
-						<input type="text" name="owSubInfo" placeholder="ex. 아이동반 가능여부, 연장영업, 기타 정보사항 ">
+						<input type="text" name="owSubInfo" placeholder="ex. 주차 가능, 아이동반 가능, 24시간 영업 ">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>주류 정보</div>
 					<div>
-						<input type="text" name="owDrinkListInfo" placeholder="판매 중인 주류 입력  (ex. 소주, 맥주)">
+						<input type="text" name="owDrinkListInfo" placeholder="판매 중인 주류 입력  (ex. 소주, 맥주 등)">
 					</div>
 				</div>																																																										
 			</section>

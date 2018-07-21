@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=4">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=5">
 </head>
 <body>
 <header id="member-main-header">
@@ -36,8 +36,8 @@
 		<div><a href="/search.do?place=홍대&food=중식&keyword=">중식</a></div>
 	</article>
 	<article>
-		<div><a href="/search.do?place=홍대&food=카페&keyword=">카페</a></div>
-		<div><a href="/search.do?place=홍대&food=베이커리&keyword=">베이커리</a></div>
+		<div><a href="/search.do?place=홍대&food=디저트&keyword=">디저트</a></div>
+		<div><a href="/search.do?place=홍대&food=술집&keyword=">술집</a></div>
 	</article>
 </section>
 <footer id="member-main-footer">

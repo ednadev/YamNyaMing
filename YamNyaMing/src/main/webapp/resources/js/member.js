@@ -94,4 +94,21 @@ function displayMarker(place) {
 }
 
 
+//ajax를 이용하여 자세히 검색 기능
+
+
+var lists = [];
+  $("input[name='confirm']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+   lists.push($(this).val());
+  });
+  
+  jQuery.ajax({type:"POST", 
+   data:{'confirm':lists},
+   url:"~~~~~~~~~~~~~~~~~~~~~~", 
+   contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+   cache: false, 
+   success:function(data) { 
+    
+     }
+  });
 

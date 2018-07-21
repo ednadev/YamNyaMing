@@ -133,16 +133,16 @@
 	background-image:url('../image/memberMain/jungsik-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1){
-	background-image:url('../image/memberMain/cafe.jpg');
+	background-image:url('../image/memberMain/dessert.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(1):hover{
-	background-image:url('../image/memberMain/cafe-hover.jpg');
+	background-image:url('../image/memberMain/dessert-hover.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2){
-	background-image:url('../image/memberMain/backery.jpg');
+	background-image:url('../image/memberMain/alcohol.jpg');
 }
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
-	background-image:url('../image/memberMain/backery-hover.jpg');
+	background-image:url('../image/memberMain/alcohol-hover.jpg');
 }
 #member-main-footer{
 	background-color:rgba(0,0,0,0.8);
@@ -736,7 +736,39 @@ html,body{height:100%;}
 	width:100%;
 	height:400px;
 }
-#member-search-section>h2{
+
+/* 세부 검색 */
+.member-search-wrapper{
+	width:960px;
+	margin:0 auto;
+}
+
+#member-search-section>.member-search-wrapper>h2{
 	margin:20px;
 	color:black;
+}
+#member-search-section>.member-search-wrapper>.detailSearch{
+	display:flex;
+	margin:10px 20px 30px;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>h3{
+	color:black;
+	font-size:1em;
+	margin-right:20px;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>input{
+	display:none;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>label{
+	cursor:pointer;
+	border:1px solid #bcbcbc;
+	padding:10px;
+	color:#bcbcbc;
+	border-radius:10px;
+	font-size:0.9em;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>input:checked+label{
+	background-color:#fb0;
+	border:1px solid #fb0;
+	color:white;
 }
