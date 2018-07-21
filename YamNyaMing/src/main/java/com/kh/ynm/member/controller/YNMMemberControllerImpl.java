@@ -298,7 +298,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		if(owDrinkListInfo!=null) {
 			for(int i=0;i<owDrinkListInfo.length;i++) {
-				System.out.println(owDrinkListInfo);
+				System.out.println(owDrinkListInfo[i]);
 			}			
 		}
 

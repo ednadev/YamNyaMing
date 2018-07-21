@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=7">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=8">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -157,7 +157,7 @@
 		<h3>세부 음식 검색</h3>
 		<div>
 			<input type="checkbox" id="homeFood" name="storeCateDetailName" onclick="check()" value="백반,가정식"><label for="homeFood">백반,가정식</label>
-			<input type="checkbox" id="koreanRestaurant" name="storeCateDetailName" onclick="check()" value="한정식"><label for="kereanRestaurant">한정식</label>
+			<input type="checkbox" id="koreanRestaurant" name="storeCateDetailName" onclick="check()" value="한정식"><label for="koreanRestaurant">한정식</label>
 			<input type="checkbox" id="ssambap" name="storeCateDetailName" onclick="check()" value="쌈밥"><label for="ssambap">쌈밥</label>
 			<input type="checkbox" id="boribap" name="storeCateDetailName" onclick="check()" value="보리밥"><label for="boribap">보리밥</label>
 			<input type="checkbox" id="bibimbap" name="storeCateDetailName" onclick="check()" value="비빔밥"><label for="bibimbap">비빔밥</label>
@@ -349,8 +349,11 @@
 			<input type="checkbox" id="cocktail" name="owDrinkListInfo" onclick="check()" value="칵테일"><label for="cocktail">칵테일</label>
 		</div>
 	</div>
+	<h4>총 <span>0</span>개가 검색되었습니다</h4>
+	<p><span>대기시간순</span> | <span>추천순</span></p>
 	</div>
 </section>
+
 <footer id="member-main-footer">
 	<div>
 		<h2>YamNyaMing</h2>
