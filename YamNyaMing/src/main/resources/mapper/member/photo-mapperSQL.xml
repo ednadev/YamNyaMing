@@ -22,7 +22,7 @@
 
 	<!-- 리뷰 이미지 등록 -->
 	<insert id="reviewPhoto">
-		insert into member_upload_photo_tb values(member_upload_photo_tb_SEQ.nextval,21,#{OriginName},#{remakeName},#{photoRoute},sysdate,#{photoViewRoute})
+		insert into member_upload_photo_tb values(member_upload_photo_tb_SEQ.nextval,3,#{OriginName},#{remakeName},#{photoRoute},sysdate,#{photoViewRoute})
 	</insert>
 	
 	

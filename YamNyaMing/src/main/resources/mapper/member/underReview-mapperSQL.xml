@@ -7,4 +7,33 @@
 	</insert>
 
 
+
+
+	 <select id="pagingTest" parameterType="test" resultType="int"> 
+ SELECT
+   count(*)
+ FROM
+ store_category_detail_tb
+</select>
+
+
+
+<select id="pagingTest2" parameterType="test" resultType="test">
+ 
+    select
+     /*+ opt_param('_optimizer_cost_based_transformation', 'off') */
+      store_cate_detail_pk as storeNo,
+      store_cate_main_fk as storeFk,
+      store_cate_detail_code as code,
+      store_cate_detail_name as name,
+      rownum
+    from
+	store_category_detail_tb
+
+	where rownum between #{startRow} and #{endRow}
+  order by rownum DESC
+
+ </select>
+
+
 </mapper>

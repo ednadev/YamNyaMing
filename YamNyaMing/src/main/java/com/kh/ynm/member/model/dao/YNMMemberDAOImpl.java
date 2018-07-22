@@ -6,10 +6,12 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -94,6 +96,23 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int storeUnderReviewInsert(SqlSessionTemplate sqlSession, YNMStoreUnderReview ysur) {
 		return sqlSession.insert("underReview.storeUnderReviewInsert",ysur);
+	}
+
+	public int boardCount(SqlSessionTemplate sqlSession, PagingTest pt) {
+		return sqlSession.selectOne("underReview.pagingTest",pt);
+	}
+
+	public List<PagingTest> boardList(SqlSessionTemplate sqlSession, PagingTest pt) {
+		List list=sqlSession.selectList("underReview.pagingTest2",pt);
+		return list;
+	}
+
+	public int likeInsert(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
+		return sqlSession.insert("review.likeInsert",yrl);
+	}
+
+	public int storeInfo(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
+		return sqlSession.selectOne("review.likeChk",yrl);
 	}
 	
 }

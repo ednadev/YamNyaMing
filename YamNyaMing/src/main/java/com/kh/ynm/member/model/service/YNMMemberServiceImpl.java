@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,10 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
+import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -124,6 +127,25 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int storeUnderReviewInsert(YNMStoreUnderReview ysur) {
 		int result=memberDAO.storeUnderReviewInsert(sqlSession,ysur);
 		return result;
+	}
+	//paging test
+	public int boardCount(PagingTest pt) {
+		return memberDAO.boardCount(sqlSession,pt);
+
+	}
+	public List<PagingTest> boardList(PagingTest pt) {
+		return memberDAO.boardList(sqlSession,pt);
+
+	}
+	//댓글 좋아요 insert
+	public int likeInsert(YNMReviewLike yrl) {
+		int result=memberDAO.likeInsert(sqlSession,yrl);
+		return result;
+	}
+	//댓글 좋아요 중복 체크
+	public int likeChk(YNMReviewLike yrl) {
+		int likeChk=memberDAO.storeInfo(sqlSession,yrl);
+		return likeChk;
 	}
 	
 

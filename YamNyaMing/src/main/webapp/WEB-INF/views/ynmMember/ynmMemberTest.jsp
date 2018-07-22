@@ -289,6 +289,10 @@ function pwCheck(){
 			<input type="hidden" value="1" name="OwnerStoreEntireNo" >
 			<input type="submit" value="가게 보기">
 		</form>
+		
+		<form action="/pagingTest.do">
+			<input type="submit" value="보기">
+		</form>
 	
 </body>
 </html>
