@@ -1,5 +1,6 @@
 package com.kh.ynm.member.model.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -84,5 +85,6 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMSearch> list = memberDAO.search(sqlSession, check);
 		return list;
 	}
-
+	
+	
 }

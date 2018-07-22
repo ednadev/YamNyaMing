@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+import com.kh.ynm.member.model.vo.BoardPager;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
@@ -315,5 +316,11 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	public String adminMain() {
 		return "ynmAdmin/mainAdmin";
 	}
+	
+	
+	
+	
+
+	
 
 }

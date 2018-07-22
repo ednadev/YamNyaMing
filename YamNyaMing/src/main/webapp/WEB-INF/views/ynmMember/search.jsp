@@ -352,10 +352,17 @@
 		</div>
 	</div>
 	<h4>총 <span>0</span>개가 검색되었습니다</h4>
-	<p><span>대기시간순</span> | <span>추천순</span></p>
+	<p><span>대기순</span> | <span>추천순</span></p>
 	<div class="search-page">
 		<c:forEach items="${search}" var="search">
-			<div style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});"></div>
+			<div style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute}); position:relative;">
+				<div style="background-color:rgba(0,0,0,0.5);position:relative;bottom:0;">
+					<h5>${search.owStoreNum }</h5>
+					<p>서울 > 마포구</p>
+					<p>보쌈,족발</p>
+					<p>대기시간 : 0분 남았습니다</p>
+				</div>
+			</div>
 		</c:forEach>
 	</div>
 	</div>

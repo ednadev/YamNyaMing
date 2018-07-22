@@ -1,7 +1,12 @@
 package com.kh.ynm.member.model.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -62,6 +67,4 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMSearch>)list;
 	}
 
-
-	
 }
