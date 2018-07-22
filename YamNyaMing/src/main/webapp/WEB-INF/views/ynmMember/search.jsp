@@ -186,6 +186,7 @@
 	<div class="detailSearch">
 		<div>
 			<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" onclick="check()" value="해산물요리"><label for="koreanSeafood" style="margin-left:119px;">해산물요리</label>			
+			<input type="checkbox" id="sashimi" name="storeCateDetailName" onclick="check()" value="칼국수,만두"><label for="sashimi">생선회</label>
 			<input type="checkbox" id="kalguksu" name="storeCateDetailName" onclick="check()" value="칼국수,만두"><label for="kalguksu">칼국수,만두</label>
 			<input type="checkbox" id="koreanCake" name="storeCateDetailName" onclick="check()" value="전,빈대떡"><label for="koreanCake">전,빈대떡</label>
 			<input type="checkbox" id="jokbal" name="storeCateDetailName" onclick="check()" value="족발,보쌈"><label for="jokbal">족발,보쌈</label>

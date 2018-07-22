@@ -78,7 +78,7 @@
 				<div class="signUp-table">
 					<div>영업시간</div>
 					<div>
-						<input type="text" name="owStoreWorkingTime" placeholder="ex. 매일  11:30 - 20:00 빵소진시까지">
+						<input type="text" name="owStoreWorkingTime" placeholder="ex. 매일  11:30 - 20:00 빵소진시까지  / 일요일, 공휴일 휴무">
 						<p>영업시간을 입력해주세요.</p>
 					</div>					
 				</div>	
