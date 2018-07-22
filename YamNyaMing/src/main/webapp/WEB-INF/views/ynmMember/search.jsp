@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=8">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=10">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -188,6 +188,7 @@
 			<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" onclick="check()" value="해산물요리"><label for="koreanSeafood" style="margin-left:119px;">해산물요리</label>			
 			<input type="checkbox" id="kalguksu" name="storeCateDetailName" onclick="check()" value="칼국수,만두"><label for="kalguksu">칼국수,만두</label>
 			<input type="checkbox" id="koreanCake" name="storeCateDetailName" onclick="check()" value="전,빈대떡"><label for="koreanCake">전,빈대떡</label>
+			<input type="checkbox" id="jokbal" name="storeCateDetailName" onclick="check()" value="족발,보쌈"><label for="jokbal">족발,보쌈</label>
 			<input type="checkbox" id="meatFood" name="storeCateDetailName" onclick="check()" value="고기요리"><label for="meatFood">고기요리</label>
 			<input type="checkbox" id="snackBar" name="storeCateDetailName" onclick="check()" value="분식"><label for="snackBar">분식</label>
 		</div>
@@ -351,6 +352,11 @@
 	</div>
 	<h4>총 <span>0</span>개가 검색되었습니다</h4>
 	<p><span>대기시간순</span> | <span>추천순</span></p>
+	<div class="search-page">
+		<c:forEach items="${search}" var="search">
+			<div style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});"></div>
+		</c:forEach>
+	</div>
 	</div>
 </section>
 

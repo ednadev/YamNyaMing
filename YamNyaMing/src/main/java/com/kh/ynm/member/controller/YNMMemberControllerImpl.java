@@ -32,6 +32,8 @@ import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMSearch;
+import com.kh.ynm.member.model.vo.YNMSearchCheck;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 
@@ -260,65 +262,38 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 	
 	
+
+
+	
+	
+	
 	
 	// 음식점 검색
 	@RequestMapping(value="/search.do")
-	public String search(HttpSession session, HttpServletRequest request) {
+	public Object search(HttpSession session, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");
 		String food = request.getParameter("food");
 		String place = request.getParameter("place");
 		session.setAttribute("keyword",keyword);
 		session.setAttribute("food", food);
-		session.setAttribute("place", place);		
+		session.setAttribute("place", place);
 		
 		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
 		
+		YNMSearchCheck check = new YNMSearchCheck();
 		
-		
-		
-		
-
-		if(storeCateDetailName!=null) {
-			for(int i=0;i<storeCateDetailName.length;i++) {
-				System.out.println(storeCateDetailName[i]);
-			}
+		ArrayList<YNMSearch> list = ynmMemberServiceImpl.search(check);
+		ModelAndView view = new ModelAndView();
+		if(!list.isEmpty()) {
+			view.addObject("search",list);
+			view.setViewName("ynmMember/search");
+			return view;
 		}
-		if(owBudget!=null) {
-			for(int i=0;i<owBudget.length;i++) {
-				System.out.println(owBudget[i]);
-			}			
-		}
-		if(owSubInfo!=null) {
-			for(int i=0;i<owSubInfo.length;i++) {
-				System.out.println(owSubInfo[i]);
-			}			
-		}
-		if(owDrinkListInfo!=null) {
-			for(int i=0;i<owDrinkListInfo.length;i++) {
-				System.out.println(owDrinkListInfo[i]);
-			}			
-		}
-
-		
-
-
-		return "ynmMember/search";
-	}
-	
-	@RequestMapping(value="/testPage.do")
-	public String testPage(HttpServletRequest request) {
-		String[] storeCateDetailName=null;
-		String [] owBudget=null;
-		storeCateDetailName = request.getParameterValues("storeCateDetailName");
-		owBudget = request.getParameterValues("owBudget");
-		String [] owSubInfo = request.getParameterValues("owSubInfo");
-		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
-		
-		System.out.println(storeCateDetailName.length);
 		return null;
+
 	}
 	
 	// 음식점 상세 페이지

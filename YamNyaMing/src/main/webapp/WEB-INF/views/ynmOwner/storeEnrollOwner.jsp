@@ -77,25 +77,10 @@
 				</div>
 				<div class="signUp-table">
 					<div>영업시간</div>
-					<div id="timeStyle">
-						<select>
-							<option>매일</option>
-							<option>평일</option>
-							<option>주말</option>
-							<option>월요일</option>
-							<option>화요일</option>
-							<option>수요일</option>
-							<option>목요일</option>
-							<option>금요일</option>
-							<option>토요일</option>
-							<option>일요일</option>
-						</select>
-						<input type="time" name="owStoreWorkingTime">
-						<span> - </span>
-						<input type="time" name="owStoreWorkingTime">
-						<input type="text" placeholder="예) 화요일 휴무">
-						<p>주요 영업시간을 입력해주세요. 예외는 기타 사항에 입력해주세요.</p>
-					</div>
+					<div>
+						<input type="text" name="owStoreWorkingTime" placeholder="ex. 매일  11:30 - 20:00 빵소진시까지">
+						<p>영업시간을 입력해주세요.</p>
+					</div>					
 				</div>	
 				<h3>상세 정보 입력</h3>	
 				<div class="signUp-table">
@@ -128,12 +113,12 @@
 					<div>가격 정보</div>
 					<div id="menuPriceInfo">
 						<div class="menuInfo">
-							<input type="text" name="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
-							<input type="text" name="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
+							<input type="text" name="owRecommandMenu" placeholder="ex. 꽃등심" class="menuStyle">
+							<input type="text" name="owRecommandMenuPrice" placeholder="ex. 30,000" class="priceStyle"><span> 원</span>
 							<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
 							<label><input type="checkbox"> 추천메뉴</label>
 							<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
-							<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
+							<textarea id="menuDesc" placeholder="ex. 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
 							<label for="menu-file" id="menu-file-text">사진등록/편집</label>
 							<input type="file" name="owRecommandMenuFile" id="menu-file">
 							<button id="addButton" type="button" onclick="menuInfoAdd();">추가</button>
