@@ -14,6 +14,7 @@ import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.member.model.vo.pagingTest2;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmMemberDAO")
@@ -113,6 +114,62 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int storeInfo(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
 		return sqlSession.selectOne("review.likeChk",yrl);
+	}
+
+	public ArrayList<PagingTest> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage,
+			int recordCountPerPage) {
+		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
+		
+		int end=currentPage*recordCountPerPage;
+		
+		pagingTest2 pt=new pagingTest2();
+		pt.setStart(start);
+		pt.setEnd(end);
+		
+		
+		List list=sqlSession.selectList("underReview.pagingTest2",pt);
+		System.out.println(list.size());
+
+		return (ArrayList<PagingTest>)list;
+	}
+
+	public pagingTest2 getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
+			int naviCountPerPage) {
+
+		
+		int recordTotalCount=0;
+		recordTotalCount=sqlSession.selectOne("underReview.pagingTest");
+		System.out.println(recordTotalCount);
+		int pageTotalCount=0;
+		
+		if(recordTotalCount%recordCountPerPage!=0) {
+			pageTotalCount=recordTotalCount/recordCountPerPage+1;
+		}else {
+			pageTotalCount=recordTotalCount/recordCountPerPage;
+		}
+		
+		if(currentPage<1) {
+			currentPage=1;
+		}else if(currentPage>pageTotalCount) {
+			currentPage=pageTotalCount;
+		}
+		
+		int startNavi=((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		
+		int endNavi=startNavi + naviCountPerPage -1;
+		
+		if(endNavi>pageTotalCount) {
+			endNavi=pageTotalCount;
+		}
+		
+		pagingTest2 qpd=new pagingTest2();
+		qpd.setCurrentPage(currentPage);
+		qpd.setEndNavi(endNavi);
+		qpd.setStartNavi(startNavi);
+		qpd.setPageTotalCount(pageTotalCount);
+		qpd.setRecordTotalCount(recordTotalCount);
+		
+		return qpd;
 	}
 	
 }

@@ -30,7 +30,7 @@
     from
 	store_category_detail_tb
 
-	where rownum between #{startRow} and #{endRow}
+	where rownum between #{start} and #{end}
   order by rownum DESC
 
  </select>

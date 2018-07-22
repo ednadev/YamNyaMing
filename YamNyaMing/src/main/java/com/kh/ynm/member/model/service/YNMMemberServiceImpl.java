@@ -19,6 +19,7 @@ import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.member.model.vo.pagingTest2;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
@@ -146,6 +147,33 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int likeChk(YNMReviewLike yrl) {
 		int likeChk=memberDAO.storeInfo(sqlSession,yrl);
 		return likeChk;
+	}
+	public pagingTest2 testAll(int currentPage) {
+		int recordCountPerPage=10;
+		int naviCountPerPage=5;
+		
+		ArrayList<PagingTest> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage);
+		pagingTest2 qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage);
+		
+		int resultcurrentPage=qpd.getCurrentPage();
+		int endNavi=qpd.getEndNavi();
+		int startNavi=qpd.getStartNavi();
+		int pageTotalCount=qpd.getPageTotalCount();
+		int recordTotalCount=qpd.getRecordTotalCount();
+		
+		pagingTest2 qpd2=null;
+		
+		if(!list.isEmpty()) {
+			qpd2=new pagingTest2();
+			qpd2.setNoticelist(list);
+			qpd2.setCurrentPage(resultcurrentPage);
+			qpd2.setEndNavi(endNavi);
+			qpd2.setStartNavi(startNavi);
+			qpd2.setPageTotalCount(pageTotalCount);
+			qpd2.setRecordTotalCount(recordTotalCount);
+			
+		}
+		return qpd2;
 	}
 	
 
