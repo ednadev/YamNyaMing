@@ -18,4 +18,7 @@ public interface YNMOwnerService {
 	
 	// 아이디 체크
 	public YNMOwner idCheck(String ownerId);
+	
+	// 상점 정보 인덱스로 가져오기
+	public int ynmSelectStoreIndex(String bizNum);
 }

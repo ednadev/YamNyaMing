@@ -14,13 +14,16 @@
 		if(${sessionScope.owner==null})
 		{
 			alert("잘못된 접근입니다. 로그인 후에 이용해주세요.");
-			location.href="redirect:/";
+			location.href="/";
 		}
 	}
 </script>
 </head>
 <body>
-	<h2>입점신청</h2>
-	<a href="/storeEnrollOwner.do">얌냐밍 입점 신청하기</a>
+	<c:if test="${sessionScope.owner!=null}">
+		<h2>입점신청</h2>
+		<a href="/storeEnrollOwner.do">얌냐밍 입점 신청하기</a>
+	</c:if>
+	
 </body>
 </html>

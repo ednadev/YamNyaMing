@@ -11,6 +11,12 @@ function openCheck3(){
 	var element = document.getElementById("checkText3");
 	element.classList.toggle("open");
 }
+function radioLoginType(radioInput)
+{
+	var radioChk = radioInput.value;
+	if(radioChk=="member") document.getElementById('loginForm').action = '/login.do';
+	else  document.getElementById('loginForm').action = '/ownerLogin.do';
+}
 
 //지도API
 //마커를 클릭하면 장소명을 표출할 인포윈도우 입니다

@@ -161,6 +161,8 @@ function owPwCheck(){
     
     if(rightFormChk)pwCheckResult.html("사용할 수 있는 비밀번호 입니다.");	
 	resultStyleChk(pwCheckResult,rightFormChk);
+	
+	passChk = rightFormChk;
 }
 
 
@@ -186,6 +188,8 @@ function ownerPwReChk()
     }
     if(rightFormChk)pwCheckReResult.html("비밀번호가 일치합니다.");	
 	resultStyleChk(pwCheckReResult,rightFormChk);
+	
+	passReChk = rightFormChk;
 }
 
 function ownerNameChk()
@@ -221,6 +225,8 @@ function ownerNameChk()
     if(rightFormChk)nameCheckResult.html("확인");	
     else nameCheckResult.html("존재하지 않는 성씨입니다.");
 	resultStyleChk(nameCheckResult,rightFormChk);
+	
+	nameChk = rightFormChk;
 }
 
 // 이메일 체크
@@ -255,7 +261,7 @@ function emailConfirm()
 				   },
 			type : "post",
 			success : function(data){	
-				console.log("이메일 결과" + data);
+
 			},
 			error : function(){
 				
@@ -276,8 +282,12 @@ function emailKeyMatchCheck()
 			if(emailConfirmInput==data){
 				$('#ownerEmailChk').html("이메일 인증 완료");
 				$('#emailConfirmInput').attr('readonly', true);
+				emailChk = true;
 				timer = 180;
 				clearInterval(playAlert); 
+			}else
+			{
+				emailChk = false;
 			}
 		},
 		error : function(){
@@ -291,8 +301,8 @@ var passChk = false;
 var passReChk =false;
 var nameChk = false;
 var emailChk = false;
-var phoneChk = false;
-var accountChk = false;
+var phoneChk = true;
+var accountChk = true;
 function signUpValidChk()
 {
 	return idChk&&passChk&&passReChk&&nameChk&&emailChk&&phoneChk&&accountChk;

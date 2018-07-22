@@ -100,8 +100,9 @@ function telCheck()
 
 function storeAddress() {
 	  var ownerResult = $('#addressOwner');
+	  $('#storePostCode').blur();
 	  var result = true;
-      new daum.Postcode({
+      var daumAddr = new daum.Postcode({
           oncomplete: function(data) {
               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -176,6 +177,7 @@ var sel_files=[];
 var html;
 $(document).ready(function(){
 	$("#mainImage").on("change",reviewPhotoSelect);
+	$("#menuImage").on("change",menuPhotoSelect);
 });
 
 function reviewFilesUpload(){
@@ -210,7 +212,35 @@ function reviewPhotoSelect(e){
 			alert("대표 사진은 30개 이하만 등록할수 있습니다.");
 		}
 	});
+}
+function menuPhotoSelect(e){
 	
+//	$(".imgs_wrap").empty();
+	
+	var files=e.target.files;
+	var filesArr=Array.prototype.slice.call(files);
+	
+	var index=sel_files.length;
+	filesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("확장자는 이미지 확장자만 가능합니다.");
+			return;
+		}
+		if(sel_files.length<30){
+			sel_files.push(f);
+			
+			var reader=new FileReader();
+			reader.onload=function(e){
+				html="<a href=\"javascript:void(0);\"  onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img style='width:120px; height:120px;' src=\""+e.target.result+"\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+				$(".imgs_wrap_menu").append(html);
+				index++;
+			}
+			reader.readAsDataURL(f);
+		}else
+		{
+			alert("대표 사진은 30개 이하만 등록할수 있습니다.");
+		}
+	});
 }
 function deleteImageAction(index){
 	sel_files.splice(index,1);
@@ -220,3 +250,20 @@ function deleteImageAction(index){
 }
 
 
+function menuTypeChange(menuType)
+{
+	var menuArr = document.getElementsByClassName('menu-type');
+	var menuTypeArr = document.getElementsByClassName('menuInfo');
+	for(var i = 0; i<menuArr.length;i++)
+	{
+		if(menuType==menuArr[i]){
+			menuType.id='menu-info-type-click';
+			menuTypeArr[i].style.display = 'block';
+			if(menuType==menuArr[1]) menuTypeArr[2].style.display = 'block';
+		}else
+		{
+			menuArr[i].id="menu-info-type";
+			menuTypeArr[i].style.display = 'none';
+		}
+	}
+}

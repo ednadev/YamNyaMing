@@ -220,6 +220,41 @@
 	margin-top:10px;
 	text-align:center;
 }
+#menu-image{
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:#cecece;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
+
+#menu-info-type{
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:#cecece;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
+#menu-info-type-click{
+	background-color:#fb0;
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:white;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
 .signUp-table>.menuPriceInfo{
 	display:block;
 }
@@ -238,16 +273,21 @@
 	margin-bottom:20px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#menu-file-text{
-	position:absolute;
+	/* position:absolute;
 	right:140px;
 	bottom:5px;
-	cursor:pointer;
+	cursor:pointer; */
+	position: relative;
+    bottom: 5px;
+    top: 20px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#addButton{
-	right:85px;
+	right:200px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#delButton{
-	right:30px;
+	right:150px;
 }
 .signUp-table>#timeStyle>input[type="text"]{
 	font-size:0.8em;
@@ -264,4 +304,31 @@
 	display:inline-block;
 	cursor:pointer;
 	margin-bottom:5px;
+}
+#menuImage{
+	display:none;
+}
+#menuImage+label{
+	background-color:black;
+	color:white;
+	padding:10px;
+	display:inline-block;
+	cursor:pointer;
+	margin-bottom:5px;
+	margin-top:20px;
+}
+
+.menuCateBtn{
+	background-color:black;
+	color:white;
+	padding:10px;
+	display:inline-block;
+	cursor:pointer;
+	margin-bottom:5px;
+	margin-top:20px;
+}
+
+.menuCategory{
+	height:38px;
+	color:#cecece;
 }

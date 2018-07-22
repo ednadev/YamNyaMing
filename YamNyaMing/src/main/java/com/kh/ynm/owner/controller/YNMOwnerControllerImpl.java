@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
+import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -61,11 +63,35 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 
 	@Override
 	@RequestMapping(value="/ownerAddStore.do")
-	public String addStore(HttpSession session, YNMStoreInfo storeInfo) {
+	public String addStore(@RequestParam("mainImgFile") MultipartFile mainImgFile,@RequestParam("menuImageFile") MultipartFile menuImgFile, HttpSession session, HttpServletRequest request) {
 		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			YNMStoreInfo storeInfo = new YNMStoreInfo();
+			storeInfo.setOwEntireFk(owner.getOwEntirePk());
+			storeInfo.setOwStoreBizNum(request.getParameter("owStoreBizNum"));
+			storeInfo.setOwStoreName(request.getParameter("owStoreName"));
+			String tel = request.getParameter("regionTel")+request.getParameter("owTel");
+			storeInfo.setOwStoreTel(tel);
+			storeInfo.setOwBigTypeFk(1);
+			storeInfo.setOwSmallTypeFk(1);
+			storeInfo.setOwStoreUrl(request.getParameter("owStoreUrl"));
+			String addr = request.getParameter("postNum") + request.getParameter("addrStreet") + request.getParameter("detailAddr");
+			System.out.println("주소 " + addr);
+			storeInfo.setOwStoreAddr(addr);
+			String owStoreWorkingTime = request.getParameter("workingWeek")+" " + 
+					request.getParameter("owStoreWorkingTimeStart") +"-" + request.getParameter("owStoreWorkingTimeEnd") + 
+					" " + request.getParameter("extWorkingOption");
+			storeInfo.setOwStoreWorkingTime(owStoreWorkingTime); 
+			
 			int result = ynmOwnerServiceImpl.ynmStoreAdd(storeInfo);
 			
-			return null;
+			int storeInfoIndex = ynmOwnerServiceImpl.ynmSelectStoreIndex(request.getParameter("owStoreBizNum"));
+			
+			MenuInfo menuInfo = new MenuInfo();
+			menuInfo.setOwStoreMenuTypeFk(2);//설명타입 
+			
+			
+			return "ynmOwner/storeEnrollOwner";
 		}
 		return null;
 	}

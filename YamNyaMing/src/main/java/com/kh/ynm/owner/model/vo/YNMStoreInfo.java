@@ -7,33 +7,64 @@ public class YNMStoreInfo {
 	private int owEntireFk;
 	private String owStoreBizNum;
 	private String owStoreName;
-	private String owStorePhone;
+	private String owStoreTel;
 	private int owBigTypeFk;
-	private int owStoreTypeFk;
+	private int owSmallTypeFk;
 	private String owStoreUrl;
+	private String owStoreAddr;
 	private Date owStoreRegDate;
 	private String owStoreMapInfo;
 	private String owStoreWorkingTime;
+	private MenuInfo menuInfo;
+	
 	
 	
 	public YNMStoreInfo() {
 		super();
 	}
-	public YNMStoreInfo(int owStoreInfoPk, int owEntireFk, String owStoreBizNum, String owStoreName,
-			String owStorePhone, int owBigTypeFk, int owStoreTypeFk, String owStoreUrl, Date owStoreRegDate,
-			String owStoreMapInfo, String owStoreWorkingTime) {
+	
+	public YNMStoreInfo(int owStoreInfoPk, int owEntireFk, String owStoreBizNum, String owStoreName, String owStoreTel,
+			int owBigTypeFk, int owSmallTypeFk, String owStoreUrl, String owStoreAddr, Date owStoreRegDate,
+			String owStoreMapInfo, String owStoreWorkingTime, MenuInfo menuInfo) {
 		super();
 		this.owStoreInfoPk = owStoreInfoPk;
 		this.owEntireFk = owEntireFk;
 		this.owStoreBizNum = owStoreBizNum;
 		this.owStoreName = owStoreName;
-		this.owStorePhone = owStorePhone;
+		this.owStoreTel = owStoreTel;
 		this.owBigTypeFk = owBigTypeFk;
-		this.owStoreTypeFk = owStoreTypeFk;
+		this.owSmallTypeFk = owSmallTypeFk;
 		this.owStoreUrl = owStoreUrl;
+		this.owStoreAddr = owStoreAddr;
 		this.owStoreRegDate = owStoreRegDate;
 		this.owStoreMapInfo = owStoreMapInfo;
 		this.owStoreWorkingTime = owStoreWorkingTime;
+		this.menuInfo = menuInfo;
+	}
+	
+	
+
+
+	@Override
+	public String toString() {
+		return "YNMStoreInfo [owStoreInfoPk=" + owStoreInfoPk + ", owEntireFk=" + owEntireFk + ", owStoreBizNum="
+				+ owStoreBizNum + ", owStoreName=" + owStoreName + ", owStoreTel=" + owStoreTel + ", owBigTypeFk="
+				+ owBigTypeFk + ", owSmallTypeFk=" + owSmallTypeFk + ", owStoreUrl=" + owStoreUrl + ", owStoreAddr="
+				+ owStoreAddr + ", owStoreRegDate=" + owStoreRegDate + ", owStoreMapInfo=" + owStoreMapInfo
+				+ ", owStoreWorkingTime=" + owStoreWorkingTime + ", menuInfo=" + menuInfo + "]";
+	}
+
+	public String getOwStoreAddr() {
+		return owStoreAddr;
+	}
+	public void setOwStoreAddr(String owStoreAddr) {
+		this.owStoreAddr = owStoreAddr;
+	}
+	public MenuInfo getMenuInfo() {
+		return menuInfo;
+	}
+	public void setMenuInfo(MenuInfo menuInfo) {
+		this.menuInfo = menuInfo;
 	}
 	public int getOwStoreInfoPk() {
 		return owStoreInfoPk;
@@ -59,11 +90,11 @@ public class YNMStoreInfo {
 	public void setOwStoreName(String owStoreName) {
 		this.owStoreName = owStoreName;
 	}
-	public String getOwStorePhone() {
-		return owStorePhone;
+	public String getOwStoreTel() {
+		return owStoreTel;
 	}
-	public void setOwStorePhone(String owStorePhone) {
-		this.owStorePhone = owStorePhone;
+	public void setOwStoreTel(String owStoreTel) {
+		this.owStoreTel = owStoreTel;
 	}
 	public int getOwBigTypeFk() {
 		return owBigTypeFk;
@@ -71,11 +102,11 @@ public class YNMStoreInfo {
 	public void setOwBigTypeFk(int owBigTypeFk) {
 		this.owBigTypeFk = owBigTypeFk;
 	}
-	public int getOwStoreTypeFk() {
-		return owStoreTypeFk;
+	public int getOwSmallTypeFk() {
+		return owSmallTypeFk;
 	}
-	public void setOwStoreTypeFk(int owStoreTypeFk) {
-		this.owStoreTypeFk = owStoreTypeFk;
+	public void setOwSmallTypeFk(int owSmallTypeFk) {
+		this.owSmallTypeFk = owSmallTypeFk;
 	}
 	public String getOwStoreUrl() {
 		return owStoreUrl;

@@ -47,4 +47,10 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		int result =  ynmOwnerDAO.ynmStoreAdd(sqlSession, storeInfo);
 		return result;
 	}
+
+	@Override
+	public int ynmSelectStoreIndex(String bizNum) {
+		int storeIndex = ynmOwnerDAO.ynmSelectStoreIndex(sqlSession,bizNum);
+		return storeIndex;
+	}
 }

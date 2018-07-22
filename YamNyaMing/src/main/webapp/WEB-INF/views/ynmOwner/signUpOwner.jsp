@@ -23,7 +23,7 @@
 			<h2>점장 가입하기</h2>
 			<p>01 약관 동의 > <span>02 정보 입력</span></p>
 		</nav>
-        <form action="/ownerSignUp.do" method="post">
+        <form action="/ownerSignUp.do" method="post" onsubmit="return signUpValidChk();">
 			<section id="owner-signUp-section">
 				<h3>계정 정보 입력</h3>
 				<div class="signUp-table">

@@ -114,39 +114,39 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			
 			
 			if(file.getSize()>0) {
-			String OriginName=file.getOriginalFilename();
-			String remakeName=System.currentTimeMillis()+"_"+OriginName;
-			String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
-			String photoViewRoute="\\memberPhoto\\"+remakeName;
-			File f=new File(photoRoute);
-			try {
-				file.transferTo(f);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		
-		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
-		ymup.setOriginName(OriginName);
-		ymup.setRemakeName(remakeName);
-		ymup.setPhotoRoute(photoRoute);
-		ymup.setPhotoViewRoute(photoViewRoute);
-		
-		int result=ynmMemberServiceImpl.memberUploadPhoto(ymup);
-		
-		YNMMemberUploadPhoto ymupIndex=ynmMemberServiceImpl.memberIndexSelect(remakeName);
-		
-		
-		ym.setMemberUploadPhotoNo(ymupIndex.getUploadPhotoNo());
-		
-		int result2=ynmMemberServiceImpl.signUpMember(ym);
-		
-		//회원가입 성공시
-		return null;
+				String OriginName=file.getOriginalFilename();
+				String remakeName=System.currentTimeMillis()+"_"+OriginName;
+				String photoRoute="C:\\Users\\user1\\git\\YamNyaMing\\YamNyaMing\\src\\main\\webapp\\resources\\memberPhoto\\"+remakeName;
+				String photoViewRoute="\\memberPhoto\\"+remakeName;
+				File f=new File(photoRoute);
+				try {
+					file.transferTo(f);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+			YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
+			ymup.setOriginName(OriginName);
+			ymup.setRemakeName(remakeName);
+			ymup.setPhotoRoute(photoRoute);
+			ymup.setPhotoViewRoute(photoViewRoute);
+			
+			int result=ynmMemberServiceImpl.memberUploadPhoto(ymup);
+			
+			YNMMemberUploadPhoto ymupIndex=ynmMemberServiceImpl.memberIndexSelect(remakeName);
+			
+			
+			ym.setMemberUploadPhotoNo(ymupIndex.getUploadPhotoNo());
+			
+			int result2=ynmMemberServiceImpl.signUpMember(ym);
+			
+			//회원가입 성공시
+			return null;
 		}
 		else {
 			int memberUploadPhotoNo=1;
@@ -156,7 +156,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			//회원가입 성공시
 			return null;
 		}
-		
+			
 		
 	}
 	

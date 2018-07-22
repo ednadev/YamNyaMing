@@ -23,6 +23,7 @@
 			<c:if test="${sessionScope.owner!=null}" var="result">
 				<li>${sessionScope.owner.owName} 사장님 환영합니다. </li>
 				<li><a href="/ownerMyPage.do">마이페이지</a></li>
+				<li><a href="/ownerLogout.do">로그아웃</a></li>
 			</c:if>
 			<c:if test="${sessionScope.owner==null}" var="result">
 				<li><a href="/loginMember.do">로그인</a></li>
