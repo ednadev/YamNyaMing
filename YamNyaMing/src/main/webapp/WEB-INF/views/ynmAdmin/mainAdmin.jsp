@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -19,7 +19,7 @@
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[닉네임]님 ([아이디]) <a href="logoutAdmin.do">로그아웃</a>
+			[닉네임]님 ([아이디]) <a href="ynmAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
@@ -27,8 +27,8 @@
 			<li><a href="adminInfo.do">관리자 정보</a></li>
 			<li><a href="memberManager.do">회원 관리</a></li>
 			<li><a href="ownerManager.do">점장 관리</a></li>
-			<li><a href="boardAdmin.do">게시판</a></li>
-			<li><a href="statAdmin.do">통계</a></li>
+			<li><a href="boardAdmin.do">게시판 관리</a></li>
+			<li><a href="statAdmin.do">통계 관리</a></li>
 		</ul>
 	</nav>
 	<section id="admin-main-section">

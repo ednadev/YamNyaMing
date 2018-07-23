@@ -29,4 +29,10 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	public String storeEnrollOwner() {
 		return "ynmOwner/storeEnrollOwner";
 	}	
+	
+	//점장 : 점장 메인 페이지로 이동
+	@RequestMapping(value="/mainOwner.do")
+	public String mainOwner() {
+		return "ynmOwner/mainOwner";
+	}
 }
