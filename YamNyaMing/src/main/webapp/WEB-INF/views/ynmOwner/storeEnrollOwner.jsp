@@ -123,7 +123,14 @@
 						<p>주요 영업시간을 입력해주세요. 예외는 기타 사항에 입력해주세요.</p>
 					</div>
 				</div>	
-				<h3>상세 정보 입력</h3>	
+				<h3>상세 정보 입력</h3>
+				<div class="signUp-table">
+					<div>가게 한줄평</div>
+					<div>
+						<input type="text" name="owStoreLineComment" class="keywordStyle">
+						<p id="tipResult">(가게를 소개할 한줄 코멘트를 적어주세요.)</p>
+					</div>
+				</div>	
 				<div class="signUp-table">
 					<div>대표 키워드</div>
 					<div>
@@ -177,7 +184,7 @@
 							<label class="menuCateBtn" id="removeMenuCateBtn" onclick="removeMenuCategory();">삭제</label>
 						</div>
 						<div class="menuInfo" id="menu-info-text" style="display:none;">
-							<select class="menuCategory">
+							<select name="menuCategoryTitle" class="menuCategory">
 								<option>분류 항목 </option>
 							</select>
 							<br>
@@ -186,11 +193,17 @@
 							<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
 							<label><input type="checkbox"> 추천메뉴</label>
 							<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
-							<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
+							<textarea id="menuDesc" name="owMenuExplain" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
 							<button id="addButton" type="button" onclick="menuInfoAdd();">추가</button>
 						</div>
 					</div>
-				</div>				
+				</div>
+				<div class="signUp-table">
+					<div>가게 추천 메뉴</div>
+					<div>
+						<input type="text" name="owRecommandMenu" placeholder="테이블 정보 입력 (최대 인원)">
+					</div>
+				</div>					
 				<div class="signUp-table">
 					<div>테이블 정보</div>
 					<div>
@@ -216,6 +229,7 @@
 					</div>
 				</div>																																																										
 			</section>
+			<input type="hidden" id="storeMenuTypeId" name="storeMenuType" value="1" />
 			<input type="submit" value="입점 신청하기">
 		</form>
 	</div>

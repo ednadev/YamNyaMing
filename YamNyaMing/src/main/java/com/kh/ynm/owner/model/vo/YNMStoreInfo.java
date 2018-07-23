@@ -15,7 +15,7 @@ public class YNMStoreInfo {
 	private Date owStoreRegDate;
 	private String owStoreMapInfo;
 	private String owStoreWorkingTime;
-	private MenuInfo menuInfo;
+	private YNMStoreDetailInfo detailInfo;
 	
 	
 	
@@ -25,7 +25,7 @@ public class YNMStoreInfo {
 	
 	public YNMStoreInfo(int owStoreInfoPk, int owEntireFk, String owStoreBizNum, String owStoreName, String owStoreTel,
 			int owBigTypeFk, int owSmallTypeFk, String owStoreUrl, String owStoreAddr, Date owStoreRegDate,
-			String owStoreMapInfo, String owStoreWorkingTime, MenuInfo menuInfo) {
+			String owStoreMapInfo, String owStoreWorkingTime, YNMStoreDetailInfo detailInfo) {
 		super();
 		this.owStoreInfoPk = owStoreInfoPk;
 		this.owEntireFk = owEntireFk;
@@ -39,7 +39,7 @@ public class YNMStoreInfo {
 		this.owStoreRegDate = owStoreRegDate;
 		this.owStoreMapInfo = owStoreMapInfo;
 		this.owStoreWorkingTime = owStoreWorkingTime;
-		this.menuInfo = menuInfo;
+		this.detailInfo = detailInfo;
 	}
 	
 	
@@ -51,7 +51,7 @@ public class YNMStoreInfo {
 				+ owStoreBizNum + ", owStoreName=" + owStoreName + ", owStoreTel=" + owStoreTel + ", owBigTypeFk="
 				+ owBigTypeFk + ", owSmallTypeFk=" + owSmallTypeFk + ", owStoreUrl=" + owStoreUrl + ", owStoreAddr="
 				+ owStoreAddr + ", owStoreRegDate=" + owStoreRegDate + ", owStoreMapInfo=" + owStoreMapInfo
-				+ ", owStoreWorkingTime=" + owStoreWorkingTime + ", menuInfo=" + menuInfo + "]";
+				+ ", owStoreWorkingTime=" + owStoreWorkingTime + ", detailInfo=" + detailInfo + "]";
 	}
 
 	public String getOwStoreAddr() {
@@ -60,11 +60,11 @@ public class YNMStoreInfo {
 	public void setOwStoreAddr(String owStoreAddr) {
 		this.owStoreAddr = owStoreAddr;
 	}
-	public MenuInfo getMenuInfo() {
-		return menuInfo;
+	public YNMStoreDetailInfo getMenuInfo() {
+		return detailInfo;
 	}
-	public void setMenuInfo(MenuInfo menuInfo) {
-		this.menuInfo = menuInfo;
+	public void setMenuInfo(YNMStoreDetailInfo detailInfo) {
+		this.detailInfo = detailInfo;
 	}
 	public int getOwStoreInfoPk() {
 		return owStoreInfoPk;

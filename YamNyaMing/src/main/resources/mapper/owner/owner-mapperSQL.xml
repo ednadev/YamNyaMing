@@ -10,6 +10,7 @@
 	
 	<select id="ownerLogin" parameterType="owner" resultType="owner">	
 		 select 
+		 ow_entire_pk as owEntirePk,
 		 ow_id as owId,
 		 ow_name as owName,
 		 ow_email as owEmail,

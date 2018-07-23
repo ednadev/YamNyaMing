@@ -3,6 +3,7 @@ package com.kh.ynm.owner.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -26,11 +27,19 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public int ynmStoreAdd(SqlSessionTemplate sqlSession, YNMStoreInfo storeInfo) {
-		return sqlSession.insert("owners.storeAdd", storeInfo);
+		return sqlSession.insert("stores.storeAdd", storeInfo);
 	}
 
 	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, String bizNum) {
-		return sqlSession.insert("owners.storeAdd", storeInfo);;
+		return sqlSession.insert("stores.storeSearchWithBizNum", bizNum);
+	}
+
+	public int ownerPhotoUpload(SqlSessionTemplate sqlSession, OwnerUploadPhoto uploadPhoto) {
+		return sqlSession.insert("owphotos.headPhotoUpload",uploadPhoto);
+	}
+
+	public int photoSelectWithName(SqlSessionTemplate sqlSession,String remakeName) {
+		return sqlSession.selectOne("owphotos.", remakeName);
 	}
 	
 }

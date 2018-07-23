@@ -261,8 +261,10 @@ function menuTypeChange(menuType)
 		menuTypeArr[j].style.display = 'none';
 		if(menuType==menuArr[0])// 이미지 메뉴 등록 눌렀을때 
 		{
+			$('#storeMenuTypeId').val("1");
 			menuTypeArr[0].style.display = 'block';
 		}else{  // 직접 메뉴 등록 눌렀을때
+			$('#storeMenuTypeId').val("2");
 			if(j>0) menuTypeArr[j].style.display = 'block';
 		}
 	}

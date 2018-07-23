@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -27,7 +28,7 @@ public interface YNMOwnerController {
 	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response, HttpSession session);
 	
 	// 가게 추가
-	public String addStore(@RequestParam("mainImgFile") MultipartFile mainImgFile,@RequestParam("menuImageFile") MultipartFile menuImgFile, HttpSession session,  HttpServletRequest request);
+	public String addStore(@RequestParam("mainImgFile") MultipartHttpServletRequest mainImgFile,@RequestParam("menuImageFile") MultipartHttpServletRequest menuImgFile, HttpSession session, HttpServletRequest request);
 	
 	// 로그아웃
 	public String ynmOwnerLogout(HttpSession session);

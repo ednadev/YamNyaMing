@@ -1,5 +1,6 @@
 package com.kh.ynm.owner.model.service;
 
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -21,4 +22,10 @@ public interface YNMOwnerService {
 	
 	// 상점 정보 인덱스로 가져오기
 	public int ynmSelectStoreIndex(String bizNum);
+	
+	// 점주 사진 업로드
+	public int ownerPhotoUpload(OwnerUploadPhoto uploadPhoto);
+	
+	// 사진 선택, 이름으로
+	public int photoSelectWithName(String remakeName);
 }

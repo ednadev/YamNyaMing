@@ -2,6 +2,7 @@ package com.kh.ynm.owner.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -10,4 +11,6 @@ public interface YNMOwnerDAO {
 	public YNMOwner selectOneOwner(SqlSessionTemplate sqlSession, String ownerid);
 	public YNMOwner selectOneOwner(SqlSessionTemplate sqlSession, YNMOwner owner);
 	public int ynmStoreAdd(SqlSessionTemplate sqlSession, YNMStoreInfo storeInfo);
+	public int ownerPhotoUpload(SqlSessionTemplate sqlSession, OwnerUploadPhoto uploadPhoto);
+	public int photoSelectWithName(SqlSessionTemplate sqlSession,String remakeName);
 }

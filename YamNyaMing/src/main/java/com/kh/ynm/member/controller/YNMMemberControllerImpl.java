@@ -143,7 +143,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 
 
-	//�쉶�썝 �깉�눜
 	@Override
 	@RequestMapping(value="/signOutMember.do")
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response) {

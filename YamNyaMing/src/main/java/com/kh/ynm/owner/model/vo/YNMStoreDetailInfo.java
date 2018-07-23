@@ -1,6 +1,6 @@
 package com.kh.ynm.owner.model.vo;
 
-public class StoreDetailInfo {
+public class YNMStoreDetailInfo {
 	private int owStoreDetailPk;
 	private int owStoreInfoFk;
 	private String owStoreTip;
@@ -8,16 +8,22 @@ public class StoreDetailInfo {
 	private int storeBigType;
 	private int storeSmallType;
 	private String recommandMenu;
-	private String StoreTableInfo;
+	private String storeTableInfo;
 	private String budgetInfo;
 	private String owSubInfo;
 	private String owDrinkListInfo;
+	private String owStoreHeadPhoto;
+	private int owStoreMenuTypeFk;
+	private String owStoreMenuInfoDetail;
+	private String owStoreCostType;
 	
-	public StoreDetailInfo() {}
+	public YNMStoreDetailInfo() {}
 	
-	public StoreDetailInfo(int owStoreDetailPk, int owStoreInfoFk, String owStoreTip, String owStoreLineComment,
+
+	public YNMStoreDetailInfo(int owStoreDetailPk, int owStoreInfoFk, String owStoreTip, String owStoreLineComment,
 			int storeBigType, int storeSmallType, String recommandMenu, String storeTableInfo, String budgetInfo,
-			String owSubInfo, String owDrinkListInfo) {
+			String owSubInfo, String owDrinkListInfo, String owStoreHeadPhoto, int owStoreMenuTypeFk,
+			String owStoreMenuInfoDetail, String owStoreCostType) {
 		super();
 		this.owStoreDetailPk = owStoreDetailPk;
 		this.owStoreInfoFk = owStoreInfoFk;
@@ -26,11 +32,17 @@ public class StoreDetailInfo {
 		this.storeBigType = storeBigType;
 		this.storeSmallType = storeSmallType;
 		this.recommandMenu = recommandMenu;
-		StoreTableInfo = storeTableInfo;
+		this.storeTableInfo = storeTableInfo;
 		this.budgetInfo = budgetInfo;
 		this.owSubInfo = owSubInfo;
 		this.owDrinkListInfo = owDrinkListInfo;
+		this.owStoreHeadPhoto = owStoreHeadPhoto;
+		this.owStoreMenuTypeFk = owStoreMenuTypeFk;
+		this.owStoreMenuInfoDetail = owStoreMenuInfoDetail;
+		this.owStoreCostType = owStoreCostType;
 	}
+
+
 
 
 	public int getOwStoreDetailPk() {
@@ -79,10 +91,10 @@ public class StoreDetailInfo {
 		this.recommandMenu = recommandMenu;
 	}
 	public String getStoreTableInfo() {
-		return StoreTableInfo;
+		return storeTableInfo;
 	}
 	public void setStoreTableInfo(String storeTableInfo) {
-		StoreTableInfo = storeTableInfo;
+		this.storeTableInfo = storeTableInfo;
 	}
 	public String getBudgetInfo() {
 		return budgetInfo;
@@ -102,6 +114,40 @@ public class StoreDetailInfo {
 	public void setOwDrinkListInfo(String owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
 	}
+
+	public String getOwStoreHeadPhoto() {
+		return owStoreHeadPhoto;
+	}
+
+	public void setOwStoreHeadPhoto(String owStoreHeadPhoto) {
+		this.owStoreHeadPhoto = owStoreHeadPhoto;
+	}
+
+	public int getOwStoreMenuTypeFk() {
+		return owStoreMenuTypeFk;
+	}
+
+	public void setOwStoreMenuTypeFk(int owStoreMenuTypeFk) {
+		this.owStoreMenuTypeFk = owStoreMenuTypeFk;
+	}
+
+	public String getOwStoreMenuInfoDetail() {
+		return owStoreMenuInfoDetail;
+	}
+
+	public void setOwStoreMenuInfoDetail(String owStoreMenuInfoDetail) {
+		this.owStoreMenuInfoDetail = owStoreMenuInfoDetail;
+	}
+
+	public String getOwStoreCostType() {
+		return owStoreCostType;
+	}
+
+	public void setOwStoreCostType(String owStoreCostType) {
+		this.owStoreCostType = owStoreCostType;
+	}
+	
+	
 	
 	
 }
