@@ -45,7 +45,7 @@ public class CommonControllerImpl implements CommonController {
 	
 	@RequestMapping(value = "/emailConCheck.do", method = RequestMethod.POST)
 	public String RegisterPost(RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
-		String email = request.getParameter("ownerEmail");
+		String email = request.getParameter("emailConfirm");
 		authReturn = new TempKey().getKey(6, true);
 		//HTML 메일
 		htmlMail(email);

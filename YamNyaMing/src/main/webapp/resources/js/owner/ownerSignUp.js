@@ -257,7 +257,7 @@ function emailConfirm()
 		$.ajax({
 			url:"/emailConCheck.do",
 			data : {
-						ownerEmail:insertEmail,
+						emailConfirm:insertEmail,
 				   },
 			type : "post",
 			success : function(data){	
