@@ -2,6 +2,7 @@ package com.kh.ynm.member.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -11,14 +12,17 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
+import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.member.model.vo.pagingTest2;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
@@ -85,8 +89,9 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	}
 	//사용자 리뷰 사진 등록
 	public int reviewUploadPhoto(YNMMemberUploadPhoto ymup) {
-		int result=memberDAO.reviewUploadPhoto(sqlSession,ymup);
-		return result;
+//		int result=memberDAO.reviewUploadPhoto(sqlSession,ymup);
+//		return result;
+		return 0;
 	}
 	//등록한 리뷰 사진 인덱스 가져오기
 	public YNMMemberUploadPhoto reviewIndexSelect(String remakeName) {
@@ -127,6 +132,52 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int storeUnderReviewInsert(YNMStoreUnderReview ysur) {
 		int result=memberDAO.storeUnderReviewInsert(sqlSession,ysur);
 		return result;
+	}
+	//paging test
+	public int boardCount(PagingTest pt) {
+		return memberDAO.boardCount(sqlSession,pt);
+
+	}
+	public List<PagingTest> boardList(PagingTest pt) {
+		return memberDAO.boardList(sqlSession,pt);
+
+	}
+	//댓글 좋아요 insert
+	public int likeInsert(YNMReviewLike yrl) {
+		int result=memberDAO.likeInsert(sqlSession,yrl);
+		return result;
+	}
+	//댓글 좋아요 중복 체크
+	public int likeChk(YNMReviewLike yrl) {
+		int likeChk=memberDAO.storeInfo(sqlSession,yrl);
+		return likeChk;
+	}
+	public pagingTest2 testAll(int currentPage) {
+		int recordCountPerPage=10;
+		int naviCountPerPage=5;
+		
+		ArrayList<PagingTest> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage);
+		pagingTest2 qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage);
+		
+		int resultcurrentPage=qpd.getCurrentPage();
+		int endNavi=qpd.getEndNavi();
+		int startNavi=qpd.getStartNavi();
+		int pageTotalCount=qpd.getPageTotalCount();
+		int recordTotalCount=qpd.getRecordTotalCount();
+		
+		pagingTest2 qpd2=null;
+		
+		if(!list.isEmpty()) {
+			qpd2=new pagingTest2();
+			qpd2.setNoticelist(list);
+			qpd2.setCurrentPage(resultcurrentPage);
+			qpd2.setEndNavi(endNavi);
+			qpd2.setStartNavi(startNavi);
+			qpd2.setPageTotalCount(pageTotalCount);
+			qpd2.setRecordTotalCount(recordTotalCount);
+			
+		}
+		return qpd2;
 	}
 	
 

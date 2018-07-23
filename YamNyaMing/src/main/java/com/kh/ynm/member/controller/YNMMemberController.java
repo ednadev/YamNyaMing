@@ -31,7 +31,7 @@ public interface YNMMemberController {
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response);
-
+	public String enrollMember();
 	
 	//예약 table
 	public String bookInsert(YNMBook yb);
@@ -44,6 +44,9 @@ public interface YNMMemberController {
 	
 	//대댓글 table
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			YNMStoreUnderReview ysur);
+	//좋아요 table
+	String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			YNMStoreUnderReview ysur);
 
 

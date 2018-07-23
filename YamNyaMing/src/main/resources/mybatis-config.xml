@@ -8,6 +8,8 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberUploadPhoto" alias="photos"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreReview" alias="reviews"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="reviewLikes"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.PagingTest" alias="test"/>
 		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>

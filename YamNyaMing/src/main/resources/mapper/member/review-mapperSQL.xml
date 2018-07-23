@@ -22,5 +22,18 @@
 			from member_store_review_tb
 			where ow_entire_fk=#{ownerStoreEntireNo}
 	</select>
+	
+	<!-- 좋아요 table -->
+	<insert id="likeInsert">
+		insert into member_review_like_tb values(member_review_like_tb_seq.nextval,#{storeReviewNo},#{memberEntireNo})
+	</insert>
+	<select id="likeChk" resultType="int">
+		select
+			count(*)
+		from 
+			member_review_like_tb
+		where 
+			mb_store_review_fk=#{storeReviewNo} and mb_entire_fk=#{memberEntireNo}
+	</select>
 
 </mapper>

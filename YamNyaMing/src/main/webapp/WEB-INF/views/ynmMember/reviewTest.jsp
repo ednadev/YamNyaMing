@@ -9,13 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<script>
+function like(storeReviewNo,memberEntireNo){
+	
+	$.ajax({
+			url : "/likeInsert.do",
+			data : {memberEntireNo : memberEntireNo,storeReviewNo:storeReviewNo},
+			success : function(data){
+				console.log("성공")
+			}
+		});	
+	
+}
+function jjim(){
+	alert("2");
+}
+</script>
 <body>
 
 	가게 폰번호<input type="text" value="${storeInfo.owStorePhone}"><br>
-
+${sessionScope.member.memberId}
 <c:forEach items="${review}" var="r">
 	댓글 인덱스 <input type="text" value="${r.storeReviewNo}"><br>
-				
+				<button onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');">좋아요</button>
+				<button onclick="jjim();">찜하기</button>
 				<c:forEach items="${r.photoObjList}" var="photo">
 						
 						${photo.photoViewRoute}
