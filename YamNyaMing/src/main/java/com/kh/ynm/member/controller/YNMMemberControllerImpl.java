@@ -47,8 +47,6 @@ import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 import com.kh.ynm.member.model.vo.pagingTest2;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
-
-
 @Controller
 public class YNMMemberControllerImpl implements YNMMemberController{
 
@@ -288,9 +286,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	}
 
-
-	//�삁�빟�븯湲� table
-	//�삁�빟 �븯湲�
 	@Override
 	@RequestMapping(value="/bookInsert.do")
 	public String bookInsert(YNMBook yb) {
@@ -432,7 +427,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				return chk;
 			}
 		}
-
 	}
 
 
@@ -534,15 +528,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 		pagingTest2 qpd=ynmMemberServiceImpl.testAll(currentPage);
 
-
 		ModelAndView view=new ModelAndView();
 		if(qpd!=null) {
 			view.addObject("test",qpd);
 			view.setViewName("ynmMember/paging");
 			return view;
-
 		}
-
 		return null;
 	}
 
