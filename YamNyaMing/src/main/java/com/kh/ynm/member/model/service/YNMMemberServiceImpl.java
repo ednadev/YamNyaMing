@@ -14,9 +14,11 @@ import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
@@ -89,9 +91,8 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	}
 	//사용자 리뷰 사진 등록
 	public int reviewUploadPhoto(YNMMemberUploadPhoto ymup) {
-//		int result=memberDAO.reviewUploadPhoto(sqlSession,ymup);
-//		return result;
-		return 0;
+		int result=memberDAO.reviewUploadPhoto(sqlSession,ymup);
+		return result;
 	}
 	//등록한 리뷰 사진 인덱스 가져오기
 	public YNMMemberUploadPhoto reviewIndexSelect(String remakeName) {
@@ -149,7 +150,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	}
 	//댓글 좋아요 중복 체크
 	public int likeChk(YNMReviewLike yrl) {
-		int likeChk=memberDAO.storeInfo(sqlSession,yrl);
+		int likeChk=memberDAO.likeChk(sqlSession,yrl);
 		return likeChk;
 	}
 	public pagingTest2 testAll(int currentPage) {
@@ -186,6 +187,50 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public ArrayList<YNMSearch> search(YNMSearchCheck check) {
 		ArrayList<YNMSearch> list = memberDAO.search(sqlSession, check);
 		return list;
+	}
+	//댓글 좋아요 총수
+	public int likeTotal(int storeReviewNo) {
+		int likeTotal=memberDAO.likeTotal(sqlSession,storeReviewNo);
+		return likeTotal;
+	}
+	//댓글 좋아요 취소
+	public int deleteLike(YNMReviewLike yrl) {
+		int result=memberDAO.deleteLike(sqlSession,yrl);
+		return result;
+	}
+	//내정보 이미지 불러오기
+	public String viewPath(int memberUploadPhotoNo) {
+		String viewPath=memberDAO.viewPath(sqlSession,memberUploadPhotoNo);
+		return viewPath;
+	}
+	//찜 체크
+	public int jjimChk(YNMReviewJjim yrj) {
+		int jjimChk=memberDAO.jjimChk(sqlSession,yrj);
+		return jjimChk;
+	}
+	//찜 하기
+	public int jjimInsert(YNMReviewJjim yrj) {
+		int result=memberDAO.jjimInsert(sqlSession,yrj);
+		return result;
+	}
+	//찜 취소
+	public int deletejjim(YNMReviewJjim yrj) {
+		int result=memberDAO.deletejjim(sqlSession,yrj);
+		return result;
+	}
+	//팔로우 체크
+	public int followChk(YNMFollow yf) {
+		int followChk=memberDAO.followChk(sqlSession,yf);
+		return followChk;
+	}
+	//팔로우 해제
+	public int deletefollow(YNMFollow yf) {
+		int deletefollow=memberDAO.deletefollow(sqlSession,yf);
+		return deletefollow;
+	}
+	public int followInsert(YNMFollow yf) {
+		int result=memberDAO.followInsert(sqlSession,yf);
+		return result;
 	}
 	
 	

@@ -13,9 +13,11 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
@@ -29,15 +31,15 @@ import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int signUpMember(SqlSessionTemplate sqlSession, YNMMember ym) {
-		return sqlSession.insert("members.signUpMember",ym);
+		return sqlSession.insert("member.signUpMember",ym);
 	}
 
 	public YNMMember selectOneMember(SqlSessionTemplate sqlSession, YNMMember vo) {
-		return sqlSession.selectOne("members.selectOneMember",vo);
+		return sqlSession.selectOne("member.selectOneMember",vo);
 	}
 
 	public int signOutMember(SqlSessionTemplate sqlSession, YNMMember ym) {
-		return sqlSession.delete("members.deleteMember",ym);
+		return sqlSession.delete("member.deleteMember",ym);
 	}
 
 	public int bookInsert(SqlSessionTemplate sqlSession, YNMBook yb) {
@@ -50,11 +52,11 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	}
 
 	public YNMMember idCheck(SqlSessionTemplate sqlSession, String memberId) {
-		return sqlSession.selectOne("members.idCheck",memberId);
+		return sqlSession.selectOne("member.idCheck",memberId);
 	}
 
 	public YNMMember nickCheck(SqlSessionTemplate sqlSession, String memberNickName) {
-		return sqlSession.selectOne("members.nickCheck",memberNickName);
+		return sqlSession.selectOne("member.nickCheck",memberNickName);
 	}
 
 	public int memberUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
@@ -121,7 +123,7 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.insert("review.likeInsert",yrl);
 	}
 
-	public int storeInfo(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
+	public int likeChk(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
 		return sqlSession.selectOne("review.likeChk",yrl);
 	}
 
@@ -179,5 +181,46 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		qpd.setRecordTotalCount(recordTotalCount);
 		
 		return qpd;
+	}
+
+	public int likeTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		return sqlSession.selectOne("review.likeTotal",storeReviewNo);
+	}
+
+	public int deleteLike(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
+		return sqlSession.delete("review.likeDelete",yrl);
+	}
+
+	public String viewPath(SqlSessionTemplate sqlSession, int memberUploadPhotoNo) {
+		return sqlSession.selectOne("photo.viewPath",memberUploadPhotoNo);
+	}
+
+	public int jjimChk(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
+		return sqlSession.selectOne("review.jjimChk",yrj);
+	}
+
+	public int jjimInsert(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
+		return sqlSession.insert("review.jjimInsert",yrj);
+	}
+
+	public int deletejjim(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
+		return sqlSession.delete("review.deleteJjim",yrj);
+	}
+
+	public int followChk(SqlSessionTemplate sqlSession, YNMFollow yf) {
+		return sqlSession.selectOne("member.followChk",yf);
+	}
+
+	public int deletefollow(SqlSessionTemplate sqlSession, YNMFollow yf) {
+		return sqlSession.delete("member.deleteFollow",yf);
+	}
+
+	public int followInsert(SqlSessionTemplate sqlSession, YNMFollow yf) {
+		return sqlSession.insert("member.followInsert",yf);
+	}
+
+	public int reviewUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
+		return sqlSession.insert("photo.reviewPhoto",ymup);
+		
 	}
 }

@@ -78,9 +78,40 @@
 	
 	
 	<select id="selectOneStore" resultType="storeInfo">
-		select ow_store_phone as owStorePhone
+		select ow_store_phone as owStoreTel
 		from owner_store_info_tb
 		where ow_store_info_pk=#{ownerStoreEntireNo}
+	</select>
+	
+	
+	<!-- 팔로우 table -->
+	
+	<select id="followChk" resultType="int">
+		select
+			count(*)
+		from 
+			member_follow_tb
+		where 
+			mb_follow_user_id_fk=#{followMemberIdNo} and mb_follower_fk=#{followerNo}
+	</select>
+	
+	
+	<insert id="followInsert">
+		insert into member_follow_tb values(member_follow_tb_seq.nextval,#{followMemberIdNo},#{followerNo})
+	</insert>
+	
+	<delete id="deleteFollow">
+		delete from member_follow_tb where mb_follower_fk=#{followerNo}
+	</delete>
+	
+	
+	<select id="followTotal" resultType="int">
+		select
+			count(*)
+		from 
+			member_follow_tb
+		where 
+			mb_follow_user_id_fk=#{followMemberIdNo}
 	</select>
 	
 	
