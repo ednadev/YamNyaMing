@@ -254,16 +254,27 @@ function menuTypeChange(menuType)
 {
 	var menuArr = document.getElementsByClassName('menu-type');
 	var menuTypeArr = document.getElementsByClassName('menuInfo');
+	
+
+	for(var j = 0; j<menuTypeArr.length;j++)
+	{
+		menuTypeArr[j].style.display = 'none';
+		if(menuType==menuArr[0])// 이미지 메뉴 등록 눌렀을때 
+		{
+			menuTypeArr[0].style.display = 'block';
+		}else{  // 직접 메뉴 등록 눌렀을때
+			if(j>0) menuTypeArr[j].style.display = 'block';
+		}
+	}
+	
 	for(var i = 0; i<menuArr.length;i++)
 	{
 		if(menuType==menuArr[i]){
 			menuType.id='menu-info-type-click';
-			menuTypeArr[i].style.display = 'block';
-			if(menuType==menuArr[1]) menuTypeArr[2].style.display = 'block';
-		}else
+		}
+		else
 		{
 			menuArr[i].id="menu-info-type";
-			menuTypeArr[i].style.display = 'none';
 		}
 	}
 }

@@ -240,15 +240,22 @@
 	}
 	function addMenuCategory()
 	{
-		var menuSelect = document.getElementsByClassName("menuCategory");
-		//menuSelectMain.add(option);
-		for(var i = 0; i<menuSelect.length;i++){
-			var option = document.createElement("option");
-			option.selected = true;
-			option.value =  $('input[name=owMenuType]').val();
-			option.text = $('input[name=owMenuType]').val();
-			menuSelect[i].add(option);
-		} 
+		if($('input[name=owMenuType]').val().length>0)
+		{
+			var menuSelect = document.getElementsByClassName("menuCategory");
+			//menuSelectMain.add(option);
+			for(var i = 0; i<menuSelect.length;i++){
+				var option = document.createElement("option");
+				option.selected = true;
+				option.value =  $('input[name=owMenuType]').val();
+				option.text = $('input[name=owMenuType]').val();
+				menuSelect[i].add(option);
+			} 
+		}
+		else
+		{
+			alert("메뉴 항목을 입력해주세요.");
+		}
 		
 		$('input[name=owMenuType]').val("");
 	}
