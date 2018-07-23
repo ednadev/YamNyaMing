@@ -66,12 +66,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/ynmMemberTest";
 	}
 
-	//사용자 : 로그인 페이지로 이동
-	@RequestMapping(value="/loginMember.do")
-	public String loginMember() {
-		return "ynmMember/loginMember";
-	}
-
 	//로그인
 	@Override
 	@RequestMapping(value="/login.do")
@@ -89,13 +83,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
-
-	//사용자 : 회원가입 페이지로 이동
-	@Override
-	@RequestMapping(value="/enrollMember.do")
-	public String enrollMember() {
-		return "ynmMember/signUpMember";
-	}	
+	
 
 	@Override
 	@RequestMapping(value="/signUpMember.do")
