@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="photo">
 	<!-- 사진 등록 쿼리 -->
-	
+	<!-- 사용자 이미지 등록 -->
 	<insert id="avatarPhoto">
 		insert into member_upload_photo_tb values(member_upload_photo_tb_SEQ.nextval,2,#{OriginName},#{remakeName},#{photoRoute},sysdate,#{photoViewRoute})
 	</insert>
@@ -14,8 +14,38 @@
 		where mb_remake_name=#{remakeName}
 	
 	</select>
-
 	
+	<update id="updatePhoto">
+		update member_upload_photo_tb set mb_origin_name=#{OriginName}, mb_remake_name=#{remakeName}, mb_photo_upload_date=sysdate, mb_photo_route=#{photoRoute}, mb_photo_view_route=#{photoViewRoute}
+			where mb_upload_photo_pk=#{uploadPhotoNo}
+	</update>
 
+	<!-- 리뷰 이미지 등록 -->
+	<insert id="reviewPhoto">
+		insert into member_upload_photo_tb values(member_upload_photo_tb_SEQ.nextval,21,#{OriginName},#{remakeName},#{photoRoute},sysdate,#{photoViewRoute})
+	</insert>
+	
+	
+	<!-- 리뷰 이미지 가져오기 -->
+	<select id="storeReviewPhoto" parameterType="photos" resultType="photos">
+		select
+			mb_upload_photo_pk as uploadPhotoNo,
+			mb_photo_type_fk as photoType,
+			mb_origin_name as OriginName,
+			mb_remake_name as remakeName,
+			mb_photo_route as photoRoute,
+			mb_photo_upload_date as photoUploadDate,
+			mb_photo_view_route as photoViewRoute
+			
+			from member_upload_photo_tb
+			
+			where mb_upload_photo_pk in 
+			<foreach item="imgArr" collection="array" open="(" separator="," close=")">
+			#{imgArr}
+			</foreach>
+			
+	</select>
+		
+	
 
 </mapper>

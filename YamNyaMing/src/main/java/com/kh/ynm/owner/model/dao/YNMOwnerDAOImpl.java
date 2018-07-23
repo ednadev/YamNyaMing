@@ -4,13 +4,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmOwnerDAO")
 public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public int ynmOwnerSignUp(SqlSessionTemplate sqlSession, YNMOwner owner) {	
-		System.out.println("회원가입 ");
 		return sqlSession.insert("owners.ownerSignUp", owner);
 	}
 	
@@ -24,4 +24,9 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return sqlSession.selectOne("owners.ownerLogin", owner);
 	}
 
+	@Override
+	public int ynmStoreAdd(SqlSessionTemplate sqlSession, YNMStoreInfo storeInfo) {
+		return sqlSession.insert("owners.storeAdd", storeInfo);
+	}
+	
 }

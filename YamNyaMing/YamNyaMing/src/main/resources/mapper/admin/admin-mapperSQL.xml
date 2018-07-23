@@ -148,10 +148,8 @@ FROM DUAL;
 
 
 select to_char(sysdate,'hh24') from owner_entire_tb;
-
 select count(*) from owner_entire_tb where (select to_char (sysdate,'hh24') from DUAL) between 15 and 19;
 select ow_bank_account from owner_entire_tb;
-
 select to_char(ow_bank_account,'hh24') from owner_entire_tb;
 
 

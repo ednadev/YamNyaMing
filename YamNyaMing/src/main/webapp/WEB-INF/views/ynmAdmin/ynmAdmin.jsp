@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
-<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
+<script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 </head>
 <body>
 <header id="admin-login-header">

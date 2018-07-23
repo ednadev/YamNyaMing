@@ -13,35 +13,17 @@ public class YNMMember {
 	private String memberEmail;
 	private String memberPhone;
 	private Date memberRegDate;
-	private int memberAvatar;
+	private int memberUploadPhotoNo;
 
 
 	
-	public YNMMember() {
-		super();
-		// TODO Auto-generated constructor stub
+
+
+	public int getMemberUploadPhotoNo() {
+		return memberUploadPhotoNo;
 	}
-	public YNMMember(int memberEntireNo, String memberId, String memberPw, String memberName, String memberNickName,
-			String memberGender, Date memberBirth, String memberEmail, String memberPhone, Date memberRegDate,
-			int memberAvatar) {
-		super();
-		this.memberEntireNo = memberEntireNo;
-		this.memberId = memberId;
-		this.memberPw = memberPw;
-		this.memberName = memberName;
-		this.memberNickName = memberNickName;
-		this.memberGender = memberGender;
-		this.memberBirth = memberBirth;
-		this.memberEmail = memberEmail;
-		this.memberPhone = memberPhone;
-		this.memberRegDate = memberRegDate;
-		this.memberAvatar = memberAvatar;
-	}
-	public int getMemberAvatar() {
-		return memberAvatar;
-	}
-	public void setMemberAvatar(int memberAvatar) {
-		this.memberAvatar = memberAvatar;
+	public void setMemberUploadPhotoNo(int memberUploadPhotoNo) {
+		this.memberUploadPhotoNo = memberUploadPhotoNo;
 	}
 	public int getMemberEntireNo() {
 		return memberEntireNo;
