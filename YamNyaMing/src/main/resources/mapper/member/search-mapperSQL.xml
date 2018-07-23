@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="search">
+	<select id="searchList" resultType="search">
+		select 
+		ow_store_num as owStoreNum, 
+		ow_photo_route as owPhotoRoute
+		from owner_store_info_tb, owner_store_photo_tb
+		where ow_store_info_fk = ow_store_info_pk
+	</select>
+</mapper>

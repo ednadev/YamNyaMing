@@ -7,10 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 </head>
 <body>
 	<header id="member-main-header">
@@ -44,14 +42,14 @@
 		<p>기다리지 않는 즐거움, <span>얌냐밍이 진짜 맛집을 추천합니다</span></p>
 	</article>
 	<article>
-		<div><a href="/search.do?place=지역+선택&food=한식&keyword=">한식</a></div>
-		<div><a href="/search.do?place=지역+선택&food=양식&keyword=">양식</a></div>
-		<div><a href="/search.do?place=지역+선택&food=일식&keyword=">일식</a></div>
-		<div><a href="/search.do?place=지역+선택&food=중식&keyword=">중식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=한식&keyword=">한식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=양식&keyword=">양식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=일식&keyword=">일식</a></div>
+		<div><a href="/search.do?place=지역 선택&food=중식&keyword=">중식</a></div>
 	</article>
 	<article>
-		<div><a href="/search.do?place=지역+선택&food=카페&keyword=">카페</a></div>
-		<div><a href="/search.do?place=지역+선택&food=베이커리&keyword=">베이커리</a></div>
+		<div><a href="/search.do?place=지역 선택&food=디저트&keyword=">디저트</a></div>
+		<div><a href="/search.do?place=지역 선택&food=술집&keyword=">술집</a></div>
 	</article>
     </section>
 	<footer id="member-main-footer">

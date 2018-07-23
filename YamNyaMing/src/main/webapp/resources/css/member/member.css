@@ -144,6 +144,15 @@
 #member-main-section>article:nth-child(3)>div:nth-child(2):hover{
 	background-image:url('../../image/memberMain/backery-hover.jpg');
 }
+#member-main-section>article:nth-child(3)>div:nth-child(1):hover{
+	background-image:url('../image/memberMain/dessert-hover.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(2){
+	background-image:url('../image/memberMain/alcohol.jpg');
+}
+#member-main-section>article:nth-child(3)>div:nth-child(2):hover{
+	background-image:url('../image/memberMain/alcohol-hover.jpg');
+}
 #member-main-footer{
 	background-color:rgba(0,0,0,0.8);
 	padding:20px;
@@ -679,6 +688,7 @@ html,body{height:100%;}
 	overflow:hidden;
 	position:fixed;
 	width:100%;
+	z-index:2;
 }
 #member-search-header>h1{
 	margin:20px;
@@ -734,4 +744,75 @@ html,body{height:100%;}
 #map{
 	width:100%;
 	height:400px;
+}
+
+/* 세부 검색 */
+.member-search-wrapper{
+	width:960px;
+	margin:0 auto;
+	overflow:hidden;
+}
+
+#member-search-section>.member-search-wrapper>h2{
+	margin:20px;
+	color:black;
+	margin-top:30px;
+}
+#member-search-section>.member-search-wrapper>.detailSearch{
+	display:flex;
+	margin:10px 20px 30px;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>h3{
+	color:black;
+	font-size:1em;
+	margin-right:20px;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>input{
+	display:none;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>label{
+	cursor:pointer;
+	border:1px solid #bcbcbc;
+	padding:10px;
+	color:#bcbcbc;
+	border-radius:10px;
+	font-size:0.9em;
+}
+#member-search-section>.member-search-wrapper>.detailSearch>div>input:checked+label{
+	background-color:#fb0;
+	border:1px solid #fb0;
+	color:white;
+}
+#member-search-section>.member-search-wrapper>h4{
+	margin-top:50px;
+	text-align:center;
+	color:black;
+	margin-bottom:35px;
+}
+#member-search-section>.member-search-wrapper>h4>span{
+	color:#fb0;
+}
+#member-search-section>.member-search-wrapper>p{
+	float:right;
+	color:black;
+	font-size:0.9em;
+}
+#member-search-section>.member-search-wrapper>p>span{
+	color:black;
+	font-weight:bold;
+	cursor:pointer;
+}
+#member-search-section>.member-search-wrapper>.search-page{
+	clear:both;
+	overflow:hidden;
+}
+#member-search-section>.member-search-wrapper>.search-page>div{
+	width:304px;
+	height:304px;
+	background-size:cover;
+	background-position:center;
+	margin-left:7px;
+	margin-right:7px;
+	float:left;
+	margin-top:14px;
 }
