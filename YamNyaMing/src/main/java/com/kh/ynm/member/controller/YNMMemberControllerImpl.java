@@ -130,8 +130,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 
 //			ym.setMemberAvatar(ymupIndex.getUploadPhotoNo());
-
-			ynmMemberServiceImpl.signUpMember(ym);
 			int result2=ynmMemberServiceImpl.signUpMember(ym);
 
 			//�쉶�썝媛��엯 �꽦怨듭떆
@@ -550,6 +548,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	@Override
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String enrollMember() {
 		// TODO Auto-generated method stub
 		return null;
 	}
