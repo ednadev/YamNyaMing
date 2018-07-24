@@ -30,7 +30,9 @@ public interface YNMMemberController {
 			HttpServletResponse response);
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
+	public String emailCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView idSearch(HttpServletRequest request, HttpServletResponse response);
 	
 	//예약 table
 	public String bookInsert(YNMBook yb);
@@ -53,6 +55,7 @@ public interface YNMMemberController {
 	//팔로우 table
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			YNMStoreUnderReview ysur);
+
 
 
 

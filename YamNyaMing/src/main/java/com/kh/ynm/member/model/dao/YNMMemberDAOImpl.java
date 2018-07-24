@@ -58,6 +58,9 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public YNMMember nickCheck(SqlSessionTemplate sqlSession, String memberNickName) {
 		return sqlSession.selectOne("member.nickCheck",memberNickName);
 	}
+	public YNMMember emailCheck(SqlSessionTemplate sqlSession, String memberEmail) {
+		return sqlSession.selectOne("member.emailCheck",memberEmail);
+	}
 
 	public int memberUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
 		return sqlSession.insert("photo.avatarPhoto",ymup);
@@ -108,15 +111,6 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int storeUnderReviewInsert(SqlSessionTemplate sqlSession, YNMStoreUnderReview ysur) {
 		return sqlSession.insert("underReview.storeUnderReviewInsert",ysur);
-	}
-
-	public int boardCount(SqlSessionTemplate sqlSession, PagingTest pt) {
-		return sqlSession.selectOne("underReview.pagingTest",pt);
-	}
-
-	public List<PagingTest> boardList(SqlSessionTemplate sqlSession, PagingTest pt) {
-		List list=sqlSession.selectList("underReview.pagingTest2",pt);
-		return list;
 	}
 
 	public int likeInsert(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
@@ -222,5 +216,9 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public int reviewUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
 		return sqlSession.insert("photo.reviewPhoto",ymup);
 		
+	}
+
+	public YNMMember idSearch(SqlSessionTemplate sqlSession, YNMMember vo) {
+		return sqlSession.selectOne("member.idSearch",vo);
 	}
 }

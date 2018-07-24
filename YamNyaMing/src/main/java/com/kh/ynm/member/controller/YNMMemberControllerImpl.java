@@ -95,6 +95,44 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "redirect:/index.jsp";
 	}
 	
+	//아이디 찾기
+	@Override
+	@RequestMapping(value="/idSearch.do")
+	public ModelAndView idSearch(HttpServletRequest request, HttpServletResponse response) {
+		YNMMember vo=new YNMMember();
+		vo.setMemberEmail(request.getParameter("memberEmail"));
+		vo.setMemberName(request.getParameter("memberName"));
+		YNMMember ym=ynmMemberServiceImpl.idSearch(vo);
+		String memberName=ym.getMemberName();
+		String resultMemberId=ym.getMemberId();
+		String []memberId2=resultMemberId.split("");
+		String memberId=memberId2[0]+memberId2[1];
+		for(int i=2; i<memberId2.length; i++) {
+			memberId+="*";
+		}
+		ym.setMemberId(memberId);
+		
+		ModelAndView view=new ModelAndView();
+		if(ym!=null) {
+
+			view.addObject("id",ym);
+			view.addObject("memberName",memberName);
+			view.setViewName("ynmMember/idsearch");
+			return view;
+		}else
+		{
+			return null;
+		}
+	}
+	
+	//비밀번호 변경
+	@Override
+	@RequestMapping(value="/pwSearch.do")
+	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		return null;
+	}
+	
 	//회원가입
 	@Override
 	@RequestMapping(value="/signUpMember.do")
@@ -121,11 +159,19 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		if(file.getSize()>0) {
 			String OriginName=file.getOriginalFilename();
 			String remakeName=System.currentTimeMillis()+"_"+OriginName;
-			String photoRoute=context.getRealPath("\\resources\\image\\member\\"+request.getParameter("memberId")+"\\")+remakeName;
+	
+			String photoRoute=context.getRealPath("\\resources\\image\\member\\"+request.getParameter("memberId")+"\\avatar\\avatarimg");
 			
 			
-			String photoViewRoute="\\"+request.getParameter("memberId")+"\\"+remakeName;
-			File f=new File(photoRoute);
+			String photoViewRoute="\\"+request.getParameter("memberId")+"\\avatar\\avatarimg"+remakeName;
+			File f=new File(photoRoute+remakeName);
+			
+			if(!f.exists()){
+				 f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
+		        }
+
+			
+			
 			try {
 				file.transferTo(f);
 			} catch (IllegalStateException e) {
@@ -139,7 +185,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
 			ymup.setOriginName(OriginName);
 			ymup.setRemakeName(remakeName);
-			ymup.setPhotoRoute(photoRoute);
+			ymup.setPhotoRoute(photoRoute+remakeName);
 			ymup.setPhotoViewRoute(photoViewRoute);
 
 			int result=ynmMemberServiceImpl.memberUploadPhoto(ymup);
@@ -151,14 +197,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			int result2=ynmMemberServiceImpl.signUpMember(ym);
 
 			//회원가입 성공시
-			return null;
+			return "ynmMember/loginMember";
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 
 			int result=ynmMemberServiceImpl.signUpMember(ym);
-			return null;
+			return "ynmMember/loginMember";
 		}
 	}
 	//회원탈퇴
@@ -207,15 +253,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 
-	//비밀번호 변경
-	@Override
-	@RequestMapping(value="/passwordUpdateMember.do")
-	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
-
-		return null;
-	}
-
 	//내정보 수정하기
 	@Override
 	@RequestMapping(value="/updateMember.do")
@@ -231,9 +268,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			int uploadPhotoNo=((YNMMember)session.getAttribute("member")).getMemberUploadPhotoNo();
 			String OriginName=file.getOriginalFilename();
 			String remakeName=System.currentTimeMillis()+"_"+OriginName;
-			String photoRoute=context.getRealPath("\\resources\\image\\")+remakeName;
-			String photoViewRoute="\\image\\"+remakeName;
-			File f=new File(photoRoute);
+			String photoRoute=context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\avatar\\avatarimg");
+			String photoViewRoute="\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\avatar\\avatarimg"+remakeName;
+			File f=new File(photoRoute+remakeName);
+			
+			if(!f.exists()){
+				 f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
+		        }		
 			try {
 				file.transferTo(f);
 			} catch (IllegalStateException e) {
@@ -307,7 +348,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
+	//이메일 유효성 검사
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/emailCheck.do")
+	public String emailCheck(HttpServletRequest request, HttpServletResponse response,Model model) {
+		String memberEmail=request.getParameter("memberEmail");
+		YNMMember ym=ynmMemberServiceImpl.emailCheck(memberEmail);
 
+		if(ym==null) {
+			String chk="0";
+			return chk;
+		}else {
+			String chk="1";
+			return chk;
+
+		}
+
+	}
 	//예약하기 삽입
 	@Override
 	@RequestMapping(value="/bookInsert.do")
@@ -343,7 +401,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException {
 		
-		String path =context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId());
+		String path =context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\review\\review");
 		String remakeName = "";
 		String reviewImgList="";
 		List<MultipartFile> files = multi.getFiles("reviewImgList");
@@ -361,7 +419,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			files.get(i).transferTo(file);
 			String OriginName=files.get(i).getOriginalFilename();
 			String photoRoute=path+remakeName;
-			String photoViewRoute="\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\"+remakeName;
+			String photoViewRoute="\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\review\\review"+remakeName;
 			YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
 			ymup.setOriginName(OriginName);
 			ymup.setRemakeName(remakeName);
@@ -589,38 +647,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmAdmin/mainAdmin";
 	}
 
-	//	@RequestMapping(value = "/pagingTest.do")
-	//    public String boardList(HttpServletRequest req, ModelMap modelMap, @ModelAttribute("boardSearchVO") PagingTest pt) {
-	//
-	//        
-	//    ///////paging : S//////////////////////////////
-	//     
-	//    int pageSize = pt.getPageSize();// 한페이지에 나오는 게시물 개수
-	//    int pageIndex = pt.getPageIndex(); //현재 선택한 페이지 number
-	//    int pageGroupSize = pt.getPageGroupSize(); // 페이지 번호가 몇개 나오느냐 개수
-	//    int startRow = (pageIndex - 1) * pageSize + 1;// 한 페이지의 시작글 번호
-	//    int endRow = pageIndex * pageSize;// 한 페이지의 마지막 글번호
-	// 
-	//    pt.setStartRow(startRow);
-	//    pt.setEndRow(endRow);
-	//    int count = ynmMemberServiceImpl.boardCount(pt); //게시물 총 개수
-	// 
-	//    int pageGroupCount = count / (pageSize * pageGroupSize) + (count % (pageSize * pageGroupSize) == 0 ? 0 : 1);
-	//    int nowPageGroup = (int) Math.ceil((double) pageIndex / pageGroupSize);
-	//     
-	//    List<PagingTest> boardList = ynmMemberServiceImpl.boardList(pt);
-	//     
-	//    modelMap.put("pageIndex", pageIndex);
-	//    modelMap.put("pageSize", pageSize);
-	//    modelMap.put("count", count);
-	//    modelMap.put("pageGroupSize", pageGroupSize);
-	//    modelMap.put("nowPageGroup", nowPageGroup);
-	//    modelMap.put("pageGroupCount", pageGroupCount);
-	//    modelMap.put("articleList", boardList);
-	//    modelMap.put("boardSearchVO", pt);
-	//     
-	//        return "ynmMember/paging";
-	//    }
 
 	@RequestMapping(value = "/pagingTest.do")
 	public ModelAndView boardList(HttpServletRequest req, ModelMap modelMap, @ModelAttribute("boardSearchVO") PagingTest pt) {

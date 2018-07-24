@@ -74,6 +74,12 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		YNMMember ym=memberDAO.nickCheck(sqlSession,memberNickName);
 		return ym;
 	}
+	//이메일 유효성
+	public YNMMember emailCheck(String memberEmail) {
+		YNMMember ym=memberDAO.emailCheck(sqlSession,memberEmail);
+		return ym;
+	}
+	
 	//사용자 아바타 사진 등록
 	public int memberUploadPhoto(YNMMemberUploadPhoto ymup) {
 		int result=memberDAO.memberUploadPhoto(sqlSession,ymup);
@@ -133,15 +139,6 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int storeUnderReviewInsert(YNMStoreUnderReview ysur) {
 		int result=memberDAO.storeUnderReviewInsert(sqlSession,ysur);
 		return result;
-	}
-	//paging test
-	public int boardCount(PagingTest pt) {
-		return memberDAO.boardCount(sqlSession,pt);
-
-	}
-	public List<PagingTest> boardList(PagingTest pt) {
-		return memberDAO.boardList(sqlSession,pt);
-
 	}
 	//댓글 좋아요 insert
 	public int likeInsert(YNMReviewLike yrl) {
@@ -228,9 +225,15 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int deletefollow=memberDAO.deletefollow(sqlSession,yf);
 		return deletefollow;
 	}
+	//팔로우 등록
 	public int followInsert(YNMFollow yf) {
 		int result=memberDAO.followInsert(sqlSession,yf);
 		return result;
+	}
+	//아이디 찾기
+	public YNMMember idSearch(YNMMember vo) {
+		YNMMember ym=memberDAO.idSearch(sqlSession,vo);
+		return ym;
 	}
 	
 	
