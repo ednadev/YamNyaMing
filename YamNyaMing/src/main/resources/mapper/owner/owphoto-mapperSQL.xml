@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="owphotos">
-  	<insert id="headPhotoUpload" parameterType="owUploadPhoto">
+  	<insert id="ownerPhotoUpload" parameterType="owUploadPhoto">
   		insert into owner_store_photo_tb values(owner_store_photo_tb_SEQ.nextval, #{owPhotoTypeFk},#{storeInfoFk},
   		#{originName}, #{remakeName}, #{photoRoute}, sysdate)
   	</insert>
-  	<select id="photoSelect" resultType="int">
+  	<select id="photoSelectWithName" resultType="int">
   		select ow_store_photo_pk from owner_store_photo_tb
   		where ow_remake_name = #{remakeName}
   	</select>

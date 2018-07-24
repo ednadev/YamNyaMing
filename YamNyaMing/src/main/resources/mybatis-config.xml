@@ -13,8 +13,9 @@
 		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
-		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeDetailInfo"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearch" alias="search"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.OwnerUploadPhoto" alias="owUploadPhoto"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.MenuInfo" alias="menuInfo"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
 	</typeAliases>
 </configuration>

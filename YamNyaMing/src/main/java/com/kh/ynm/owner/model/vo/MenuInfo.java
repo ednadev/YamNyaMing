@@ -2,53 +2,83 @@ package com.kh.ynm.owner.model.vo;
 
 public class MenuInfo {
 	private int owMenuInfoPk;
-	private int owStoreInfoFk;
-	private int owStoreMenuTypeFk;
-	private String owStoreMenuInfoDetail;
-	private String owStoreCostType;
-	
+	private String menuId;
+	private String menuTitle;
+	private String subTitle;
+	private String explain;
+	private int menuCost;
 	
 	public MenuInfo() {}
-	
-	public MenuInfo(int owMenuInfoPk, int owStoreInfoFk, int owStoreMenuTypeFk, String owStoreMenuInfoDetail,
-			String owStoreCostType) {
+
+	public MenuInfo(int owMenuInfoPk, String menuId, String menuTitle, String subTitle, String explain,
+			int menuCost) {
 		super();
 		this.owMenuInfoPk = owMenuInfoPk;
-		this.owStoreInfoFk = owStoreInfoFk;
-		this.owStoreMenuTypeFk = owStoreMenuTypeFk;
-		this.owStoreMenuInfoDetail = owStoreMenuInfoDetail;
-		this.owStoreCostType = owStoreCostType;
+		this.menuId = menuId;
+		this.menuTitle = menuTitle;
+		this.subTitle = subTitle;
+		this.explain = explain;
+		this.menuCost = menuCost;
 	}
+
+	public String getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
+	}
+
 	public int getOwMenuInfoPk() {
 		return owMenuInfoPk;
 	}
+
+
 	public void setOwMenuInfoPk(int owMenuInfoPk) {
 		this.owMenuInfoPk = owMenuInfoPk;
 	}
-	public int getOwStoreInfoFk() {
-		return owStoreInfoFk;
+
+
+	public String getMenuTitle() {
+		return menuTitle;
 	}
-	public void setOwStoreInfoFk(int owStoreInfoFk) {
-		this.owStoreInfoFk = owStoreInfoFk;
+
+
+	public void setMenuTitle(String menuTitle) {
+		this.menuTitle = menuTitle;
 	}
-	public int getOwStoreMenuTypeFk() {
-		return owStoreMenuTypeFk;
+
+
+	public String getSubTitle() {
+		return subTitle;
 	}
-	public void setOwStoreMenuTypeFk(int owStoreMenuTypeFk) {
-		this.owStoreMenuTypeFk = owStoreMenuTypeFk;
+
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
 	}
-	public String getOwStoreMenuInfoDetail() {
-		return owStoreMenuInfoDetail;
+
+
+	public String getExplain() {
+		return explain;
 	}
-	public void setOwStoreMenuInfoDetail(String owStoreMenuInfoDetail) {
-		this.owStoreMenuInfoDetail = owStoreMenuInfoDetail;
+
+
+	public void setExplain(String explain) {
+		this.explain = explain;
 	}
-	public String getOwStoreCostType() {
-		return owStoreCostType;
+
+
+	public int getMenuCost() {
+		return menuCost;
 	}
-	public void setOwStoreCostType(String owStoreCostType) {
-		this.owStoreCostType = owStoreCostType;
+
+
+	public void setMenuCost(int menuCost) {
+		this.menuCost = menuCost;
 	}
+	
+	
 	
 	
 }

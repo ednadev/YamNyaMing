@@ -3,8 +3,10 @@ package com.kh.ynm.owner.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmOwnerDAO")
@@ -31,14 +33,30 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	}
 
 	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, String bizNum) {
-		return sqlSession.insert("stores.storeSearchWithBizNum", bizNum);
+		return sqlSession.selectOne("stores.storeSearchWithBizNum", bizNum);	
 	}
 
 	public int ownerPhotoUpload(SqlSessionTemplate sqlSession, OwnerUploadPhoto uploadPhoto) {
-		return sqlSession.insert("owphotos.headPhotoUpload",uploadPhoto);
+		return sqlSession.insert("owphotos.ownerPhotoUpload",uploadPhoto);
+	}
+	
+	@Override
+	public int photoSelectWithName(SqlSessionTemplate sqlSession,String remakeName) {
+		return sqlSession.selectOne("owphotos.photoSelectWithName", remakeName);
+	}
+	
+	@Override
+	public int ownerMenuUpload(SqlSessionTemplate sqlSession, MenuInfo menuInfo) {
+		return sqlSession.insert("stores.menuUpload", menuInfo);
 	}
 
-	public int photoSelectWithName(SqlSessionTemplate sqlSession,String remakeName) {
-		return sqlSession.selectOne("owphotos.", remakeName);
+	@Override
+	public int selectMenuWithId(SqlSessionTemplate sqlSession, String menuId) {
+		return sqlSession.selectOne("stores.menuSelectWithId", menuId);
+	}
+	
+	@Override
+	public int storeDetailInfo(SqlSessionTemplate sqlSession, YNMStoreDetailInfo detailInfo) {
+		return sqlSession.insert("stores.storeDetailInfoInsert", detailInfo);
 	}
 }

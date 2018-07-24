@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ynm.owner.model.dao.YNMOwnerDAOImpl;
+import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmOwnerService")
@@ -65,6 +67,24 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	public int photoSelectWithName(String remakeName) {
 		int photoIndex = ynmOwnerDAO.photoSelectWithName(sqlSession,remakeName);
 		return photoIndex;
+	}
+	
+	@Override
+	public int ownerMenuUpload(MenuInfo menuInfo) {
+		int menuUploadResult = ynmOwnerDAO.ownerMenuUpload(sqlSession, menuInfo);
+		return menuUploadResult;
+	}
+
+	@Override
+	public int selectMenuWithId(String menuId) {
+		int menuIndex = ynmOwnerDAO.selectMenuWithId(sqlSession, menuId);
+		return menuIndex;
+	}
+	
+	@Override
+	public int storeDetailInfo(YNMStoreDetailInfo detailInfo) {
+		int storeDetailInfoResult = ynmOwnerDAO.storeDetailInfo(sqlSession, detailInfo);
+		return storeDetailInfoResult;
 	}
 
 	

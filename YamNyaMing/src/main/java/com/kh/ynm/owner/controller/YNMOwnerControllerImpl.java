@@ -72,7 +72,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 
 	@Override
 	@RequestMapping(value="/ownerAddStore.do")
-	public String addStore(@RequestParam("mainImgFile") MultipartHttpServletRequest mainImgFile,@RequestParam("menuImageFile") MultipartHttpServletRequest menuImgFile, HttpSession session, HttpServletRequest request) {
+	public String addStore(MultipartHttpServletRequest mainImgFile,MultipartHttpServletRequest menuImgFile, HttpSession session, HttpServletRequest request) {
 		if(session.getAttribute("owner")!=null) {
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			YNMStoreInfo storeInfo = new YNMStoreInfo();
@@ -96,7 +96,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			// 가게 등록이 완료됐으면.
 			if(result>0) {
 				// 가게 인덱스
-				int storeInfoIndex = ynmOwnerServiceImpl.ynmSelectStoreIndex(request.getParameter("owStoreBizNum"));
+				int storeInfoIndex = ynmOwnerServiceImpl.ynmSelectStoreIndex(storeInfo.getOwStoreBizNum());
 				int menuType = Integer.parseInt(request.getParameter("storeMenuType"));
 				YNMStoreDetailInfo detailInfo = new YNMStoreDetailInfo();
 				detailInfo.setOwStoreInfoFk(storeInfoIndex);// 설명할 가게 인덱스
@@ -113,25 +113,16 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				}
 				// 대표 이미지 등록
 				List<MultipartFile> files = mainImgFile.getFiles("mainImgFile");
+				String uploadPhotoImg = "";
 				if(files.size()>0) {
-					String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\")+owner.getOwId()+"\\storeHeadPhoto\\";
-					File f=new File(photoRoute);
+					String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\headPhoto_");
+				
 					for (int i = 0; i < files.size(); i++) 
 					{
 						String originName= files.get(i).getOriginalFilename();
-						String remakeName= "storeHeadPhoto_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
-						String photoViewRoute=servletContext.getRealPath("\\resources\\image\\owner\\")+owner.getOwId()+"\\storeHeadPhoto\\"+remakeName;
+						String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 						
-						OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
-						uploadPhoto.setOwPhotoTypeFk(3);
-						uploadPhoto.setStoreInfoFk(storeInfoIndex);
-						uploadPhoto.setOriginName(originName);
-						uploadPhoto.setRemakeName(remakeName);
-						uploadPhoto.setPhotoRoute(photoRoute);
-						
-						int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
-						
-						int photoIndex =ynmOwnerServiceImpl.photoSelectWithName(remakeName);
+						File f=new File(photoRoute + remakeName);
 						//해당 디렉토리의 존재여부를 확인
 						if(!f.exists()){
 							//없다면 생성
@@ -144,39 +135,125 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+						
+						OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+						uploadPhoto.setOwPhotoTypeFk(3);
+						uploadPhoto.setStoreInfoFk(storeInfoIndex);
+						uploadPhoto.setOriginName(originName);
+						uploadPhoto.setRemakeName(remakeName);
+						uploadPhoto.setPhotoRoute(photoRoute);
+						
+						int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+						if(photoUpload>0) {
+							int photoIndex =ynmOwnerServiceImpl.photoSelectWithName(remakeName);
+							if(i<files.size()-1) uploadPhotoImg+=photoIndex+",";
+							else uploadPhotoImg+=photoIndex;
+						}else {
+							System.out.println("이미지 업로드 실패");
+							break;
+						}
 					}
 				}
-				
 				
 				detailInfo.setOwStoreTip(tip);
 				detailInfo.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
 				detailInfo.setStoreBigType(1);
 				detailInfo.setStoreSmallType(1);
-				detailInfo.setRecommandMenu(request.getParameter("owRecommandMenu"));
+				detailInfo.setRecommandMenu(request.getParameter("owStoreRecommandMenuList"));
 				detailInfo.setStoreTableInfo(request.getParameter("owStoreTableInfo"));
 				detailInfo.setBudgetInfo(request.getParameter("owBudget"));
 				detailInfo.setOwSubInfo(request.getParameter("owSubInfo"));
 				detailInfo.setOwDrinkListInfo(request.getParameter("owDrinkListInfo"));
 				detailInfo.setOwStoreMenuTypeFk(menuType);//설명타입
+				detailInfo.setOwStoreHeadPhoto(uploadPhotoImg);
 
-				switch(menuType) {
+				switch(detailInfo.getOwStoreMenuTypeFk()) {
 					case 1:// 이미지 등록 정보
-						
+						List<MultipartFile> filesMenu = menuImgFile.getFiles("menuImageFile");
+						if(filesMenu.size()>0) {
+							String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\menuP_");
+							String menuPhotoList = "";
+							for (int i = 0; i < filesMenu.size(); i++)
+							{
+								String originName= filesMenu.get(i).getOriginalFilename();
+								String remakeName= "storeMenuPhoto_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+								
+								File f=new File(photoRoute+remakeName);
+								//해당 디렉토리의 존재여부를 확인
+								if(!f.exists()){
+									//없다면 생성
+									f.mkdirs(); 
+								}
+								try {
+									filesMenu.get(i).transferTo(f);
+								} catch (IllegalStateException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								
+								OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+								uploadPhoto.setOwPhotoTypeFk(4);
+								uploadPhoto.setStoreInfoFk(storeInfoIndex);
+								uploadPhoto.setOriginName(originName);
+								uploadPhoto.setRemakeName(remakeName);
+								uploadPhoto.setPhotoRoute(photoRoute);
+								
+								int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+								if(photoUpload>0) {
+									int photoIndex =ynmOwnerServiceImpl.photoSelectWithName(remakeName);
+									if(i<filesMenu.size()-1) menuPhotoList+=photoIndex+",";
+									else menuPhotoList+=photoIndex;
+								}else {
+									System.out.println("이미지 업로드 실패");
+									break;
+								}
+							}
+							detailInfo.setOwStoreMenuInfoDetail(menuPhotoList);
+							
+						}
 						break;
 					case 2:// 메뉴 등록 정보
 						String [] menuCateArr = request.getParameterValues("menuCategoryTitle");
 						String [] menuArr = request.getParameterValues("owRecommandMenu");
 						String [] menuPriceArr = request.getParameterValues("owRecommandMenuPrice");
 						String [] menuExplainArr = request.getParameterValues("owMenuExplain");
+						String menuInfoList = "";
+						for(int i = 0; i<menuCateArr.length;i++)
+						{
+							MenuInfo menuInfo = new MenuInfo();
+							String menuId = System.currentTimeMillis()+"_"+owner.getOwEntirePk()+"_"+menuArr[i];
+							menuInfo.setMenuId(menuId);
+							menuInfo.setMenuTitle(menuCateArr[i]);
+							menuInfo.setSubTitle(menuArr[i]);
+							menuInfo.setExplain(menuExplainArr[i]);
+							menuInfo.setMenuCost(Integer.parseInt(menuPriceArr[i]));
+							
+							int menuResult = ynmOwnerServiceImpl.ownerMenuUpload(menuInfo);
+							if(menuResult>0)
+							{
+								int menuIndex =  ynmOwnerServiceImpl.selectMenuWithId(menuId);
+								if(i<menuCateArr.length-1) menuInfoList+=menuIndex+",";
+								else menuInfoList+=menuIndex;
+							}
+							else
+							{
+								System.out.println("메뉴 인서트 실패");
+								break;
+							}
+							
+						}
+						detailInfo.setOwStoreMenuInfoDetail(menuInfoList);
 						break;
 				
 				}
 				detailInfo.setOwStoreCostType("ko");
+				
+				int detailInfoResult = ynmOwnerServiceImpl.storeDetailInfo(detailInfo);
 			}
 			 
 			
-			
-			return "ynmOwner/storeEnrollOwner";
+			return "redirect:/";
 		}
 		return null;
 	}

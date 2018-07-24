@@ -7,15 +7,24 @@
 		#{owStoreBizNum}, #{owStoreName}, #{owStoreTel}, #{owBigTypeFk}, #{owSmallTypeFk},
 		#{owStoreUrl},#{owStoreAddr},sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
  	</insert> 
- 	<insert id="storeDetailAdd" parameterType="storeDetailInfo">
- 		insert into owner_store_detail_tb
- 		values(owner_store_detail_tb_SEQ.nextval, #{owStoreLineComment},
- 		#{storeBigType}, #{storeSmallType}, #{owStoreTip}, #{recommandMenu},
- 		#{storeTableInfo}, #{budgetInfo}, #{owSubInfo}, #{owDrinkListInfo},
- 		#{owStoreHeadPhoto},#{owStoreMenuTypeFk}, #{owStoreMenuInfoDetail}, #{owStoreCostType} )
- 	</insert>
  	<select id="storeSearchWithBizNum" resultType="int">
  		select OW_STORE_INFO_PK from owner_store_info_tb 
- 		where OW_STORE_BIZ_NUM = #{bizNum} 
+ 		where OW_STORE_BIZ_NUM = '1234567891' 
  	</select>
+ 	
+ 	<insert id="menuUpload" parameterType="menuInfo">
+ 		insert into owner_menu_info_detail_tb 
+ 		values(owner_menu_info_detail_tb_SEQ.nextval,#{menuId}, #{menuTitle}, #{subTitle}, #{explain}, #{menuCost})
+ 	</insert>
+ 	
+ 	<select id="menuSelectWithId" resultType="int">
+ 		select ow_menu_info_detail_pk from owner_menu_info_detail_tb 
+ 		where ow_menu_id  = #{menuId} 
+ 	</select>
+ 	<insert id="storeDetailInfoInsert" parameterType="storeDetailInfo">
+ 		insert into owner_store_detail_tb 
+ 		values(owner_store_detail_tb_SEQ.nextval, #{owStoreInfoFk},  #{storeBigType}, #{storeSmallType}, #{owStoreLineComment},
+ 		  #{owStoreTip}, #{recommandMenu},  #{storeTableInfo}, #{budgetInfo},#{owSubInfo}, #{owDrinkListInfo},
+ 		  #{owStoreHeadPhoto},#{owStoreMenuTypeFk}, #{owStoreMenuInfoDetail},#{owStoreCostType})
+ 	</insert>
 </mapper>

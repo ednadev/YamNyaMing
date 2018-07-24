@@ -1,7 +1,9 @@
 package com.kh.ynm.owner.model.service;
 
+import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
+import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 public interface YNMOwnerService {
@@ -28,4 +30,14 @@ public interface YNMOwnerService {
 	
 	// 사진 선택, 이름으로
 	public int photoSelectWithName(String remakeName);
+	
+	// 메뉴 업로드
+	public int ownerMenuUpload(MenuInfo menuInfo);
+	
+	// 메뉴 인덱스 가져오기
+	public int selectMenuWithId(String menuId);
+	
+	// 상세 가게 정보 입력
+	public int storeDetailInfo(YNMStoreDetailInfo detailInfo);
+	
 }

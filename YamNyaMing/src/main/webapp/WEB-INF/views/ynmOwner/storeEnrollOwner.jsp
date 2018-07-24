@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=3">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
@@ -201,7 +201,7 @@
 				<div class="signUp-table">
 					<div>가게 추천 메뉴</div>
 					<div>
-						<input type="text" name="owRecommandMenu" placeholder="테이블 정보 입력 (최대 인원)">
+						<input type="text" name="owStoreRecommandMenuList" placeholder="추천메뉴">
 					</div>
 				</div>					
 				<div class="signUp-table">
