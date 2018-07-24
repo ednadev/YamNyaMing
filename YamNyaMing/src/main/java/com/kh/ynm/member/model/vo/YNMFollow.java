@@ -3,17 +3,17 @@ package com.kh.ynm.member.model.vo;
 public class YNMFollow {
 	private int followNo;
 	private int followMemberIdNo;
-	private int followrNo;
+	private int followerNo;
 	
 	
 	public YNMFollow() {
 		super();
 	}
-	public YNMFollow(int followNo, int followMemberIdNo, int followrNo) {
+	public YNMFollow(int followNo, int followMemberIdNo, int followerNo) {
 		super();
 		this.followNo = followNo;
 		this.followMemberIdNo = followMemberIdNo;
-		this.followrNo = followrNo;
+		this.followerNo = followerNo;
 	}
 	public int getFollowNo() {
 		return followNo;
@@ -27,11 +27,11 @@ public class YNMFollow {
 	public void setFollowMemberIdNo(int followMemberIdNo) {
 		this.followMemberIdNo = followMemberIdNo;
 	}
-	public int getFollowrNo() {
-		return followrNo;
+	public int getFollowerNo() {
+		return followerNo;
 	}
-	public void setFollowrNo(int followrNo) {
-		this.followrNo = followrNo;
+	public void setFollowerNo(int followerNo) {
+		this.followerNo = followerNo;
 	}
 	
 	

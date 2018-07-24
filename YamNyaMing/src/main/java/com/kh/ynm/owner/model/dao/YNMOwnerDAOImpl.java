@@ -41,5 +41,4 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	public int photoSelectWithName(SqlSessionTemplate sqlSession,String remakeName) {
 		return sqlSession.selectOne("owphotos.", remakeName);
 	}
-	
 }

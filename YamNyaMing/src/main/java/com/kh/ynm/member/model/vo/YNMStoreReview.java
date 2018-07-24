@@ -15,10 +15,17 @@ public class YNMStoreReview {
 	private char reviewOpenCheck;
 	private String reviewImgList;
 	private String[] reviewImgArr;
+	private int likeTotal;
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
 	
 	
 	
+	public int getLikeTotal() {
+		return likeTotal;
+	}
+	public void setLikeTotal(int likeTotal) {
+		this.likeTotal = likeTotal;
+	}
 	public String[] getReviewImgArr() {
 		return reviewImgArr;
 	}

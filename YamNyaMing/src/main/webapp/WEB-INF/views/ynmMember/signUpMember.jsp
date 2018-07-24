@@ -13,6 +13,73 @@
 </head>
 <script>
 
+var timer = 180;
+window.onload = function()
+{
+	startAlert = function() {
+		  $('#emailConfirmInput').attr('readonly', false);
+		  playAlert = setInterval(function() {
+			  timer-=1;
+			  var minute = Math.floor(timer/60);
+			  var second = Math.floor(timer%60);
+			  
+			  if(minute<=0 && second <=0)
+			  {
+				 clearInterval(playAlert); 
+				 timer = 180;
+				 $('#emailChkTimer').text("인증번호 재발급");
+			  }else{
+				  $('#emailChkTimer').text( (minute>9?minute:"0"+minute) +":"+ (second>9?second:"0"+second) );
+				  $('#emailConfirmInput').show();
+			  }
+		  }, 1000);
+	};
+}
+
+function emailConfirm()
+{
+	var insertEmail  = $('#memberEmail').val(); // 이메일 입력 결과
+	if(timer==180){
+		$.ajax({
+			url:"/emailConCheck.do",
+			data : {
+				emailConfirm:insertEmail,
+				   },
+			type : "post",
+			success : function(data){	
+				console.log("이메일 결과" + data);
+			},
+			error : function(){
+				
+			},
+		});
+		timer = 180;
+		startAlert();
+	}
+}
+
+function emailKeyMatchCheck()
+{
+	var emailConfirmInput = $('#emailConfirmInput').val();
+	$.ajax({
+		url:"/emailAccessKey.do",
+		type : "post",
+		success : function(data){	
+			if(emailConfirmInput==data){
+				$('#email_check').html("이메일 인증 완료");
+				$('#emailConfirmInput').attr('readonly', true);
+				timer = 180;
+				clearInterval(playAlert); 
+				emailChkBool=true;
+			}
+		},
+		error : function(){
+			
+		},
+	});
+}
+
+
 var phoneBool=false;
 var idBool=false;
 var pwBool=false;
@@ -24,6 +91,7 @@ var birthYearBool=false;
 var birthMonthBool=false;
 var birthDayBool=false;
 var emailBool=false;
+var emailChkBool=false;
 var check1Bool=false;
 var check2Bool=false;
 var check3Bool=false;
@@ -287,6 +355,7 @@ function memberNameChk()
 		}	
 		
 		if(rightFormChk){
+			emailCheckResult.html("이메일 인증 대기상태<button id='emailChkTimer' type='button' style='background-color:black;color:white;border:none;cursor:pointer;padding:10px 30px;display:inline;margin-left:5px;' onclick='emailConfirm();'>인증 메일 보내기</button>");
 			emailBool=true;		
 			
 		}
@@ -366,7 +435,7 @@ function memberNameChk()
 	$(document).keyup(function() {
 	    $('input[type="submit"]').attr('disabled', true);
 	        if(idBool==true && pwBool==true && pw2Bool==true && nameBool==true && nickNameBool==true && genderBool==true && birthYearBool==true && 
-	        		birthMonthBool==true && birthDayBool==true && emailBool==true && check1Bool==true && check2Bool==true && check3Bool==true) {
+	        		birthMonthBool==true && birthDayBool==true && emailBool==true && check1Bool==true && check2Bool==true && check3Bool==true &&emailChkBool==true) {
 	            $('input[type="submit"]').attr('disabled' , false);
 	        }else{
 	            $('input[type="submit"]').attr('disabled' , true);
@@ -459,7 +528,8 @@ function memberNameChk()
 				<div>이메일</div>
 				<div>
 					<input type="email" id="memberEmail" name="memberEmail" placeholder="이메일" onChange="emailCheck();">
-					<button>이메일 인증</button>
+						<br>
+						<input type="text" id="emailConfirmInput" placeholder="인증번호 입력" onchange="emailKeyMatchCheck();" onkeydown="emailKeyMatchCheck();" style="display:none"/>
 					<p id="email_check">얌냐밍에서 이용하실 이메일을 입력해주세요.</p>
 				</div>
 			</div>
@@ -918,7 +988,6 @@ function memberNameChk()
 			</div>
 			<input type="submit" value="회원가입하기">
 		</form>
-		<button onclick="test();">확인</button>
 	
 	</section>
 	<footer id="member-main-footer">
