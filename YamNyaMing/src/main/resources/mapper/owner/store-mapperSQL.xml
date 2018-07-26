@@ -27,4 +27,10 @@
  		  #{owStoreTip}, #{recommandMenu},  #{storeTableInfo}, #{budgetInfo},#{owSubInfo}, #{owDrinkListInfo},
  		  #{owStoreHeadPhoto},#{owStoreMenuTypeFk}, #{owStoreMenuInfoDetail},#{owStoreCostType})
  	</insert>
+ 	<insert id="couponEnroll" parameterType="couponEnrollData">
+ 		insert into owner_coupon_info_tb 
+ 		values(owner_coupon_info_tb_SEQ.nextval, #{owEntireFk}, #{owStoreInfoFk},
+ 		#{owCouponName}, #{owCouponCount}, #{owCouponStartDate},#{owCouponExpireDate}, 
+ 		#{owCouponDetail} )
+ 	</insert>
 </mapper>

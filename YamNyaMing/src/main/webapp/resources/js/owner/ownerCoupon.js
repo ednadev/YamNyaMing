@@ -8,7 +8,7 @@ window.onload = function()
 
 function couponNameCheck()
 {
-	var nameInsert = $('#couponNameId').val();
+	var nameInsert = $('#owCouponName').val();
 	var nameResult = $('#couponNameResult');
 	if(nameInsert.length>0)
 	{
@@ -58,7 +58,7 @@ function dateCheck()
 function couponEnroll()
 {
 	if(couponNameCheck() && couponCountCheck() && dateCheck()){
-		var couponName = $('#couponNameId').val();
+		var couponName = $('#owCouponName').val();
 		var couponCount =  $('#couponCountId').val();
 		var couponStartData =  $('#couponStartDateId').val();
 		var couponExpireDate =  $('#couponEndDateId').val();

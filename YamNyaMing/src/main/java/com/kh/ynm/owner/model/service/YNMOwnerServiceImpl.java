@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ynm.owner.model.dao.YNMOwnerDAOImpl;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -85,6 +86,12 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	public int storeDetailInfo(YNMStoreDetailInfo detailInfo) {
 		int storeDetailInfoResult = ynmOwnerDAO.storeDetailInfo(sqlSession, detailInfo);
 		return storeDetailInfoResult;
+	}
+	
+	@Override
+	public int couponEnroll(CouponEnroll couponEnroll) {
+		int couponEnrollResult = ynmOwnerDAO.couponEnroll(sqlSession, couponEnroll);
+		return couponEnrollResult;
 	}
 
 	

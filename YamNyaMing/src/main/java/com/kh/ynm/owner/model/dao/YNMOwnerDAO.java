@@ -2,6 +2,7 @@ package com.kh.ynm.owner.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -18,4 +19,5 @@ public interface YNMOwnerDAO {
 	public int ownerMenuUpload(SqlSessionTemplate sqlSession, MenuInfo menuInfo);
 	public int selectMenuWithId(SqlSessionTemplate sqlSession, String menuId);
 	public int storeDetailInfo(SqlSessionTemplate sqlSession, YNMStoreDetailInfo detailInfo);
+	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll);
 }

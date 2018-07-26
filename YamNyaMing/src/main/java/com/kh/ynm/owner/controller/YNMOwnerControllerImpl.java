@@ -296,8 +296,11 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	public String couponAdd(HttpSession session,HttpServletRequest request ) {
 		if(session.getAttribute("owner")!=null)
 		{
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 			CouponEnroll couponEnroll = new CouponEnroll();
+			couponEnroll.setOwEntireFk(owner.getOwEntirePk());
+			couponEnroll.setOwStoreInfoFk(1);
 			couponEnroll.setOwCouponName(request.getParameter("couponName"));
 			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
 			Date startDate= new Date();
@@ -309,9 +312,13 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			couponEnroll.setOwCouponExpireDate(startDate);
+			couponEnroll.setOwCouponStartDate(startDate);
 			couponEnroll.setOwCouponExpireDate(expireDate);
 			couponEnroll.setOwCouponDetail(request.getParameter("couponExplain"));
+			
+			int result = ynmOwnerServiceImpl.couponEnroll(couponEnroll);
+			if(result>0)return "ynmOwner/ownerMyPage";
+			else return "ynmOwner/ynmOwnerError/couponEnrollFail";
 		}
 		return null;
 	}

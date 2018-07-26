@@ -1,5 +1,6 @@
 package com.kh.ynm.owner.model.service;
 
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -39,5 +40,8 @@ public interface YNMOwnerService {
 	
 	// 상세 가게 정보 입력
 	public int storeDetailInfo(YNMStoreDetailInfo detailInfo);
+
+	// 쿠폰 등록
+	public int couponEnroll(CouponEnroll couponEnroll);
 	
 }

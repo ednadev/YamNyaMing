@@ -3,6 +3,7 @@ package com.kh.ynm.owner.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -58,5 +59,11 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	@Override
 	public int storeDetailInfo(SqlSessionTemplate sqlSession, YNMStoreDetailInfo detailInfo) {
 		return sqlSession.insert("stores.storeDetailInfoInsert", detailInfo);
+	}
+	
+	@Override
+	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll) {
+		System.out.println(couponEnroll.getOwCouponStartDate() );
+		return sqlSession.insert("stores.couponEnroll", couponEnroll);
 	}
 }

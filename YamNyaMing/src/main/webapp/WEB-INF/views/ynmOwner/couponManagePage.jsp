@@ -12,7 +12,7 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=3"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=1"></script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -73,6 +73,7 @@
 						</div>
 					</div>
 					<div>
+						<input type="hidden" id="couponStoreIndex" value=""/>
 						<button id="couponEnrollBtn" onclick="couponEnroll();">쿠폰 등록</button>
 					</div>
 			</div>
