@@ -22,4 +22,7 @@ public class YNMSearch {
 	public void setOwStoreName(String owStoreName) {
 		this.owStoreName = owStoreName;
 	}
+	
+	
+
 }

@@ -8,8 +8,8 @@
 <title>얌냐밍</title>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
-<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/signup.css?ver=1">
+<script src="${pageContext.request.contextPath}/resources/js/member/memberSignUp.js"></script>
 </head>
 
 <script>

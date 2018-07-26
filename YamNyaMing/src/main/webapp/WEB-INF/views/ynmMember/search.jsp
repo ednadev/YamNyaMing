@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css?ver=10">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -149,7 +149,7 @@
 </header>
 <section id="member-search-section">
 	<div id="map"></div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member.js?ver=2"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberSearch.js?ver=2"></script>
 	<div class="member-search-wrapper">
 	<h2>자세히 검색</h2>
 	<c:choose>
