@@ -1,14 +1,14 @@
 package com.kh.ynm.member.model.vo;
 
 public class YNMSearch {
-	String owPhotoRoute;
-	String owStoreNum;
+	private String owPhotoRoute;
+	private String owStoreName;
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
-	public YNMSearch(String owPhotoRoute, String owStoreNum) {
+	public YNMSearch(String owPhotoRoute, String owStoreName) {
 		this.owPhotoRoute = owPhotoRoute;
-		this.owStoreNum = owStoreNum;
+		this.owStoreName = owStoreName;
 	}
 	public String getOwPhotoRoute() {
 		return owPhotoRoute;
@@ -16,10 +16,10 @@ public class YNMSearch {
 	public void setOwPhotoRoute(String owPhotoRoute) {
 		this.owPhotoRoute = owPhotoRoute;
 	}
-	public String getOwStoreNum() {
-		return owStoreNum;
+	public String getOwStoreName() {
+		return owStoreName;
 	}
-	public void setOwStoreNum(String owStoreNum) {
-		this.owStoreNum = owStoreNum;
+	public void setOwStoreName(String owStoreName) {
+		this.owStoreName = owStoreName;
 	}
 }

@@ -20,6 +20,7 @@ import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
@@ -127,29 +128,28 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("review.likeChk",yrl);
 	}
 
-	public ArrayList<PagingTest> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage,
+	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage,
 			int recordCountPerPage) {
 		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
 		
 		int end=currentPage*recordCountPerPage;
 		
-		pagingTest2 pt=new pagingTest2();
+		YNMSearchPaging pt=new YNMSearchPaging();
 		pt.setStart(start);
 		pt.setEnd(end);
 		
 		
-		List list=sqlSession.selectList("underReview.pagingTest2",pt);
+		List list=sqlSession.selectList("search.searchList",pt);
 		System.out.println(list.size());
 
-		return (ArrayList<PagingTest>)list;
+		return (ArrayList<YNMSearch>)list;
 	}
 
-	public pagingTest2 getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
+	public YNMSearchPaging getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
 			int naviCountPerPage) {
-
 		
 		int recordTotalCount=0;
-		recordTotalCount=sqlSession.selectOne("underReview.pagingTest");
+		recordTotalCount=sqlSession.selectOne("search.searchCount");
 		System.out.println(recordTotalCount);
 		int pageTotalCount=0;
 		
@@ -172,55 +172,56 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		if(endNavi>pageTotalCount) {
 			endNavi=pageTotalCount;
 		}
+	
+		YNMSearchPaging sp =new YNMSearchPaging();
+		sp.setCurrentPage(currentPage);
+		sp.setEndNavi(endNavi);
+		sp.setStartNavi(startNavi);
+		sp.setPageTotalCount(pageTotalCount);
+		sp.setRecordTotalCount(recordTotalCount);
 		
-		pagingTest2 qpd=new pagingTest2();
-		qpd.setCurrentPage(currentPage);
-		qpd.setEndNavi(endNavi);
-		qpd.setStartNavi(startNavi);
-		qpd.setPageTotalCount(pageTotalCount);
-		qpd.setRecordTotalCount(recordTotalCount);
-		
-		return qpd;
-	}
+		return sp;
+	}	
 
 	public int likeTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		return sqlSession.selectOne("review.likeTotal",storeReviewNo);
 	}
-
+	
 	public int deleteLike(SqlSessionTemplate sqlSession, YNMReviewLike yrl) {
 		return sqlSession.delete("review.likeDelete",yrl);
 	}
-
+	
 	public String viewPath(SqlSessionTemplate sqlSession, int memberUploadPhotoNo) {
 		return sqlSession.selectOne("photo.viewPath",memberUploadPhotoNo);
 	}
-
+	
 	public int jjimChk(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
 		return sqlSession.selectOne("review.jjimChk",yrj);
 	}
-
+	
 	public int jjimInsert(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
 		return sqlSession.insert("review.jjimInsert",yrj);
 	}
-
+	
 	public int deletejjim(SqlSessionTemplate sqlSession, YNMReviewJjim yrj) {
 		return sqlSession.delete("review.deleteJjim",yrj);
 	}
-
+	
 	public int followChk(SqlSessionTemplate sqlSession, YNMFollow yf) {
 		return sqlSession.selectOne("member.followChk",yf);
 	}
-
+	
 	public int deletefollow(SqlSessionTemplate sqlSession, YNMFollow yf) {
 		return sqlSession.delete("member.deleteFollow",yf);
 	}
-
+	
 	public int followInsert(SqlSessionTemplate sqlSession, YNMFollow yf) {
 		return sqlSession.insert("member.followInsert",yf);
 	}
-
+	
 	public int reviewUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
 		return sqlSession.insert("photo.reviewPhoto",ymup);
 		
 	}
+	
 }

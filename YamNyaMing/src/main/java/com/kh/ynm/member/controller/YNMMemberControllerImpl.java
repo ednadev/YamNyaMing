@@ -33,8 +33,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+<<<<<<< HEAD
 import com.kh.ynm.member.model.vo.BoardPager;
 import com.kh.ynm.member.model.vo.PagingTest;
+=======
+>>>>>>> origin/kmg
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
@@ -42,6 +45,7 @@ import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
@@ -544,7 +548,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	// �쓬�떇�젏 寃��깋
 	@RequestMapping(value="/search.do")
-	public Object search(HttpSession session, HttpServletRequest request) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");
 		String food = request.getParameter("food");
 		String place = request.getParameter("place");
@@ -558,19 +562,29 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
 
 		YNMSearchCheck check = new YNMSearchCheck();
+		
+		int currentPage;
 
-		ArrayList<YNMSearch> list = ynmMemberServiceImpl.search(check);
-		ModelAndView view = new ModelAndView();
-		if(!list.isEmpty()) {
-			view.addObject("search",list);
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage=1;
+		}
+		else
+		{
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		YNMSearchPaging qpd=ynmMemberServiceImpl.testAll(currentPage);
+
+		ModelAndView view=new ModelAndView();
+		if(qpd!=null) {
+			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}
 		return null;
-
 	}
 	
-
 	// 음식점 상세 페이지
 	@RequestMapping(value="/detailPage.do")
 	public String detailPage() {

@@ -22,6 +22,7 @@ import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 import com.kh.ynm.member.model.vo.pagingTest2;
@@ -153,6 +154,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int likeChk=memberDAO.likeChk(sqlSession,yrl);
 		return likeChk;
 	}
+	
 	public pagingTest2 testAll(int currentPage) {
 		int recordCountPerPage=10;
 		int naviCountPerPage=5;
@@ -233,5 +235,32 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return result;
 	}
 	
+	public YNMSearchPaging testAll(int currentPage) {
+		int recordCountPerPage=9;
+		int naviCountPerPage=5;
+		
+		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage);
+		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage);
+		
+		int resultcurrentPage=qpd.getCurrentPage();
+		int endNavi=qpd.getEndNavi();
+		int startNavi=qpd.getStartNavi();
+		int pageTotalCount=qpd.getPageTotalCount();
+		int recordTotalCount=qpd.getRecordTotalCount();
+		
+		YNMSearchPaging qpd2=null;
+		
+		if(!list.isEmpty()) {
+			qpd2=new YNMSearchPaging();
+			qpd2.setNoticelist(list);
+			qpd2.setCurrentPage(resultcurrentPage);
+			qpd2.setEndNavi(endNavi);
+			qpd2.setStartNavi(startNavi);
+			qpd2.setPageTotalCount(pageTotalCount);
+			qpd2.setRecordTotalCount(recordTotalCount);
+			
+		}
+		return qpd2;
+	}	
 	
 }
