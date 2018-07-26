@@ -29,12 +29,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
-import com.kh.ynm.member.model.vo.BoardPager;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 
@@ -271,7 +271,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	// 음식점 검색
 	@RequestMapping(value="/search.do")
-	public Object search(HttpSession session, HttpServletRequest request) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");
 		String food = request.getParameter("food");
 		String place = request.getParameter("place");
@@ -286,16 +286,28 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		YNMSearchCheck check = new YNMSearchCheck();
 		
-		ArrayList<YNMSearch> list = ynmMemberServiceImpl.search(check);
-		ModelAndView view = new ModelAndView();
-		if(!list.isEmpty()) {
-			view.addObject("search",list);
+		int currentPage;
+
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage=1;
+		}
+		else
+		{
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		YNMSearchPaging qpd=ynmMemberServiceImpl.testAll(currentPage);
+
+		ModelAndView view=new ModelAndView();
+		if(qpd!=null) {
+			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}
 		return null;
-
 	}
+	
 	
 	// 음식점 상세 페이지
 	@RequestMapping(value="/detailPage.do")

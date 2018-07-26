@@ -16,6 +16,7 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 @Repository("ynmMemberDAO")
@@ -67,4 +68,60 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMSearch>)list;
 	}
 
+	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage,
+			int recordCountPerPage) {
+		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
+		
+		int end=currentPage*recordCountPerPage;
+		
+		YNMSearchPaging pt=new YNMSearchPaging();
+		pt.setStart(start);
+		pt.setEnd(end);
+		
+		
+		List list=sqlSession.selectList("search.searchList",pt);
+		System.out.println(list.size());
+
+		return (ArrayList<YNMSearch>)list;
+	}
+
+	public YNMSearchPaging getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
+			int naviCountPerPage) {
+
+		
+		int recordTotalCount=0;
+		recordTotalCount=sqlSession.selectOne("search.searchCount");
+		System.out.println(recordTotalCount);
+		int pageTotalCount=0;
+		
+		if(recordTotalCount%recordCountPerPage!=0) {
+			pageTotalCount=recordTotalCount/recordCountPerPage+1;
+		}else {
+			pageTotalCount=recordTotalCount/recordCountPerPage;
+		}
+		
+		if(currentPage<1) {
+			currentPage=1;
+		}else if(currentPage>pageTotalCount) {
+			currentPage=pageTotalCount;
+		}
+		
+		int startNavi=((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		
+		int endNavi=startNavi + naviCountPerPage -1;
+		
+		if(endNavi>pageTotalCount) {
+			endNavi=pageTotalCount;
+		}
+		
+		YNMSearchPaging sp =new YNMSearchPaging();
+		sp.setCurrentPage(currentPage);
+		sp.setEndNavi(endNavi);
+		sp.setStartNavi(startNavi);
+		sp.setPageTotalCount(pageTotalCount);
+		sp.setRecordTotalCount(recordTotalCount);
+		
+		return sp;
+	}	
+	
 }

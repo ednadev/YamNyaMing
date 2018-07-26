@@ -16,6 +16,7 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 
 @Service("ynmMemberService")
@@ -86,5 +87,32 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return list;
 	}
 	
+	public YNMSearchPaging testAll(int currentPage) {
+		int recordCountPerPage=9;
+		int naviCountPerPage=5;
+		
+		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage);
+		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage);
+		
+		int resultcurrentPage=qpd.getCurrentPage();
+		int endNavi=qpd.getEndNavi();
+		int startNavi=qpd.getStartNavi();
+		int pageTotalCount=qpd.getPageTotalCount();
+		int recordTotalCount=qpd.getRecordTotalCount();
+		
+		YNMSearchPaging qpd2=null;
+		
+		if(!list.isEmpty()) {
+			qpd2=new YNMSearchPaging();
+			qpd2.setNoticelist(list);
+			qpd2.setCurrentPage(resultcurrentPage);
+			qpd2.setEndNavi(endNavi);
+			qpd2.setStartNavi(startNavi);
+			qpd2.setPageTotalCount(pageTotalCount);
+			qpd2.setRecordTotalCount(recordTotalCount);
+			
+		}
+		return qpd2;
+	}	
 	
 }

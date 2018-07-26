@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.kh.ynm.member.model.vo.*" import="java.util.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +21,8 @@
     	<select name="place" id="place">
     	<c:choose>
     		<c:when test="${place eq '홍대'}">
-	    		<option selected>지역 선택</option>
-	    		<option value="홍대">홍대</option>
+	    		<option>지역 선택</option>
+	    		<option value="홍대" selected>홍대</option>
     		</c:when> 
     		<c:otherwise>
 	    		<option selected>지역 선택</option>
@@ -354,16 +356,27 @@
 	<h4>총 <span>0</span>개가 검색되었습니다</h4>
 	<p><span>대기순</span> | <span>추천순</span></p>
 	<div class="search-page">
-		<c:forEach items="${search}" var="search">
+		<c:forEach items="${search.noticelist}" var="search">
 			<div style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute}); position:relative;">
 				<div style="background-color:rgba(0,0,0,0.5);position:relative;bottom:0;">
-					<h5>${search.owStoreNum }</h5>
+					<h5>${search.owStoreName }</h5>
 					<p>서울 > 마포구</p>
 					<p>보쌈,족발</p>
 					<p>대기시간 : 0분 남았습니다</p>
 				</div>
 			</div>
 		</c:forEach>
+		<c:if test="${search.currentPage>1}" var="search">
+			<button onclick="searchPaging()"> < </button>
+		</c:if>
+<%-- <%-- 		<c:forEach items="${search}" var="search" begin="${search.startNavi}" end="${search.endNavi}" step=1>
+			<c:if test="${search.currentPage eq search.startNavi}">
+				<button onclick="searchPaging()">${search.startNavi}</button>
+			</c:if>
+		</c:forEach> --%>
+<%-- 		<c:if test="${search.currentPage < search.pageTotalCount}">
+			<button onclick="searchPaging()"> > </button>
+		</c:if> --%>
 	</div>
 	</div>
 </section>
