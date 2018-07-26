@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -32,5 +33,8 @@ public interface YNMOwnerController {
 	
 	// 로그아웃
 	public String ynmOwnerLogout(HttpSession session);
+	
+	// 쿠폰 등록
+	public String couponAdd(HttpSession session, HttpServletRequest request);
 	
 }

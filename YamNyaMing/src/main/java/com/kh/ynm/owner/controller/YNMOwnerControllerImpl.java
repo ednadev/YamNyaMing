@@ -2,6 +2,9 @@ package com.kh.ynm.owner.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -285,6 +289,31 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			session.removeAttribute("owner");
 		}
 		return "redirect:/";
+	}
+
+	@Override
+	@RequestMapping(value="/couponEnroll.do")
+	public String couponAdd(HttpSession session,HttpServletRequest request ) {
+		if(session.getAttribute("owner")!=null)
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			CouponEnroll couponEnroll = new CouponEnroll();
+			couponEnroll.setOwCouponName(request.getParameter("couponName"));
+			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
+			Date startDate= new Date();
+			Date expireDate= new Date();
+			try {
+				startDate = sdf.parse(request.getParameter("couponStartData"));
+				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			couponEnroll.setOwCouponExpireDate(startDate);
+			couponEnroll.setOwCouponExpireDate(expireDate);
+			couponEnroll.setOwCouponDetail(request.getParameter("couponExplain"));
+		}
+		return null;
 	}
 	
 

@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+#owner-coupon-section{
+    border: 1px solid #cecece;
+    padding:10px;
+}
+
+
+/*쿠폰 등록 div*/
+#coupon-enroll{
+	width:100%;
+}
+
+/*쿠폰 타입 선택버튼*/
+#coupon-type-btn-click{
+    background-color: #fb0;
+    border: 1px solid #cecece;
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+    display: inline;
+    width: 88px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    text-align: center;
+}
+#coupon-type-btn{
+    background-color: white;
+    border: 1px solid #cecece;
+    cursor: pointer;
+    color: #cecece;
+    padding: 10px;
+    display: inline;
+    width: 88px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#couponEnrollBtn{
+   background-color: #fb0;
+   color: white;
+   border: none;
+   margin: 20px auto;
+   display: block;
+   padding: 20px 60px;
+   font-size: 1em;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+/*쿠폰 리스트 div*/
+#owner-section-coupon{
+	clear:both;
+	
+}
+/* number타입 input*/
+input[type="number"]{
+    color: #555;
+    padding: 10px;
+    width: 50%;
+}
+/* 모든 input*/
+input[type="date"]{
+    color: #555;
+    padding: 8px;
+}
+
+textarea{
+	color: #555;
+    padding: 10px;
+    width: 50%;
+    height:80px;
+}
+
+/**/
+#owner-main-footer{
+	background-color:rgba(0,0,0,0.8);
+   position:absolute;
+   bottom:0;
+   width:100%;
+   overflow:hidden;
+}
+
+
+
