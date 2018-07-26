@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="com.kh.ynm.admin.model.vo.*"
+	import="com.kh.ynm.owner.model.vo.*"
 	%>
 <% YNMAdmin ad = (YNMAdmin)session.getAttribute("admin");%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -11,13 +12,36 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+
+
+<script type="text/javascript">  //아이디 체크여부 확인 
+function blockBtn(){
+    var block = $('#block').value;
+        $.ajax({
+             url : "/ownerBlock.do",
+             data : {block : block},
+             dataType:'json',
+             success : function(data){
+                 console.log(data);
+                 if(data>0){
+                	 alert("실패했어욧..");
+                    return false;
+                 } else{
+                    alert("블락성공 ^-^"); 
+                 }   
+             }
+         });    
+}    
+
+</script>
+
 </head>
 <body>
 	<header id="admin-login-header">
@@ -25,7 +49,7 @@
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
@@ -42,7 +66,7 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-3">
-            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span>회원관리 </h2>
+            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span>점장관리 </h2>
           </div>
           <div class="col-xs-9 col-sm-9 col-md-9">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -51,14 +75,13 @@
                 <div class="form-group">
                   <div class="input-group">
                   
-                      <form action="/MemberSearch.do">
+                      <form action="/OwnerSearch.do">
                   		<SELECT name="combo" id="combo">
-    						<OPTION value="MemberName">이름으로 검색</OPTION>
-    						<OPTION value="MemberNickName">닉네임으로 검색</OPTION>
-    						<OPTION value="MemberId">아이디로 검색</OPTION>
+    						<OPTION value="OwnerName">이름으로 검색</OPTION>
+    						<OPTION value="OwnerId">아이디로 검색</OPTION>
 						</SELECT>
                       <input type="text" name="keyword" id="keyword" required>
-                      <input type="submit" value="검색" />
+                      <input type="submit" value="검색"/>
                   </form>
                     
                  
@@ -75,32 +98,26 @@
         <table class="table table-hover">
 				<thead>
 				<tr>
-				    <th class="col-xs-3">아바타</th>
-					<th class="col-xs-3">아이디</th>
+				<th class="col-xs-3">아이디</th>
 					<th class="col-xs-3">이름</th>
-					<th class="col-xs-3">닉네임</th>
-					<th class="col-xs-3">성별</th>
-					<th class="col-xs-3">생일</th>
 					<th class="col-xs-3">이메일</th>
-					<th class="col-xs-3">폰번</th>
-					<th class="col-xs-3">가입일</th>
+					<th class="col-xs-3">전화번호</th>
+					<th class="col-xs-3">계좌정보</th>
+					<th class="col-xs-3">정지</th>
 
 				</tr>
 			</thead>
 			
-			   <c:forEach items="${list}" var="m">
+			   <c:forEach items="${list}" var="o">
 			   <thead>
 				<tbody class="points_table_scrollbar">
 				  <tr class="edit" id="detail">
-				 	<td class="col-xs-3">${m.memberAvatar}</td>
-					<td class="col-xs-3">${m.memberId} </td>
-					<td class="col-xs-3">${m.memberName} </td>
-					<td class="col-xs-3">${m.memberNickName}</td>
-					<td class="col-xs-3">${m.memberGender} </td>
-					<td class="col-xs-3">${m.memberBirth} </td>
-					<td class="col-xs-3">${m.memberEmail}</td>
-					<td class="col-xs-3">${m.memberPhone} </td>
-					<td class="col-xs-3">${m.memberRegDate} </td>
+					<td class="col-xs-3">${o.owId}</td>
+					<td class="col-xs-3">${o.owName} </td>
+					<td class="col-xs-3">${o.owEmail} </td>
+					<td class="col-xs-3">0${o.phone}</td>
+					<td class="col-xs-3">${o.owBankAccount} </td>
+					<td class="col-xs-3"><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
 				</tr>
 			</c:forEach>
 			</tbody>

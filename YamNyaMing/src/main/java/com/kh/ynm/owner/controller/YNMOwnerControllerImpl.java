@@ -43,7 +43,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			return "redirect:/";
 		}
 		else
-		{// 로그인 실패.
+		{// 濡쒓렇�씤 �떎�뙣.
 			return "ynmOwner/ynmOwnerError/ownerLoginFail";
 		}
 		
@@ -64,8 +64,22 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	public String addStore(HttpSession session, YNMStoreInfo storeInfo) {
 		if(session.getAttribute("owner")!=null) {
 			int result = ynmOwnerServiceImpl.ynmStoreAdd(storeInfo);
+
 			
 			return null;
+
+			// 媛�寃� �벑濡앹씠 �셿猷뚮릱�쑝硫�.
+			if(result>0) {
+				int storeInfoIndex = ynmOwnerServiceImpl.ynmSelectStoreIndex(request.getParameter("owStoreBizNum"));
+				System.out.println("�벑濡앸맂 媛�寃뚯쓽 �씤�뜳�뒪 踰덊샇 " + storeInfoIndex);
+				MenuInfo menuInfo = new MenuInfo();
+				menuInfo.setOwStoreMenuTypeFk(2);//�꽕紐낇��엯
+			}
+			 
+			
+			
+			return "ynmOwner/storeEnrollOwner";
+
 		}
 		return null;
 	}

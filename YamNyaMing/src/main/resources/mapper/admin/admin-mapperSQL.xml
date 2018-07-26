@@ -1,84 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
-	
-<insert id="insertAdmin" parameterType="admin">
-insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade})  
+
+
+<insert id="insertAdmin" parameterType="admins">
+insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade}) 
 </insert>
 
+<select id="adminIdCheck" parameterType="admins" resultType="admins">
+SELECT ADMIN_NICKNAME as ad_nickname 
+FROM admin_info_tb 
+WHERE ADMIN_ID = #{ad_id}
+</select>
 
-<select id="adminIdCheck" parameterType="admin" resultType="admin">
-      SELECT ADMIN_NICKNAME as ad_nickname FROM admin_info_tb
-      WHERE ADMIN_ID = #{ad_id}
-</select>
-	
+
 <select id="allMemberView" parameterType="members" resultType="members">
-  SELECT 
-  mb_id as memberId,
-  mb_name as memberName,
-  mb_nickname as memberNickName,
-  mb_gender as memberGender,
-  mb_birth as memberBirth,
-  mb_email as memberEmail,
-  mb_phone as memberPhone,
-  mb_regDate as memberRegDate,
-  mb_avatar as memberAvatar
-  from member_entire_tb
+SELECT mb_id as memberId,
+	   mb_name as memberName,
+	   mb_nickname as memberNickName,
+	   mb_gender as memberGender,
+	   mb_birth as memberBirth,
+	   mb_email as memberEmail,
+	   mb_phone as memberPhone,
+	   mb_regDate as memberRegDate,
+	   MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
+	   from member_entire_tb
 </select>
+
 
 <select id="allOwnerView" parameterType="owner" resultType="owner">
-  SELECT 
-  OW_ID as owId,
-  OW_NAME as owName,
-  OW_EMAIL as owEmail,
-  OW_PHONE as phone,
-  OW_REGDATE as owRegDate,
-  OW_BANK_ACCOUNT as owBankAccount
-  from OWNER_ENTIRE_TB
+SELECT OW_ID as owId, 
+	   OW_NAME as owName,
+	   OW_EMAIL as owEmail,
+	   OW_PHONE as phone,
+	   OW_REGDATE as owRegDate, 
+	   OW_BANK_ACCOUNT as owBankAccount 
+	   from OWNER_ENTIRE_TB
 </select>
 
 
-<select id="OwnerSearch" parameterType="owner" resultType="owner">
-SELECT  
-  OW_ID as owId,
-  OW_NAME as owName,
-  OW_EMAIL as owEmail,
-  OW_PHONE as phone,
-  OW_REGDATE as owRegDate,
-  OW_BANK_ACCOUNT as owBankAccount 
-  FROM OWNER_ENTIRE_TB
-  WHERE OW_NAME LIKE '%'||#search#||'%' 
-</select>
-
-<select id="MemberSearch" parameterType="members" resultType="members"> 
-  SELECT 
-  mb_id as memberId,
-  mb_name as memberName,
-  mb_nickname as memberNickName,
-  mb_gender as memberGender,
-  mb_birth as memberBirth,
-  mb_email as memberEmail,
-  mb_phone as memberPhone,
-  mb_regDate as memberRegDate,
-  mb_avatar as memberAvatar
-  from member_entire_tb
-  WHERE mb_name LIKE '%'||#search#||'%' 
+<select id="ownerSearch" parameterType="map" resultType="owner">
+SELECT OW_ID as owId,
+	   OW_NAME as owName,
+	   OW_EMAIL as owEmail,
+	   OW_PHONE as phone,
+	   OW_REGDATE as owRegDate, 
+	   OW_BANK_ACCOUNT as owBankAccount 
+	   FROM OWNER_ENTIRE_TB 
+<where>
+<choose>
+<when test="combo == 'OwnerName'">
+OW_NAME LIKE '%'|| #{keyword} ||'%' </when>
+<otherwise>
+OW_ID LIKE '%'|| #{keyword} ||'%' 
+</otherwise>
+</choose>
+</where>
 </select>
 
 
-<select id="adminLogin" parameterType="admin" resultType="admin">
-      SELECT 
-      ADMIN_INFO_PK as admin_info_pk,
-      ADMIN_ID as ad_id,
-      ADMIN_PASSWORD as ad_password,
-      ADMIN_NICKNAME as ad_nickname,
-      ADMIN_ACCESS_GRADE_FK as
-      from admin_info_tb 
-      where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
+<select id="memberSearch" parameterType="map" resultType="members">
+SELECT mb_id as memberId,
+	   mb_name as memberName, 
+	   mb_nickname as memberNickName,
+	   mb_gender as memberGender,
+	   mb_birth as memberBirth,
+	   mb_email as memberEmail, 
+	   mb_phone as memberPhone,
+	   mb_regDate as memberRegDate,
+	   MB_UPLOAD_PHOTO_FK as memberAvatar 
+	   from member_entire_tb where 
+<choose>
+<when test="combo == 'MemberName'">
+MB_NAME LIKE '%'|| #{Keyword} ||'%' 
+</when>
+<when test="combo == 'MemberNickName'">
+MB_NICKNAME LIKE '%'|| #{Keyword} ||'%' 
+</when>
+<otherwise>
+MB_ID LIKE '%'|| #{Keyword} ||'%' 
+</otherwise>
+</choose>
+</select>
+
+<select id="adminLogin" parameterType="admins" resultType="admins">
+SELECT ADMIN_INFO_PK as admin_info_pk, ADMIN_ID as ad_id, ADMIN_PASSWORD as ad_password, ADMIN_NICKNAME as ad_nickname, ADMIN_ACCESS_GRADE_FK as ad_grade from admin_info_tb where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
 </select>
 
 
-
+<select id="statAdmin" resultType="statistics">
+SELECT
+    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='M')as boy, 
+    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='F')as girl,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 10 and 20)as age1020,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 20 and 30)as age2030,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 30 and 40)as age3040,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 40 and 50)as age4050,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 50 and 60)as age5060,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb)>60)as age60,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 09 and 10)as time0910,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 11 and 12)as time1112,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 13 and 14)as time1314,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 15 and 16)as time1516,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 17 and 18)as time1718,
+    (select count(*) from MEMBER_BOOK_TB where (select to_char (MB_BOOK_DATE,'hh24') from DUAL) between 19 and 22)as time1922,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='한식')as korea,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='중식')as china,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='일식')as japan,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='양식')as usa,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='디저트')as dessert,
+    (select count(*) from owner_entire_tb MEMBER_entire_tb)as allmember,
+    (select count(*) from MEMBER_entire_tb where MB_REGDATE = sysdate)as newtoday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-1,'YYMMDD') from dual))as newyesterday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-2,'YYMMDD') from dual))as newthreeday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-3,'YYMMDD') from dual))as newfourday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-4,'YYMMDD') from dual))as newfiveday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-5,'YYMMDD') from dual))as newsixday,
+    (select count(*) from MEMBER_entire_tb where (to_char(MB_REGDATE,'YYMMDD')) = (select to_char(sysdate-6,'YYMMDD') from dual))as newsevenday,
+    (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-7  AND sysdate)as all7day,
+    (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-15 AND sysdate)as all15day,
+    (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-13 AND sysdate)as all30day,
+    (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate,'YYMMDD'))AS deletetoday,
+    (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-1,'YYMMDD'))AS deleteyesterday,
+    (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-2,'YYMMDD'))AS deletethreeday,
+    (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-3,'YYMMDD'))AS deletefourday,
+    (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-4,'YYMMDD'))AS deletefiveday,
+	(select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-5,'YYMMDD'))AS deletesixday,
+	(select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-6,'YYMMDD'))AS deletesevenday,
+    (select count(*) from member_signout_tb WHERE mb_signout_date between sysdate-7   AND sysdate)as delete7day,
+    (select count(*) from member_signout_tb WHERE mb_signout_date between sysdate-15  AND sysdate)as delete15day,
+    (select count(*) from member_signout_tb WHERE mb_signout_date between sysdate-30  AND sysdate)as delete30day
+FROM dual
+</select>
+<!-- <select id="storeList" resultType="YNMStoreInfo"> -->
 
 
 </mapper>

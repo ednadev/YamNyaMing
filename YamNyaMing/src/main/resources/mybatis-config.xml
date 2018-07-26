@@ -2,15 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<typeAliases>
+	    <typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admins"/>
+	    <typeAlias type="com.kh.ynm.admin.model.vo.AdminStatistics" alias="statistics"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMember" alias="members"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberCheck" alias="memberCheck"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMBook" alias="books"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberUploadPhoto" alias="photos"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreReview" alias="reviews"/>
-		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>
-		
-		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>		
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
+		
 	</typeAliases>
 </configuration>

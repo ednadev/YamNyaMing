@@ -26,7 +26,13 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public int ynmStoreAdd(SqlSessionTemplate sqlSession, YNMStoreInfo storeInfo) {
-		return sqlSession.insert("owners.storeAdd", storeInfo);
+		return sqlSession.insert("stores.storeAdd", storeInfo);
 	}
+
+
+	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, String bizNum) {
+		return sqlSession.insert("stores.storeSearchWithBizNum", bizNum);
+	}
+
 	
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	import ="com.kh.ynm.admin.model.vo.*"
+	%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,21 +22,22 @@
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[닉네임]님 ([아이디]) <a href="logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-			<li><a href="adminInfo.do">관리자 정보</a></li>
-			<li><a href="memberManager.do">회원 관리</a></li>
-			<li><a href="ownerManager.do">점장 관리</a></li>
-			<li><a href="boardAdmin.do">게시판</a></li>
-			<li><a href="statAdmin.do">통계</a></li>
+	<li><a href="/adminInfo.do">관리자 정보</a></li>
+			<li><a href="/allMemberView.do">회원 관리</a></li>
+			<li><a href="/allOwnerView.do">점장 관리</a></li>
+			<li><a href="/boardAdmin.do">게시판</a></li>
+			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
 	<section id="admin-main-section">
 	<div>
 		<div id="main-section-member">
+		
 			<h4>회원 현황</h4>
 			<table border="1">
 			<thead>
@@ -43,36 +47,73 @@
 			</thead>
 			<tbody>
 			<tr>
-				<td>07/12</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.sevenday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newsevenday}</td>
+				<td>${list.deletesevenday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/13</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.sixday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newsixday}</td>
+				<td>${list.deletesixday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/14</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.fiveday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newfiveday}</td>
+				<td>${list.deletefiveday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/15</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.fourday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newfourday}</td>
+				<td>${list.deletefourday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/16</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.threeday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newthreeday}</td>
+				<td>${list.deletethreeday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/17</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.yesterday}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newyesterday}</td>
+				<td>${list.deleteyesterday}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td>07/18</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.today}</td>
+				<td>${list.allmember}</td>
+				<td>${list.newtoday}</td>
+				<td>${list.deletetoday}</td>
+				<td>${list.newtoday}</td>
 			</tr>				
 			</tbody>
 			<tfoot>
 			<tr>
-				<td colspan="2">7일합계</td><td>0</td><td>0</td><td>0</td>
+				<td colspan="2">7일합계</td>
+				<td>${list.all7day}</td>
+				<td>${list.delete7day}</td>
+				<td>${list.newtoday}</td>
 			</tr>
 			<tr>
-				<td colspan="2">15일합계</td><td>0</td><td>0</td><td>0</td>
+				<td colspan="2">15일합계</td>
+				<td>${list.all15day}</td>
+				<td>${list.delete15day}</td>
+				<td>${list.newtoday}</td>
 			</tr>	
 			<tr>
-				<td colspan="2">30일합계</td><td>0</td><td>0</td><td>0</td>
+				<td colspan="2">30일합계</td>
+				<td>${list.all30day}</td>
+				<td>${list.delete30day}</td>
+				<td>${list.newtoday}</td>
 			</tr>				
 			</tfoot>
 			</table>
@@ -86,36 +127,10 @@
 			</tr>
 			</thead>
 			<tbody>
+			
 			<tr>
 				<td>피에르 가니에르 서울</td><td>41</td><td>4.5</td><td>219</td><td>68</td>
-			</tr>
-			<tr>
-				<td>더 파크뷰</td><td>28</td><td>5.0</td><td>157</td><td>14</td>
-			</tr>	
-			<tr>
-				<td>야마야 (여의도점)</td><td>35</td><td>4.0</td><td>16</td><td>14</td>
-			</tr>
-			<tr>
-				<td>청미심</td><td>28</td><td>4.0</td><td>72</td><td>19</td>
-			</tr>
-			<tr>
-				<td>장 스테이크 하우스</td><td>35</td><td>3.5</td><td>86</td><td>25</td>
-			</tr>
-			<tr>
-				<td>하동관 (여의도직영1호점)</td><td>1</td><td>4.0</td><td>16</td><td>11</td>
-			</tr>
-			<tr>
-				<td>할매집</td><td>6</td><td>3.5</td><td>89</td><td>4</td>
-			</tr>
-			<tr>
-				<td>비스트로 드 욘트빌</td><td>14</td><td>4.5</td><td>86</td><td>1070</td>
-			</tr>
-			<tr>
-				<td>뎐</td><td>14</td><td>3.5</td><td>15</td><td>4</td>
-			</tr>
-			<tr>
-				<td>사대부집 곳간</td><td>11</td><td>3.5</td><td>64</td><td>35</td>
-			</tr>																										
+			</tr>																									
 			</tbody>
 			</table>
 		</div>
@@ -144,6 +159,8 @@
 					<canvas id="store-chart"></canvas>
 				</div>
 				<script>
+				var boy = ${list.boy}
+				var girl = ${list.girl}
 				new Chart(document.getElementById("gender-chart"), {
 				    type: 'pie',
 				    data: {
@@ -151,7 +168,7 @@
 				      datasets: [{
 				    	label: "성별",
 				        backgroundColor: ["#64B5F6", "#E57373"],
-				        data: [2005,3006]
+				        data: [boy,girl]
 				      }]
 				    },options: {
 				      title: {
@@ -160,6 +177,13 @@
 				      }
 				    }
 				});	
+				var age1020 = ${list.age1020}
+				var age2030 = ${list.age2030}
+				var age3040 = ${list.age3040}
+				var age4050 = ${list.age4050}
+				var age5060 = ${list.age5060}
+				var age60 = ${list.age60}
+				
 				new Chart(document.getElementById("year-chart"), {
 				    type: 'pie',
 				    data: {
@@ -167,7 +191,7 @@
 				      datasets: [{
 				        label: "연령대별",
 				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [2005,3006,1200,4003,2000,1342]
+				        data: [age1020,age2030,age3040,age4050,age5060,age60]
 				      }]
 				    },
 				    options: {
@@ -177,6 +201,12 @@
 				      }
 				    }
 				});		
+				var time0910 = ${list.time0910}
+				var time1112 = ${list.time1112}
+				var time1314 = ${list.time1314}
+				var time1516 = ${list.time1516}
+				var time1718 = ${list.time1718}
+				var time1922 = ${list.time1922}
 				new Chart(document.getElementById("time-chart"), {
 				    type: 'bar',
 				    data: {
@@ -184,7 +214,7 @@
 				      datasets: [{
 				        label: "시간대별",
 				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [2005,3006,1200,4003,2000,1342]
+				        data: [time0910,time1112,time1314,time1516,time1718,time1922]
 				      }]
 				    },
 				    options: {
@@ -194,6 +224,13 @@
 				      }
 				    }
 				});	
+				
+				var korea = ${list.korea}
+				var china = ${list.china}
+				var japan = ${list.japan}
+				var usa = ${list.usa}
+				var dessert = ${list.dessert}
+				
 				new Chart(document.getElementById("store-chart"), {
 				    type: 'bar',
 				    data: {
@@ -201,7 +238,7 @@
 				      datasets: [{
 				        label: "업종별",
 				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [2005,3006,1200,4003,2000]
+				        data: [korea,china,japan,usa,dessert]
 				      }]
 				    },
 				    options: {
@@ -210,14 +247,30 @@
 				        text: '업종별'
 				      }
 				    }
-				});					
+				});			
+				
+				$(function () {
+					//동적으로 원격에 있는 JSON 파일(결과값)을 로드
+					$.ajax({
+					url:"/storeList.do",
+					dataType: "json",
+					success: function (data) {
+					//받아온 JSON을 테이블에 출력
+					$.each(data, function () {
+					$('#tablList').append("<tr><td>" + this.Num + "</td><td>" + this["Name"] + "</td></tr>");
+					});
+			$.each(data, function (index,entry) {
+			$('#tablList').append("<tr><td>" + entry.Num + "</td><td>" + entry["Name"] + "</td></tr>");
+
+					});
+		},
+					error: function () { alert("에러발생"); }
+					});
+					});
 				</script>
 			</div>
 
 		</div>
-		
-		
-
 	</section>
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>

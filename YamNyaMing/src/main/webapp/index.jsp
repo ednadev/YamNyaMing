@@ -26,6 +26,7 @@
 			</c:if>
 			<c:if test="${sessionScope.owner==null}" var="result">
 				<li><a href="/loginMember.do">로그인</a></li>
+				<li><a href="/adminLogin.do">관리자 로그인</a><li>
 			</c:if>
 			<li><a href="/enrollMember.do">회원가입</a></li>
 		</ul>

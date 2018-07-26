@@ -13,15 +13,19 @@
 <body>
 <header id="admin-login-header">
 	<h1><a href="ynmAdmin.do">YamNyaMing 관리자</a></h1>
+	<h1><a href="/enrollAdmin.do" id="enroll">회원가입</a></h1>
 </header>
 <section id="admin-login-section">
 	<h2>로그인</h2>
 	<form action="/adminLogin2.do" method="post">
-		<input type="text" id="ad_id" placeholder="아이디">
-		<input type="password" id="ad_pw" placeholder="비밀번호">
+		<input type="text" name="ad_id" placeholder="아이디">
+		<input type="password" name="ad_pw" placeholder="비밀번호">
 		<input type="submit" value="로그인">
+		
 	</form>
+
 </section>
+
 <footer id="admin-login-footer">
 	<div>
 		<h2>YamNyaMing</h2>

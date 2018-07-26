@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -56,7 +56,7 @@
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-		    <li><a href="/adminInfo.do">관리자 정보</a></li>
+		  <li><a href="/adminInfo.do">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>

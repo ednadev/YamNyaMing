@@ -58,7 +58,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmMember/ynmMemberTest";
 	}
 	
-	//로그인
+	//濡쒓렇�씤
 	@Override
 	@RequestMapping(value="/login.do")
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response) {
@@ -76,7 +76,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	}
 	
-	//로그아웃
+	//濡쒓렇�븘�썐
 	@Override
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
@@ -88,7 +88,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	}
 	
-	//회원 가입
+	//�쉶�썝 媛��엯
 	@Override
 	@RequestMapping(value="/signUpMember.do")
 	public String signUpMember(@RequestParam("avatarPhoto") MultipartFile file,HttpServletRequest request, HttpServletResponse response) {
@@ -100,7 +100,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			ym.setMemberName(request.getParameter("memberName"));
 			ym.setMemberNickName(request.getParameter("memberNickName"));
 			ym.setMemberGender(request.getParameter("memberGender"));
-			//yyyy-mm-dd 형태로 받아야함
+			//yyyy-mm-dd �삎�깭濡� 諛쏆븘�빞�븿
 			String mbBirthYear=request.getParameter("mbBirthYear");
 			String mbBirthMonth=request.getParameter("mbBirthMonth");
 			String mbBirthDay=request.getParameter("mbBirthDay");
@@ -145,7 +145,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		int result2=ynmMemberServiceImpl.signUpMember(ym);
 		
-		//회원가입 성공시
+		//�쉶�썝媛��엯 �꽦怨듭떆
 		return null;
 		}
 		else {
@@ -153,15 +153,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 			
 			int result=ynmMemberServiceImpl.signUpMember(ym);
-			//회원가입 성공시
+			//�쉶�썝媛��엯 �꽦怨듭떆
 			return null;
 		}
 		
 		
 	}
-	
-	
-	//회원 탈퇴
+
 	@Override
 	@RequestMapping(value="/signOutMember.do")
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -180,7 +178,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	//내정보 확인
+	//�궡�젙蹂� �솗�씤
 	@Override
 	@RequestMapping(value="/memberInfo.do")
 	public Object memberInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -205,7 +203,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 	}
 	
-	//비밀번호 변경
+	//鍮꾨�踰덊샇 蹂�寃�
 	@Override
 	@RequestMapping(value="/passwordUpdateMember.do")
 	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -214,7 +212,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	//내정보 수정
+	//�궡�젙蹂� �닔�젙
 	@Override
 	@RequestMapping(value="/updateMember.do")
 	public String updateMember(@RequestParam("avatarPhoto") MultipartFile file,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -224,7 +222,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ym.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ym.setMemberNickName(request.getParameter("memberNickName"));
 		ym.setMemberEmail(request.getParameter("memberEmail"));
-		//이미지 등록 테이블 수정
+		//�씠誘몄� �벑濡� �뀒�씠釉� �닔�젙
 		if(file.getSize()>0) {
 			int uploadPhotoNo=((YNMMember)session.getAttribute("member")).getMemberUploadPhotoNo();
 			String OriginName=file.getOriginalFilename();
@@ -254,7 +252,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		int result2=ynmMemberServiceImpl.updateMember(ym);
 		
-		//수정 성공시
+		//�닔�젙 �꽦怨듭떆
 		return null;
 		}
 		else {
@@ -262,7 +260,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 			
 			int result=ynmMemberServiceImpl.updateMember(ym);
-			//수정 실패시
+			//�닔�젙 �떎�뙣�떆
 			return null;
 		}
 		
@@ -270,7 +268,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	}
 	
-	//회원 가입시 아이디 유효성 검사
+	//�쉶�썝 媛��엯�떆 �븘�씠�뵒 �쑀�슚�꽦 寃��궗
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/idCheck.do")
@@ -288,7 +286,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		
 	}
-	//회원 가입시 닉네임 유효성 검사
+	//�쉶�썝 媛��엯�떆 �땳�꽕�엫 �쑀�슚�꽦 寃��궗
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/nickCheck.do")
@@ -308,8 +306,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}
 	
 	
-	//예약하기 table
-	//예약 하기
+	//�삁�빟�븯湲� table
+	//�삁�빟 �븯湲�
 	@Override
 	@RequestMapping(value="/bookInsert.do")
 	public String bookInsert(YNMBook yb) {
@@ -317,7 +315,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	//예약 정보 확인
+	//�삁�빟 �젙蹂� �솗�씤
 	@Override
 	@RequestMapping(value="/bookselect.do")
 	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -340,9 +338,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	
 	
-	//리뷰 table
+	//由щ럭 table
 	
-	//댓글 등록
+	//�뙎湲� �벑濡�
 	@Override
 	@RequestMapping(value="/storeReviewInsert.do")
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
@@ -392,7 +390,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return null;
 	}
 	
-	//댓글 불러오기
+	//�뙎湲� 遺덈윭�삤湲�
 	@Override
 	@RequestMapping(value="/reviewCheck.do")
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response) {
@@ -444,7 +442,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 	}
 	
-	//대댓글 등록
+	//���뙎湲� �벑濡�
 	@Override
 	@RequestMapping(value="/storeUnderReviewInsert.do")
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
@@ -455,7 +453,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	
 	
-	// 음식점 검색
+	// �쓬�떇�젏 寃��깋
 	@RequestMapping(value="/search.do")
 	public String search(HttpSession session, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");

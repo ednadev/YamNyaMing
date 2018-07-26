@@ -1,25 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>하아..</title>
-<style type="text/css">
-body {
-	 font-family: 'Sunflower';
-}
-span{
-  font-size: 15px;
-}
-#idch{
-  font-size: 12px;
-}
-#checkPwd{
-  color : red;
-  font-size: 12px;
-}
-</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>얌냐밍</title>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
+<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
+</head>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script type="text/javascript" src="httpRequest.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -36,7 +27,7 @@ function idCheck(){
         document.getElementById('subbtn').disabled;
     }else{
         $.ajax({
-             url : "/idCheck.do",
+             url : "/adminIdCheck.do",
              data : {ad_id : ad_id},
              dataType:'json',
              success : function(data){
@@ -82,13 +73,11 @@ function idCheck(){
   document.getElementById('checkPwd').innerHTML = "8~12글자로 입력하세요.";
   return false;
   }
-
   else if(num < 0 || eng < 0 || spe < 0 ){
   document.getElementById('checkPwd').style.color = "red";
   document.getElementById('checkPwd').innerHTML = "영문,숫자,특수문자 합쳐서 ";
   return false;
   }
-
   else
   {
    document.getElementById('checkPwd').style.color = "blue";
@@ -97,61 +86,61 @@ function idCheck(){
   } 
  }
 </script>
-</head>
+
+
 <body>
-<form name="search" onsubmit="return check()" action="/enrollAdmin2.do" method="post">
-<div>
-  <h4>관리자 가입</h4>
-</div>
-<table border="1">
-  <tr>
-     <td align="center"><span>아이디</span></td>
-     <td>
-        <input type="text" name="ad_id" id="ad_id" required/>
-        <input type="button" name="idck" id="idck" value="췍" onclick="idCheck()"/>  
-        <div id="idch">아이디를 입력하세요.</div>
-          <input type="hidden" value="0" name="use"/>
-     </td>
-  </tr>
-  <tr>
-     <td align="center"><span>암호 </span></td>
-     <td><input type="password" name="ad_password" required ></input></td>
-  </tr>
-  <tr>
-    <td align="center"><span>암호확인</span>
-    </td>
-     <td>
-        <input type="password" name="pwd_check" onkeyup="check()" required ></input>
-        <div id="checkPwd">암호를 입력하세요.</div>
-     </td>
-  </tr>
-   <tr>
-    <td align="center"><span>닉네임</span>
-    </td>
-     <td>
-        <input type="text" name="ad_nickname" required />
-     </td>
-  </tr>
-  
- <tr>
- <th>이메일</th>
- <td>
-  <input type="email" name="email" id="email" required/>
- </td>
-   <tr>
-    <td align="center"><span>권한</span>
-    </td>
-     <td>
-	<SELECT name="combo" id="ad_grade">
+   <header id="member-signUp-header">
+      <h1><a href="/index.jsp">YamNyaMing</a></h1>
+   </header>
+   <section id="member-signUp-section">
+    
+    
+      <form action="/enrollAdmin2.do" method="post" enctype="multipart/form-data">
+         <h2>관리자 가입</h2>
+         <div class="signUp-table">
+            <div>아이디</div>
+            <div>
+               <input type="text" name="ad_id" id="ad_id" required/>
+               <input type="button" name="idck" id="idck" value="췍" onclick="idCheck()"/>  
+               <p id="idch">얌냐밍에서 이용하실 아이디를 입력해주세요. 5~20자의 영문,숫자만 가능합니다.</p>
+            </div>
+         </div>
+         <div class="signUp-table">
+            <div>비밀번호</div>
+            <div>
+               <input type="password" name="ad_password" placeholder="비밀번호를 입력하세요" required ></input>
+               <input type="password" name="pwd_check" placeholder="비밀번호를 똑같이 입력하세요" onkeyup="check()" required ></input>
+               <p id="checkPwd">특수문자(예: !@#$ 등) 1자 이상을 포함한 8~15 글자의 비밀번호로 설정해주세요.</p>
+            </div>
+         </div>
+         <div class="signUp-table">
+	     <div>권한</div>
+         <SELECT name="combo" id="ad_grade" style="width:420px; height: 45px; margin:10px; color:black;">
     <OPTION value="1">슈퍼관리자</OPTION>
     <OPTION value="2">일반관리자</OPTION>
-</SELECT>
-     </td>
-  </tr>
-  <tr>
-  		<td colspan="2" align="right"><input type="submit" value="가입하기" id="subbtn"></input></td>
-  </tr>
-</table>
-</form>
+          </SELECT>
+
+         </div>
+         <div class="signUp-table">
+            <div>닉네임</div>
+            <div>
+               <input type="text" name="ad_nickname" placeholder="닉네임" required />
+            </div>
+         </div>
+         
+    
+			<input type="submit" value="회원가입하기">
+		</form>
+	
+	</section>
+	<footer id="member-main-footer">
+		<div>
+			<h2>YamNyaMing</h2>
+			<p>Immediately Reservation!</p>
+			<address>㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
+			주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing Co. All rights reserved</address>
+		</div>
+		<a href="/enrollOwner.do">점장 가입하기</a>
+	</footer>
 </body>
 </html>

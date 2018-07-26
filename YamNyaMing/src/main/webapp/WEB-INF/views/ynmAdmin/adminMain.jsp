@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,16 +20,16 @@
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[닉네임]님 ([아이디]) <a href="logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-			<li><a href="adminInfo.do">관리자 정보</a></li>
-			<li><a href="memberManager.do">회원 관리</a></li>
-			<li><a href="ownerManager.do">점장 관리</a></li>
-			<li><a href="boardAdmin.do">게시판</a></li>
-			<li><a href="statAdmin.do">통계</a></li>
+	<li><a href="/adminInfo.do">관리자 정보</a></li>
+			<li><a href="/allMemberView.do">회원 관리</a></li>
+			<li><a href="/allOwnerView.do">점장 관리</a></li>
+			<li><a href="/boardAdmin.do">게시판</a></li>
+			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
 	<section id="admin-main-section">
@@ -43,25 +44,25 @@
 			</thead>
 			<tbody>
 			<tr>
-				<td>07/12</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.sevenday}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/13</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.sixday}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/14</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.fiveday}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/15</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.fourday}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/16</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.threeday}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/17</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.YESTERDAY}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			<tr>
-				<td>07/18</td><td>0</td><td>0</td><td>0</td><td>0</td>
+				<td>${list.today}</td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>				
 			</tbody>
 			<tfoot>
