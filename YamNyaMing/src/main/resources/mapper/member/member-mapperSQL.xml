@@ -76,6 +76,23 @@
 	
 	</select>
 	
+	<select id="emailCheck" resultType="members">
+	select 
+			mb_email as memberEmail
+	from member_entire_tb
+	where mb_email=#{memberEmail}
+	
+	</select>
+	
+	<select id="idSearch" resultType="members">
+		select
+			mb_id as memberId,
+			mb_email as memberEmail,
+			mb_name as memberName
+		from member_entire_tb
+		where mb_name=#{memberName} and mb_email=#{memberEmail}
+	</select>
+	
 	
 	<select id="selectOneStore" resultType="storeInfo">
 		select ow_store_phone as owStoreTel

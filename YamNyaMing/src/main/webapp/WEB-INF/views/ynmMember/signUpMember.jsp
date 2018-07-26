@@ -11,6 +11,7 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 <script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
 </head>
+
 <script>
 
 var timer = 180;
@@ -125,10 +126,6 @@ function idCheck(){
  					$('#id_check').html("<span style='color:red;'>이미 사용중이거나 탈퇴한 아이디입니다.</span>");
  					idBool=false;
  				} else{
- 					
- 		
- 					
- 					
  					if(idCheckBool){
  					$('#id_check').html("<span style='color:#26a69a;'>사용할 수 있는 아이디입니다.</span>");
  					idBool=true;
@@ -348,21 +345,36 @@ function memberNameChk()
 		var rightFormChk = true;
 		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
+		
 		if (insertEmail.match(regExp) == null) {
 			rightFormChk = false;
 			emailCheckResult.html("<span style='color:red;'>이메일 형식에 맞게 작성해주세요.</span>");
 			emailBool=false;
 		}	
-		
-		if(rightFormChk){
-			emailCheckResult.html("이메일 인증 대기상태<button id='emailChkTimer' type='button' style='background-color:black;color:white;border:none;cursor:pointer;padding:10px 30px;display:inline;margin-left:5px;' onclick='emailConfirm();'>인증 메일 보내기</button>");
-			emailBool=true;		
+		else{
+			$.ajax({
+	 			url : "/emailCheck.do",
+	 			data : {memberEmail : insertEmail},
+	 			dataType:'json',
+	 			success : function(data){
+	 				if(data==1){
+	 					emailCheckResult.html("<span style='color:red;'>이미 사용중인 이메일 입니다.</span>");
+	 					rightFormChk=false;
+	 					emailBool=false;
+	 				} else{
+	 					if(rightFormChk){
+	 					emailCheckResult.html("이메일 인증 대기상태<button id='emailChkTimer' type='button' style='background-color:black;color:white;border:none;cursor:pointer;padding:10px 30px;display:inline;margin-left:5px;' onclick='emailConfirm();'>인증 메일 보내기</button>");
+	 					emailBool=true;		
+	 					
+	 				} 
+	 				}
+	 			}
+	 		});	
 			
 		}
 	}
-	
-	
 	var sel_file;
+	var html;
 	$(document).ready(function(){
 		$("#input_avatarPhoto").on("change",avatarPhotoSelect);
 	});
@@ -380,10 +392,20 @@ function memberNameChk()
 			sel_file=f;
 			var reader=new FileReader();
 			reader.onload=function(e){
-				$("#img").attr("src",e.target.result);
+				$("#avatarImg").attr("src",e.target.result);
 			}
 			reader.readAsDataURL(f);
 		});
+	}
+	
+	function deleteImageAction(){
+		$('#avatarImg').remove();
+		
+		var img = document.createElement("img");
+		img.id="avatarImg";
+		var div=document.getElementById("profile-img");
+		div.appendChild(img);
+		
 	}
 	
 	function checkService1(chk){
@@ -538,7 +560,9 @@ function memberNameChk()
 				<div>프로필 사진</div>
 				<div>
 					<div id="profileStyle">
-						 <div id="profile-img"></div>
+						 <div id="profile-img" onclick="deleteImageAction();">
+						 	<img id="avatarImg"/>
+						 </div>
 						<div>						
 							
 							<label for="input_avatarPhoto">찾아보기</label>

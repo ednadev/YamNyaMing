@@ -344,6 +344,12 @@
 	border-radius:50%;
 	display:inline-block;
 }
+
+#avatarImg{
+	width:100%; 
+	height:100%;
+	border-radius:50%;
+}
 #profileStyle>div{
 	display:inline-block;
 }

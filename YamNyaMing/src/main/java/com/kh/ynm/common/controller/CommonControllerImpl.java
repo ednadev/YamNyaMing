@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+import com.kh.ynm.member.model.vo.YNMMember;
+
 
 @Controller
 public class CommonControllerImpl implements CommonController {
 	private static String authReturn = "";
+	
+	@Autowired
+	@Qualifier(value="ynmMemberService")
+	private YNMMemberServiceImpl ynmMemberServiceImpl;
 	
 	@Autowired
     private JavaMailSenderImpl javaMailSenderImpl;
@@ -52,6 +60,26 @@ public class CommonControllerImpl implements CommonController {
        
 		return null;
 	}
+	
+	@RequestMapping(value = "/idSend.do", method = RequestMethod.POST)
+	public String idSend(RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
+		String email = request.getParameter("emailConfirm");
+		String memberName=request.getParameter("memberName");
+		System.out.println(email);
+		System.out.println(memberName);
+		YNMMember vo=new YNMMember();
+		vo.setMemberEmail(email);
+		vo.setMemberName(memberName);
+		YNMMember ym=ynmMemberServiceImpl.idSearch(vo);
+		
+		authReturn = ym.getMemberId();
+		
+		//HTML 메일
+		htmlMail(email);
+       
+		return null;
+	}
+	
 	public void htmlMail(String email)
 	{
 		 MimeMessage mimeMessage = javaMailSenderImpl.createMimeMessage();
@@ -65,7 +93,6 @@ public class CommonControllerImpl implements CommonController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	     
 	}
 	
 	public void normalEmail(String email)
