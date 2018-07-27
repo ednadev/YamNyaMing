@@ -31,22 +31,23 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.common.MyFileRenamePolicy;
+import com.kh.ynm.common.controller.CommonControllerImpl;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
-import com.kh.ynm.member.model.vo.PagingTest;
+
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
 import com.kh.ynm.member.model.vo.YNMSearchCheck;
-import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pagingTest2;
+import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
@@ -75,13 +76,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setMemberPw(request.getParameter("memberPw"));
 		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
 		HttpSession session=request.getSession();
-		if(ym!=null) {
-			session.setAttribute("member", ym);
-			return "redirect:/index.jsp";
+		
+		if(CommonControllerImpl.loginType==true) {
+			if(ym!=null) {
+				session.setAttribute("member", ym);
+				CommonControllerImpl.loginType=false;
+				return "ynmMember/pwUpdateTest";
+			}else {
+				return "ynmMember/fail";
+			}
+			
 		}else {
-			return "ynmMember/fail";
+			if(ym!=null) {
+				session.setAttribute("member", ym);
+				return "redirect:/index.jsp";
+			}else {
+				return "ynmMember/fail";
+			}
 		}
-
 	}
 	
 	//로그아웃
@@ -125,12 +137,23 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 	}
 	
-	//비밀번호 변경
+	//비밀번호 찾기
 	@Override
 	@RequestMapping(value="/pwSearch.do")
-	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
+	public ModelAndView pwSearch(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		YNMMember vo=new YNMMember();
+		vo.setMemberId(request.getParameter("memberId"));
+		vo.setMemberEmail(request.getParameter("memberEmail"));
+		YNMMember ym=ynmMemberServiceImpl.pwSearch(vo);
+		
+		ModelAndView view=new ModelAndView();
+		if(ym!=null) {
+			view.addObject("id",ym);
+			view.setViewName("ynmMember/pwSearch");
+			return view;
+		}
 		return null;
+		
 	}
 	
 	//회원가입
@@ -224,6 +247,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		return null;
+	}
+	//비밀번호 변경하기
+	@Override
+	@RequestMapping(value="/passwordUpdateMember.do")
+	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		YNMMember ym=new YNMMember();
+		session=request.getSession(false);
+		ym.setMemberId(((YNMMember)session.getAttribute("member")).getMemberId());
+		ym.setMemberEmail(((YNMMember)session.getAttribute("member")).getMemberEmail());
+		ym.setMemberPw(request.getParameter("memberPw"));
+		int result=ynmMemberServiceImpl.pwUpdateMember(ym);
+		
+		if(result>0) {
+			return "redirect:/index.jsp";
+		}else {
+			return null;
+		}
+		
 	}
 
 	//내 정보 보기
@@ -505,7 +546,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/storeUnderReviewInsert.do")
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
 		int result=ynmMemberServiceImpl.storeUnderReviewInsert(ysur);
-
 		return null;
 	}
 
@@ -513,7 +553,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/likeInsert.do")
-	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		int memberEntireNo=Integer.parseInt(request.getParameter("memberEntireNo"));
 		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
 		YNMReviewLike yrl=new YNMReviewLike();
@@ -541,7 +581,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/jjimInsert.do")
-	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		int memberEntireNo=Integer.parseInt(request.getParameter("memberEntireNo"));
 		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
 		YNMReviewJjim yrj=new YNMReviewJjim();
@@ -570,7 +610,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/followInsert.do")
-	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		int followMemberIdNo=Integer.parseInt(request.getParameter("memberEntireNo"));
 		int followerNo=Integer.parseInt(request.getParameter("userMemberEntireNo"));
 		
@@ -600,45 +640,55 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 
 
-	// �쓬�떇�젏 寃��깋
-	@RequestMapping(value="/search.do")
-	public ModelAndView search(HttpSession session, HttpServletRequest request) {
-		String keyword = request.getParameter("keyword");
-		String food = request.getParameter("food");
-		String place = request.getParameter("place");
-		session.setAttribute("keyword",keyword);
-		session.setAttribute("food", food);
-		session.setAttribute("place", place);
-
-		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
-		String [] owBudget = request.getParameterValues("owBudget");
-		String [] owSubInfo = request.getParameterValues("owSubInfo");
-		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
-
-		YNMSearchCheck check = new YNMSearchCheck();
+	//사용자 설정
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/setting.do")
+	public String setting(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		YNMMemberSetting yms=new YNMMemberSetting();
+		yms.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+		yms.setThemePushUpdate(request.getParameter("themePushUpdate").charAt(0));
+		yms.setAlarmPushReviewLike(request.getParameter("alarmPushReviewLike").charAt(0));
+		yms.setAlarmPushReviewComment(request.getParameter("alarmPushReviewComment").charAt(0));
+		yms.setAlarmPushReviewJjim(request.getParameter("alarmPushReviewJjim").charAt(0));
+		yms.setAlarmPushFollow(request.getParameter("alarmPushFollow").charAt(0));
+		yms.setMyinfoAgree(request.getParameter("myinfoAgree").charAt(0));
+		yms.setAlarmEventEmail(request.getParameter("alarmEventEmail").charAt(0));
+		yms.setAlarmEventSms(request.getParameter("alarmEventSms").charAt(0));
+		yms.setMyinfoReviewOpen(request.getParameter("myinfoReviewOpen").charAt(0));
+		yms.setMyinfoReviewJjim(request.getParameter("myinfoReviewJjim").charAt(0));
+		yms.setMyinfoStoreJjim(request.getParameter("myinfoStoreJjim").charAt(0));
 		
-		int currentPage;
-
-		if(request.getParameter("currentPage")==null)
-		{
-			currentPage=1;
+		int result=ynmMemberServiceImpl.updateSetting(yms);
+		
+		if(result>0) {
+			return "success";
 		}
 		else
 		{
-			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			return "fail";
 		}
 
-		YNMSearchPaging qpd=ynmMemberServiceImpl.testAll(currentPage);
-
-		ModelAndView view=new ModelAndView();
-		if(qpd!=null) {
-			view.addObject("search",qpd);
-			view.setViewName("ynmMember/search");
-			return view;
-		}
-		return null;
 	}
-	
+	@Override
+	@RequestMapping(value="/settingInfo.do")
+	public ModelAndView settingInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		session=request.getSession(false);
+		int memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
+		YNMMemberSetting yms=ynmMemberServiceImpl.settingInfo(memberEntireNo);
+		
+		ModelAndView view = new ModelAndView();
+		if(yms!=null) {
+			view.addObject("setting",yms);
+			view.setViewName("ynmMember/memberSetting");
+			return view;
+		}else {
+			return null;
+		}
+		
+		
+	}
+
 	// 음식점 상세 페이지
 	@RequestMapping(value="/detailPage.do")
 	public String detailPage() {
@@ -657,3 +707,4 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return "ynmAdmin/mainAdmin";
 	}
 }
+
