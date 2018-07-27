@@ -31,7 +31,9 @@ public class MemberPasswordAdvice {
 	
 	@Pointcut("execution(* com.kh.ynm.owner.model.service.*ServiceImpl.selectOneOwner(..))")
 	public void selectOneOwner() {}
-
+	
+	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.pwUpdateMember(..))")
+	public void pwUpdateMember() {}
 	
 	
 	@Before("login()")
@@ -79,6 +81,13 @@ public class MemberPasswordAdvice {
 		String ownerPw=yo.getOwPw();
 		String encryPw=SHA256Util.encryData(ownerPw);
 		yo.setOwPw(encryPw);
+	}
+	@Before("pwUpdateMember()")
+	public void pwUpdateMember(JoinPoint jp)throws Exception{
+		YNMMember ym=(YNMMember)(jp.getArgs()[0]);
+		String userPw=ym.getMemberPw();
+		String encryPw=SHA256Util.encryData(userPw);
+		ym.setMemberPw(encryPw);
 	}
 	
 	

@@ -31,7 +31,8 @@ import com.kh.ynm.member.model.vo.YNMMember;
 @Controller
 public class CommonControllerImpl implements CommonController {
 	private static String authReturn = "";
-	
+	public static boolean loginType=false;
+	private String emailType="";
 	@Autowired
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
@@ -55,6 +56,7 @@ public class CommonControllerImpl implements CommonController {
 	public String RegisterPost(RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
 		String email = request.getParameter("emailConfirm");
 		authReturn = new TempKey().getKey(6, true);
+		emailType="emailAccessKey";
 		//HTML 메일
 		htmlMail(email);
        
@@ -74,6 +76,27 @@ public class CommonControllerImpl implements CommonController {
 		
 		authReturn = ym.getMemberId();
 		
+		emailType="idSend";
+		//HTML 메일
+		htmlMail(email);
+       
+		return null;
+	}
+	
+	@RequestMapping(value = "/pwSend.do", method = RequestMethod.POST)
+	public String pwSend(RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
+		String email = request.getParameter("emailConfirm");
+		String memberId=request.getParameter("memberId");
+		authReturn = new TempKey().getKey(6, true);
+		YNMMember vo=new YNMMember();
+		vo.setMemberEmail(email);
+		vo.setMemberId(memberId);
+		vo.setMemberPw(authReturn);
+		int result=ynmMemberServiceImpl.pwUpdateMember(vo);
+		loginType=true;
+		
+		
+		emailType="pwSend";
 		//HTML 메일
 		htmlMail(email);
        
@@ -84,10 +107,22 @@ public class CommonControllerImpl implements CommonController {
 	{
 		 MimeMessage mimeMessage = javaMailSenderImpl.createMimeMessage();
 	        try {
-				mimeMessage.setFrom(new InternetAddress("ynmmanager@gmail.com"));
-				   mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(email));
+					mimeMessage.setFrom(new InternetAddress("ynmmanager@gmail.com"));
+					mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(email));
+					
+					if(emailType.equals("emailAccessKey")) {
 			        mimeMessage.setSubject("얌냐밍 회원가입 인증번호 메일");
 			        mimeMessage.setText("<b>메일 내용입니다.</b><br>인증키 :"+authReturn, "UTF-8", "html");
+					}else if(emailType.equals("idSend")) {
+					mimeMessage.setSubject("얌냐밍 회원 아이디 메일");
+					mimeMessage.setText("<b>메일 내용입니다.</b><br>아이디 :"+authReturn, "UTF-8", "html");
+					}else
+					{
+					mimeMessage.setSubject("얌냐밍 회원 비밀번호 메일");
+					mimeMessage.setText("<b>메일 내용입니다.</b><br>임시 비밀번호 :"+authReturn, "UTF-8", "html");	
+					}
+			        
+			        
 			        javaMailSenderImpl.send(mimeMessage);
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
