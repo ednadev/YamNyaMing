@@ -2,6 +2,10 @@ package com.kh.ynm.owner.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -63,8 +69,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@Override
 	@RequestMapping(value="/ownerSignOut.do")
 	public String ynmOwnerSignOut(HttpSession session, @RequestParam String owId, @RequestParam String owPw) {
-		
-		
 		return null;
 	}
 	
@@ -120,7 +124,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					for (int i = 0; i < files.size(); i++) 
 					{
 						String originName= files.get(i).getOriginalFilename();
-						String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+						String remakeName= "headPhoto_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 						
 						File f=new File(photoRoute + remakeName);
 						//해당 디렉토리의 존재여부를 확인
@@ -176,7 +180,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 							for (int i = 0; i < filesMenu.size(); i++)
 							{
 								String originName= filesMenu.get(i).getOriginalFilename();
-								String remakeName= "storeMenuPhoto_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+								String remakeName= "menuP_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 								
 								File f=new File(photoRoute+remakeName);
 								//해당 디렉토리의 존재여부를 확인
@@ -283,8 +287,96 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(session.getAttribute("owner")!=null)
 		{
 			session.removeAttribute("owner");
+			session.removeAttribute("ownerReCheck");
 		}
 		return "redirect:/";
+	}
+
+	@Override
+	@RequestMapping(value="/couponEnroll.do")
+	public Object couponAdd(HttpSession session,HttpServletRequest request ) {
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null)
+		{
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			CouponEnroll couponEnroll = new CouponEnroll();
+			couponEnroll.setOwEntireFk(owner.getOwEntirePk());
+			couponEnroll.setOwStoreInfoFk(1);
+			couponEnroll.setOwCouponName(request.getParameter("owCouponName"));
+			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
+			Date startDate= new Date();
+			Date expireDate= new Date();
+			try {
+				startDate = sdf.parse(request.getParameter("couponStartDate"));
+				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			couponEnroll.setOwCouponStartDate(startDate);
+			couponEnroll.setOwCouponExpireDate(expireDate);
+			couponEnroll.setOwCouponDetail(request.getParameter("couponDetail"));
+			
+			int result = ynmOwnerServiceImpl.couponEnroll(couponEnroll);
+			if(result>0)
+			{
+				int currentPage = 1;
+				if(request.getParameter("currentPage")==null) currentPage=1;
+				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+				
+				int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+				int naviCountPerPage = 5; //2.
+				ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
+				CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
+				
+				view.addObject("couponListData", couponList);
+				view.addObject("pageNaviData", pageNavi);
+				view.setViewName("ynmOwner/couponManagePage");
+				return view;
+			}
+			else {
+		
+				view.setViewName("ynmOwner/ynmOwnerError/couponEnrollFail");
+				return view;
+			}
+		}
+		return null;
+	}
+	
+//	@Override
+//	public Strin
+	
+	@Override
+	@RequestMapping("/ownerIdPassChk.do")
+	public String ownerIdPassCheck(HttpSession session,HttpServletRequest request)
+	{
+		String owId = request.getParameter("owIdBeforeCheck");
+		String owPw = request.getParameter("owPwBeforeCheck");
+		
+		YNMOwner owner = new YNMOwner();
+		owner.setOwId(owId);
+		owner.setOwPw(owPw);
+		YNMOwner resultOwner = ynmOwnerServiceImpl.selectOneOwner(owner);
+		System.out.println("비밀번호 확인 체크" + resultOwner!=null);
+		if(resultOwner!=null)
+		{
+			session.setAttribute("ownerReCheck", resultOwner);
+			return "ynmOwner/ownerInfo";
+		}
+		else
+		{// 로그인 실패.
+			return "ynmOwner/ynmOwnerError/idPassReCheckFail";
+		}
+	}
+	
+	@Override
+	@RequestMapping("/ownerInfoUpdate.do")
+	public String ownerInfoUpdate(HttpSession session, YNMOwner owner)
+	{
+		int result = ynmOwnerServiceImpl.ynmOwnerInfoUpdate(owner);
+		if(result>0)return  "ynmOwner/ownerMyPage";
+		else return "ynmOwner/ynmOwnerError/ownerInfoUpdateFail";
 	}
 	
 

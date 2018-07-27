@@ -4,7 +4,6 @@
 
  
 
-
 function resultStyleChk(resultChk,chk)
 {
 	if(!chk)resultChk.css('color','red');

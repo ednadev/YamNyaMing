@@ -42,7 +42,7 @@ import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
-import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
@@ -76,7 +76,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setMemberPw(request.getParameter("memberPw"));
 		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
 		HttpSession session=request.getSession();
-		
+
 		if(CommonControllerImpl.loginType==true) {
 			if(ym!=null) {
 				session.setAttribute("member", ym);
@@ -85,7 +85,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}else {
 				return "ynmMember/fail";
 			}
-			
+
 		}else {
 			if(ym!=null) {
 				session.setAttribute("member", ym);
@@ -95,18 +95,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}
 		}
 	}
-	
+
 	//로그아웃
 	@Override
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		session=request.getSession(false);
-		
+
 		session.invalidate();
-		
+
 		return "redirect:/index.jsp";
 	}
-	
+
 	//아이디 찾기
 	@Override
 	@RequestMapping(value="/idSearch.do")
@@ -123,7 +123,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			memberId+="*";
 		}
 		ym.setMemberId(memberId);
-		
+
 		ModelAndView view=new ModelAndView();
 		if(ym!=null) {
 
@@ -136,7 +136,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return null;
 		}
 	}
-	
+
 	//비밀번호 찾기
 	@Override
 	@RequestMapping(value="/pwSearch.do")
@@ -145,7 +145,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setMemberId(request.getParameter("memberId"));
 		vo.setMemberEmail(request.getParameter("memberEmail"));
 		YNMMember ym=ynmMemberServiceImpl.pwSearch(vo);
-		
+
 		ModelAndView view=new ModelAndView();
 		if(ym!=null) {
 			view.addObject("id",ym);
@@ -153,9 +153,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return view;
 		}
 		return null;
-		
+
 	}
-	
+
 	//회원가입
 	@Override
 	@RequestMapping(value="/signUpMember.do")
@@ -167,34 +167,34 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ym.setMemberNickName(request.getParameter("memberNickName"));
 		ym.setMemberGender(request.getParameter("memberGender"));
 		//yyyy-mm-dd 형태로 받아야함
-		
-        String mbBirthYear=request.getParameter("mbBirthYear");
-        String mbBirthMonth=request.getParameter("mbBirthMonth");
-        String mbBirthDay=request.getParameter("mbBirthDay");
-        
-        String memberBirth=mbBirthYear+"-"+mbBirthMonth+"-"+mbBirthDay;
-        java.sql.Date birth = java.sql.Date.valueOf(memberBirth);
-        ym.setMemberBirth(birth);
-        
-        ym.setMemberEmail(request.getParameter("memberEmail"));
-        ym.setMemberPhone(request.getParameter("memberPhone"));
-		
+
+		String mbBirthYear=request.getParameter("mbBirthYear");
+		String mbBirthMonth=request.getParameter("mbBirthMonth");
+		String mbBirthDay=request.getParameter("mbBirthDay");
+
+		String memberBirth=mbBirthYear+"-"+mbBirthMonth+"-"+mbBirthDay;
+		java.sql.Date birth = java.sql.Date.valueOf(memberBirth);
+		ym.setMemberBirth(birth);
+
+		ym.setMemberEmail(request.getParameter("memberEmail"));
+		ym.setMemberPhone(request.getParameter("memberPhone"));
+
 		if(file.getSize()>0) {
 			String OriginName=file.getOriginalFilename();
 			String remakeName=System.currentTimeMillis()+"_"+OriginName;
-	
+
 			String photoRoute=context.getRealPath("\\resources\\image\\member\\"+request.getParameter("memberId")+"\\avatar\\avatarimg");
-			
-			
+
+
 			String photoViewRoute="\\"+request.getParameter("memberId")+"\\avatar\\avatarimg"+remakeName;
 			File f=new File(photoRoute+remakeName);
-			
-			if(!f.exists()){
-				 f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
-		        }
 
-			
-			
+			if(!f.exists()){
+				f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
+			}
+
+
+
 			try {
 				file.transferTo(f);
 			} catch (IllegalStateException e) {
@@ -220,14 +220,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			int result2=ynmMemberServiceImpl.signUpMember(ym);
 
 			//회원가입 성공시
-			return "ynmMember/loginMember";
+			return "ynmMember/index";
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 
 			int result=ynmMemberServiceImpl.signUpMember(ym);
-			return "ynmMember/loginMember";
+			return "ynmMember/index";
 		}
 	}
 	//회원탈퇴
@@ -258,13 +258,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ym.setMemberEmail(((YNMMember)session.getAttribute("member")).getMemberEmail());
 		ym.setMemberPw(request.getParameter("memberPw"));
 		int result=ynmMemberServiceImpl.pwUpdateMember(ym);
-		
+
 		if(result>0) {
 			return "redirect:/index.jsp";
 		}else {
 			return null;
 		}
-		
+
 	}
 
 	//내 정보 보기
@@ -278,8 +278,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
 		String viewPath=ynmMemberServiceImpl.viewPath(ym.getMemberUploadPhotoNo());
-		
-		
+
+
 		ModelAndView view=new ModelAndView();
 		if(ym!=null) {
 
@@ -304,7 +304,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ym.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ym.setMemberNickName(request.getParameter("memberNickName"));
 		ym.setMemberEmail(request.getParameter("memberEmail"));
-		
+
 		if(file.getSize()>0) {
 			int uploadPhotoNo=((YNMMember)session.getAttribute("member")).getMemberUploadPhotoNo();
 			String OriginName=file.getOriginalFilename();
@@ -312,10 +312,10 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			String photoRoute=context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\avatar\\avatarimg");
 			String photoViewRoute="\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\avatar\\avatarimg"+remakeName;
 			File f=new File(photoRoute+remakeName);
-			
+
 			if(!f.exists()){
-				 f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
-		        }		
+				f.mkdirs(); //디렉토리가 존재하지 않는다면 생성
+			}		
 			try {
 				file.transferTo(f);
 			} catch (IllegalStateException e) {
@@ -441,16 +441,16 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/storeReviewInsert.do")
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException {
-		
+
 		String path =context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\review\\review");
 		String remakeName = "";
 		String reviewImgList="";
 		List<MultipartFile> files = multi.getFiles("reviewImgList");
 		File file = new File(path);
-		 
+
 		if(!file.exists()){
-			 file.mkdirs(); //디렉토리가 존재하지 않는다면 생성
-	        }
+			file.mkdirs(); //디렉토리가 존재하지 않는다면 생성
+		}
 
 
 
@@ -476,7 +476,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		} 
 
 
-	
+
 		YNMStoreReview ysr=new YNMStoreReview();
 		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ysr.setReviewTitle(request.getParameter("reviewTitle"));
@@ -523,23 +523,23 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 						String[] tempImgArr = tempStoreReview.getReviewImgArr();
 						if(tempImgArr[s].equals(tempPhoto.getUploadPhotoNo()+""))
 						{
-							
+
 							ysrList.get(i).setPhotoObjList(imgList.get(j));
 						}
 					}
 				}
 			}
 		}
-			
-				ModelAndView view=new ModelAndView();
-				if(ysi!=null && !ysrList.isEmpty()) {
-				view.addObject("storeInfo",ysi);
-				view.addObject("review",ysrList);
-				view.setViewName("ynmMember/reviewTest");
-				return view;
-					
-				}
-				return null;
+
+		ModelAndView view=new ModelAndView();
+		if(ysi!=null && !ysrList.isEmpty()) {
+			view.addObject("storeInfo",ysi);
+			view.addObject("review",ysrList);
+			view.setViewName("ynmMember/reviewTest");
+			return view;
+
+		}
+		return null;
 	}
 	//리뷰 대댓글 작성
 	@Override
@@ -576,7 +576,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}
 		}
 	}
-	
+
 	//찜하기
 	@Override
 	@ResponseBody
@@ -606,14 +606,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}
 		}
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/followInsert.do")
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		int followMemberIdNo=Integer.parseInt(request.getParameter("memberEntireNo"));
 		int followerNo=Integer.parseInt(request.getParameter("userMemberEntireNo"));
-		
+
 		YNMFollow yf=new YNMFollow();
 		yf.setFollowMemberIdNo(followMemberIdNo);
 		yf.setFollowerNo(followerNo);
@@ -636,8 +636,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}
 		}
 	}
-	
-	
+
+
 
 
 	//사용자 설정
@@ -658,15 +658,60 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		yms.setMyinfoReviewOpen(request.getParameter("myinfoReviewOpen").charAt(0));
 		yms.setMyinfoReviewJjim(request.getParameter("myinfoReviewJjim").charAt(0));
 		yms.setMyinfoStoreJjim(request.getParameter("myinfoStoreJjim").charAt(0));
-		
 		int result=ynmMemberServiceImpl.updateSetting(yms);
-		
+
 		if(result>0) {
 			return "success";
 		}
 		else
 		{
 			return "fail";
+		}
+	}
+	// 사용자 검색
+	@RequestMapping(value="/search.do")
+	public ModelAndView search(HttpSession session, HttpServletRequest request) {
+		String keyword = request.getParameter("keyword");
+		String food = request.getParameter("food");
+		String place = request.getParameter("place");
+		session.setAttribute("keyword",keyword);
+		session.setAttribute("food", food);
+		session.setAttribute("place", place);
+
+		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
+		String [] owBudget = request.getParameterValues("owBudget");
+		String [] owSubInfo = request.getParameterValues("owSubInfo");
+		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+
+		YNMSearchPaging check = new YNMSearchPaging();
+
+		check.setKeyword(keyword);
+		check.setFood(food);
+		check.setPlace(place);
+		check.setStoreCateDetailName(storeCateDetailName);
+		check.setOwBudget(owBudget);
+		check.setOwSubInfo(owSubInfo);
+		check.setOwDrinkListInfo(owDrinkListInfo);
+		
+		int currentPage;
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage = 1;
+		}else
+		{
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		
+		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
+
+		ModelAndView view=new ModelAndView();
+		if(qpd!=null) {
+			view.addObject("search",qpd);
+			view.setViewName("ynmMember/search");
+			return view;
+		}else {
+			return null;
 		}
 
 	}
@@ -676,7 +721,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		session=request.getSession(false);
 		int memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
 		YNMMemberSetting yms=ynmMemberServiceImpl.settingInfo(memberEntireNo);
-		
+
 		ModelAndView view = new ModelAndView();
 		if(yms!=null) {
 			view.addObject("setting",yms);
@@ -685,8 +730,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}else {
 			return null;
 		}
-		
-		
+
 	}
 
 	// 음식점 상세 페이지
