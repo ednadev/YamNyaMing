@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -353,19 +353,35 @@
 			<input type="checkbox" id="cocktail" name="owDrinkListInfo" onclick="check()" value="칵테일"><label for="cocktail">칵테일</label>
 		</div>
 	</div>
-	<h4>총 <span>0</span>개가 검색되었습니다</h4>
-	<p><span>대기순</span> | <span>추천순</span></p>
+	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
+	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
 	<div class="search-page">
 		<c:forEach items="${search.noticelist}" var="search">
-			<div style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute}); position:relative;">
-				<div style="background-color:rgba(0,0,0,0.5);position:relative;bottom:0;">
-					<h5>${search.owStoreName }</h5>
-					<p>서울 > 마포구</p>
-					<p>보쌈,족발</p>
-					<p>대기시간 : 0분 남았습니다</p>
+			<div class="search-result">
+				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
+					<div>
+						<p class="waiting">대기인원 0 추천 0</p>
+						<div class="heart"></div>
+						<h5>${search.owStoreName }</h5>
+						<p class="info">${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
+					</div>
 				</div>
+				<div class="search-result-text">
+					<div>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<p class="star-result">0점</p>
+					</div>
+					<div>${search.owStoreComment}</div>
+				</div>
+				<button>예약하기</button>
+				<button>리뷰쓰기</button>
 			</div>
 		</c:forEach>
+		<div class="content-title"></div>
 		<c:if test="${search.currentPage>1}" var="search">
 			<button onclick="searchPaging()"> < </button>
 		</c:if>

@@ -34,9 +34,9 @@
 		<a href="pwFindMember.do">비밀번호 찾기</a>
 	</p>
 	<div>
-		<p><img src="${pageContext.request.contextPath}/resources/image/facebookLoginIcon.jpg" height="40px;" align="center"></p>
-		<p><img src="${pageContext.request.contextPath}/resources/image/googleLoginIcon.jpg" height="40px;"  align="center"></p>
-		<p><img src="${pageContext.request.contextPath}/resources/image/naverLoginIcon.jpg" height="40px;"  align="center"></p>
+		<p><img src="${pageContext.request.contextPath}/resources/image/member/login/facebookLoginIcon.jpg" height="40px;" align="center"></p>
+		<p><img src="${pageContext.request.contextPath}/resources/image/member/login/googleLoginIcon.jpg" height="40px;"  align="center"></p>
+		<p><img src="${pageContext.request.contextPath}/resources/image/member/login/naverLoginIcon.jpg" height="40px;"  align="center"></p>
 	</div>
 </section>
 <footer id="member-login-footer">

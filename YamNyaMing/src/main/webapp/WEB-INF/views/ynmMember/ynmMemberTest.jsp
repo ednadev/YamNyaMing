@@ -166,6 +166,7 @@
 		이메일:<input type="text" name="memberEmail">
 		<input type="submit" value="찾기">
 		</form>
+		
 	
 </body>
 </html>

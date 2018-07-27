@@ -566,7 +566,7 @@ function memberNameChk()
 						<div>						
 							
 							<label for="input_avatarPhoto">찾아보기</label>
-							<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/profile.png">
+							<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
 						</div>
 					</div>
 					<p id="profileText">얌냐밍의 회원 프로필 사진으로 사용될 이미지를 등록해 주세요.</p>

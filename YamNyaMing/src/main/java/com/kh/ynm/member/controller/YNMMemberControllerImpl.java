@@ -40,7 +40,6 @@ import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
-import com.kh.ynm.member.model.vo.YNMSearchCheck;
 import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
@@ -197,14 +196,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			int result2=ynmMemberServiceImpl.signUpMember(ym);
 
 			//회원가입 성공시
-			return "ynmMember/loginMember";
+			return "ynmMember/index";
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 
 			int result=ynmMemberServiceImpl.signUpMember(ym);
-			return "ynmMember/loginMember";
+			return "ynmMember/index";
 		}
 	}
 	//회원탈퇴
@@ -600,7 +599,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 
 
-	// �쓬�떇�젏 寃��깋
+	// 사용자 검색
 	@RequestMapping(value="/search.do")
 	public ModelAndView search(HttpSession session, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");
@@ -609,13 +608,21 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		session.setAttribute("keyword",keyword);
 		session.setAttribute("food", food);
 		session.setAttribute("place", place);
-
+		
 		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
 
-		YNMSearchCheck check = new YNMSearchCheck();
+		YNMSearchPaging check = new YNMSearchPaging();
+		
+		check.setKeyword(keyword);
+		check.setFood(food);
+		check.setPlace(place);
+		check.setStoreCateDetailName(storeCateDetailName);
+		check.setOwBudget(owBudget);
+		check.setOwSubInfo(owSubInfo);
+		check.setOwDrinkListInfo(owDrinkListInfo);
 		
 		int currentPage;
 
@@ -628,7 +635,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		YNMSearchPaging qpd=ynmMemberServiceImpl.testAll(currentPage);
+		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
 
 		ModelAndView view=new ModelAndView();
 		if(qpd!=null) {

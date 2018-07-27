@@ -3,6 +3,14 @@ package com.kh.ynm.member.model.vo;
 import java.util.ArrayList;
 
 public class YNMSearchPaging {
+	String keyword;
+	String food;
+	String place;
+	String [] storeCateDetailName;
+	String [] owBudget;
+	String [] owSubInfo;
+	String [] owDrinkListInfo;
+
 	int start;
 	int end;
 	private ArrayList<YNMSearch> noticelist;
@@ -12,6 +20,71 @@ public class YNMSearchPaging {
 	private int currentPage;
 	private int pageTotalCount;
 	private int recordTotalCount;
+	public YNMSearchPaging() {
+		// TODO Auto-generated constructor stub
+	}
+	public YNMSearchPaging(String keyword, String food, String place, String[] storeCateDetailName, String[] owBudget,
+			String[] owSubInfo, String[] owDrinkListInfo, int start, int end, ArrayList<YNMSearch> noticelist,
+			String pageNavi, int startNavi, int endNavi, int currentPage, int pageTotalCount, int recordTotalCount) {
+		this.keyword = keyword;
+		this.food = food;
+		this.place = place;
+		this.storeCateDetailName = storeCateDetailName;
+		this.owBudget = owBudget;
+		this.owSubInfo = owSubInfo;
+		this.owDrinkListInfo = owDrinkListInfo;
+		this.start = start;
+		this.end = end;
+		this.noticelist = noticelist;
+		this.pageNavi = pageNavi;
+		this.startNavi = startNavi;
+		this.endNavi = endNavi;
+		this.currentPage = currentPage;
+		this.pageTotalCount = pageTotalCount;
+		this.recordTotalCount = recordTotalCount;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public String getFood() {
+		return food;
+	}
+	public void setFood(String food) {
+		this.food = food;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
+	}
+	public String[] getStoreCateDetailName() {
+		return storeCateDetailName;
+	}
+	public void setStoreCateDetailName(String[] storeCateDetailName) {
+		this.storeCateDetailName = storeCateDetailName;
+	}
+	public String[] getOwBudget() {
+		return owBudget;
+	}
+	public void setOwBudget(String[] owBudget) {
+		this.owBudget = owBudget;
+	}
+	public String[] getOwSubInfo() {
+		return owSubInfo;
+	}
+	public void setOwSubInfo(String[] owSubInfo) {
+		this.owSubInfo = owSubInfo;
+	}
+	public String[] getOwDrinkListInfo() {
+		return owDrinkListInfo;
+	}
+	public void setOwDrinkListInfo(String[] owDrinkListInfo) {
+		this.owDrinkListInfo = owDrinkListInfo;
+	}
 	public int getStart() {
 		return start;
 	}
@@ -66,6 +139,7 @@ public class YNMSearchPaging {
 	public void setRecordTotalCount(int recordTotalCount) {
 		this.recordTotalCount = recordTotalCount;
 	}
+
 	
 	
 }
