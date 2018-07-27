@@ -19,9 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
-
-<script type="text/javascript">  //아이디 체크여부 확인 
+<script type="text/javascript">
 function blockBtn(){
     var block = $('#block').value;
         $.ajax({
@@ -41,7 +39,10 @@ function blockBtn(){
 }    
 
 </script>
+<style>
 
+
+</style>
 </head>
 <body>
 	<header id="admin-login-header">
@@ -80,10 +81,11 @@ function blockBtn(){
     						<OPTION value="OwnerName">이름으로 검색</OPTION>
     						<OPTION value="OwnerId">아이디로 검색</OPTION>
 						</SELECT>
-                      <input type="text" name="keyword" id="keyword" required>
-                      <input type="submit" value="검색"/>
+                          <input type="text" name="keyword" id="keyword" required>
+                      <input type="submit" value="검색" class="searchbtn"/>
                   </form>
-                    
+                      
+
                  
                     </div>
                   </div>
@@ -99,11 +101,11 @@ function blockBtn(){
 				<thead>
 				<tr>
 				<th class="col-xs-3">아이디</th>
-					<th class="col-xs-3">이름</th>
-					<th class="col-xs-3">이메일</th>
-					<th class="col-xs-3">전화번호</th>
-					<th class="col-xs-3">계좌정보</th>
-					<th class="col-xs-3">정지</th>
+					<th>이름</th>
+					<th>이메일</th>
+					<th>전화번호</th>
+					<th>계좌정보</th>
+					<th>정지</th>
 
 				</tr>
 			</thead>
@@ -112,12 +114,12 @@ function blockBtn(){
 			   <thead>
 				<tbody class="points_table_scrollbar">
 				  <tr class="edit" id="detail">
-					<td class="col-xs-3">${o.owId}</td>
-					<td class="col-xs-3">${o.owName} </td>
-					<td class="col-xs-3">${o.owEmail} </td>
-					<td class="col-xs-3">0${o.phone}</td>
-					<td class="col-xs-3">${o.owBankAccount} </td>
-					<td class="col-xs-3"><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
+					<td>${o.owId}</td>
+					<td>${o.owName} </td>
+					<td>${o.owEmail} </td>
+					<td>0${o.phone}</td>
+					<td>${o.owBankAccount} </td>
+					<td><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
 				</tr>
 			</c:forEach>
 			</tbody>

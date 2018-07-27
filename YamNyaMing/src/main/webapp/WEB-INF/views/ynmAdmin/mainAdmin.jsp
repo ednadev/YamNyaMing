@@ -27,7 +27,7 @@
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-	<li><a href="/adminInfo.do">관리자 정보</a></li>
+	        <li><a href="/adminInfo.do">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
@@ -48,72 +48,72 @@
 			<tbody>
 			<tr>
 				<td>${list.sevenday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newsevenday}</td>
-				<td>${list.deletesevenday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.sevendaynewowner}+${list.sevendaynewmember}</td>
+				<td>${list.deleteowsevenday}+${list.deletememsevenday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.sixday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newsixday}</td>
-				<td>${list.deletesixday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.sixdaynewowner}+${list.sixdaynewmember}</td>
+				<td>${list.deleteowsixday}+${list.deletememsixday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.fiveday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newfiveday}</td>
-				<td>${list.deletefiveday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.fivedaynewowner}+${list.fivedaynewmember}</td>
+				<td>${list.deleteowfiveday}+${list.deletememfiveday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.fourday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newfourday}</td>
-				<td>${list.deletefourday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.fourdaynewowner}+${list.fourdaynewmember}</td>
+				<td>${list.deleteowfourday}+${list.deletememfourday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.threeday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newthreeday}</td>
-				<td>${list.deletethreeday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.threedaynewmember}+${list.threedaynewowner}</td>
+				<td>${list.deleteowthreeday}+${list.deletememthreeday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.yesterday}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newyesterday}</td>
-				<td>${list.deleteyesterday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.yesterdaynewowner}+${list.yesternewmember}</td>
+				<td>${list.deleteowyestermemday}+${list.deleteyestermemday}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.today}</td>
-				<td>${list.allmember}</td>
-				<td>${list.newtoday}</td>
-				<td>${list.deletetoday}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.memberall}+${list.ownerall}</td>
+				<td>${list.todaynewowner}+${list.todaynewmember}</td>
+				<td>${list.deleteowtoday}+${list.deletememtoday}</td>
+				<td>0</td>
 			</tr>				
 			</tbody>
 			<tfoot>
 			<tr>
 				<td colspan="2">7일합계</td>
-				<td>${list.all7day}</td>
-				<td>${list.delete7day}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.member7day}+${list.owner7day}</td>
+				<td>${list.deletemem7day}+${list.deleteow7day}</td>
+				<td>0</td>
 			</tr>
 			<tr>
 				<td colspan="2">15일합계</td>
-				<td>${list.all15day}</td>
-				<td>${list.delete15day}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.member15day}+${list.owner15day}</td>
+				<td>${list.deletemem15day}+${list.deleteow15day}</td>
+				<td>0</td>
 			</tr>	
 			<tr>
 				<td colspan="2">30일합계</td>
-				<td>${list.all30day}</td>
-				<td>${list.delete30day}</td>
-				<td>${list.newtoday}</td>
+				<td>${list.member30day}+${list.owner30day}</td>
+				<td>${list.deletemem30day}+${list.deleteow30day}</td>
+				<td>0</td>
 			</tr>				
 			</tfoot>
 			</table>
@@ -138,7 +138,7 @@
 			<h4>문의/답변관리</h4>
 			<table>
 			<tr>
-				<th>후기</th><td>0건</td>
+				<th>후기</th><td>100건</td>
 			</tr>
 			<tr>
 				<th>고객문의</th><td>0건</td>
@@ -206,7 +206,7 @@
 				var time1314 = ${list.time1314}
 				var time1516 = ${list.time1516}
 				var time1718 = ${list.time1718}
-				var time1922 = ${list.time1922}
+				var time1924 = ${list.time1924}
 				new Chart(document.getElementById("time-chart"), {
 				    type: 'bar',
 				    data: {
@@ -214,7 +214,7 @@
 				      datasets: [{
 				        label: "시간대별",
 				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [time0910,time1112,time1314,time1516,time1718,time1922]
+				        data: [time0910,time1112,time1314,time1516,time1718,time1924]
 				      }]
 				    },
 				    options: {
@@ -264,7 +264,7 @@
 
 					});
 		},
-					error: function () { alert("에러발생"); }
+					error: function () { alert("개발중"); }
 					});
 					});
 				</script>

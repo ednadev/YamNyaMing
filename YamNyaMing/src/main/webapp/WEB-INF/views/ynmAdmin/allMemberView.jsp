@@ -12,7 +12,6 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
@@ -75,15 +74,15 @@
         <table class="table table-hover">
 				<thead>
 				<tr>
-				    <th class="col-xs-3">아바타</th>
-					<th class="col-xs-3">아이디</th>
-					<th class="col-xs-3">이름</th>
-					<th class="col-xs-3">닉네임</th>
-					<th class="col-xs-3">성별</th>
-					<th class="col-xs-3">생일</th>
-					<th class="col-xs-3">이메일</th>
-					<th class="col-xs-3">폰번</th>
-					<th class="col-xs-3">가입일</th>
+				    <th>아바타</th>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>닉네임</th>
+					<th>성별</th>
+					<th>생일</th>
+					<th>이메일</th>
+					<th>폰번</th>
+					<th>가입일</th>
 
 				</tr>
 			</thead>
