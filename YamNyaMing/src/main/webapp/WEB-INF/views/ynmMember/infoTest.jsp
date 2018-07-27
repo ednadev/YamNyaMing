@@ -53,7 +53,7 @@ function avatarDelete(){
 	<input type="text" value="${info.memberRegDate}">
 	
 	
-	<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/yangsik.jpg'>
+	<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'>
 	
 	<label for="input_avatarPhoto">이미지변경</label>
 	<input type="file" id="input_avatarPhoto" style="display:none;" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/profile.png">
@@ -70,6 +70,7 @@ function avatarDelete(){
 	<input type="text" value="${b.memberEntireNo}">
 	<input type="text" value="${b.bookDate2}">
 	</c:forEach>
+	
 	
 	
 </body>

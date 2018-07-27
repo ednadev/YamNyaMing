@@ -93,6 +93,19 @@
 		where mb_name=#{memberName} and mb_email=#{memberEmail}
 	</select>
 	
+	<select id="pwSearch" resultType="members">
+		select
+			mb_id as memberId,
+			mb_email as memberEmail,
+			mb_name as memberName
+		from member_entire_tb
+		where mb_id=#{memberId} and mb_email=#{memberEmail}
+	</select>
+	
+	<update id="pwUpdateMember">
+		update member_entire_tb set mb_pw=#{memberPw} where mb_id=#{memberId} and mb_email=#{memberEmail} 
+	</update>
+	
 	
 	<select id="selectOneStore" resultType="storeInfo">
 		select ow_store_phone as owStoreTel
@@ -100,6 +113,34 @@
 		where ow_store_info_pk=#{ownerStoreEntireNo}
 	</select>
 	
+	
+	<!-- 사용자 설정 table -->
+	
+	<update id="updateSetting">
+		update member_setting_tb set mb_theme_push_update=#{themePushUpdate},mb_alarm_push_review_like=#{alarmPushReviewLike},mb_alarm_push_review_comment=#{alarmPushReviewComment},
+										mb_alarm_push_review_jjim=#{alarmPushReviewJjim},mb_alarm_push_follow=#{alarmPushFollow},mb_myinfo_agree=#{myinfoAgree},mb_alarm_event_email=#{alarmEventEmail},
+										mb_alarm_event_sms=#{alarmEventSms},mb_myinfo_review_open=#{myinfoReviewOpen},mb_myinfo_review_jjim=#{myinfoReviewJjim},mb_myinfo_store_jjim=#{myinfoStoreJjim}
+									where mb_entire_fk=#{memberEntireNo}
+
+	</update>
+	
+	<select id="settingInfo" resultType="settings"> 
+	select
+		mb_theme_push_update as themePushUpdate,
+		mb_alarm_push_review_like as alarmPushReviewLike,
+		mb_alarm_push_review_comment as alarmPushReviewComment,
+		mb_alarm_push_review_jjim as alarmPushReviewJjim,
+		mb_alarm_push_follow as alarmPushFollow,
+		mb_myinfo_agree as myinfoAgree,
+		mb_alarm_event_email as alarmEventEmail,
+		mb_alarm_event_sms as alarmEventSms,
+		mb_myinfo_review_open as myinfoReviewOpen,
+		mb_myinfo_review_jjim as myinfoReviewJjim,
+		mb_myinfo_store_jjim as myinfoStoreJjim
+		
+		from member_setting_tb
+		where mb_entire_fk=#{memberEntireNo}
+		</select>
 	
 	<!-- 팔로우 table -->
 	
