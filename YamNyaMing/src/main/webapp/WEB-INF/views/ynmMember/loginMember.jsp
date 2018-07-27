@@ -9,6 +9,7 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?ver=2">
 <script src="${pageContext.request.contextPath}/resources/js/member/member.js?ver=1"></script>
 </head>
 <script>
@@ -92,9 +93,10 @@ $(document).ready(function() {
 		<a href="pwFindMember.do">비밀번호 찾기</a>
 	</p>
 	<div>
-		<p><img src="${pageContext.request.contextPath}/resources/image/facebookLoginIcon.jpg" height="40px;" align="center"></p>
-		<p><img src="${pageContext.request.contextPath}/resources/image/googleLoginIcon.jpg" height="40px;"  align="center"></p>
-		<p><img src="${pageContext.request.contextPath}/resources/image/naverLoginIcon.jpg" height="40px;"  align="center"></p>
+        <p><img src="${pageContext.request.contextPath}/resources/image/member/login/facebookLoginIcon.jpg" height="40px;" align="center"></p>
+        <p><img src="${pageContext.request.contextPath}/resources/image/member/login/googleLoginIcon.jpg" height="40px;"  align="center"></p>
+        <p><img src="${pageContext.request.contextPath}/resources/image/member/login/naverLoginIcon.jpg" height="40px;"  align="center"></p>
+
 	</div>
 </section>
 <footer id="member-login-footer">

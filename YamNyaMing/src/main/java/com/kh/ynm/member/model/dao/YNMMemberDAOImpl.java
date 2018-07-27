@@ -18,7 +18,7 @@ import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
-import com.kh.ynm.member.model.vo.YNMSearchCheck;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
@@ -72,12 +72,7 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public int storeReviewInsert(SqlSessionTemplate sqlSession, YNMStoreReview ysr) {
 		return sqlSession.insert("review.storeReviewInsert",ysr);
 	}
-
-	public ArrayList<YNMSearch> search(SqlSessionTemplate sqlSession, YNMSearchCheck check) {
-		List list = sqlSession.selectList("search.searchList",check);
-		return (ArrayList<YNMSearch>)list;
-	}
-
+	
 	public YNMMemberUploadPhoto reviewIndexSelect(SqlSessionTemplate sqlSession, String remakeName) {
 		return sqlSession.selectOne("photo.indexSearch",remakeName);
 	}
@@ -180,5 +175,54 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("member.settingInfo",memberEntireNo);
 	}
 	
+	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
+			YNMSearchPaging check) {
+		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
+		
+		int end=currentPage*recordCountPerPage;
+		
+		check.setStart(start);
+		check.setEnd(end);
+		
+		
+		List list=sqlSession.selectList("search.searchList",check);
 
+		return (ArrayList<YNMSearch>)list;
+	}
+
+	public YNMSearchPaging getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
+			int naviCountPerPage, YNMSearchPaging check) {
+		int recordTotalCount=0;
+		recordTotalCount=sqlSession.selectOne("search.searchCount",check);
+		int pageTotalCount=0;
+		
+		if(recordTotalCount%recordCountPerPage!=0) {
+			pageTotalCount=recordTotalCount/recordCountPerPage+1;
+		}else {
+			pageTotalCount=recordTotalCount/recordCountPerPage;
+		}
+		
+		if(currentPage<1) {
+			currentPage=1;
+		}else if(currentPage>pageTotalCount) {
+			currentPage=pageTotalCount;
+		}
+		
+		int startNavi=((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		
+		int endNavi=startNavi + naviCountPerPage -1;
+		
+		if(endNavi>pageTotalCount) {
+			endNavi=pageTotalCount;
+		}
+	
+		YNMSearchPaging sp =new YNMSearchPaging();
+		sp.setCurrentPage(currentPage);
+		sp.setEndNavi(endNavi);
+		sp.setStartNavi(startNavi);
+		sp.setPageTotalCount(pageTotalCount);
+		sp.setRecordTotalCount(recordTotalCount);
+		
+		return sp;
+	}	
 }
