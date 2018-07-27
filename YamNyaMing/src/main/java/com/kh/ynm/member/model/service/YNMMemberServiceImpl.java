@@ -12,19 +12,19 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
-import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
+import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
-import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMSearchPaging;
+import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pagingTest2;
+import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
@@ -201,7 +201,23 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		YNMMember ym=memberDAO.idSearch(sqlSession,vo);
 		return ym;
 	}
-	
+	public YNMMember pwSearch(YNMMember vo) {
+		YNMMember ym=memberDAO.pwSearch(sqlSession,vo);
+		return ym;
+	}
+	public int pwUpdateMember(YNMMember vo) {
+		int result=memberDAO.pwUpdateMember(sqlSession,vo);
+		return result;
+	}
+	public int updateSetting(YNMMemberSetting yms) {
+		int result=memberDAO.updateSetting(sqlSession,yms);
+		return result;
+	}
+	public YNMMemberSetting settingInfo(int memberEntireNo) {
+		YNMMemberSetting yms=memberDAO.settingInfo(sqlSession,memberEntireNo);
+		return yms;
+	}
+
 	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
 		int recordCountPerPage=9;
 		int naviCountPerPage=5;

@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="search">
+	<select id="searchList" resultType="test">
+		select
+
+		store_cate_detail_pk as pk,
+		store_cate_detail_code as code,
+		store_cate_detail_name as name
+		from (select store_category_detail_tb.*,row_number() over(order by
+		store_cate_detail_pk desc) as num from store_category_detail_tb)
+		where
+		num between #{start} and #{end}
+
+		ow_store_name as owStoreName,
+		ow_photo_route as owPhotoRoute,
+		rownum
+		from owner_store_info_tb,
+		owner_store_photo_tb
+		where ow_store_info_fk = ow_store_info_pk
+		and rownum between #{start} and #{end}
+		order by rownum
+	</select>
+
+
+	<select id="searchCount" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		store_category_detail_tb
+	</select>
 	<select id="searchList" resultType="search">
 		select
-			ow_store_name as owStoreName, 
-		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
-		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
-		    ow_photo_route as owPhotoRoute,
-		    store_cate_detail_name as storeCateDetailName,
-		    ow_store_comment as owStoreComment
-		from (select *, row_number() over(order by store_cate_detail_pk) as num from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, owner_store_detail_tb detail
-		where photo.ow_store_info_fk = info.ow_store_info_pk
-		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
-		and info.ow_store_info_pk = detail.ow_store_index)
+		ow_store_name as owStoreName,
+		substr(ow_store_addr,1,2) as owStoreAddrFirst,
+		substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as
+		owStoreAddrFinal,
+		ow_photo_route as owPhotoRoute,
+		store_cate_detail_name as storeCateDetailName,
+		ow_store_comment as owStoreComment
+		from (select *, row_number() over(order by
+		store_cate_detail_pk) as num from owner_store_info_tb info,
+		owner_store_photo_tb photo, store_category_detail_tb cate,
+		owner_store_detail_tb detail
+		where photo.ow_store_info_fk =
+		info.ow_store_info_pk
+		and info.ow_store_detail_type_fk =
+		cate.store_cate_detail_pk
+		and info.ow_store_info_pk =
+		detail.ow_store_index)
 		and num between {start} and {end}
 	</select>
-	
-   <select id="searchList" resultType="test">
-      select 
-         store_cate_detail_pk as pk,
-         store_cate_detail_code as code,
-         store_cate_detail_name as name
-         from (select store_category_detail_tb.*,row_number() over(order by store_cate_detail_pk desc) as num from store_category_detail_tb)
 
-   </select>	
-	
-	
-	<select id="searchCount" parameterType="search" resultType="int"> 
+	<select id="searchList" resultType="test">
+		select
+		store_cate_detail_pk as pk,
+		store_cate_detail_code as code,
+		store_cate_detail_name as name
+		from (select store_category_detail_tb.*,row_number() over(order by
+		store_cate_detail_pk desc) as num from store_category_detail_tb)
+
+	</select>
+
+
+	<select id="searchCount" parameterType="search" resultType="int">
 		select count(*) from owner_store_info_tb
 	</select>
 </mapper>

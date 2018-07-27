@@ -10,12 +10,11 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-
-import com.kh.ynm.member.model.vo.PagingTest;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
+import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.member.model.vo.YNMReviewJjim;
 import com.kh.ynm.member.model.vo.YNMSearch;
@@ -24,7 +23,7 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pagingTest2;
+import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmMemberDAO")
@@ -116,8 +115,6 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("review.likeChk",yrl);
 	}
 
-
-
 	public int likeTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		return sqlSession.selectOne("review.likeTotal",storeReviewNo);
 	}
@@ -162,6 +159,22 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("member.idSearch",vo);
 	}
 
+	public YNMMember pwSearch(SqlSessionTemplate sqlSession, YNMMember vo) {
+		return sqlSession.selectOne("member.pwSearch",vo);
+	}
+
+	public int pwUpdateMember(SqlSessionTemplate sqlSession, YNMMember vo) {
+		return sqlSession.update("member.pwUpdateMember",vo);
+	}
+
+	public int updateSetting(SqlSessionTemplate sqlSession, YNMMemberSetting yms) {
+		return sqlSession.update("member.updateSetting",yms);
+	}
+
+	public YNMMemberSetting settingInfo(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.settingInfo",memberEntireNo);
+	}
+	
 	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
 			YNMSearchPaging check) {
 		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
@@ -212,5 +225,4 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		
 		return sp;
 	}	
-	
 }

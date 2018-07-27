@@ -78,22 +78,15 @@
 		
 		<input type="submit" value="가입">
 	</form>
-	
-	
-	
-	
 	<form action="/login.do" method="post">
 	<input type="text" name="memberId" placeholder="아이디 입력"/>
 		<input type="text" name="memberPw" placeholder="PW 입력"/>
 	<input type="submit" value="로그인">
 	</form>
-	
 	<form action="/logout.do">
 		<input type="submit" value="로그아웃">
 	</form>
-	
 	<hr>
-	
 	회원 탈퇴
 	<form action="signOutMember.do">
 		<input type="text" name="memberPw">
@@ -148,10 +141,6 @@
 		</form>
 		
 		
-		<form action="/pagingTest.do">
-			<input type="submit" value="보기">
-		</form>
-		
 		<hr>
 		아이디 찾기
 		<form action="/idSearch.do">
@@ -166,7 +155,17 @@
 		이메일:<input type="text" name="memberEmail">
 		<input type="submit" value="찾기">
 		</form>
+		<hr>
+		<form action="/settingInfo.do">
+			<input type="submit" value="사용자 설정 정보">
+		</form>
 		
+		<form action="/ptest.do">
+		<input type="submit" value="페이징">
+		</form>
+		<form action="/logins.do">
+		<input type="submit" value="네이버">
+		</form>
 	
 </body>
 </html>

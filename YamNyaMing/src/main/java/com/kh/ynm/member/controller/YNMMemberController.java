@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 
@@ -33,6 +34,9 @@ public interface YNMMemberController {
 	public String emailCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	public ModelAndView idSearch(HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView pwSearch(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public String setting(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView settingInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	
 	//예약 table
 	public String bookInsert(YNMBook yb);
@@ -47,14 +51,12 @@ public interface YNMMemberController {
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			YNMStoreUnderReview ysur);
 	//좋아요 table
-	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			YNMStoreUnderReview ysur);
+	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//찜하기 table
-	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			YNMStoreUnderReview ysur);
+	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//팔로우 table
-	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			YNMStoreUnderReview ysur);
+	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
 
 
 
