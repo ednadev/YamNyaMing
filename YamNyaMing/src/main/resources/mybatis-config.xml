@@ -17,5 +17,7 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.OwnerUploadPhoto" alias="owUploadPhoto"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.MenuInfo" alias="menuInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.CouponEnroll" alias="couponEnrollData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.CouponPageData" alias="couponPageData"/>
 	</typeAliases>
 </configuration>

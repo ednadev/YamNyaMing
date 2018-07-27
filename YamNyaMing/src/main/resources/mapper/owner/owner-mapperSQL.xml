@@ -27,4 +27,9 @@
 	 	 #{owEntireFk}, #{owStoreBizNum}, #{owStoreName}, #{owStoreTel}, #{owStorePhone}, 
 	 	 #{owStoreBigTypeFk}, #{owStoreDetailTypeFk}, #{owStoreUrl}, sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
 	 </insert>
+	 
+	 <update id="updateOwnerInfo" parameterType="owner">
+	 	update owner_entire_tb set ow_pw= #{owPw}, ow_email=#{owEmail}, ow_phone=#{phone}, ow_bank_account=#{owBankAccount}
+	 	where ow_id = #{owId}
+	 </update>
 </mapper>

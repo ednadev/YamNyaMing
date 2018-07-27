@@ -50,6 +50,7 @@ function resultStyleChk(resultChk,chk)
 	if(!chk)resultChk.css('color','red');
 	else resultChk.css('color','lightgreen');
 }
+
 // 아이디 체크
 function ownerIdChk()
 {

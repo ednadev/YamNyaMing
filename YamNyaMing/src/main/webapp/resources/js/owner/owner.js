@@ -14,11 +14,14 @@ var finalList8 = new Array("패밀리레스토랑","아시아음식","베트남�
 
 window.onload = function(){
 	var firstSelect = document.getElementById("firstSelect");
-	for(i=0; i<firstList.length;i++){
-		var optionEl = document.createElement("option");
-		optionEl.value = firstList[i];
-		optionEl.appendChild(document.createTextNode(firstList[i]));
-		firstSelect.appendChild(optionEl);
+	if(firstSelect!=null)
+	{
+		for(i=0; i<firstList.length;i++){
+			var optionEl = document.createElement("option");
+			optionEl.value = firstList[i];
+			optionEl.appendChild(document.createTextNode(firstList[i]));
+			firstSelect.appendChild(optionEl);
+		}
 	}
 }
 
