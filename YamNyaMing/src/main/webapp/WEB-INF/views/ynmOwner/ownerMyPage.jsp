@@ -16,13 +16,13 @@
 <body>
 	<header id="owner-main-header">
 		<h1>
-			<a href="mainOwner.do">YamNyaMing 관리</a>
+			<a href="/mainOwner.do">YamNyaMing 관리</a>
 		</h1>
 		<p>
-			<a href="storeEnrollOwner.do">입점 신청하기</a>
+			<a href="/storeEnrollOwner.do">입점 신청하기</a>
 		</p>
 		<p>
-			${sessionScope.owner.owName} 님 (${sessionScope.owner.owId}) <a href="/index.jsp">로그아웃</a>
+			${sessionScope.owner.owName} 님 (${sessionScope.owner.owId}) <a href="/ownerLogout.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="owner-main-nav">

@@ -1,9 +1,13 @@
 package com.kh.ynm.owner.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -63,7 +67,23 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	
 	@Override
 	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll) {
-		System.out.println(couponEnroll.getOwCouponStartDate() );
+		System.out.println(couponEnroll.getOwCouponName());
 		return sqlSession.insert("stores.couponEnroll", couponEnroll);
+	}
+	
+	@Override
+	public int ynmOwnerInfoUpdate(SqlSessionTemplate sqlSession, YNMOwner owner) 
+	{
+		return sqlSession.update("owners.updateOwnerInfo", owner);
+	}
+	
+	@Override
+	public ArrayList<CouponEnroll> couponListPaging(SqlSessionTemplate sqlSession, CouponPageData couponPageData) {
+		List list= sqlSession.selectList("stores.couponList", couponPageData);
+		return (ArrayList<CouponEnroll>)list;
+	}
+
+	public int couponGetTotal(SqlSessionTemplate sqlSession, CouponPageData couponPageData) {
+		return sqlSession.selectOne("stores.couponTotal", couponPageData);
 	}
 }

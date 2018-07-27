@@ -76,4 +76,10 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	public String analysisMngPage() {
 		return "ynmOwner/analysisManagePage";
 	}
+
+	@Override
+	@RequestMapping(value="/ownerInfo.do")
+	public String ownerInfoPage() {
+		return "ynmOwner/ownerInfo";
+	}
 }

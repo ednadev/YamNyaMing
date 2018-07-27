@@ -19,11 +19,17 @@ public interface YNMOwnerController {
 	// 점주 회원 가입
 	public String ynmOwnerSignUp(HttpSession session, YNMOwner owner);
 	
+	// 점주 정보 업데이트
+	public String ownerInfoUpdate(HttpSession session, YNMOwner owner);
+	
 	// 점주 회원 탈퇴
 	public String ynmOwnerSignOut(HttpSession session,@RequestParam String userId, @RequestParam String userPw);
 	
 	// 아이디 체크
 	public String idCheck(HttpServletRequest request, HttpServletResponse response)  throws IOException;
+	
+	// 아이디와 비밀번호가 맞는지 체크
+	public String ownerIdPassCheck(HttpSession session,HttpServletRequest request);
 	
 	// 점주 선택
 	public String selectOneOwner(HttpServletRequest request, HttpServletResponse response, HttpSession session);
@@ -35,6 +41,7 @@ public interface YNMOwnerController {
 	public String ynmOwnerLogout(HttpSession session);
 	
 	// 쿠폰 등록
-	public String couponAdd(HttpSession session, HttpServletRequest request);
+	public Object couponAdd(HttpSession session, HttpServletRequest request);
+	
 	
 }

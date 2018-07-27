@@ -17,6 +17,7 @@ public interface YNMOwnerViewController {
 	public String ownerMyPage();
 	
 	// 마이페이지 - 정보관리
+	public String ownerInfoPage();
 	
 	// 마이페이지 - 음식점관리
 	public String storeMngPage();
@@ -32,4 +33,5 @@ public interface YNMOwnerViewController {
 	
 	// 마이페이지 - 통계분석관리
 	public String analysisMngPage();
+
 }

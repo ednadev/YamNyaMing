@@ -33,4 +33,22 @@
  		#{owCouponName}, #{owCouponCount}, #{owCouponStartDate},#{owCouponExpireDate}, 
  		#{owCouponDetail} )
  	</insert>
+ 	<select id="couponList" resultType="couponEnrollData" parameterType="couponPageData">
+ 		select
+ 			   ow_coupon_info_pk as owCouponInfoPk,
+ 			   ow_entire_fk as owEntireFk,
+ 			   ow_store_info_fk as owStoreInfoFk,
+ 			   ow_coupon_name as owCouponName,
+ 			   ow_coupon_count as owCouponCount,
+ 			   ow_coupon_start_date as owCouponStartDate,
+ 			   ow_coupon_expire_date as owCouponExpireDate,
+ 			   ow_coupon_detail as owCouponDetail 
+ 		from ( select owner_coupon_info_tb.*,row_number() over(order by OW_COUPON_INFO_PK desc) as num 
+ 		from owner_coupon_info_tb where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk})
+	 	where num between #{startPage} and #{endPage}
+ 	</select>
+ 	<select id="couponTotal" parameterType="couponPageData" resultType="int">
+ 		select count(*) from owner_coupon_info_tb
+ 		where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk}
+ 	</select>
 </mapper>

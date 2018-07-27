@@ -1,8 +1,11 @@
 package com.kh.ynm.owner.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -20,4 +23,6 @@ public interface YNMOwnerDAO {
 	public int selectMenuWithId(SqlSessionTemplate sqlSession, String menuId);
 	public int storeDetailInfo(SqlSessionTemplate sqlSession, YNMStoreDetailInfo detailInfo);
 	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll);
+	public int ynmOwnerInfoUpdate(SqlSessionTemplate sqlSession, YNMOwner owner);
+	public ArrayList<CouponEnroll> couponListPaging(SqlSessionTemplate sqlSession, CouponPageData couponPageData);
 }

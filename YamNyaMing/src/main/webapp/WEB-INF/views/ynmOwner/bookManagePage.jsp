@@ -15,10 +15,10 @@
 <body>
 	<header id="owner-main-header">
 		<h1>
-			<a href="mainOwner.do">YamNyaMing 관리</a>
+			<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 		</h1>
 		<p>
-			<a href="storeEnrollOwner.do">입점 신청하기</a>
+			<a href="/storeEnrollOwner.do">입점 신청하기</a>
 		</p>
 		<p>
 			${sessionScope.owner.owName} 님 (${sessionScope.owner.owId}) <a href="/index.jsp">로그아웃</a>
@@ -26,7 +26,7 @@
 	</header>
 	<nav id="owner-main-nav">
 		<ul>
-			<li><a href="/ownerMyPage.do">정보 관리</a></li>
+			<li><a href="/ownerInfo.do">정보 관리</a></li>
 			<li><a href="/storeManage.do">음식점 관리</a></li>
 			<li><a href="/reservationManage.do">예약 관리</a></li>
 			<li><a href="/couponManage.do">쿠폰 관리</a></li>

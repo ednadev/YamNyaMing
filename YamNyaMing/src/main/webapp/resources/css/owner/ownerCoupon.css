@@ -8,7 +8,7 @@
 
 /*쿠폰 등록 div*/
 #coupon-enroll{
-	width:100%;
+
 }
 
 /*쿠폰 타입 선택버튼*/
@@ -52,18 +52,33 @@
 /*쿠폰 리스트 div*/
 #owner-section-coupon{
 	clear:both;
-	
+	min-height:230px;
 }
-/* number타입 input*/
-input[type="number"]{
-    color: #555;
-    padding: 10px;
-    width: 50%;
+/*쿠폰 목록 보여주기*/
+#enrollCouponList{
+	padding:20px;
 }
-/* 모든 input*/
-input[type="date"]{
-    color: #555;
-    padding: 8px;
+/*쿠폰 테이블*/
+#keywords {
+  margin: 0 auto;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  width:90%;
+}
+#keywords thead {
+  cursor: pointer;
+  background: #fb0;
+}
+#keywords thead tr th { 
+  font-weight: bold;
+  padding: 12px 30px;
+  padding-left: 42px;
+}
+
+#keywords tbody tr td {
+  text-align: center;
+  padding: 15px 10px;
+  max-width:350px;
 }
 
 textarea{
@@ -72,8 +87,27 @@ textarea{
     width: 50%;
     height:80px;
 }
-
-/**/
+#couponDelBtn{
+	width:100%;
+	height:100%;
+	background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+	border:0;
+	cursor: pointer;
+}
+.signUp-table>div:nth-child(2)>input[type="number"] {
+    color: #555;
+    padding: 10px;
+    width: 50%;
+}
+.signUp-table>div:nth-child(2)>input[type="date"] {
+    color: #555;
+    padding: 10px;
+    width: 22.5%;
+}
+/*
 #owner-main-footer{
 	background-color:rgba(0,0,0,0.8);
    position:absolute;
@@ -81,6 +115,7 @@ textarea{
    width:100%;
    overflow:hidden;
 }
+*/
 
 
 

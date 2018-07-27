@@ -1,5 +1,7 @@
 package com.kh.ynm.owner.model.service;
 
+import java.util.ArrayList;
+
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
@@ -14,7 +16,7 @@ public interface YNMOwnerService {
 	// 회원 선택(로그인, 정보 가져오기)
 	public YNMOwner selectOneOwner(YNMOwner owner);
 		
-	// 
+	//
 	public YNMOwner selectOneOwner(String ownerId);
 	
 	// 가게 추가
@@ -43,5 +45,12 @@ public interface YNMOwnerService {
 
 	// 쿠폰 등록
 	public int couponEnroll(CouponEnroll couponEnroll);
+
+	// 점주 정보 업데이트
+	public int ynmOwnerInfoUpdate(YNMOwner owner);
+	
+	// 쿠폰 리스트 가져오기
+	public ArrayList<CouponEnroll> couponListPaging(int currentPage,int recordCountPerPage,int owEntirePk, int storeEntireFk) ;
+
 	
 }
