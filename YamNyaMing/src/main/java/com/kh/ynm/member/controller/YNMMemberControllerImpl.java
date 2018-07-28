@@ -668,53 +668,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return "fail";
 		}
 	}
-	// 사용자 검색
-	@RequestMapping(value="/search.do")
-	public ModelAndView search(HttpSession session, HttpServletRequest request) {
-		String keyword = request.getParameter("keyword");
-		String food = request.getParameter("food");
-		String place = request.getParameter("place");
-		session.setAttribute("keyword",keyword);
-		session.setAttribute("food", food);
-		session.setAttribute("place", place);
-
-		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
-		String [] owBudget = request.getParameterValues("owBudget");
-		String [] owSubInfo = request.getParameterValues("owSubInfo");
-		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
-
-		YNMSearchPaging check = new YNMSearchPaging();
-
-		check.setKeyword(keyword);
-		check.setFood(food);
-		check.setPlace(place);
-		check.setStoreCateDetailName(storeCateDetailName);
-		check.setOwBudget(owBudget);
-		check.setOwSubInfo(owSubInfo);
-		check.setOwDrinkListInfo(owDrinkListInfo);
-		
-		int currentPage;
-		if(request.getParameter("currentPage")==null)
-		{
-			currentPage = 1;
-		}else
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
-		
-		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-
-		ModelAndView view=new ModelAndView();
-		if(qpd!=null) {
-			view.addObject("search",qpd);
-			view.setViewName("ynmMember/search");
-			return view;
-		}else {
-			return null;
-		}
-
-	}
+	
 	@Override
 	@RequestMapping(value="/settingInfo.do")
 	public ModelAndView settingInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -731,14 +685,73 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return null;
 		}
 
+	}	
+	
+	// 사용자 검색
+	@RequestMapping(value="/search.do")
+	public ModelAndView search(HttpSession session, HttpServletRequest request) {
+		String keyword = request.getParameter("keyword");
+		String food = request.getParameter("food");
+		String place = request.getParameter("place");
+		session.setAttribute("keyword",keyword);
+		session.setAttribute("food", food);
+		session.setAttribute("place", place);
+		
+		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
+		String [] owBudget = request.getParameterValues("owBudget");
+		String [] owSubInfo = request.getParameterValues("owSubInfo");
+		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+
+		YNMSearchPaging check = new YNMSearchPaging();
+		
+		check.setKeyword(keyword);
+		check.setFood(food);
+		check.setPlace(place);
+		check.setStoreCateDetailName(storeCateDetailName);
+		check.setOwBudget(owBudget);
+		check.setOwSubInfo(owSubInfo);
+		check.setOwDrinkListInfo(owDrinkListInfo);
+		
+		int currentPage;
+
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage=1;
+		}
+		else
+		{
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
+
+		ModelAndView view=new ModelAndView();
+		if(qpd!=null) {
+			view.addObject("search",qpd);
+			view.setViewName("ynmMember/search");
+			return view;
+		}
+		return null;
 	}
 
 	// 음식점 상세 페이지
 	@RequestMapping(value="/detailPage.do")
-	public String detailPage() {
-		return "ynmMember/detailPage";	
+	public String detailPage(HttpServletRequest request, HttpServletResponse response) {
+		YNMSearch vo = new YNMSearch();
+		vo.setOwStoreName(request.getParameter("owStoreName"));
+		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
+		HttpSession session = request.getSession();
+		if(store!=null) {
+			session.setAttribute("store", store);
+			return "ynmMember/detailPage";
+		}else {
+			return null;
+		}
+		
 	}
 
+	
+	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
 	public String ynmAdmin() {

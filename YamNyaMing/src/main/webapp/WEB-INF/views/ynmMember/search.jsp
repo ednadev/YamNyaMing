@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=5">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -359,12 +359,16 @@
 		<c:forEach items="${search.noticelist}" var="search">
 			<div class="search-result">
 				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
-					<div>
+					<form action="/detailPage.do" method="get">
+						<input type="hidden" name="owStoreName" value="${search.owStoreName}">
+						<input type="submit" value="">
+					</form>
+					<a>
 						<p class="waiting">대기인원 0 추천 0</p>
 						<div class="heart"></div>
 						<h5>${search.owStoreName }</h5>
 						<p class="info">${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
-					</div>
+					</a>
 				</div>
 				<div class="search-result-text">
 					<div>

@@ -224,5 +224,10 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		sp.setRecordTotalCount(recordTotalCount);
 		
 		return sp;
+	}
+
+	public YNMSearch detailPage(SqlSessionTemplate sqlSession, YNMSearch vo) {
+		return sqlSession.selectOne("search.detailPage",vo);
 	}	
+
 }

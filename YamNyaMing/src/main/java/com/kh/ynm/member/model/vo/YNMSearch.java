@@ -7,17 +7,19 @@ public class YNMSearch {
 	private String storeCateDetailName;
 	private String owPhotoRoute;
 	private String owStoreComment;
+	private String owStoreHeadPhoto;
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
 	public YNMSearch(String owStoreName, String owStoreAddrFirst, String owStoreAddrFinal, String storeCateDetailName,
-			String owPhotoRoute, String owStoreComment) {
+			String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto) {
 		this.owStoreName = owStoreName;
 		this.owStoreAddrFirst = owStoreAddrFirst;
 		this.owStoreAddrFinal = owStoreAddrFinal;
 		this.storeCateDetailName = storeCateDetailName;
 		this.owPhotoRoute = owPhotoRoute;
 		this.owStoreComment = owStoreComment;
+		this.owStoreHeadPhoto = owStoreHeadPhoto;
 	}
 	public String getOwStoreName() {
 		return owStoreName;
@@ -55,5 +57,12 @@ public class YNMSearch {
 	public void setOwStoreComment(String owStoreComment) {
 		this.owStoreComment = owStoreComment;
 	}
+	public String getOwStoreHeadPhoto() {
+		return owStoreHeadPhoto;
+	}
+	public void setOwStoreHeadPhoto(String owStoreHeadPhoto) {
+		this.owStoreHeadPhoto = owStoreHeadPhoto;
+	}
+
 
 }
