@@ -110,21 +110,24 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				{
 					if(tips[i]!=null && tips[i].length()>0) {
 						tip += tips[i];
+						if(i<tips.length-1) {
+							if(tips[i+1].length()>0) tip+=",";
+						}
 					}else {
 						break;
 					}
-					if(i<tips.length-1) tip+=",";
+					
 				}
 				// 대표 이미지 등록
 				List<MultipartFile> files = mainImgFile.getFiles("mainImgFile");
 				String uploadPhotoImg = "";
 				if(files.size()>0) {
 					String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\headPhoto_");
-				
+					String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\");
 					for (int i = 0; i < files.size(); i++) 
 					{
 						String originName= files.get(i).getOriginalFilename();
-						String remakeName= "headPhoto_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+						String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 						
 						File f=new File(photoRoute + remakeName);
 						//해당 디렉토리의 존재여부를 확인
@@ -144,12 +147,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						uploadPhoto.setOwPhotoTypeFk(3);
 						uploadPhoto.setStoreInfoFk(storeInfoIndex);
 						uploadPhoto.setOriginName(originName);
-						uploadPhoto.setRemakeName(remakeName);
-						uploadPhoto.setPhotoRoute(photoRoute);
+						uploadPhoto.setRemakeName("headPhoto_" + remakeName);
+						uploadPhoto.setPhotoRoute(photoSaveRoute);
 						
 						int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
 						if(photoUpload>0) {
-							int photoIndex =ynmOwnerServiceImpl.photoSelectWithName(remakeName);
+							int photoIndex =ynmOwnerServiceImpl.photoSelectWithName("headPhoto_" +remakeName);
 							if(i<files.size()-1) uploadPhotoImg+=photoIndex+",";
 							else uploadPhotoImg+=photoIndex;
 						}else {
@@ -176,11 +179,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						List<MultipartFile> filesMenu = menuImgFile.getFiles("menuImageFile");
 						if(filesMenu.size()>0) {
 							String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\menuP_");
+							String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
 							String menuPhotoList = "";
 							for (int i = 0; i < filesMenu.size(); i++)
 							{
 								String originName= filesMenu.get(i).getOriginalFilename();
-								String remakeName= "menuP_" + System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+								String remakeName=  System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 								
 								File f=new File(photoRoute+remakeName);
 								//해당 디렉토리의 존재여부를 확인
@@ -200,12 +204,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 								uploadPhoto.setOwPhotoTypeFk(4);
 								uploadPhoto.setStoreInfoFk(storeInfoIndex);
 								uploadPhoto.setOriginName(originName);
-								uploadPhoto.setRemakeName(remakeName);
-								uploadPhoto.setPhotoRoute(photoRoute);
+								uploadPhoto.setRemakeName("menuP_" +remakeName);
+								uploadPhoto.setPhotoRoute(photoSaveRoute);
 								
 								int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
 								if(photoUpload>0) {
-									int photoIndex =ynmOwnerServiceImpl.photoSelectWithName(remakeName);
+									int photoIndex =ynmOwnerServiceImpl.photoSelectWithName("menuP_" +remakeName);
 									if(i<filesMenu.size()-1) menuPhotoList+=photoIndex+",";
 									else menuPhotoList+=photoIndex;
 								}else {
@@ -321,7 +325,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			int result = ynmOwnerServiceImpl.couponEnroll(couponEnroll);
 			if(result>0)
 			{
-				int currentPage = 1;
+				return couponShowList(session,request);
+				/*int currentPage = 1;
 				if(request.getParameter("currentPage")==null) currentPage=1;
 				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
 				
@@ -333,7 +338,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view.addObject("couponListData", couponList);
 				view.addObject("pageNaviData", pageNavi);
 				view.setViewName("ynmOwner/couponManagePage");
-				return view;
+				return view;*/
 			}
 			else {
 		
@@ -342,6 +347,25 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	@RequestMapping(value="/couponManage.do")
+	public ModelAndView couponShowList(HttpSession session,HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+		int currentPage = 1;
+		if(request.getParameter("currentPage")==null) currentPage=1;
+		else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		
+		int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+		int naviCountPerPage = 5; //2.
+		ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
+		CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
+		view.addObject("couponListData", couponList);
+		view.addObject("pageNaviData", pageNavi);
+		view.setViewName("ynmOwner/couponManagePage");
+		return view;
 	}
 	
 //	@Override
@@ -377,6 +401,24 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		int result = ynmOwnerServiceImpl.ynmOwnerInfoUpdate(owner);
 		if(result>0)return  "ynmOwner/ownerMyPage";
 		else return "ynmOwner/ynmOwnerError/ownerInfoUpdateFail";
+	}
+
+	@Override
+	@RequestMapping("/storeList.do")
+	public ModelAndView storeList(HttpSession session, HttpServletRequest request) {
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			int ownerIndex = owner.getOwEntirePk();
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<YNMStoreInfo> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
+			
+		}
+		return null;
 	}
 	
 

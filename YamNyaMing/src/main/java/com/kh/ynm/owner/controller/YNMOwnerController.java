@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -42,6 +43,10 @@ public interface YNMOwnerController {
 	
 	// 쿠폰 등록
 	public Object couponAdd(HttpSession session, HttpServletRequest request);
+
+	// 쿠폰 리스트 가져오기
+	public ModelAndView couponShowList(HttpSession session, HttpServletRequest request);
 	
-	
+	// 가게 관리 페이지
+	public ModelAndView storeList(HttpSession session, HttpServletRequest request);
 }

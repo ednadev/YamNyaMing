@@ -10,7 +10,9 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?ver=2">
-<script src="${pageContext.request.contextPath}/resources/js/member/member.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/member/memberSignUp.js?ver=1"></script>
+<!-- 파이어베이스 로그인 -->
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
 </head>
 <script>
 function setCookie(cookieName, value, exdays) {
@@ -65,7 +67,44 @@ $(document).ready(function() {
 			setCookie("memberId", memberId, 7);
 		}
 	});
+	
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyA6CQonX8F8m6Pdw80buaHzzzh0oqES4o4",
+	    authDomain: "yamnyaming-b9c68.firebaseapp.com",
+	    databaseURL: "https://yamnyaming-b9c68.firebaseio.com",
+	    projectId: "yamnyaming-b9c68",
+	    storageBucket: "yamnyaming-b9c68.appspot.com",
+	    messagingSenderId: "507906920617"
+	  };
+	  firebase.initializeApp(config);
+	 
 });
+
+function googleLogin()
+{
+	// 인증하기
+    var provider = new firebase.auth.GoogleAuthProvider();
+	
+	firebase.auth().signInWithPopup(provider).then(function(result) {
+		// This gives you a Google Access Token. You can use it to access the Google API.
+		var token = result.credential.accessToken;
+		// The signed-in user info.
+		var user = result.user;
+		
+		console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+	}).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		// The email of the user's account used.
+		var email = error.email;
+		// The firebase.auth.AuthCredential type that was used.
+		var credential = error.credential;
+		// ...
+	});	
+
+}
 
 
 </script>
@@ -94,7 +133,7 @@ $(document).ready(function() {
 	</p>
 	<div>
         <p><img src="${pageContext.request.contextPath}/resources/image/member/login/facebookLoginIcon.jpg" height="40px;" align="center"></p>
-        <p><img src="${pageContext.request.contextPath}/resources/image/member/login/googleLoginIcon.jpg" height="40px;"  align="center"></p>
+        <p onclick="googleLogin();"><img src="${pageContext.request.contextPath}/resources/image/member/login/googleLoginIcon.jpg" height="40px;"  align="center"></p>
         <p><img src="${pageContext.request.contextPath}/resources/image/member/login/naverLoginIcon.jpg" height="40px;"  align="center"></p>
 
 	</div>

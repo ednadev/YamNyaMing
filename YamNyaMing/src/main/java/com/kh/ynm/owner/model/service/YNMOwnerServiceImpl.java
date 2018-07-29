@@ -13,6 +13,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -149,73 +150,24 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 			endNavi = pageTotalCount;
 		}
 		CouponPageData couponPageDataResult = new CouponPageData();
+		couponPageDataResult.setCurrentPage(currentPage);
 		couponPageDataResult.setStartNavi(startNavi);
 		couponPageDataResult.setEndNavi(endNavi);
 		couponPageDataResult.setPageTotalCount(pageTotalCount);
 		couponPageDataResult.setRecordTotalCount(recordTotalCount);
 		
 		return couponPageDataResult;
-		
-		//페이지navi에서 사용할 '<'모양과'>'모양을 사용하기 위해 필요한 변수 2개 생성
-//		boolean needPrev = true;
-//		boolean needNext = true;
-//
-//		if(startNavi==1)
-//		{
-//			needPrev = false;
-//		}
-//
-//		if(endNavi==pageTotalCount)
-//		{
-//			needNext = false;
-//		}
-//		//여기까지 기본적은 구조는 끝.
-//
-//		StringBuilder sb = new StringBuilder();
-//		String navi = 
-//				"<nav aria-label='Page navigation example'>";				
-//		navi+= "<ul class='pagination'>";
-//
-//		
-//		if(needPrev) {// 시작이 1페이지가 아니라면!					
-//			navi +=	"<li class='page-item'>"+
-//				"<a class='page-link' aria-label='Previous' onclick='pageChange("+(startNavi-1)+ ");'> <span aria-hidden='true' >«</span>"+
-//				"<span class='sr-only'>Previous</span>"+
-//				"</a> </li>";
-//			
-////			"<span onclick='pageChange("+(startNavi-1)+ ");'> < </span>";
-//		}
-//		
-//		for(int i = startNavi;i<=endNavi;i++)
-//		{
-//			if(i==currentPage) {
-//				navi += "<li>"+
-//				"<a class='page-link' onclick='pageChange("+ i +");'> <span aria-hidden='true'><B>"+i+"</B></span>"+
-//				"<span class='sr-only'>"+ i +"</span>"+
-//				"</a></li>";
-////				navi += "<span onclick='pageChange("+ i + ");'></span>";
-//			}
-//			else {
-//				navi += "<li>"+
-//					"<a class='page-link'  onclick='pageChange("+ i +");'> <span aria-hidden='true'>"+i+"</span>"+
-//					"<span class='sr-only'>"+i+"</span>"+
-//					"</a></li>";
-////				navi += "<span onclick='pageChange("+ i + ");'>"+ i +"</span>";
-////				sb.append("<a href='/notice?currentPage="+i+"'> "+i+" </a>");
-//			}
-//		}
-//		
-//		if(needNext) {// 끝페이지가 아니라면
-//			navi += "<li class='page-item'>"+
-//				"<a class='page-link' aria-label='Next' onclick='pageChange("+(endNavi+1)+ ");'>"+
-//				"<span aria-hidden='true' >»</span>"+ 
-//				"<span class='sr-only'>Next</span>"+
-//				"</a>"+
-//			"</li>";
-////			navi+= "<span onclick='pageChange("+(endNavi+1)+ ");'> > </span>";
-////			sb.append("<a href='/notice?currentPage="+(endNavi+1)+ "'> > </a>");
-//		
-//		}
+	}
+
+	public ArrayList<YNMStoreInfo> ynmStoreInfoList(int ownerIndex, int currentPage, int recordCountPerPage) {
+		//시작 페이지 계산
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		StorePageData storePageData = new StorePageData();
+		storePageData.setStartPage(start);
+		storePageData.setEndPage(end);
+		storePageData.setOwEntirePk(ownerIndex);
+		return ynmOwnerDAO.storeListPaging(sqlSession,storePageData);
 	}
 
 	

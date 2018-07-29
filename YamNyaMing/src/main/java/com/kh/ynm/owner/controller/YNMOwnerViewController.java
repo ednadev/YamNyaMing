@@ -26,7 +26,7 @@ public interface YNMOwnerViewController {
 	public String bookMngPage();
 	
 	// 마이페이지 - 쿠폰 관리
-	public String couponMngPage();
+//	public String couponMngPage();
 	
 	// 마이페이지 - 게시판 관리
 	public String boardMngPage();

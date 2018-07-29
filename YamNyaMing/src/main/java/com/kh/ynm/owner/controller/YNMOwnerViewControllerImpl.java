@@ -55,14 +55,7 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	public String bookMngPage() {
 		return "ynmOwner/bookManagePage";
 	}
-	
-	// 점장 쿠폰 관리 페이지
-	@Override
-	@RequestMapping(value="/couponManage.do")
-	public String couponMngPage() {
-		return "ynmOwner/couponManagePage";
-	}
-	
+
 	// 점장 게시판 관리 페이지
 	@Override
 	@RequestMapping(value="/boardOwner.do")

@@ -9,7 +9,7 @@
  	</insert> 
  	<select id="storeSearchWithBizNum" resultType="int">
  		select OW_STORE_INFO_PK from owner_store_info_tb 
- 		where OW_STORE_BIZ_NUM = '1234567891' 
+ 		where OW_STORE_BIZ_NUM = #{bizNum} 
  	</select>
  	
  	<insert id="menuUpload" parameterType="menuInfo">
@@ -50,5 +50,13 @@
  	<select id="couponTotal" parameterType="couponPageData" resultType="int">
  		select count(*) from owner_coupon_info_tb
  		where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk}
+ 	</select>
+ 	
+ 	<select id="storeTitleList" parameterType="storePageData" resultType="storeTitleData">
+ 		select ow_store_info_pk, ow_entire_fk, ow_store_name,ow_store_tip,ow_photo_route, ow_remake_name
+			from owner_store_info_tb,
+			(select * from owner_store_detail_tb, owner_store_photo_tb
+			where OW_STORE_PHOTO_PK = substr(ow_store_head_photo,1,1))
+			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{storePageData.owEntirePk};
  	</select>
 </mapper>

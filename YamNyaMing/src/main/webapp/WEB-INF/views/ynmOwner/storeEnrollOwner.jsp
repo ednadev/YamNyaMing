@@ -29,7 +29,7 @@
 				<div class="signUp-table">
 					<div>사업자 등록번호</div>
 					<div>
-						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호" onkeydown="owStoreBizCheck();" onchange="owStoreBizCheck();">
+						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호"/> <!-- onkeydown="owStoreBizCheck();" onchange="owStoreBizCheck();"> -->
 						<p id="owStoreBizNumResult">사업자 등록번호를 입력해주세요.</p>
 					</div>
 				</div>	

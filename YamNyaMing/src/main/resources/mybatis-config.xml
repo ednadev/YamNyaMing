@@ -20,5 +20,7 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponEnroll" alias="couponEnrollData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponPageData" alias="couponPageData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.StorePageData" alias="storePageData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>
 	</typeAliases>
 </configuration>
