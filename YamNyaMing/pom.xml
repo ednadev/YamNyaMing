@@ -23,8 +23,6 @@
 	
 	<dependencies>
 	<!-- 네아로 -->
-
-
 	<dependency>
 	<groupId>com.github.scribejava</groupId>
 	<artifactId>scribejava-core</artifactId>

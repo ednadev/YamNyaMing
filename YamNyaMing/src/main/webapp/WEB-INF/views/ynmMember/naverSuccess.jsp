@@ -22,6 +22,7 @@ h3 {
 }
 </style>
 <script type="text/javascript">
+
 	$(document).ready(function() {
 		var name = ${result}.response.name;
 		var email = ${result}.response.email;

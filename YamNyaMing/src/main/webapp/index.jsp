@@ -17,6 +17,7 @@
 		</h1>
 		<a href="/ynmMemberTest.do">맴버test</a>
 		<a href="/naverlogin.do">네아</a>
+		<a href="/googlelogin.do">구글</a>
 
 		<ul>
 			<c:if test="${sessionScope.owner!=null}" var="result">

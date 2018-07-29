@@ -28,9 +28,10 @@ public class LoginController {
 	private void setNaverLoginBO(NaverLoginBo naverLoginBo) {
 		this.naverLoginBo = naverLoginBo;
 	}
+	
 
 	//로그인 첫 화면 요청 메소드
-	@RequestMapping(value = "/naverlogin.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "naverlogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model model, HttpSession session) {
 		
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
@@ -39,7 +40,6 @@ public class LoginController {
 		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
 		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
-		System.out.println("gdgdgd");
 		//네이버 
 		model.addAttribute("url", naverAuthUrl);
 
@@ -48,7 +48,7 @@ public class LoginController {
 	}
 
 	//네이버 로그인 성공시 callback호출 메소드
-	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/YamNyaMing/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		System.out.println("여기는 callback");
@@ -56,9 +56,14 @@ public class LoginController {
         oauthToken = naverLoginBo.getAccessToken(session, code, state);
         //로그인 사용자 정보를 읽어온다.
 	    apiResult = naverLoginBo.getUserProfile(oauthToken);
+	    System.out.println(apiResult);
 		model.addAttribute("result", apiResult);
 
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "ynmMember/naverSuccess";
 	}
+
+	
+	
+	
 }
