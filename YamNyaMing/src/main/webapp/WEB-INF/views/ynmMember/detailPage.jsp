@@ -11,11 +11,16 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=8">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/lightslider.css" />                  
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=9">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
+
+<script>
+function starPoint(point){
+		$("#star1").css({"background-image","url('${pageContext.request.contextPath}'/resource/image/member/search/star-full.png)"}); 
+}
+</script>
 </head>
+
 <body>
 <header id="member-search-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
@@ -317,38 +322,46 @@
 		</script>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">
+			<form action="/storeReviewInsert.do" enctype="multipart/form-data" method="post">
 			<h4>리뷰 쓰기</h4>
+			<input type="hidden" name="owStoreInfoPk" value="${store.owStoreInfoPk}"/>
 			<table>
 			<tbody>
 			<tr>
 				<th>별점</th>
 				<td>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
+					<span class="star-yellow" id="star1" onclick="starPoint(1);"></span>
+					<span class="star-yellow" id="star2" onclick="starPoint(2);"></span>
+					<span class="star-yellow" id="star3" onclick="starPoint(3);"></span>
+					<span class="star-yellow" id="star4" onclick="starPoint(4);"></span>
+					<span class="star-yellow" id="star5" onclick="starPoint(5);"></span>
 				</td>
 			</tr>
 			<tr>
 				<th>리뷰</th>
-				<td><textarea placeholder="매장에 대한 리뷰를 30자 이상 작성해주세요.&#13;&#10;매장과 관계없는 글, 광고성, 욕성, 비방, 도배 등의 글은 예고 없이 삭제됩니다."></textarea></td>
+				<td><textarea id="reviewContent" name="reviewContent" placeholder="매장에 대한 리뷰를 30자 이상 작성해주세요.&#13;&#10;매장과 관계없는 글, 광고성, 욕성, 비방, 도배 등의 글은 예고 없이 삭제됩니다."></textarea></td>
 			</tr>
 			<tr>
 				<th>사진 등록</th>
 				<td>
-					<input type="file" id="photoEnroll"><label for="photoEnroll">사진 등록하기</label>
+					<input type="file" id="input_reviewPhoto" name="reviewImgList" multiple/>
+					<label for="input_reviewPhoto" onclick="reviewFilesUpload();">사진 등록하기</label>
 				</td>
 			</tr>
 			<tr>
 				<th></th>
 				<td>
-					<div style="display:none;"></div>
+					<div class="imgs_wrap" style="display:block;width:100%;">
+							
+
+						
+					</div>
 				</td>
 			</tr>
 			</tbody>
 			</table>
 			<button>리뷰 올리기</button>
+			</form>
 			<h4>리뷰</h4>
 			<p><span>최신순</span> | <span>인기순</span></p>
 			<div>

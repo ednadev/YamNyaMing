@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.vo;
 
 public class YNMSearch {
+	private int owStoreInfoPk;
 	private String owStoreName;
 	private String owStoreAddrFirst;
 	private String owStoreAddrFinal;
@@ -137,4 +138,11 @@ public class YNMSearch {
 	public void setOwDrinkListInfo(String owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
 	}
+	public int getOwStoreInfoPk() {
+		return owStoreInfoPk;
+	}
+	public void setOwStoreInfoPk(int owStoreInfoPk) {
+		this.owStoreInfoPk = owStoreInfoPk;
+	}
+	
 }

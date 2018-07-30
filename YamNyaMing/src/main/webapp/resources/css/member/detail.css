@@ -328,23 +328,23 @@
 .member-detail-page-wrapper>#Review{
 	overflow:hidden;
 }
-.member-detail-page-wrapper>#Review>h4:nth-child(1){
+.member-detail-page-wrapper>#Review>form>h4:nth-child(1){
 	margin:20px 20px 10px 20px;
 	color:black;
 }
-.member-detail-page-wrapper>#Review>table{
+.member-detail-page-wrapper>#Review>form>table{
 	margin-left:20px;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr{
 	height:40px;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr>th{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr>th{
 	color:#555;
 	font-size:0.9em;
 	text-align:left;
 	width:72px;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr>td>textarea{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr>td>textarea{
 	width:810px;
 	height:150px;
 	resize:none;
@@ -352,24 +352,26 @@
 	padding:10px;
 	line-height:1.5;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr>td>input[type="file"]{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr>td>input[type="file"]{
 	display:none;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr>td>label{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr>td>label{
 	border:1px solid #fb0;
 	padding:7px;
 	border-radius:5px;
 	cursor:pointer;
 }
-.member-detail-page-wrapper>#Review>table>tbody>tr>td>div{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr>td>div{
 	width:100px;
 	height:100px;
 	border-radius:3px;
-	background-color:pink;
 	float:left;
 	margin-right:7px;
 }
-.member-detail-page-wrapper>#Review>button{
+.member-detail-page-wrapper>#Review>form>table>tbody>tr:nth-child(4)>td{
+	overflow:auto;
+}
+.member-detail-page-wrapper>#Review>form>button{
 	background-color:#fb0;
 	border:none;
 	color:white;
@@ -380,52 +382,52 @@
 	font-weight:bold;
 	cursor:pointer;
 }
-.member-detail-page-wrapper>#Review>h4:nth-child(4){
+.member-detail-page-wrapper>#Review>h4:nth-child(2){
 	margin:20px 20px 10px 0px;
 	color:black;
 	float:left;
 }
-.member-detail-page-wrapper>#Review>p:nth-child(5){
+.member-detail-page-wrapper>#Review>p:nth-child(3){
 	float:right;
 	font-size:0.9em;
 	color:black;
 	margin-top:20px;
 }
-.member-detail-page-wrapper>#Review>p:nth-child(5)>span{
+.member-detail-page-wrapper>#Review>p:nth-child(3)>span{
 	color:black;
 	cursor:pointer;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6){
+.member-detail-page-wrapper>#Review>div:nth-child(4){
 	clear:both;
 	border:1px solid #ddd;
 	padding:20px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1){
 	margin-bottom:20px;
 	overflow:hidden;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>#profile-image{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>#profile-image{
 	width:70px;
 	height:70px;
 	border-radius:50%;
 	background-color:rgba(0,0,0,0.5);
 	float:left;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>div:nth-child(2){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>div:nth-child(2){
 	float:left;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>div:nth-child(2)>p:nth-child(1){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>div:nth-child(2)>p:nth-child(1){
 	margin-top:20px;
 	color:black;
 	font-weight:bold;
 	margin-left:11px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>div:nth-child(2)>p:nth-child(2){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>div:nth-child(2)>p:nth-child(2){
 	font-size:0.9em;
 	color:black;
 	margin-left:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>button{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>button{
 	float:right;
 	background-color:white;
 	border:1px solid #fb0;
@@ -433,42 +435,42 @@
 	border-radius:7px;
 	cursor:pointer;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(1)>button:hover{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(1)>button:hover{
 	background-color:#fb0;
 	color:white;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2){
 	clear:both;
 	border-top:1px solid #ddd;
 	padding-top:20px;
 	border-bottom:1px solid #ddd;
 	padding-bottom:20px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(1){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(1){
 	font-size:0.9em;
 	color:black;
 	margin-bottom:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(2){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(2){
 	color:black;
 	line-height:1.5;
 	margin-bottom:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>div:nth-child(3)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>div:nth-child(3)>div{
 	background-color:pink;
 	width:70px;
 	height:70px;
 	border-radius:7px;
 	margin-bottom:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(4){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(4){
 	font-size:0.9em;
 	margin-bottom:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5){
 	margin-bottom:10px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button{
 	background-color:white;
 	border:1px solid #fb0;
 	border-radius:7px;
@@ -476,60 +478,60 @@
 	cursor:pointer;
 	margin-right:5px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button>p{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button>p{
 	display:inline-block;
 	margin-left:5px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button>div{
 	width:16px;
 	height:16px;
 	display:inline-block;
 	background-size:cover;
 	background-position:center;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(1)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(1)>div{
 	background-image:url('../../image/member/search/like.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(2)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(2)>div{
 	background-image:url('../../image/member/search/heart-yellow.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(3)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(3)>div{
 	background-image:url('../../image/member/search/comment.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(4)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(4)>div{
 	background-image:url('../../image/member/search/sharing.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:hover{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:hover{
 	background-color:#fb0;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:hover p{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:hover p{
 	color:white;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(1):hover div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(1):hover div{
 	background-image:url('../../image/member/search/like-white.png');	
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(2):hover div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(2):hover div{
 	background-image:url('../../image/member/search/heart.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(3):hover div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(3):hover div{
 	background-image:url('../../image/member/search/comment-white.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(2)>p:nth-child(5)>button:nth-child(4):hover div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(2)>p:nth-child(5)>button:nth-child(4):hover div{
 	background-image:url('../../image/member/search/sharing-white.png');
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(3){
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(3){
 	padding-top:20px;
 	position:relative;
 	padding-left:20px;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(3)>div{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(3)>div{
 	width:50px;
 	height:50px;
 	background-color:gray;
 	border-radius:50%;
 	display:inline-block;
 }
-.member-detail-page-wrapper>#Review>div:nth-child(6)>div:nth-child(3)>input{
+.member-detail-page-wrapper>#Review>div:nth-child(4)>div:nth-child(3)>input{
 	position:relative;
 	bottom:20px;
 	left:5px;

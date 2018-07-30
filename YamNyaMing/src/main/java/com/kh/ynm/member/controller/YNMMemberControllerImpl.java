@@ -466,7 +466,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			file.mkdirs(); //디렉토리가 존재하지 않는다면 생성
 		}
 		if(files.get(0).getSize()>0) {
-			System.out.println("나 왔성");
 		for (int i = 0; i < files.size(); i++) {
 			remakeName=System.currentTimeMillis()+"_"+files.get(i).getOriginalFilename();
 			file = new File(path+remakeName);
@@ -491,7 +490,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		YNMStoreReview ysr=new YNMStoreReview();
 		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-		ysr.setReviewTitle(request.getParameter("reviewTitle"));
 		ysr.setOwnerEntireNo(Integer.parseInt(request.getParameter("ownerStoreEntireNo")));
 		ysr.setReviewContent(request.getParameter("reviewContent"));
 		ysr.setReviewStar(request.getParameter("reviewStar"));

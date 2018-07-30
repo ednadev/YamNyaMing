@@ -7,7 +7,6 @@ public class YNMStoreReview {
 	private int storeReviewNo;
 	private int ownerStoreEntireNo;
 	private int memberEntireNo;
-	private String reviewTitle;
 	private String reviewContent;
 	private String reviewStar;
 	private char jjimCheck;
@@ -49,12 +48,6 @@ public class YNMStoreReview {
 	}
 	public void setMemberEntireNo(int memberEntireNo) {
 		this.memberEntireNo = memberEntireNo;
-	}
-	public String getReviewTitle() {
-		return reviewTitle;
-	}
-	public void setReviewTitle(String reviewTitle) {
-		this.reviewTitle = reviewTitle;
 	}
 	public String getReviewContent() {
 		return reviewContent;
