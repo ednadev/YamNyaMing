@@ -29,6 +29,25 @@
 			
 	</select>
 	
+		<select id="selectOneMember2" resultType="members">
+		select 
+			mb_entire_pk as memberEntireNo,
+			mb_id as memberId,
+			mb_pw as memberPw,
+			mb_name as memberName,
+			mb_nickname as memberNickName,
+			mb_gender as memberGender,
+			mb_birth as memberBirth,
+			mb_email as memberEmail,
+			mb_phone as memberPhone,
+			mb_regdate as memberRegDate,
+			mb_upload_photo_fk as memberUploadPhotoNo
+			from member_entire_tb
+			
+			where mb_id=#{memberId}
+			
+	</select>
+	
 	<select id="memberInfo" resultType="memberCheck">
 			select 
 			mb_entire_pk as memberEntireNo,

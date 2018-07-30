@@ -47,7 +47,6 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
@@ -91,10 +90,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				session.setAttribute("member", ym);
 				return "redirect:/index.jsp";
 			}else {
-				return "ynmMember/fail";
+				return "ynmMember/memberError/loginError";
 			}
 		}
 	}
+	@Override
+	@RequestMapping(value="/index.do")
+	public String indexPage(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession sessoin=request.getSession(false);
+		
+		return "redirect:/index.jsp";
+	}
+	
 
 	//로그아웃
 	@Override
@@ -109,12 +116,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	//아이디 찾기
 	@Override
-	@RequestMapping(value="/idSearch.do")
+	@RequestMapping(value="/memberIdSearch.do")
 	public ModelAndView idSearch(HttpServletRequest request, HttpServletResponse response) {
 		YNMMember vo=new YNMMember();
 		vo.setMemberEmail(request.getParameter("memberEmail"));
 		vo.setMemberName(request.getParameter("memberName"));
 		YNMMember ym=ynmMemberServiceImpl.idSearch(vo);
+		ModelAndView view=new ModelAndView();
+		if(ym!=null) {
 		String memberName=ym.getMemberName();
 		String resultMemberId=ym.getMemberId();
 		String []memberId2=resultMemberId.split("");
@@ -124,16 +133,17 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		ym.setMemberId(memberId);
 
-		ModelAndView view=new ModelAndView();
-		if(ym!=null) {
+		
+		
 
 			view.addObject("id",ym);
 			view.addObject("memberName",memberName);
-			view.setViewName("ynmMember/idsearch");
+			view.setViewName("ynmMember/idSearch");
 			return view;
 		}else
 		{
-			return null;
+			view.setViewName("ynmMember/memberError/SearchError");
+			return view;
 		}
 	}
 
@@ -151,8 +161,10 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			view.addObject("id",ym);
 			view.setViewName("ynmMember/pwSearch");
 			return view;
+		}else {
+			view.setViewName("ynmMember/memberError/SearchError");
+			return view;
 		}
-		return null;
 
 	}
 
@@ -274,9 +286,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMMember vo=new YNMMember();
 		session=request.getSession(false);
 		vo.setMemberId(((YNMMember)session.getAttribute("member")).getMemberId());
-		vo.setMemberPw(request.getParameter("memberPw"));
 
-		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
+		YNMMember ym=ynmMemberServiceImpl.selectOneMember2(vo);
 		String viewPath=ynmMemberServiceImpl.viewPath(ym.getMemberUploadPhotoNo());
 
 
@@ -442,18 +453,20 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException {
 
+		
+		
 		String path =context.getRealPath("\\resources\\image\\member\\"+((YNMMember)session.getAttribute("member")).getMemberId()+"\\review\\review");
 		String remakeName = "";
 		String reviewImgList="";
 		List<MultipartFile> files = multi.getFiles("reviewImgList");
 		File file = new File(path);
 
+		
 		if(!file.exists()){
 			file.mkdirs(); //디렉토리가 존재하지 않는다면 생성
 		}
-
-
-
+		if(files.get(0).getSize()>0) {
+			System.out.println("나 왔성");
 		for (int i = 0; i < files.size(); i++) {
 			remakeName=System.currentTimeMillis()+"_"+files.get(i).getOriginalFilename();
 			file = new File(path+remakeName);
@@ -474,9 +487,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			else reviewImgList+=ymupIndex.getUploadPhotoNo();
 
 		} 
-
-
-
+		}
+		
 		YNMStoreReview ysr=new YNMStoreReview();
 		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ysr.setReviewTitle(request.getParameter("reviewTitle"));
@@ -485,6 +497,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ysr.setReviewStar(request.getParameter("reviewStar"));
 		ysr.setReviewImgList(reviewImgList);
 		int result=ynmMemberServiceImpl.storeReviewInsert(ysr);
+		
+		
 		return null;
 	}
 

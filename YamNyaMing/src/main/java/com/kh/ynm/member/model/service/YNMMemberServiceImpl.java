@@ -24,7 +24,6 @@ import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
@@ -44,6 +43,12 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	//로그인 
 	public YNMMember selectOneMember(YNMMember vo) {
 		YNMMember ym=memberDAO.selectOneMember(sqlSession,vo);
+		return ym;
+		
+	}
+	//내정보 확인
+	public YNMMember selectOneMember2(YNMMember vo) {
+		YNMMember ym=memberDAO.selectOneMember2(sqlSession,vo);
 		return ym;
 		
 	}

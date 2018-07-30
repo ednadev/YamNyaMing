@@ -80,7 +80,7 @@ public class CommonControllerImpl implements CommonController {
 		//HTML 메일
 		htmlMail(email);
        
-		return null;
+		return "ynmMember/idSearch";
 	}
 	
 	@RequestMapping(value = "/pwSend.do", method = RequestMethod.POST)
@@ -100,7 +100,7 @@ public class CommonControllerImpl implements CommonController {
 		//HTML 메일
 		htmlMail(email);
        
-		return null;
+		return "ynmMember/pwSearch";
 	}
 	
 	public void htmlMail(String email)
