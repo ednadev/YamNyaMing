@@ -4,7 +4,7 @@
 
 
 <insert id="insertAdmin" parameterType="admins">
-insert into admin_info_tb values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade}) 
+insert into ADMIN_INFO_TB values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade}) 
 </insert>
 
 <select id="adminIdCheck" parameterType="admins" resultType="admins">
