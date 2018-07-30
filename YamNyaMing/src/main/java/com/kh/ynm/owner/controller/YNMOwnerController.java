@@ -49,4 +49,7 @@ public interface YNMOwnerController {
 	
 	// 가게 관리 페이지
 	public ModelAndView storeList(HttpSession session, HttpServletRequest request);
+
+	// 선택한 가게 인덱스를 가진 상세정보를 불러오기
+	public ModelAndView storeDetailInfo(HttpSession session, HttpServletRequest request);
 }

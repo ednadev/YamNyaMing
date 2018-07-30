@@ -342,18 +342,24 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping(value="/couponManage.do")
 	public ModelAndView couponShowList(HttpSession session,HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		YNMOwner owner = (YNMOwner)session.getAttribute("owner");
-		int currentPage = 1;
-		if(request.getParameter("currentPage")==null) currentPage=1;
-		else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-		
-		int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
-		int naviCountPerPage = 5; //2.
-		ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
-		CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
-		view.addObject("couponListData", couponList);
-		view.addObject("pageNaviData", pageNavi);
-		view.setViewName("ynmOwner/couponManagePage");
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
+			CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
+			view.addObject("couponListData", couponList);
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmOwner/couponManagePage");
+		}else
+		{
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
+		}
 		return view;
 	}
 	
@@ -410,9 +416,31 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
 			view.setViewName("ynmOwner/storeManagePage");
+		}else {
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
 	
+	@Override
+	@RequestMapping("/storeDetailInfo.do")
+	public ModelAndView storeDetailInfo(HttpSession session, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			
+		}
+		else
+		{
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
+		}
+		return view;
+	}
+	
+	@RequestMapping("/testDetailPage.do")
+	public String testDetailPage()
+	{
+		return "ynmMember/detailPage";
+	}
 
 }

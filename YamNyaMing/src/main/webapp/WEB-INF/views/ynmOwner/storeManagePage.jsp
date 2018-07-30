@@ -8,8 +8,9 @@
 <title>얌냐밍-가게 관리</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
@@ -36,8 +37,9 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
-	<section id="owner-coupon-section">
+	<section id="store-select-detail">
 		<div>
+			<a href="/testDetailPage.do">테스트용</a>
 			<c:if test="${storeTitleInfo!=null}">
 				<c:forEach var="storeList" items="${storeTitleInfo}">
 					<form action="/storeDetailInfo" method="post">
@@ -55,6 +57,8 @@
 					</form>
 				</c:forEach>
 			</c:if>
+			<hr style="clear:both;">
+			페이징
 			<c:if test="${pageNaviData!=null}">
 				<div id="pagingNumber">
 					<c:if test="${pageNaviData.startNavi!=1}">
@@ -86,6 +90,11 @@
 					</c:if>
 				</div>
 			</c:if>
+		</div>
+		<hr style="clear:both;">
+		가게 상세 정보
+		<div>
+		
 		</div>
 	</section>
 <!-- 	<footer id="owner-main-footer">

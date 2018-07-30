@@ -18,3 +18,8 @@ img{
 	object-fit:cover;
 	position:relative;
 }
+
+/*아래쪽 페이징*/
+#pagingNumber{
+	clear:both;
+}
