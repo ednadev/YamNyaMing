@@ -227,5 +227,15 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		sp.setRecordTotalCount(recordTotalCount);
 		
 		return sp;
+	}
+
+	public YNMSearch detailPage(SqlSessionTemplate sqlSession, YNMSearch vo) {
+		return sqlSession.selectOne("search.detailPage",vo);
+	}
+
+	public ArrayList<YNMSearch> detailPageImg(SqlSessionTemplate sqlSession, YNMSearch vo) {
+		List list = sqlSession.selectList("search.detailPageImg",vo);
+		return (ArrayList<YNMSearch>)list;
 	}	
+
 }

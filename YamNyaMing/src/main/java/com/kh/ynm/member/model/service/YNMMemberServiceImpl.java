@@ -223,6 +223,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return yms;
 	}
 
+	// 사용자 검색
 	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
 		int recordCountPerPage=9;
 		int naviCountPerPage=5;
@@ -249,6 +250,17 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 			
 		}
 		return qpd2;
-	}	
+	}
+	public YNMSearch detailPage(YNMSearch vo) {
+		YNMSearch store = memberDAO.detailPage(sqlSession, vo);
+		return store;
+	}
+	public ArrayList<YNMSearch> detailPageImg(YNMSearch vo) {
+		ArrayList<YNMSearch> storeImg = memberDAO.detailPageImg(sqlSession, vo);
+		return storeImg;
+	}		
+
+
+	
 	
 }

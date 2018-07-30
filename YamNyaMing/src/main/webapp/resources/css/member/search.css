@@ -171,44 +171,48 @@
 	margin-top:14px;
 	position:relative;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>form>input[type="submit"]{
 	background-color:rgba(0,0,0,0.4);
+	border:none;
 	position:relative;
 	width:304px;
 	height:304px;
+	display:block;
+	cursor:pointer;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div>.waiting{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(2){
 	position:absolute;
 	top:0;
 	right:0;
-	font-size:0.9em;
-	color:white;
 	margin:10px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div>.heart{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(2)>p{
+	color:white;
+	font-size:0.9em;
+}
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(2)>.heart{
 	background-image:url('../../image/member/search/heart.png');
 	background-size:cover;
 	background-position:center;
 	width:30px;
 	height:30px;
-	position:absolute;
-	margin:10px;
-	top:22px;
-	right:0;
+	float:right;
+	margin-top:10px;
+	cursor:pointer;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div>h5{
-	color:white;
-	position:absolute;
-	font-size:1em;
-	margin:10px;
-	bottom:22px;
-}
-#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div>.info{
-	color:white;
-	font-size:1em;
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(3){
 	position:absolute;
 	bottom:0;
+	left:0;
 	margin:10px;
+}
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(3)>h5{
+	color:white;
+	font-size:1em;
+}
+#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(3)>p{
+	color:white;
+	font-size:1em;	
 }
 #member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-text{
 	border:1px solid #ddd;
