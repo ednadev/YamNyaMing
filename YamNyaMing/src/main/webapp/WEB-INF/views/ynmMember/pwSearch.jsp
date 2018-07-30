@@ -19,7 +19,7 @@
 				   },
 			type : "post",
 			success : function(){	
-				console.log("이메일 결과");
+				window.close();
 			},
 			error : function(){
 				
@@ -27,8 +27,6 @@
 		});
 	});
 </script>
-
 <body>
-성공
 </body>
 </html>

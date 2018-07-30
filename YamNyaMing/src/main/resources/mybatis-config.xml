@@ -10,7 +10,6 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="reviewLikes"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberSetting" alias="settings"/>
-		<typeAlias type="com.kh.ynm.member.model.vo.pgTest" alias="test"/>
 		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>

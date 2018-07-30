@@ -23,6 +23,7 @@ public interface YNMMemberController {
 	
 	//회원 table
 	public String selectOneMember(HttpServletRequest request, HttpServletResponse response);// ȸ�� �˻�
+	public String indexPage(HttpServletRequest request, HttpServletResponse response);
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session);
 	public String signUpMember(MultipartFile file,HttpServletRequest request, HttpServletResponse response);// ȸ������
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response);// ȸ��Ż��
@@ -56,6 +57,7 @@ public interface YNMMemberController {
 	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//팔로우 table
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
 
 
 

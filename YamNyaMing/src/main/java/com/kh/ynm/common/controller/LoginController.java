@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -13,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.ynm.member.model.vo.YNMMemberNaverLogin;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class LoginController {
-
 	/* NaverLoginBO */
 	private NaverLoginBo naverLoginBo;
 	private String apiResult = null;
@@ -58,6 +62,31 @@ public class LoginController {
 	    apiResult = naverLoginBo.getUserProfile(oauthToken);
 	    System.out.println(apiResult);
 		model.addAttribute("result", apiResult);
+		YNMMemberNaverLogin ymnl=new YNMMemberNaverLogin();
+        
+        //JSON데이터를 넣어 JSON Object 로 만들어 준다.
+        try {
+        	
+        	JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(apiResult);
+			JSONObject responseInfoArray = (JSONObject) jsonObject.get("response");
+		
+			
+			ymnl.setNaverId((responseInfoArray.get("id")).toString());
+			ymnl.setNaverNickName((responseInfoArray.get("nickname")).toString());
+            ymnl.setNaverImage((responseInfoArray.get("profile_image")).toString());
+            ymnl.setAge((responseInfoArray.get("age")).toString());
+			ymnl.setGender((responseInfoArray.get("gender")).toString());
+			ymnl.setEmail((responseInfoArray.get("email")).toString());
+			ymnl.setName((responseInfoArray.get("name")).toString());
+			ymnl.setBirthday((responseInfoArray.get("birthday")).toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		session.setAttribute("naver", ymnl);
 
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "ynmMember/naverSuccess";

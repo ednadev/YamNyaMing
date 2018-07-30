@@ -23,7 +23,6 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.member.model.vo.pgTest;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Repository("ynmMemberDAO")
@@ -35,6 +34,10 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public YNMMember selectOneMember(SqlSessionTemplate sqlSession, YNMMember vo) {
 		return sqlSession.selectOne("member.selectOneMember",vo);
+	}
+	
+	public YNMMember selectOneMember2(SqlSessionTemplate sqlSession, YNMMember vo) {
+		return sqlSession.selectOne("member.selectOneMember2",vo);
 	}
 
 	public int signOutMember(SqlSessionTemplate sqlSession, YNMMember ym) {
