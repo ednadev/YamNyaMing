@@ -117,7 +117,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		{
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
-			 ModelAndView view = new ModelAndView();
+			ModelAndView view = new ModelAndView();
 			ArrayList<YNMOwner> list = ynmAdminServiceImpl.OwnerSearch(combo,keyword);
 			  if(list!=null)
 			  {
@@ -136,7 +136,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		{
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
-			 ModelAndView view = new ModelAndView();
+			ModelAndView view = new ModelAndView();
 			ArrayList<YNMMember> list= ynmAdminServiceImpl.MemberSearch(combo,keyword);
 			  if(list!=null)
 			  {
@@ -178,54 +178,53 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			
 			return "ynmAdmin/boardAdmin";	
 		}
-
+	
+		
 		@RequestMapping(value="/statAdmin.do")
 		public Object statAdmin(HttpSession session,AdminStatistics vo) 
 		{
-			AdminStatistics state =  ynmAdminServiceImpl.statAdmin();
+			vo =  ynmAdminServiceImpl.statAdmin();
 			ModelAndView view = new ModelAndView();
-			
-			
 			//오늘날짜
 			String today = new java.text.SimpleDateFormat("MM/dd").format(new java.util.Date());
-			state.setToday(today);
+			vo.setToday(today);
 			//어제날짜
 			Calendar c1 = new GregorianCalendar();
 			c1.add(Calendar.DATE, -1); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String yesterday = sdf.format(c1.getTime()); // String으로 저장
-			state.setYesterday(yesterday);
+			vo.setYesterday(yesterday);
 			//2일전
 			Calendar c2 = new GregorianCalendar();
 			c2.add(Calendar.DATE, -2); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String threeday = sdf1.format(c2.getTime()); // String으로 저장
-			state.setThreeday(threeday);
+			vo.setThreeday(threeday);
 			//3일전
 			Calendar c3 = new GregorianCalendar();
 			c3.add(Calendar.DATE, -3); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String fourday = sdf2.format(c3.getTime()); // String으로 저장
-			state.setFourday(fourday);
+			vo.setFourday(fourday);
 			//4일전
 			Calendar c4 = new GregorianCalendar();
 			c4.add(Calendar.DATE, -4); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf3 = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String fiveday = sdf3.format(c4.getTime()); // String으로 저장
-			state.setFiveday(fiveday);
+			vo.setFiveday(fiveday);
 			//5일전
 			Calendar c5 = new GregorianCalendar();
 			c5.add(Calendar.DATE, -5); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf4 = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String sixday = sdf4.format(c5.getTime()); // String으로 저장
-			state.setSixday(sixday);
+			vo.setSixday(sixday);
 			//6일전
 			Calendar c6 = new GregorianCalendar();
 			c6.add(Calendar.DATE, -6); // 오늘날짜로부터 -1
 			SimpleDateFormat sdf5 = new SimpleDateFormat("MM/dd"); // 날짜 포맷 
 			String sevenday = sdf5.format(c6.getTime()); // String으로 저장
-			state.setSevenday(sevenday);
-			view.addObject("list",state);
+			vo.setSevenday(sevenday);
+			view.addObject("list",vo);
 			view.setViewName("ynmAdmin/mainAdmin");
 			return view;
 		}
@@ -251,13 +250,10 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			}
 		}
 		@RequestMapping(value="/storeList.do")
-		public String storeList(HttpSession session,YNMStoreInfo vo)
+		public ArrayList<YNMStoreInfo> storeList(HttpSession session,YNMStoreInfo vo)
 		{
 			ArrayList<YNMStoreInfo> list = ynmAdminServiceImpl.storeList();
-
-	        	String data="1";
-	            return data; 
-	        
+		    return list; 
 		}
 		
 		

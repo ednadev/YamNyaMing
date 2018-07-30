@@ -38,8 +38,6 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 
 	public ArrayList<YNMOwner> OwnerSearch(SqlSessionTemplate sqlSession,String combo,String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("Owner map�ֱ���:"+combo);
-		System.out.println("Owner map�ֱ���:"+keyword);
 		map.put("combo", combo);
 		map.put("keyword", keyword);
 		List list = sqlSession.selectList("admin.ownerSearch",map);

@@ -48,71 +48,134 @@
 			<tbody>
 			<tr>
 				<td>${list.sevenday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.sevendaynewowner}+${list.sevendaynewmember}</td>
-				<td>${list.deleteowsevenday}+${list.deletememsevenday}</td>
+				<td>${list.memall6day
+				+list.owall6day
+				-list.deleteowsevenday
+				-list.deletememsevenday}</td>
+				<td>${list.sevendaynewowner+list.sevendaynewmember}</td>
+				<td>${list.deleteowsevenday+list.deletememsevenday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.sixday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.sixdaynewowner}+${list.sixdaynewmember}</td>
-				<td>${list.deleteowsixday}+${list.deletememsixday}</td>
+				<td>${list.memall5day
+				+list.owall5day
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday}</td>
+				<td>${list.sixdaynewowner+list.sixdaynewmember}</td>
+				<td>${list.deleteowsixday+list.deletememsixday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.fiveday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.fivedaynewowner}+${list.fivedaynewmember}</td>
-				<td>${list.deleteowfiveday}+${list.deletememfiveday}</td>
+				<td>${list.memall4day
+				+list.owall4day
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday
+				-list.deleteowfiveday
+				-list.deletememfiveday}</td>
+				<td>${list.fivedaynewowner+list.fivedaynewmember}</td>
+				<td>${list.deleteowfiveday+list.deletememfiveday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.fourday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.fourdaynewowner}+${list.fourdaynewmember}</td>
-				<td>${list.deleteowfourday}+${list.deletememfourday}</td>
+				<td>${list.memall3day
+				+list.owall3day
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday
+				-list.deleteowfiveday
+				-list.deletememfiveday
+				-list.deleteowfourday
+				-list.deletememfourday}</td>
+				<td>${list.fourdaynewowner+list.fourdaynewmember}</td>
+				<td>${list.deleteowfourday+list.deletememfourday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.threeday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.threedaynewmember}+${list.threedaynewowner}</td>
-				<td>${list.deleteowthreeday}+${list.deletememthreeday}</td>
+				<td>${list.memall2day
+				+list.owall2day
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday
+				-list.deleteowfiveday
+				-list.deletememfiveday
+				-list.deleteowfourday
+				-list.deletememfourday
+				-list.deleteowthreeday
+				-list.deletememthreeday}</td>
+				<td>${list.threedaynewmember+list.threedaynewowner}</td>
+				<td>${list.deleteowthreeday+list.deletememthreeday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.yesterday}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.yesterdaynewowner}+${list.yesternewmember}</td>
-				<td>${list.deleteowyestermemday}+${list.deleteyestermemday}</td>
+				<td>${list.memallyesterday
+				+list.owallyesterday
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday
+				-list.deleteowfiveday
+				-list.deletememfiveday
+				-list.deleteowfourday
+				-list.deletememfourday
+				-list.deleteowthreeday
+				-list.deletememthreeday
+				-list.deleteowyestermemday
+				-list.deleteyestermemday}</td>
+				<td>${list.yesterdaynewowner+list.yesternewmember}</td>
+				<td>${list.deleteowyestermemday+list.deleteyestermemday}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>${list.today}</td>
-				<td>${list.memberall}+${list.ownerall}</td>
-				<td>${list.todaynewowner}+${list.todaynewmember}</td>
-				<td>${list.deleteowtoday}+${list.deletememtoday}</td>
+				<td>${list.memalltoday
+				+list.owalltoday
+				-list.deleteowsevenday
+				-list.deletememsevenday
+				-list.deleteowsixday
+				-list.deletememsixday
+				-list.deleteowfiveday
+				-list.deletememfiveday
+				-list.deleteowfourday
+				-list.deletememfourday
+				-list.deleteowthreeday
+				-list.deletememthreeday
+				-list.deleteowyestermemday
+				-list.deleteyestermemday
+				-list.deleteowtoday
+				-list.deletememtoday}</td>
+				<td>${list.todaynewowner+list.todaynewmember}</td>
+				<td>${list.deleteowtoday+list.deletememtoday}</td>
 				<td>0</td>
 			</tr>				
 			</tbody>
 			<tfoot>
 			<tr>
 				<td colspan="2">7일합계</td>
-				<td>${list.member7day}+${list.owner7day}</td>
-				<td>${list.deletemem7day}+${list.deleteow7day}</td>
+				<td>${list.member7day+list.owner7day}</td>
+				<td>${list.deletemem7day+list.deleteow7day}</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td colspan="2">15일합계</td>
-				<td>${list.member15day}+${list.owner15day}</td>
-				<td>${list.deletemem15day}+${list.deleteow15day}</td>
+				<td>${list.member15day+list.owner15day}</td>
+				<td>${list.deletemem15day+list.deleteow15day}</td>
 				<td>0</td>
 			</tr>	
 			<tr>
 				<td colspan="2">30일합계</td>
-				<td>${list.member30day}+${list.owner30day}</td>
-				<td>${list.deletemem30day}+${list.deleteow30day}</td>
+				<td>${list.member30day+list.owner30day}</td>
+				<td>${list.deletemem30day+list.deleteow30day}</td>
 				<td>0</td>
 			</tr>				
 			</tfoot>
@@ -120,7 +183,7 @@
 		</div>
 		<div id="main-section-owner">
 			<h4>음식점 현황 (Top10)</h4>
-			<table border="1" class="sortable">
+			<table border="1" class="sortable" id="tablList" class="tablList" name="tablList">
 			<thead>
 			<tr>
 				<th>상호명</th><th class="sorting">예약수</th><th class="sorting">평점</th><th class="sorting">추천수</th><th class="sorting">즐겨찾기</th>
@@ -128,9 +191,7 @@
 			</thead>
 			<tbody>
 			
-			<tr>
-				<td>피에르 가니에르 서울</td><td>41</td><td>4.5</td><td>219</td><td>68</td>
-			</tr>																									
+																									
 			</tbody>
 			</table>
 		</div>
@@ -230,15 +291,17 @@
 				var japan = ${list.japan}
 				var usa = ${list.usa}
 				var dessert = ${list.dessert}
+				var sul = ${list.sul}
+				var gita = ${list.gita}
 				
 				new Chart(document.getElementById("store-chart"), {
 				    type: 'bar',
 				    data: {
-				      labels: ["한식","중식","일식","양식","디저트"],
+				      labels: ["한식","중식","일식","양식","디저트","술집","기타"],
 				      datasets: [{
 				        label: "업종별",
-				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [korea,china,japan,usa,dessert]
+				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5","yellow","red"],
+				        data: [korea,china,japan,usa,dessert,sul,gita]
 				      }]
 				    },
 				    options: {

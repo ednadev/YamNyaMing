@@ -12,6 +12,5 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>		
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
-		
 	</typeAliases>
 </configuration>

@@ -17,7 +17,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 </head>
 <body>
 <header id="admin-login-header">
@@ -30,7 +30,7 @@
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-		<li><a href="/adminInfo.do">관리자 정보</a></li>
+			<li><a href="/adminInfo.do">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>

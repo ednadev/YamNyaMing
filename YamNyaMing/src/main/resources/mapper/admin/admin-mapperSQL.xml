@@ -109,6 +109,22 @@ SELECT
     (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='일식')as japan,
     (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='양식')as usa,
     (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='디저트')as dessert,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='술집')as sul,
+    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='기타')as gita,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-6) as owall6day,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-6) as memall6day,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-5) as owall5day,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-5) as memall5day,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-4) as owall4day,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-4) as memall4day,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-3) as owall3day,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-3) as memall3day,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-2) as owall2day,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-2) as memall2day,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-1) as owallyesterday,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-1) as memallyesterday,
+    (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate) as owalltoday,
+    (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate) as memalltoday,
     (select COUNT(*) FROM OWNER_ENTIRE_TB) as ownerall,
     (SELECT COUNT(*) FROM member_entire_tb) as memberall,
     (select count(*) from OWNER_ENTIRE_TB where to_char(OW_REGDATE,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD'))as todaynewowner,
@@ -127,10 +143,10 @@ SELECT
     (select count(*) from member_entire_Tb where to_char(MB_REGDATE,'YYMMDD') = TO_CHAR(SYSDATE-6,'YYMMDD'))as sevendaynewmember,
     (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-7  AND sysdate)as member7day,
     (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-15 AND sysdate)as member15day,
-    (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-13 AND sysdate)as member30day,
+    (select count(*) from MEMBER_entire_tb WHERE MB_REGDATE between sysdate-30 AND sysdate)as member30day,
     (select count(*) from OWNER_ENTIRE_TB WHERE OW_REGDATE between sysdate-7  AND sysdate)as owner7day,
     (select count(*) from OWNER_ENTIRE_TB WHERE OW_REGDATE between sysdate-15 AND sysdate)as owner15day,
-    (select count(*) from OWNER_ENTIRE_TB WHERE OW_REGDATE between sysdate-13 AND sysdate)as owner30day,
+    (select count(*) from OWNER_ENTIRE_TB WHERE OW_REGDATE between sysdate-30 AND sysdate)as owner30day,
     (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate,'YYMMDD'))AS deletememtoday,
     (select count(*) from owner_signout_tb where (to_char(ow_signout_date,'YYMMDD')) = to_char(sysdate,'YYMMDD'))AS deleteowtoday,    
     (select count(*) from member_signout_tb where (to_char(mb_signout_date,'YYMMDD')) = to_char(sysdate-1,'YYMMDD'))AS deleteyestermemday,
@@ -154,5 +170,25 @@ SELECT
 FROM DUAL
 </select>
 
+<select id="storeList" resultType="com.kh.ynm.admin.model.vo.YNMStoreInfo">
+select 
+	   ow_store_name as name,
+       book as book,
+       grade as grade,
+       jjim as jjim,
+       favorite as favorite 
+       from owner_store_info_tb,
+(select                         
+count(b.mb_entire_fk) as book,
+avg(r.ow_store_review_star) as grade,
+count(r.ow_store_jjim_check) as jjim,
+count(f.mb_favorite_pk) as favorite
+from owner_store_info_tb o
+left join member_book_tb b on (o.ow_store_info_pk = b.ow_entire_fk) 
+left join member_store_review_tb r on (o.ow_store_info_pk = r.ow_store_info_fk)
+left join member_favorite_tb f on (o.ow_store_info_pk = f.ow_store_info_fk)
+where r.ow_store_jjim_check='J'
+order by b.mb_entire_fk DESC)
+</select>
 
 </mapper>
