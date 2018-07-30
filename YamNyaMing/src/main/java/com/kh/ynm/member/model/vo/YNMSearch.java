@@ -8,11 +8,22 @@ public class YNMSearch {
 	private String owPhotoRoute;
 	private String owStoreComment;
 	private String owStoreHeadPhoto;
+	private String owStoreTel;
+	private String owStoreUrl;
+	private String owStoreAddr;
+	private String owStoreWorkingTime;
+	private String owBudget;
+	private String storeCateMainName;
+	private String owStoreTableInfo;
+	private String owSubInfo;
+	private String owDrinkListInfo;
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
 	public YNMSearch(String owStoreName, String owStoreAddrFirst, String owStoreAddrFinal, String storeCateDetailName,
-			String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto) {
+			String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto, String owStoreTel, String owStoreUrl,
+			String owStoreAddr, String owStoreWorkingTime, String owBudget, String storeCateMainName,
+			String owStoreTableInfo, String owSubInfo, String owDrinkListInfo) {
 		this.owStoreName = owStoreName;
 		this.owStoreAddrFirst = owStoreAddrFirst;
 		this.owStoreAddrFinal = owStoreAddrFinal;
@@ -20,6 +31,15 @@ public class YNMSearch {
 		this.owPhotoRoute = owPhotoRoute;
 		this.owStoreComment = owStoreComment;
 		this.owStoreHeadPhoto = owStoreHeadPhoto;
+		this.owStoreTel = owStoreTel;
+		this.owStoreUrl = owStoreUrl;
+		this.owStoreAddr = owStoreAddr;
+		this.owStoreWorkingTime = owStoreWorkingTime;
+		this.owBudget = owBudget;
+		this.storeCateMainName = storeCateMainName;
+		this.owStoreTableInfo = owStoreTableInfo;
+		this.owSubInfo = owSubInfo;
+		this.owDrinkListInfo = owDrinkListInfo;
 	}
 	public String getOwStoreName() {
 		return owStoreName;
@@ -63,6 +83,58 @@ public class YNMSearch {
 	public void setOwStoreHeadPhoto(String owStoreHeadPhoto) {
 		this.owStoreHeadPhoto = owStoreHeadPhoto;
 	}
-
-
+	public String getOwStoreTel() {
+		return owStoreTel;
+	}
+	public void setOwStoreTel(String owStoreTel) {
+		this.owStoreTel = owStoreTel;
+	}
+	public String getOwStoreUrl() {
+		return owStoreUrl;
+	}
+	public void setOwStoreUrl(String owStoreUrl) {
+		this.owStoreUrl = owStoreUrl;
+	}
+	public String getOwStoreAddr() {
+		return owStoreAddr;
+	}
+	public void setOwStoreAddr(String owStoreAddr) {
+		this.owStoreAddr = owStoreAddr;
+	}
+	public String getOwStoreWorkingTime() {
+		return owStoreWorkingTime;
+	}
+	public void setOwStoreWorkingTime(String owStoreWorkingTime) {
+		this.owStoreWorkingTime = owStoreWorkingTime;
+	}
+	public String getOwBudget() {
+		return owBudget;
+	}
+	public void setOwBudget(String owBudget) {
+		this.owBudget = owBudget;
+	}
+	public String getStoreCateMainName() {
+		return storeCateMainName;
+	}
+	public void setStoreCateMainName(String storeCateMainName) {
+		this.storeCateMainName = storeCateMainName;
+	}
+	public String getOwStoreTableInfo() {
+		return owStoreTableInfo;
+	}
+	public void setOwStoreTableInfo(String owStoreTableInfo) {
+		this.owStoreTableInfo = owStoreTableInfo;
+	}
+	public String getOwSubInfo() {
+		return owSubInfo;
+	}
+	public void setOwSubInfo(String owSubInfo) {
+		this.owSubInfo = owSubInfo;
+	}
+	public String getOwDrinkListInfo() {
+		return owDrinkListInfo;
+	}
+	public void setOwDrinkListInfo(String owDrinkListInfo) {
+		this.owDrinkListInfo = owDrinkListInfo;
+	}
 }

@@ -740,9 +740,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMSearch vo = new YNMSearch();
 		vo.setOwStoreName(request.getParameter("owStoreName"));
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
+		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
+		int size=storeImg.size();
 		HttpSession session = request.getSession();
-		if(store!=null) {
+		if(store!=null && storeImg!=null) {
 			session.setAttribute("store", store);
+			session.setAttribute("size", size);
+			session.setAttribute("storeImg", storeImg);
 			return "ynmMember/detailPage";
 		}else {
 			return null;

@@ -17,7 +17,8 @@
 		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
 		and info.ow_store_info_pk = detail.ow_store_index)
 		where ow_store_info_fk between #{start} and #{end}
-		order by ow_store_info_pk
+        and ow_photo_type_fk = 3
+		order by ow_store_info_pk 
 	</select>
 	
 	<select id="searchCount" parameterType="search" resultType="int"> 
@@ -32,13 +33,31 @@
 		    ow_photo_route as owPhotoRoute,
 		    store_cate_detail_name as storeCateDetailName,
 		    ow_store_comment as owStoreComment,
-		    ow_store_head_photo as owStoreHeadPhoto
-		from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, owner_store_detail_tb detail
+		    ow_store_head_photo as owStoreHeadPhoto,
+		    ow_store_tel as owStoreTel,
+		    ow_store_url as owStoreUrl,
+		    ow_store_addr as owStoreAddr,
+		    substr(ow_store_working_time,4,13) as owStoreWorkingTime,
+		    ow_budget as owBudget,
+		    store_cate_main_name as storeCateMainName,
+		    ow_store_table_info as owStoreTableInfo,
+		    ow_sub_info as owSubInfo,
+		    ow_drink_list_info as owDrinkListInfo
+		from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
+				owner_store_detail_tb detail, store_category_main_tb maincate
 		where photo.ow_store_info_fk = info.ow_store_info_pk
 		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
 		and info.ow_store_info_pk = detail.ow_store_index
+		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
+		and ow_photo_type_fk = 3
 		and ow_store_name = #{owStoreName}
 	</select>
+	
+	<select id="detailPageImg" resultType="search">
+		select ow_photo_route as owPhotoRoute from owner_store_photo_tb, owner_store_info_tb
+		where ow_store_info_fk = ow_store_info_pk
+		and ow_store_name = #{owStoreName}
+	</select>	
 	
 	
 </mapper>

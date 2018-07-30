@@ -363,12 +363,14 @@
 						<input type="hidden" name="owStoreName" value="${search.owStoreName}">
 						<input type="submit" value="">
 					</form>
-					<a>
-						<p class="waiting">대기인원 0 추천 0</p>
+					<div>
+						<p>대기인원 0 추천 0</p>
 						<div class="heart"></div>
+					</div>
+					<div>
 						<h5>${search.owStoreName }</h5>
-						<p class="info">${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
-					</a>
+						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
+					</div>
 				</div>
 				<div class="search-result-text">
 					<div>
