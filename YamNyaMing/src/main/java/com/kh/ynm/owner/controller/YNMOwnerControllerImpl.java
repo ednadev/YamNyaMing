@@ -32,6 +32,8 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -326,19 +328,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			if(result>0)
 			{
 				return couponShowList(session,request);
-				/*int currentPage = 1;
-				if(request.getParameter("currentPage")==null) currentPage=1;
-				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-				
-				int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
-				int naviCountPerPage = 5; //2.
-				ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
-				CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
-				
-				view.addObject("couponListData", couponList);
-				view.addObject("pageNaviData", pageNavi);
-				view.setViewName("ynmOwner/couponManagePage");
-				return view;*/
 			}
 			else {
 		
@@ -404,8 +393,9 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 
 	@Override
-	@RequestMapping("/storeList.do")
+	@RequestMapping("/storeManage.do")
 	public ModelAndView storeList(HttpSession session, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			int ownerIndex = owner.getOwEntirePk();
@@ -415,10 +405,13 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
-			ArrayList<YNMStoreInfo> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
-			
+			ArrayList<StoreTitleData> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
+			StorePageData spd = ynmOwnerServiceImpl.ynmStoreNavi(currentPage,recordCountPerPage,naviCountPerPage,ownerIndex);
+			view.addObject("storeTitleInfo", storeInfoList);
+			view.addObject("pageNaviData",spd);
+			view.setViewName("ynmOwner/storeManagePage");
 		}
-		return null;
+		return view;
 	}
 	
 

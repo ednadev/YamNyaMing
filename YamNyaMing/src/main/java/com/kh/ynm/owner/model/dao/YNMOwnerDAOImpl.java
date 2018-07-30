@@ -11,6 +11,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -83,13 +84,19 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		List list= sqlSession.selectList("stores.couponList", couponPageData);
 		return (ArrayList<CouponEnroll>)list;
 	}
-
+	
+	@Override
 	public int couponGetTotal(SqlSessionTemplate sqlSession, CouponPageData couponPageData) {
 		return sqlSession.selectOne("stores.couponTotal", couponPageData);
 	}
 
-	public ArrayList<YNMStoreInfo> storeListPaging(SqlSessionTemplate sqlSession, StorePageData storePageData) {
+	@Override
+	public ArrayList<StoreTitleData> storeListPaging(SqlSessionTemplate sqlSession, StorePageData storePageData) {
 		List list= sqlSession.selectList("stores.storeTitleList", storePageData);
-		return  (ArrayList<YNMStoreInfo>)list;
+		return  (ArrayList<StoreTitleData>)list;
+	}
+
+	public int storeEnrollList(SqlSessionTemplate sqlSession, int ownerIndex) {
+		return sqlSession.selectOne("stores.storeEnrollNavi", ownerIndex);
 	}
 }

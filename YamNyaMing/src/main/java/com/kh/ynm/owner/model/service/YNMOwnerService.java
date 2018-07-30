@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -52,5 +54,10 @@ public interface YNMOwnerService {
 	// 쿠폰 리스트 가져오기
 	public ArrayList<CouponEnroll> couponListPaging(int currentPage,int recordCountPerPage,int owEntirePk, int storeEntireFk) ;
 
+	// 내가 등록한 가게 리스트
+	public ArrayList<StoreTitleData> ynmStoreInfoList(int ownerIndex, int currentPage, int recordCountPerPage);
+	
+	// 가게 선택 네비게이션
+	public StorePageData ynmStoreNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int ownerIndex);
 	
 }

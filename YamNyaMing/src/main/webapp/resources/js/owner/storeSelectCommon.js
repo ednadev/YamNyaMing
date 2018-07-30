@@ -1,0 +1,7 @@
+/**
+ * 
+ */
+function selectStoreDetailInfo(storeIndex)
+{
+	
+}

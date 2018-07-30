@@ -8,6 +8,8 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -25,4 +27,7 @@ public interface YNMOwnerDAO {
 	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll);
 	public int ynmOwnerInfoUpdate(SqlSessionTemplate sqlSession, YNMOwner owner);
 	public ArrayList<CouponEnroll> couponListPaging(SqlSessionTemplate sqlSession, CouponPageData couponPageData);
+	public int couponGetTotal(SqlSessionTemplate sqlSession, CouponPageData couponPageData);
+	public ArrayList<StoreTitleData> storeListPaging(SqlSessionTemplate sqlSession, StorePageData storePageData);
+	public int storeEnrollList(SqlSessionTemplate sqlSession, int ownerIndex);
 }

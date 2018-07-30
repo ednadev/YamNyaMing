@@ -14,6 +14,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreDetailInfo;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -159,7 +160,7 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return couponPageDataResult;
 	}
 
-	public ArrayList<YNMStoreInfo> ynmStoreInfoList(int ownerIndex, int currentPage, int recordCountPerPage) {
+	public ArrayList<StoreTitleData> ynmStoreInfoList(int ownerIndex, int currentPage, int recordCountPerPage) {
 		//시작 페이지 계산
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
@@ -168,6 +169,44 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		storePageData.setEndPage(end);
 		storePageData.setOwEntirePk(ownerIndex);
 		return ynmOwnerDAO.storeListPaging(sqlSession,storePageData);
+	}
+
+	public StorePageData ynmStoreNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int ownerIndex) {
+		
+		int recordTotalCount = ynmOwnerDAO.storeEnrollList(sqlSession, ownerIndex);
+		
+		int pageTotalCount = 0;
+
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		StorePageData storePageData = new StorePageData();
+		storePageData.setCurrentPage(currentPage);
+		storePageData.setStartNavi(startNavi);
+		storePageData.setEndNavi(endNavi);
+		storePageData.setPageTotalCount(pageTotalCount);
+		storePageData.setRecordTotalCount(recordTotalCount);
+		return storePageData;
 	}
 
 	

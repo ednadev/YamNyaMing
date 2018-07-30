@@ -20,7 +20,7 @@ public interface YNMOwnerViewController {
 	public String ownerInfoPage();
 	
 	// 마이페이지 - 음식점관리
-	public String storeMngPage();
+//	public String storeMngPage();
 	
 	// 마이페이지 - 예약 관리
 	public String bookMngPage();

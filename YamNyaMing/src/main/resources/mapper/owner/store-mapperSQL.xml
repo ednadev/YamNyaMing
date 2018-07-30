@@ -42,7 +42,7 @@
  			   ow_coupon_count as owCouponCount,
  			   ow_coupon_start_date as owCouponStartDate,
  			   ow_coupon_expire_date as owCouponExpireDate,
- 			   ow_coupon_detail as owCouponDetail 
+ 			   ow_coupon_detail as owCouponDetail
  		from ( select owner_coupon_info_tb.*,row_number() over(order by OW_COUPON_INFO_PK desc) as num 
  		from owner_coupon_info_tb where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk})
 	 	where num between #{startPage} and #{endPage}
@@ -53,10 +53,23 @@
  	</select>
  	
  	<select id="storeTitleList" parameterType="storePageData" resultType="storeTitleData">
- 		select ow_store_info_pk, ow_entire_fk, ow_store_name,ow_store_tip,ow_photo_route, ow_remake_name
+ 		select 	ow_store_info_pk as owStoreInfoPk, 
+ 				ow_entire_fk as owEntireFk, 
+				ow_store_name as owStoreName,
+				ow_store_tip as owStoreTip,
+				ow_photo_route||'\'||ow_remake_name as owPhotoRoute,
+			    (select avg(OW_STORE_REVIEW_STAR) from member_store_review_tb
+            	where OW_ENTIRE_FK=ow_store_info_pk) as storeStarPoint 
 			from owner_store_info_tb,
 			(select * from owner_store_detail_tb, owner_store_photo_tb
 			where OW_STORE_PHOTO_PK = substr(ow_store_head_photo,1,1))
-			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{storePageData.owEntirePk};
+			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{owEntirePk}
+ 	</select>
+ 	<select id="storeEnrollNavi" resultType="int">
+ 		select count(*)
+			from owner_store_info_tb,
+			(select * from owner_store_detail_tb, owner_store_photo_tb
+			where OW_STORE_PHOTO_PK = substr(ow_store_head_photo,1,1))
+			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{ownerIndex}
  	</select>
 </mapper>

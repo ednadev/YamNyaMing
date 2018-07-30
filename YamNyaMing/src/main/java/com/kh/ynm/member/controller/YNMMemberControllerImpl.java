@@ -220,14 +220,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			int result2=ynmMemberServiceImpl.signUpMember(ym);
 
 			//회원가입 성공시
-			return "ynmMember/index";
+			return "redirect:/";
 		}
 		else {
 			int memberUploadPhotoNo=1;
 			ym.setMemberUploadPhotoNo(memberUploadPhotoNo);
 
 			int result=ynmMemberServiceImpl.signUpMember(ym);
-			return "ynmMember/index";
+			return "redirect:/";
 		}
 	}
 	//회원탈퇴
