@@ -10,13 +10,17 @@ public class OwnerUploadPhoto {
 	private String remakeName;
 	private String photoRoute;
 	private Date owPhotoUploadDate;
-	
+	private String owPhotoViewRoute;
+	private int storeDetailPk;
+	private String headStoreList;
 	public OwnerUploadPhoto() {
 		
 	}
 	
+	
 	public OwnerUploadPhoto(int owStorePhotoPk, int owPhotoTypeFk, int storeInfoFk, String originName,
-			String remakeName, String photoRoute, Date owPhotoUploadDate) {
+			String remakeName, String photoRoute, Date owPhotoUploadDate, String owPhotoViewRoute, int storeDetailPk,
+			String headStoreList) {
 		super();
 		this.owStorePhotoPk = owStorePhotoPk;
 		this.owPhotoTypeFk = owPhotoTypeFk;
@@ -25,6 +29,29 @@ public class OwnerUploadPhoto {
 		this.remakeName = remakeName;
 		this.photoRoute = photoRoute;
 		this.owPhotoUploadDate = owPhotoUploadDate;
+		this.owPhotoViewRoute = owPhotoViewRoute;
+		this.storeDetailPk = storeDetailPk;
+		this.headStoreList = headStoreList;
+	}
+
+	
+	public int getStoreDetailPk() {
+		return storeDetailPk;
+	}
+
+
+	public void setStoreDetailPk(int storeDetailPk) {
+		this.storeDetailPk = storeDetailPk;
+	}
+
+
+	public String getHeadStoreList() {
+		return headStoreList;
+	}
+
+
+	public void setHeadStoreList(String headStoreList) {
+		this.headStoreList = headStoreList;
 	}
 
 
@@ -69,6 +96,22 @@ public class OwnerUploadPhoto {
 	}
 	public void setOwPhotoUploadDate(Date owPhotoUploadDate) {
 		this.owPhotoUploadDate = owPhotoUploadDate;
+	}
+	public String getOwPhotoViewRoute() {
+		return owPhotoViewRoute;
+	}
+
+
+	public void setOwPhotoViewRoute(String owPhotoViewRoute) {
+		String[] arrTest1 = owPhotoViewRoute.split("\\\\");
+		StringBuilder sb = new StringBuilder();
+		boolean chk = false;
+		for(int i = 0; i<arrTest1.length;i++)
+		{
+			if(arrTest1[i].equals("resources")) chk = true;
+			if(chk) sb.append("\\"+arrTest1[i]);  
+		}
+		this.owPhotoViewRoute = sb.toString();
 	}
 	
 	

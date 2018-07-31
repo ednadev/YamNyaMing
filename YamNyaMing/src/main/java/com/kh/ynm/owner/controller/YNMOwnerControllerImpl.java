@@ -399,9 +399,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		else return "ynmOwner/ynmOwnerError/ownerInfoUpdateFail";
 	}
 
-	@Override
-	@RequestMapping("/storeManage.do")
-	public ModelAndView storeList(HttpSession session, HttpServletRequest request) {
+	public ModelAndView storeManageEnrollList(HttpSession session, HttpServletRequest request)
+	{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
@@ -416,7 +415,28 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			StorePageData spd = ynmOwnerServiceImpl.ynmStoreNavi(currentPage,recordCountPerPage,naviCountPerPage,ownerIndex);
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
-			
+		}
+		return view;
+	}
+	
+	@Override
+	@RequestMapping("/storeManage.do")
+	public ModelAndView storeList(HttpSession session, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			int ownerIndex = owner.getOwEntirePk();
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+
+			System.out.println("전체 내 데이터" +ownerIndex );
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<StoreTitleData> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
+			StorePageData spd = ynmOwnerServiceImpl.ynmStoreNavi(currentPage,recordCountPerPage,naviCountPerPage,ownerIndex);
+			view.addObject("storeTitleInfo", storeInfoList);
+			view.addObject("pageNaviData",spd);
 			if(storeInfoList.size()>0) {
 				if(request.getParameter("storeIndex")==null) {
 					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
@@ -425,7 +445,11 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
 				}else
 				{
-					view.addObject("currentStoreIndex", Integer.parseInt(request.getParameter("storeIndex")));
+					int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+					System.out.println("머임??");
+					view.addObject("currentStoreIndex", storeIndex);
+					StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
+					view.addObject("storeInfoPageData", storeInfoPD);
 				}
 			}
 			view.setViewName("ynmOwner/storeManagePage");
@@ -490,9 +514,86 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 	
 	@Override
-	@RequestMapping("/storePageTypeLoad")
+	@RequestMapping("/storePageTypeLoad.do")
 	public ModelAndView storePageTypeLoad(HttpSession session,  HttpServletRequest request)
 	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			String storeTapType = request.getParameter("storeTapType");
+			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			System.out.println("현재 가게 인덱스 " + storeIndex);
+			int tapOrder = 0;
+			
+			view = storeManageEnrollList(session, request);
+			if(storeTapType.equals("정보")){
+				tapOrder = 0;
+				view = storeDetailInfo(session,request);
+			}else if(storeTapType.equals("포토")) {
+				tapOrder = 1;
+				OwnerUploadPhoto paramVo = new OwnerUploadPhoto();
+				paramVo.setOwPhotoTypeFk(3);
+				paramVo.setStoreInfoFk(storeIndex);
+				ArrayList<OwnerUploadPhoto> photoList = ynmOwnerServiceImpl.headPhotoList(paramVo);
+				view.addObject("headPhotoList", photoList);
+			}else if(storeTapType.equals("리뷰")) {
+				tapOrder = 2;
+			}else if(storeTapType.equals("메뉴")) {
+				tapOrder = 3;
+			}else if(storeTapType.equals("지도")) {
+				tapOrder = 4;
+			}
+			
+			view.addObject("currentStoreIndex",storeIndex);
+			view.addObject("storeTapType", tapOrder);
+			view.setViewName("ynmOwner/storeManagePage");
+		}else {
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
+		}
+		return view;
+	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping("/storeHeadPhotoDelete.do")
+	public String storeHeadPhotoDelete(HttpSession session, HttpServletRequest request)
+	{
+		if(session.getAttribute("owner")!=null) {
+			OwnerUploadPhoto paramVo = new OwnerUploadPhoto();
+			paramVo.setOwStorePhotoPk(Integer.parseInt(request.getParameter("photoIndex")));
+			paramVo.setPhotoRoute(request.getParameter("photoRoute"));
+			paramVo.setRemakeName(request.getParameter("photoRemakeName"));
+			paramVo.setStoreDetailPk(Integer.parseInt(request.getParameter("detailPk")));
+			int result = ynmOwnerServiceImpl.storeHeadPhotoDelete(paramVo);
+			if(result>0)
+			{
+				String [] headPhotoArr = request.getParameter("headPhotoList").split(",");
+				String updateHeadPhotoArr = "";
+				for(int i = 0; i<headPhotoArr.length;i++)
+				{
+					if(!headPhotoArr[i].equals(request.getParameter("photoIndex"))) {
+						updateHeadPhotoArr += headPhotoArr[i];
+						if(i<headPhotoArr.length-1) updateHeadPhotoArr +=",";
+					}
+				}
+				paramVo.setHeadStoreList(updateHeadPhotoArr);
+				
+				int detailInfoUpdate = ynmOwnerServiceImpl.storeDetailInfoHeadPhotoUpdate(paramVo);
+				File file = new File(paramVo.getPhotoRoute() +"/" + paramVo.getRemakeName());
+				if(file.exists())
+				{
+					file.delete();
+					return "delSuccess";
+				}else {
+					return "delFail";
+				}
+			}
+			else {
+				return "dbDelFail";
+			}
+		}else
+		{
+			
+		}
 		return null;
 	}
 

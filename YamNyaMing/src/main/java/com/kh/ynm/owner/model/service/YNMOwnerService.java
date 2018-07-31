@@ -69,5 +69,14 @@ public interface YNMOwnerService {
 
 	// 가게 상세 정보 수정하긴
 	public int storeInfoDetailEdit(StoreInfoPageData storeInfoPD);
+
+	// 가게 대표 이미지 불러오기
+	public ArrayList<OwnerUploadPhoto> headPhotoList(OwnerUploadPhoto paramVo);
+
+	// 가게 대표이미지 삭제
+	public int storeHeadPhotoDelete(OwnerUploadPhoto paramVo);
+
+	// 가게 상세 정보에서 이미지 리스트 수정하기
+	public int storeDetailInfoHeadPhotoUpdate(OwnerUploadPhoto paramVo);
 	
 }

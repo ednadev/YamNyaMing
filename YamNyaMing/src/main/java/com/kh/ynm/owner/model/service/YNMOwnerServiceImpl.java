@@ -228,5 +228,23 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return result;
 	}
 
+	@Override
+	public ArrayList<OwnerUploadPhoto> headPhotoList(OwnerUploadPhoto paramVo) {
+		ArrayList<OwnerUploadPhoto> list = ynmOwnerDAO.headPhotoList(sqlSession,paramVo);
+		return list;
+	}
+
+	@Override
+	public int storeHeadPhotoDelete(OwnerUploadPhoto paramVo) {
+		int result = ynmOwnerDAO.storeHeadPhotoDelete(sqlSession, paramVo);
+		return result;
+	}
+	
+	@Override
+	public int storeDetailInfoHeadPhotoUpdate(OwnerUploadPhoto paramVo) {
+		int result = ynmOwnerDAO.storeDetailInfoHeadPhotoUpdate(sqlSession, paramVo);
+		return result;
+	}
+
 	
 }

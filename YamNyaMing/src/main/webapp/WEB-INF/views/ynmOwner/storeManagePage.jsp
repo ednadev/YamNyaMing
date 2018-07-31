@@ -99,15 +99,14 @@
 		<hr style="clear:both;">
 		가게 정보 타입
 		<div>
-			<form action="/storePageTypeLoad" method="post">
+			 <form action="/storePageTypeLoad.do" method="post">
 				<!-- 현재 선택된  -->
 				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
-				<input type="hidden" id="storeInfoTapBtn" name="storeIndex" value="">
-				<input type="submit" onclick="storeInfoTapBtn(0,'info');" value="정보">
-				<input type="submit" onclick="storeInfoTapBtn(1,'photo');" value="포토">
-				<input type="submit" onclick="storeInfoTapBtn(2,'review');" value="리뷰">
-				<input type="submit" onclick="storeInfoTapBtn(3,'menu');" value="메뉴">
-				<input type="submit" onclick="storeInfoTapBtn(4,'map');" value="지도">
+				<input type="submit" name="storeTapType" value="정보">
+				<input type="submit" name="storeTapType" value="포토">
+				<input type="submit" name="storeTapType" value="리뷰">
+				<input type="submit" name="storeTapType" value="메뉴">
+				<input type="submit" name="storeTapType" value="지도">
 			</form>
 		</div>
 		
@@ -202,18 +201,48 @@
 			</form>
 		</div>
 		<div class="store-info-div">
-			<form action="/storeHeadPhotoEdit.do" method="post">
-				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
-			</form>
+			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+			<h3>이미지를  클릭해서 삭제 할 수 있습니다.</h3>
+			<!-- <form action="/storeHeadPhotoEdit.do" method="post"> -->
+			<c:if test="${headPhotoList!=null}">
+				<c:forEach var="headPhoto" items="${headPhotoList}">
+					<input type="hidden" id="${headPhoto.owStorePhotoPk}_route" value="${headPhoto.photoRoute}">
+					<input type="hidden" id="${headPhoto.owStorePhotoPk}_name" value="${headPhoto.remakeName}">
+					<input type="hidden" id="${headPhoto.owStorePhotoPk}_detailPk" value="${headPhoto.storeDetailPk}">
+					<input type="hidden" id="${headPhoto.owStorePhotoPk}_headList" value="${headPhoto.headStoreList}">
+					<img src="${headPhoto.owPhotoViewRoute}" id="${headPhoto.owStorePhotoPk}"
+					onclick='deleteHeadPhoto(${headPhoto.owStorePhotoPk});' 
+					style="width:200px; height:200px;" />
+				</c:forEach>
+			</c:if>
+			<c:if test="${headPhotoList==null}">
+				대표사진이 없습니다.
+			</c:if>
 		</div>
 		<div class="store-info-div">
+			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+			리뷰
 		</div>
 		<div class="store-info-div">
+			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+			메뉴
 		</div>
 		<div class="store-info-div">
+			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+			맵
 		</div>
 	</section>
 	<script>
+		window.onload=function(){
+			var storeDivArr = document.getElementsByClassName("store-info-div");
+			for(var i = 0; i<storeDivArr.length;i++)
+			{
+				if(i==${storeTapType}){
+					storeDivArr[i].style.display = "block";
+				}
+				else storeDivArr[i].style.display="none";
+			}
+		}
 		function editShow(showPId,inputId)
 		{
 			if(inputId.style.display=="none")
@@ -229,6 +258,47 @@
 		
 		function storeInfoTapBtn(currentTap, tapType)
 		{
+			var storeDivArr = document.getElementsByClassName("store-info-div");
+			for(var i = 0; i<storeDivArr.length;i++)
+			{
+				if(currentTap==i){
+					storeDivArr[i].style.display = "block";
+				}
+				else storeDivArr[i].style.display="none";
+			}
+			$('#storeInfoTapBtn').val(tapType);
+		}
+		function deleteHeadPhoto(photoIndex)
+		{
+			var route = photoIndex + "_route"
+			var photoRoute = $('#'+route).val();
+			
+			var name = photoIndex + "_name";
+			var photoRemakeName = $('#'+name).val();
+			
+			var detail = photoIndex + "_detailPk";
+			var detailPk = $('#' + detail).val();
+			
+			var headList = photoIndex + "_headList";
+			var headPhotoList = $('#' + headList).val();
+			
+			$.ajax({
+				url:"/storeHeadPhotoDelete.do",
+				data : {
+						photoIndex:photoIndex,
+						photoRoute:photoRoute,
+						photoRemakeName:photoRemakeName,
+						detailPk:detailPk,
+						headPhotoList:headPhotoList
+					   },
+				type : "post",
+				success : function(data){	
+					
+				},
+				error : function(){
+					console.log("실패");	
+				}
+			});
 			
 		}
 	</script>

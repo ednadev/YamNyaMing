@@ -59,4 +59,7 @@ public interface YNMOwnerController {
 
 	// 가게 페이지 로드
 	public ModelAndView storePageTypeLoad(HttpSession session, HttpServletRequest request);
+
+	// 사진 삭제하기
+	public String storeHeadPhotoDelete(HttpSession session, HttpServletRequest request);
 }

@@ -115,4 +115,20 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	public int storeInfoDetailEdiy(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD) {
 		return sqlSession.update("stores.storeInfoDetailEdit",storeInfoPD);
 	}
+	
+	@Override
+	public ArrayList<OwnerUploadPhoto> headPhotoList(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
+		List list = sqlSession.selectList("owphotos.headPhotoList",paramVo);
+		return (ArrayList<OwnerUploadPhoto>)list;
+	}
+
+	@Override
+	public int storeHeadPhotoDelete(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
+		return sqlSession.delete("owphotos.headPhotoDelete", paramVo);
+	}
+
+	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
+		return sqlSession.update("stores.detailInfoHeadPhotoUpdate", paramVo);
+	}
+
 }

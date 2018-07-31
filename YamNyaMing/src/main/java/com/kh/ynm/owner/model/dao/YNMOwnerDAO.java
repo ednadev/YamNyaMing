@@ -34,4 +34,6 @@ public interface YNMOwnerDAO {
 	public StoreInfoPageData storeInfoPageDataGet(SqlSessionTemplate sqlSession, int storeIndex);
 	public int storeInfoEdit(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD);
 	public int storeInfoDetailEdiy(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD);
+	public ArrayList<OwnerUploadPhoto> headPhotoList(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
+	public int storeHeadPhotoDelete(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
 }
