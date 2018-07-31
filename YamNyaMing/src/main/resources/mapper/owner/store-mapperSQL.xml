@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="stores">
+	
+	<!--가게 등록 -->
 	<insert id="storeAdd" parameterType="storeInfo">
 		insert into owner_store_info_tb 
 		values(owner_store_info_tb_SEQ.nextval, #{owEntireFk},
 		#{owStoreBizNum}, #{owStoreName}, #{owStoreTel}, #{owBigTypeFk}, #{owSmallTypeFk},
 		#{owStoreUrl},#{owStoreAddr},sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
  	</insert> 
+ 	
+ 	<!--사업자 등록번호로 가게 검색 -->
  	<select id="storeSearchWithBizNum" resultType="int">
  		select OW_STORE_INFO_PK from owner_store_info_tb 
  		where OW_STORE_BIZ_NUM = #{bizNum} 
  	</select>
  	
+ 	<!-- 메뉴 업로드 -->
  	<insert id="menuUpload" parameterType="menuInfo">
  		insert into owner_menu_info_detail_tb 
  		values(owner_menu_info_detail_tb_SEQ.nextval,#{menuId}, #{menuTitle}, #{subTitle}, #{explain}, #{menuCost})
  	</insert>
  	
+ 	<!--등록한 메뉴 아이디로 선택하기 -->
  	<select id="menuSelectWithId" resultType="int">
  		select ow_menu_info_detail_pk from owner_menu_info_detail_tb 
  		where ow_menu_id  = #{menuId} 
  	</select>
+ 	
+ 	<!--가게 상세 정보 입력 -->
  	<insert id="storeDetailInfoInsert" parameterType="storeDetailInfo">
  		insert into owner_store_detail_tb 
  		values(owner_store_detail_tb_SEQ.nextval, #{owStoreInfoFk},  #{storeBigType}, #{storeSmallType}, #{owStoreLineComment},
  		  #{owStoreTip}, #{recommandMenu},  #{storeTableInfo}, #{budgetInfo},#{owSubInfo}, #{owDrinkListInfo},
  		  #{owStoreHeadPhoto},#{owStoreMenuTypeFk}, #{owStoreMenuInfoDetail},#{owStoreCostType})
  	</insert>
+ 	
+ 	<!--쿠폰 등록 -->
  	<insert id="couponEnroll" parameterType="couponEnrollData">
  		insert into owner_coupon_info_tb 
  		values(owner_coupon_info_tb_SEQ.nextval, #{owEntireFk}, #{owStoreInfoFk},
  		#{owCouponName}, #{owCouponCount}, #{owCouponStartDate},#{owCouponExpireDate}, 
  		#{owCouponDetail} )
  	</insert>
+ 	
+ 	<!--쿠폰의 페이징-->
  	<select id="couponList" resultType="couponEnrollData" parameterType="couponPageData">
  		select
  			   ow_coupon_info_pk as owCouponInfoPk,
@@ -47,11 +59,14 @@
  		from owner_coupon_info_tb where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk})
 	 	where num between #{startPage} and #{endPage}
  	</select>
+ 	
+ 	<!--쿠폰의 페이지 넘버링 -->
  	<select id="couponTotal" parameterType="couponPageData" resultType="int">
  		select count(*) from owner_coupon_info_tb
  		where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk}
  	</select>
  	
+ 	<!--등록된 가게의 리스트에 보여질 정보 -->
  	<select id="storeTitleList" parameterType="storePageData" resultType="storeTitleData">
  		select 	ow_store_info_pk as owStoreInfoPk, 
  				ow_entire_fk as owEntireFk, 
@@ -62,9 +77,11 @@
             	where OW_ENTIRE_FK=ow_store_info_pk) as storeStarPoint 
 			from owner_store_info_tb,
 			(select * from owner_store_detail_tb, owner_store_photo_tb
-			where OW_STORE_PHOTO_PK = substr(ow_store_head_photo,1,1))
+			where OW_STORE_PHOTO_PK =  TRIM(REGEXP_SUBSTR(ow_store_head_photo, '[^,]+')))
 			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{owEntirePk}
  	</select>
+ 	
+ 	<!--등록된 가게 페이징 넘버 -->
  	<select id="storeEnrollNavi" resultType="int">
  		select count(*)
 			from owner_store_info_tb,
@@ -72,4 +89,68 @@
 			where OW_STORE_PHOTO_PK = substr(ow_store_head_photo,1,1))
 			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{ownerIndex}
  	</select>
+ 	
+ 	<!-- 가게의 정보 페이지 정보 -->
+ 	<select id="storeInfoPageData" resultType="storeInfoPageData">
+ 		select 
+ 		ow_store_info_pk as owStoreInfoPk, 
+		ow_entire_fk as owEntireFk, 
+		ow_store_name as owStoreName,
+		ow_store_tip as owStoreTip,
+		(select avg(OW_STORE_REVIEW_STAR) from member_store_review_tb
+        where OW_ENTIRE_FK= #{storeIndex} ) as storeStarPoint, 
+ 		OW_STORE_INFO_PK as owStoreInfoPk,
+ 		OW_ENTIRE_FK as owEntireFk,
+ 		OW_STORE_TEL as owStoreTel,
+ 		oi.OW_STORE_BIG_TYPE_FK as owBigTypeFk,
+ 		oi.OW_STORE_DETAIL_TYPE_FK as owSmallTypeFk,
+ 		OW_STORE_URL as owStoreUrl,
+ 		OW_STORE_ADDR as owStoreAddr,
+ 		OW_STORE_WORKING_TIME as owStoreWorkingTime,
+ 		OW_STORE_DETAIL_PK as owStoreDetailPk,
+ 		OW_STORE_COMMENT as owStoreLineComment,
+ 		OW_RECOMMAND_MENU as recommandMenu,
+ 		OW_STORE_TABLE_INFO as storeTableInfo,
+ 		OW_BUDGET as budgetInfo,
+ 		OW_SUB_INFO as owSubInfo,
+ 		OW_DRINK_LIST_INFO as owDrinkListInfo,
+ 		OW_STORE_HEAD_PHOTO as owStoreHeadPhoto
+ 		from owner_store_info_tb oi, owner_store_detail_tb od
+ 		where OW_STORE_INFO_PK = #{storeIndex} and OW_STORE_INDEX =  #{storeIndex}
+ 	</select>
+ 	
+ 	<!-- 가게 기본 정보 업데이트 -->
+ 	<update id="storeInfoBasicEdit" parameterType="storeInfoPageData">
+ 	 	update owner_store_info_tb
+ 	 	set
+ 	 	OW_STORE_NAME = #{owStoreName},
+ 	 	OW_STORE_TEL = #{owStoreTel},
+ 	 	OW_STORE_BIG_TYPE_FK = #{owBigTypeFk},
+ 	 	OW_STORE_DETAIL_TYPE_FK = #{owSmallTypeFk},
+ 	 	OW_STORE_URL = #{owStoreUrl},
+ 	 	OW_STORE_ADDR = #{owStoreAddr},
+ 	 	OW_STORE_WORKING_TIME = #{owStoreWorkingTime}
+ 	 	where OW_STORE_INFO_PK = #{owStoreInfoPk}
+ 	</update>
+ 	
+ 	<!-- 가게 상세 정보 업데이트 -->
+	<update id="storeInfoDetailEdit" parameterType="storeInfoPageData">
+ 	 	update owner_store_detail_tb
+ 	 	set
+ 	 	OW_STORE_BIG_TYPE_FK = #{owBigTypeFk},
+ 	 	OW_STORE_DETAIL_TYPE_FK = #{owSmallTypeFk},
+ 	 	OW_STORE_COMMENT = #{owStoreLineComment},
+ 	 	OW_STORE_TIP = #{owStoreTip},
+ 	 	OW_RECOMMAND_MENU = #{recommandMenu},
+ 	 	OW_STORE_TABLE_INFO = #{storeTableInfo},
+ 	 	OW_BUDGET = #{budgetInfo},
+ 	 	OW_SUB_INFO = #{owSubInfo},
+ 	 	OW_DRINK_LIST_INFO = #{owDrinkListInfo}
+ 	 	where OW_STORE_INDEX = #{owStoreInfoPk}
+ 	</update>
+ 	
+ 	
+
+ 	
+	
 </mapper>

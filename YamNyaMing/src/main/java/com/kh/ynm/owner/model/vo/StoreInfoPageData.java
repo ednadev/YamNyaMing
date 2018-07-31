@@ -6,17 +6,16 @@ public class StoreInfoPageData {
 	private int owStoreInfoPk;
 	private int owEntireFk;
 	private String owStoreName;
+	private String owStoreTip;
+	private float storeStarPoint;
 	private String owStoreTel;
 	private int owBigTypeFk;
 	private int owSmallTypeFk;
 	private String owStoreUrl;
 	private String owStoreAddr;
-	private String owStoreMapInfo;
 	private String owStoreWorkingTime;
 	
 	private int owStoreDetailPk;
-	private int owStoreInfoFk;
-	private String owStoreTip;
 	private String owStoreLineComment;
 	private String recommandMenu;
 	private String storeTableInfo;
@@ -25,12 +24,52 @@ public class StoreInfoPageData {
 	private String owDrinkListInfo;
 	private String owStoreHeadPhoto;
 	private String[] storeHeadPhotoArr;// 대표 이미지 배열로 파싱
-	private int owStoreMenuTypeFk;
-	private String owStoreMenuInfoDetail;
-	private String[] owStoreMenuInfoDetailArr;// 메뉴 정보 인덱스 배열로 파싱
-	private String owStoreCostType;
+
 	
 	public StoreInfoPageData() {}
+	
+	
+	public String getOwStoreName() {
+		return owStoreName;
+	}
+
+
+
+	public void setOwStoreName(String owStoreName) {
+		this.owStoreName = owStoreName;
+	}
+
+
+
+	public String getOwStoreTip() {
+		return owStoreTip;
+	}
+
+
+
+	public void setOwStoreTip(String owStoreTip) {
+		this.owStoreTip = owStoreTip;
+	}
+
+
+
+	public float getStoreStarPoint() {
+		return storeStarPoint;
+	}
+
+
+
+	public void setStoreStarPoint(float storeStarPoint) {
+		this.storeStarPoint = storeStarPoint;
+	}
+
+
+
+	public void setStoreHeadPhotoArr(String[] storeHeadPhotoArr) {
+		this.storeHeadPhotoArr = storeHeadPhotoArr;
+	}
+
+
 
 	public int getOwStoreInfoPk() {
 		return owStoreInfoPk;
@@ -46,14 +85,6 @@ public class StoreInfoPageData {
 
 	public void setOwEntireFk(int owEntireFk) {
 		this.owEntireFk = owEntireFk;
-	}
-
-	public String getOwStoreName() {
-		return owStoreName;
-	}
-
-	public void setOwStoreName(String owStoreName) {
-		this.owStoreName = owStoreName;
 	}
 
 	public String getOwStoreTel() {
@@ -96,14 +127,6 @@ public class StoreInfoPageData {
 		this.owStoreAddr = owStoreAddr;
 	}
 
-	public String getOwStoreMapInfo() {
-		return owStoreMapInfo;
-	}
-
-	public void setOwStoreMapInfo(String owStoreMapInfo) {
-		this.owStoreMapInfo = owStoreMapInfo;
-	}
-
 	public String getOwStoreWorkingTime() {
 		return owStoreWorkingTime;
 	}
@@ -118,22 +141,6 @@ public class StoreInfoPageData {
 
 	public void setOwStoreDetailPk(int owStoreDetailPk) {
 		this.owStoreDetailPk = owStoreDetailPk;
-	}
-
-	public int getOwStoreInfoFk() {
-		return owStoreInfoFk;
-	}
-
-	public void setOwStoreInfoFk(int owStoreInfoFk) {
-		this.owStoreInfoFk = owStoreInfoFk;
-	}
-
-	public String getOwStoreTip() {
-		return owStoreTip;
-	}
-
-	public void setOwStoreTip(String owStoreTip) {
-		this.owStoreTip = owStoreTip;
 	}
 
 	public String getOwStoreLineComment() {
@@ -193,31 +200,6 @@ public class StoreInfoPageData {
 		setStoreHeadPhotoArr(owStoreHeadPhoto);
 	}
 
-	public int getOwStoreMenuTypeFk() {
-		return owStoreMenuTypeFk;
-	}
-
-	public void setOwStoreMenuTypeFk(int owStoreMenuTypeFk) {
-		this.owStoreMenuTypeFk = owStoreMenuTypeFk;
-	}
-
-	public String getOwStoreMenuInfoDetail() {
-		return owStoreMenuInfoDetail;
-	}
-
-	public void setOwStoreMenuInfoDetail(String owStoreMenuInfoDetail) {
-		this.owStoreMenuInfoDetail = owStoreMenuInfoDetail;
-		setOwStoreMenuInfoDetailArr(this.owStoreMenuInfoDetail);
-	}
-
-	public String getOwStoreCostType() {
-		return owStoreCostType;
-	}
-
-	public void setOwStoreCostType(String owStoreCostType) {
-		this.owStoreCostType = owStoreCostType;
-	}
-
 	public String[] getStoreHeadPhotoArr() {
 		return storeHeadPhotoArr;
 	}
@@ -225,14 +207,5 @@ public class StoreInfoPageData {
 	public void setStoreHeadPhotoArr(String storeHeadPhotoArr) {
 		this.storeHeadPhotoArr = storeHeadPhotoArr.split(",");
 	}
-
-	public String[] getOwStoreMenuInfoDetailArr() {
-		return owStoreMenuInfoDetailArr;
-	}
-
-	public void setOwStoreMenuInfoDetailArr(String owStoreMenuInfoDetailArr) {
-		this.owStoreMenuInfoDetailArr = owStoreMenuInfoDetailArr.split(",");
-	}
-	
 	
 }

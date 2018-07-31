@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -59,5 +60,14 @@ public interface YNMOwnerService {
 	
 	// 가게 선택 네비게이션
 	public StorePageData ynmStoreNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int ownerIndex);
+
+	// 가게 관리 페이지에서 정보 불러오기.
+	public StoreInfoPageData storeInfoPageDataGet(int storeIndex);
+
+	// 가게 기본 정보 수정하기
+	public int storeInfoEdit(StoreInfoPageData storeInfoPD);
+
+	// 가게 상세 정보 수정하긴
+	public int storeInfoDetailEdit(StoreInfoPageData storeInfoPD);
 	
 }

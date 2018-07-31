@@ -13,6 +13,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -207,6 +208,24 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		storePageData.setPageTotalCount(pageTotalCount);
 		storePageData.setRecordTotalCount(recordTotalCount);
 		return storePageData;
+	}
+
+	@Override
+	public StoreInfoPageData storeInfoPageDataGet(int storeIndex) {
+		StoreInfoPageData storeInfoPD = ynmOwnerDAO.storeInfoPageDataGet(sqlSession, storeIndex);
+		return storeInfoPD;
+	}
+
+	@Override
+	public int storeInfoEdit(StoreInfoPageData storeInfoPD) {
+		int result = ynmOwnerDAO.storeInfoEdit(sqlSession, storeInfoPD);
+		return result;
+	}
+
+	@Override
+	public int storeInfoDetailEdit(StoreInfoPageData storeInfoPD) {
+		int result = ynmOwnerDAO.storeInfoDetailEdiy(sqlSession, storeInfoPD);
+		return result;
 	}
 
 	

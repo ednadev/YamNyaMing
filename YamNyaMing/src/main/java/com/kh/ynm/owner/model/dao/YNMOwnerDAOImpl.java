@@ -10,6 +10,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -98,5 +99,20 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	public int storeEnrollList(SqlSessionTemplate sqlSession, int ownerIndex) {
 		return sqlSession.selectOne("stores.storeEnrollNavi", ownerIndex);
+	}
+
+	@Override
+	public StoreInfoPageData storeInfoPageDataGet(SqlSessionTemplate sqlSession, int storeIndex) {
+		return sqlSession.selectOne("stores.storeInfoPageData",storeIndex );
+	}
+
+	@Override
+	public int storeInfoEdit(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD) {
+		return  sqlSession.update("stores.storeInfoBasicEdit",storeInfoPD );
+	}
+
+	@Override
+	public int storeInfoDetailEdiy(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD) {
+		return sqlSession.update("stores.storeInfoDetailEdit",storeInfoPD);
 	}
 }

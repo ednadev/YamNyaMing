@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -52,4 +53,7 @@ public interface YNMOwnerController {
 
 	// 선택한 가게 인덱스를 가진 상세정보를 불러오기
 	public ModelAndView storeDetailInfo(HttpSession session, HttpServletRequest request);
+
+	// 가게 정보 업데이트
+	public ModelAndView storeInfoEdit(HttpSession session, HttpServletRequest request );
 }

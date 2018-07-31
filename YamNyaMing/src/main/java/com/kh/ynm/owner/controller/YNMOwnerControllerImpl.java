@@ -32,6 +32,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -408,13 +409,25 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			
+
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<StoreTitleData> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
 			StorePageData spd = ynmOwnerServiceImpl.ynmStoreNavi(currentPage,recordCountPerPage,naviCountPerPage,ownerIndex);
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
+			
+			if(storeInfoList.size()>0) {
+				if(request.getParameter("storeIndex")==null) {
+					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
+					StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeInfoList.get(0).getOwStoreInfoPk());
+					view.addObject("storeInfoPageData", storeInfoPD);
+					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
+				}else
+				{
+					view.addObject("currentStoreIndex", Integer.parseInt(request.getParameter("storeIndex")));
+				}
+			}
 			view.setViewName("ynmOwner/storeManagePage");
 		}else {
 			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
@@ -423,12 +436,16 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 	
 	@Override
-	@RequestMapping("/storeDetailInfo.do")
+	@RequestMapping("/storeInfoPage.do")
 	public ModelAndView storeDetailInfo(HttpSession session, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
+			view = storeList(session, request);
 			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
-			
+			StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
+			view.addObject("storeInfoPageData", storeInfoPD);
+			view.addObject("currentStoreIndex", storeIndex);
+			view.setViewName("ynmOwner/storeManagePage");
 		}
 		else
 		{
@@ -437,10 +454,47 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return view;
 	}
 	
-	@RequestMapping("/testDetailPage.do")
-	public String testDetailPage()
+	@Override
+	@RequestMapping("/storeInfoEdit.do")
+	public ModelAndView storeInfoEdit(HttpSession session, HttpServletRequest request)
 	{
-		return "ynmMember/detailPage";
+		StoreInfoPageData storeInfoPD = new StoreInfoPageData();
+		storeInfoPD.setOwStoreInfoPk(Integer.parseInt(request.getParameter("storeIndex")));
+		storeInfoPD.setOwStoreName(request.getParameter("owStoreName"));
+		storeInfoPD.setOwStoreTel(request.getParameter("owStoreTel"));
+		storeInfoPD.setOwStoreAddr(request.getParameter("owStoreAddr"));
+		storeInfoPD.setOwStoreUrl(request.getParameter("owStoreUrl"));
+		storeInfoPD.setOwStoreWorkingTime(request.getParameter("owStoreWorkingTime"));
+		storeInfoPD.setBudgetInfo(request.getParameter("budgetInfo"));
+		storeInfoPD.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
+		storeInfoPD.setOwStoreTip(request.getParameter("owStoreTip"));
+		storeInfoPD.setRecommandMenu(request.getParameter("recommandMenu"));
+		storeInfoPD.setOwBigTypeFk(1);//Integer.parseInt(request.getParameter("owBigTypeFk")));
+		storeInfoPD.setOwSmallTypeFk(1);//Integer.getParameter);
+		storeInfoPD.setStoreTableInfo(request.getParameter("storeTableInfo"));
+		storeInfoPD.setOwSubInfo(request.getParameter("owSubInfo"));
+		storeInfoPD.setOwDrinkListInfo(request.getParameter("owDrinkListInfo"));
+		ModelAndView view = new ModelAndView();
+		int result = ynmOwnerServiceImpl.storeInfoEdit(storeInfoPD);
+		if(result>0)
+		{
+			int resultDetail = ynmOwnerServiceImpl.storeInfoDetailEdit(storeInfoPD);
+			if(resultDetail>0)
+			{
+				view = storeDetailInfo(session, request);
+			}
+			else System.out.println("상세정보 업데이트 실패");
+		}
+		else System.out.println("일반정보 업데이트 실패");
+		return view;
 	}
+	
+	@Override
+	@RequestMapping("/storePageTypeLoad")
+	public ModelAndView storePageTypeLoad(HttpSession session,  HttpServletRequest request)
+	{
+		
+	}
+
 
 }
