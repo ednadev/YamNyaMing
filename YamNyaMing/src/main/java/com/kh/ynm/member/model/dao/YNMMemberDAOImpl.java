@@ -236,6 +236,10 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMSearch> detailPageImg(SqlSessionTemplate sqlSession, YNMSearch vo) {
 		List list = sqlSession.selectList("search.detailPageImg",vo);
 		return (ArrayList<YNMSearch>)list;
+	}
+
+	public int jjimTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		return sqlSession.selectOne("review.jjimTotal",storeReviewNo);
 	}	
 
 }

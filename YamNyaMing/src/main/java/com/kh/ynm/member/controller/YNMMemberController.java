@@ -44,7 +44,7 @@ public interface YNMMemberController {
 	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 	//리뷰 table
-	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
 	

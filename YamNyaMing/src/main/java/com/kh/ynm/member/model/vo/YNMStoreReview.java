@@ -4,21 +4,50 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class YNMStoreReview {
+	private int memberUploadPhotoNo;
+	private String photoViewRoute;
 	private int storeReviewNo;
 	private int ownerStoreEntireNo;
 	private int memberEntireNo;
 	private String reviewContent;
-	private String reviewStar;
+	private int reviewStar;
 	private char jjimCheck;
 	private Date reviewDate;
 	private char reviewOpenCheck;
 	private String reviewImgList;
 	private String[] reviewImgArr;
 	private int likeTotal;
+	private int jjimTotal;
+	private String memberNickName;
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
 	
 	
 	
+	
+	public int getJjimTotal() {
+		return jjimTotal;
+	}
+	public void setJjimTotal(int jjimTotal) {
+		this.jjimTotal = jjimTotal;
+	}
+	public int getMemberUploadPhotoNo() {
+		return memberUploadPhotoNo;
+	}
+	public void setMemberUploadPhotoNo(int memberUploadPhotoNo) {
+		this.memberUploadPhotoNo = memberUploadPhotoNo;
+	}
+	public String getPhotoViewRoute() {
+		return photoViewRoute;
+	}
+	public void setPhotoViewRoute(String photoViewRoute) {
+		this.photoViewRoute = photoViewRoute;
+	}
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
+	}
 	public int getLikeTotal() {
 		return likeTotal;
 	}
@@ -55,10 +84,10 @@ public class YNMStoreReview {
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
 	}
-	public String getReviewStar() {
+	public int getReviewStar() {
 		return reviewStar;
 	}
-	public void setReviewStar(String reviewStar) {
+	public void setReviewStar(int reviewStar) {
 		this.reviewStar = reviewStar;
 	}
 	public char getJjimCheck() {

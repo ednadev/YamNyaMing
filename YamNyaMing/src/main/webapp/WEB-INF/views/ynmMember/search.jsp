@@ -360,11 +360,11 @@
 			<div class="search-result">
 				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
 					<form action="/detailPage.do" method="get">
-						<input type="hidden" name="owStoreName" value="${search.owStoreName}">
+						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
 						<input type="submit" value="">
 					</form>
 					<div>
-						<p>대기인원 0 추천 0</p>
+						<p>대기인원 0 추천 ${search.owStoreInfoPk},${search.owStoreInfoPk}</p>
 						<div class="heart"></div>
 					</div>
 					<div>

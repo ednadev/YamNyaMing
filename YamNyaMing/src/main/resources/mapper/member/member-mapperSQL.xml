@@ -125,12 +125,12 @@
 		update member_entire_tb set mb_pw=#{memberPw} where mb_id=#{memberId} and mb_email=#{memberEmail} 
 	</update>
 	
-	
+<!-- 	
 	<select id="selectOneStore" resultType="storeInfo">
 		select ow_store_phone as owStoreTel
 		from owner_store_info_tb
 		where ow_store_info_pk=#{ownerStoreEntireNo}
-	</select>
+	</select> -->
 	
 	
 	<!-- 사용자 설정 table -->
