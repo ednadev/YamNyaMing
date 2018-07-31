@@ -490,12 +490,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		YNMStoreReview ysr=new YNMStoreReview();
 		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-		ysr.setOwnerEntireNo(Integer.parseInt(request.getParameter("ownerStoreEntireNo")));
+		ysr.setOwnerEntireNo(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		ysr.setReviewContent(request.getParameter("reviewContent"));
 		ysr.setReviewStar(Integer.parseInt(request.getParameter("reviewStar")));
 		ysr.setReviewImgList(reviewImgList);
 		int result=ynmMemberServiceImpl.storeReviewInsert(ysr);
-		
+		int owStoreInfoPk=Integer.parseInt(request.getParameter("owStoreInfoPk"));
 		ModelAndView view=new ModelAndView();
 		if(result>0) {
 		view=detailPage(request,response);
@@ -565,8 +565,11 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			view.addObject("review",ysrList);
 			return view;
 
+		}else {
+			view.addObject("noReview"," 등록된 리뷰가 없습니다.");
+		return view;
+		
 		}
-		return null;
 	}
 	//리뷰 대댓글 작성
 	@Override

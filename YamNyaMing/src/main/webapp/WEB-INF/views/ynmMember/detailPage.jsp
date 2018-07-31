@@ -355,7 +355,7 @@
 		<div id="Review" class="tabInfo" style="display:none;">
 			<form action="/storeReviewInsert.do" enctype="multipart/form-data" method="post" name="reviewform">
 			<h4>리뷰 쓰기</h4>
-			<input type="hidden" name="ownerStoreEntireNo" value="${store.owStoreInfoPk}"/>
+			<input type="hidden" name="owStoreInfoPk" value="${store.owStoreInfoPk}"/>
 			<table>
 			<tbody>
 			<tr>
