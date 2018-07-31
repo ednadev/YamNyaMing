@@ -56,4 +56,7 @@ public interface YNMOwnerController {
 
 	// 가게 정보 업데이트
 	public ModelAndView storeInfoEdit(HttpSession session, HttpServletRequest request );
+
+	// 가게 페이지 로드
+	public ModelAndView storePageTypeLoad(HttpSession session, HttpServletRequest request);
 }

@@ -493,7 +493,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping("/storePageTypeLoad")
 	public ModelAndView storePageTypeLoad(HttpSession session,  HttpServletRequest request)
 	{
-		
+		return null;
 	}
 
 
