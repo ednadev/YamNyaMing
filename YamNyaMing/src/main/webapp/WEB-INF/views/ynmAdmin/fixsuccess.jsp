@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-실패형2
+<script>
+alert("수정 완료 ^ㅅ^"); 
+window.location.href="/adminList.do"
+</script>
 </body>
 </html>

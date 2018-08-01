@@ -127,6 +127,7 @@ SELECT
     (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate) as memalltoday,
     (select COUNT(*) FROM OWNER_ENTIRE_TB) as ownerall,
     (SELECT COUNT(*) FROM member_entire_tb) as memberall,
+    (select count(*) from member_store_review_tb) as hugi,
     (select count(*) from OWNER_ENTIRE_TB where to_char(OW_REGDATE,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD'))as todaynewowner,
     (select count(*) from member_entire_Tb where to_char(MB_REGDATE,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD'))as todaynewmember,
     (select count(*) from OWNER_ENTIRE_TB where to_char(OW_REGDATE,'YYMMDD') = TO_CHAR(SYSDATE-1,'YYMMDD'))as yesterdaynewowner,
@@ -190,5 +191,61 @@ left join member_favorite_tb f on (o.ow_store_info_pk = f.ow_store_info_fk)
 where r.ow_store_jjim_check='J'
 order by b.mb_entire_fk DESC)
 </select>
+
+<select id="adminList" resultType="admins">
+select 
+ADMIN_ID as ad_id,
+ADMIN_PASSWORD as ad_password,
+ADMIN_NICKNAME as ad_nickname,
+ADMIN_ACCESS_GRADE_FK as ad_grade
+from admin_info_tb
+where ADMIN_ID not in ('admin')
+</select>
+
+<update id="dounGrade">
+UPDATE admin_info_tb 
+SET ADMIN_ACCESS_GRADE_FK = 2 
+WHERE ADMIN_ID = #{ad_id}
+</update>
+
+<update id="upGrade">
+UPDATE admin_info_tb
+SET ADMIN_ACCESS_GRADE_FK = 1
+WHERE ADMIN_ID = #{ad_id}
+</update>
+
+<!-- 페이징 및 전체 레코드 갯수 조회 쿼리 -->
+<select id="writeGetCount" resultType="int">
+    select count(*) from notice
+</select>
+<!-- 게시글 목록을 조회하기 위한 쿼리(일반, 공지사항)-->
+
+<select id="writeList" resultType="notice" parameterType="hashmap">
+select 
+noticeNo as noticeNo,
+subject as subject,
+contents as contents,
+userId as userId,
+regDate as regDate
+FROM (select notice.*,row_number() over(order by noticeno desc)as num from notice)
+WHERE num between #{offset} and #{noOfRecords}
+</select>
+
+
+
+
+   
+<select id="writeInfoList" resultType="notice">
+select 
+noticeNo as noticeNo,
+subject as subject,
+contents as contents,
+userId as userId,
+regDate as regDate
+from notice 
+where info = 1 ORDER BY idx DESC
+</select>
+
+
 
 </mapper>

@@ -22,7 +22,7 @@
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="/logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
@@ -183,7 +183,8 @@
 		</div>
 		<div id="main-section-owner">
 			<h4>음식점 현황 (Top10)</h4>
-			<table border="1" class="sortable" id="tablList" class="tablList" name="tablList">
+			<input type="button" onclick="test11();" value="ㄱㄱ"/>
+			<table border="1" class="sortable" id="tablList" class="tablList" name="tablList" id="userTb1">
 			<thead>
 			<tr>
 				<th>상호명</th><th class="sorting">예약수</th><th class="sorting">평점</th><th class="sorting">추천수</th><th class="sorting">즐겨찾기</th>
@@ -191,6 +192,9 @@
 			</thead>
 			<tbody>
 			
+
+
+
 																									
 			</tbody>
 			</table>
@@ -199,13 +203,13 @@
 			<h4>문의/답변관리</h4>
 			<table>
 			<tr>
-				<th>후기</th><td>100건</td>
+				<th>후기</th><td>${list.hugi}건</td>
 			</tr>
 			<tr>
-				<th>고객문의</th><td>0건</td>
+				<th>고객문의</th><td>${list.userQ}건</td>
 			</tr>
 			<tr>
-				<th>점장문의</th><td>0건</td>
+				<th>점장문의</th><td>${list.ownerQ}건</td>
 			</tr>			
 			</table>
 		</div>		
@@ -310,27 +314,43 @@
 				        text: '업종별'
 				      }
 				    }
-				});			
+				});	
 				
-				$(function () {
-					//동적으로 원격에 있는 JSON 파일(결과값)을 로드
-					$.ajax({
-					url:"/storeList.do",
-					dataType: "json",
-					success: function (data) {
-					//받아온 JSON을 테이블에 출력
-					$.each(data, function () {
-					$('#tablList').append("<tr><td>" + this.Num + "</td><td>" + this["Name"] + "</td></tr>");
-					});
-			$.each(data, function (index,entry) {
-			$('#tablList').append("<tr><td>" + entry.Num + "</td><td>" + entry["Name"] + "</td></tr>");
+			
 
-					});
-		},
-					error: function () { alert("개발중"); }
-					});
-					});
 				</script>
+					<script>
+	function test11()
+	{
+		$.ajax({
+			url : "/storeList.do",
+			type : "get",
+			success : function(data)
+			{
+				console.log("성공");
+				var result = "";
+				for(var i=0;i<data.length;10)
+					{
+					result +="이름 : "+data[i].name+"/"
+							+"예약수 : "+data[i].book+"/"
+							+"평점 : "+data[i].grade+"/"
+							+"즐겨찾기 : "+data[i].jjim+"/"
+							+"좋아요 : "+data[i].favorite+"/"
+					}
+			$('#userTb1').html(result);	
+			},
+			
+			error : function() {
+				console.log("실패");
+			}
+		
+		});
+		
+	}
+	
+	</script>
+
+	
 			</div>
 
 		</div>
