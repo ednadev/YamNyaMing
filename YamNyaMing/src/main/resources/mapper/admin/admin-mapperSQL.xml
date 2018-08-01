@@ -2,32 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 
-
+<!-- 관리자 가입 -->
 <insert id="insertAdmin" parameterType="admins">
 insert into ADMIN_INFO_TB values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade}) 
 </insert>
-
+<!-- 관리자 아이디체크 -->
 <select id="adminIdCheck" parameterType="admins" resultType="admins">
 SELECT ADMIN_NICKNAME as ad_nickname 
 FROM admin_info_tb 
 WHERE ADMIN_ID = #{ad_id}
 </select>
 
-
+<!-- 사용자 전체보기 -->
 <select id="allMemberView" parameterType="members" resultType="members">
-SELECT mb_id as memberId,
-	   mb_name as memberName,
-	   mb_nickname as memberNickName,
-	   mb_gender as memberGender,
-	   mb_birth as memberBirth,
-	   mb_email as memberEmail,
-	   mb_phone as memberPhone,
-	   mb_regDate as memberRegDate,
-	   MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
-	   from member_entire_tb
+SELECT 
+mb_id as memberId,
+mb_name as memberName,
+mb_nickname as memberNickName,
+mb_gender as memberGender,
+mb_birth as memberBirth,
+mb_email as memberEmail,
+mb_phone as memberPhone,
+mb_regDate as memberRegDate,
+MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
+from member_entire_tb
 </select>
 
-
+<!-- 점주 전체보기 -->
 <select id="allOwnerView" parameterType="owner" resultType="owner">
 SELECT OW_ID as owId, 
 	   OW_NAME as owName,
@@ -38,7 +39,7 @@ SELECT OW_ID as owId,
 	   from OWNER_ENTIRE_TB
 </select>
 
-
+<!-- 점주 검색 -->
 <select id="ownerSearch" parameterType="map" resultType="owner">
 SELECT OW_ID as owId,
 	   OW_NAME as owName,
@@ -50,7 +51,8 @@ SELECT OW_ID as owId,
 <where>
 <choose>
 <when test="combo == 'OwnerName'">
-OW_NAME LIKE '%'|| #{keyword} ||'%' </when>
+OW_NAME LIKE '%'|| #{keyword} ||'%' 
+</when>
 <otherwise>
 OW_ID LIKE '%'|| #{keyword} ||'%' 
 </otherwise>
@@ -58,59 +60,70 @@ OW_ID LIKE '%'|| #{keyword} ||'%'
 </where>
 </select>
 
-
+<!-- 사용자 검색 -->
 <select id="memberSearch" parameterType="map" resultType="members">
-SELECT mb_id as memberId,
-	   mb_name as memberName, 
-	   mb_nickname as memberNickName,
-	   mb_gender as memberGender,
-	   mb_birth as memberBirth,
-	   mb_email as memberEmail, 
-	   mb_phone as memberPhone,
-	   mb_regDate as memberRegDate,
-	   MB_UPLOAD_PHOTO_FK as memberAvatar 
-	   from member_entire_tb where 
+SELECT 
+mb_id as memberId,
+mb_name as memberName,
+mb_nickname as memberNickName,
+mb_gender as memberGender,
+mb_birth as memberBirth,
+mb_email as memberEmail,
+mb_phone as memberPhone,
+mb_regDate as memberRegDate,
+MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
+from member_entire_tb
+where 
 <choose>
 <when test="combo == 'MemberName'">
-MB_NAME LIKE '%'|| #{Keyword} ||'%' 
+mb_name LIKE '%'|| #{keyword} ||'%' 
 </when>
 <when test="combo == 'MemberNickName'">
-MB_NICKNAME LIKE '%'|| #{Keyword} ||'%' 
+mb_nickname LIKE '%'|| #{keyword} ||'%' 
 </when>
 <otherwise>
-MB_ID LIKE '%'|| #{Keyword} ||'%' 
+mb_id LIKE '%'|| #{keyword} ||'%'  
 </otherwise>
 </choose>
 </select>
 
+
+<!-- 관리자 로그인 -->
 <select id="adminLogin" parameterType="admins" resultType="admins">
-SELECT ADMIN_INFO_PK as admin_info_pk, ADMIN_ID as ad_id, ADMIN_PASSWORD as ad_password, ADMIN_NICKNAME as ad_nickname, ADMIN_ACCESS_GRADE_FK as ad_grade from admin_info_tb where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
+SELECT 
+ADMIN_INFO_PK as admin_info_pk, 
+ADMIN_ID as ad_id, 
+ADMIN_PASSWORD as ad_password, 
+ADMIN_NICKNAME as ad_nickname, 
+ADMIN_ACCESS_GRADE_FK as ad_grade 
+from admin_info_tb where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
 </select>
 
-
+<!-- 통계 -->
 <select id="statAdmin" resultType="statistics">
 SELECT
     (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='M')as boy, 
     (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='F')as girl,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 10 and 20)as age1020,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 20 and 30)as age2030,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 30 and 40)as age3040,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 40 and 50)as age4050,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb) between 50 and 60)as age5060,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT FLOOR(MONTHS_BETWEEN(SYSDATE,TO_DATE(MB_BIRTH,'YYMMDD'))/12)AS 만나이 from MEMBER_entire_tb)>60)as age60,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 10 and 19)as age1020,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 20 and 29)as age2030,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 30 and 39)as age3040,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 40 and 49)as age4050,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 50 and 59)as age5060,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb)>=60)as age60,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 09 and 10)as time0910,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 11 and 12)as time1112,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 13 and 14)as time1314,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 15 and 16)as time1516,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 17 and 18)as time1718,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 19 and 24)as time1924,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='한식')as korea,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='중식')as china,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='일식')as japan,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='양식')as usa,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='디저트')as dessert,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='술집')as sul,
-    (select count(*) from OWNER_STORE_DETAIL_TB where OW_STORE_BIG_TYPE_FK='기타')as gita,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=1)as korea,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=2)as china,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=3)as japan,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=4)as usa,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=5)as buffet,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=6)as dessert,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=7)as bar,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=8)as other,
     (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-6) as owall6day,
     (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-6) as memall6day,
     (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-5) as owall5day,
@@ -171,6 +184,7 @@ SELECT
 FROM DUAL
 </select>
 
+<!-- 통계에서 가게순위 리스트  -->
 <select id="storeList" resultType="com.kh.ynm.admin.model.vo.YNMStoreInfo">
 select 
 	   ow_store_name as name,
@@ -192,6 +206,7 @@ where r.ow_store_jjim_check='J'
 order by b.mb_entire_fk DESC)
 </select>
 
+<!-- 관리자 수락/강등에서 관리자리스트 -->
 <select id="adminList" resultType="admins">
 select 
 ADMIN_ID as ad_id,
@@ -202,49 +217,39 @@ from admin_info_tb
 where ADMIN_ID not in ('admin')
 </select>
 
+
+<!-- 관리자 강등 -->
 <update id="dounGrade">
 UPDATE admin_info_tb 
 SET ADMIN_ACCESS_GRADE_FK = 2 
 WHERE ADMIN_ID = #{ad_id}
 </update>
-
+<!-- 관리자 승급 -->
 <update id="upGrade">
 UPDATE admin_info_tb
 SET ADMIN_ACCESS_GRADE_FK = 1
 WHERE ADMIN_ID = #{ad_id}
 </update>
 
-<!-- 페이징 및 전체 레코드 갯수 조회 쿼리 -->
-<select id="writeGetCount" resultType="int">
-    select count(*) from notice
-</select>
-<!-- 게시글 목록을 조회하기 위한 쿼리(일반, 공지사항)-->
-
-<select id="writeList" resultType="notice" parameterType="hashmap">
-select 
-noticeNo as noticeNo,
-subject as subject,
-contents as contents,
-userId as userId,
-regDate as regDate
-FROM (select notice.*,row_number() over(order by noticeno desc)as num from notice)
-WHERE num between #{offset} and #{noOfRecords}
-</select>
-
-
+<!--쿠폰의 페이징-->
+ 	<select id="noticeList" resultType="notice" parameterType="noticePageData">
+ 		select
+ 			   NOTICENO as noticeNo,
+ 			   SUBJECT as subject,
+ 			   CONTENTS as contents,
+ 			   USERID as userId,
+ 			   REGDATE as regDate
+ 		from ( select notice.*,row_number() over(order by NOTICENO desc) as num 
+	 	where num between #{startPage} and #{endPage}
+ 	</select>
+ 	
+ 	<!--쿠폰의 페이지 넘버링 -->
+ 	<select id="noticeTotal" parameterType="noticePageData" resultType="int">
+ 		select count(*) from notice
+ 	</select>
 
 
-   
-<select id="writeInfoList" resultType="notice">
-select 
-noticeNo as noticeNo,
-subject as subject,
-contents as contents,
-userId as userId,
-regDate as regDate
-from notice 
-where info = 1 ORDER BY idx DESC
-</select>
+
 
 
 

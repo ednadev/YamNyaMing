@@ -22,7 +22,6 @@
 			</p>
 			<input type="text" name="memberEmail" placeholder="이메일">
 			<input type="text" name="memberName" placeholder="이름">
-
 			<input type="submit" value="아이디 찾기">
 		</form>
 	</section>

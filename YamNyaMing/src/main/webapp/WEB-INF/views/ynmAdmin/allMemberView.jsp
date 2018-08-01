@@ -21,7 +21,7 @@
 <body>
 	<header id="admin-login-header">
 		<h1>
-			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
 			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
@@ -43,9 +43,9 @@
           <div class="col-xs-12 col-sm-12 col-md-3">
             <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span>회원관리 </h2>
           </div>
-          <div class="col-xs-9 col-sm-9 col-md-9">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-              <div class="col-xs-12 col-md-4">
+          <div>
+            <div>
+              <div>
                 <label> Search </label>
                 <div class="form-group">
                   <div class="input-group">
@@ -91,15 +91,24 @@
 			   <thead>
 				<tbody class="points_table_scrollbar">
 				  <tr class="edit" id="detail">
-				 	<td class="col-xs-3">${m.memberAvatar}</td>
-					<td class="col-xs-3">${m.memberId} </td>
-					<td class="col-xs-3">${m.memberName} </td>
-					<td class="col-xs-3">${m.memberNickName}</td>
-					<td class="col-xs-3">${m.memberGender} </td>
-					<td class="col-xs-3">${m.memberBirth} </td>
-					<td class="col-xs-3">${m.memberEmail}</td>
-					<td class="col-xs-3">${m.memberPhone} </td>
-					<td class="col-xs-3">${m.memberRegDate} </td>
+				 	<td>${m.memberUploadPhotoNo}</td>
+					<td>${m.memberId} </td>
+					<td>${m.memberName} </td>
+					<td>${m.memberNickName}</td>
+					<td>
+					<c:choose>
+					<c:when test="${m.memberGender eq 'M'}">
+					남
+					</c:when>
+					<c:otherwise>
+					여
+					</c:otherwise>
+					</c:choose>
+					</td>
+					<td>${m.memberBirth} </td>
+					<td>${m.memberEmail}</td>
+					<td>${m.memberPhone} </td>
+					<td>${m.memberRegDate} </td>
 				</tr>
 			</c:forEach>
 			</tbody>

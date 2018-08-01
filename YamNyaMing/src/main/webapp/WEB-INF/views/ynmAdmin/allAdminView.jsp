@@ -22,7 +22,7 @@
 <body>
 	<header id="admin-login-header">
 		<h1>
-			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
 			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>

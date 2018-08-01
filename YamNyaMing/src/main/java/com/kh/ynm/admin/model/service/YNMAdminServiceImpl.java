@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 import com.kh.ynm.admin.model.dao.YNMAdminDAO;
 import com.kh.ynm.admin.model.dao.YNMAdminDAOImpl;
 import com.kh.ynm.admin.model.vo.AdminStatistics;
+import com.kh.ynm.admin.model.vo.BoardPaging;
 import com.kh.ynm.admin.model.vo.Notice;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -116,5 +119,60 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	  public int writeGetCount() throws Exception {
 	    return adminDAO.writeGetCount(sqlSession);
 	  }
+
+
+	public ArrayList<Notice> noticeListPaging(int currentPage,int recordCountPerPage,int owEntirePk, int storeEntireFk) {
+		//시작 페이지 계산
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		BoardPaging noticePageData = new BoardPaging();
+		noticePageData.setStartPage(start);
+		noticePageData.setEndPage(end);
+		noticePageData.setOwEntirePk(owEntirePk);
+		noticePageData.setStoreEntireFk(storeEntireFk);
+		return adminDAO.noticeListPaging(sqlSession,noticePageData);
+	}
+	
+	public CouponPageData noticePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int owEntirePk, int storeEntireFk) {
+		BoardPaging noticePageData = new BoardPaging();
+		noticePageData.setOwEntirePk(owEntirePk);
+		noticePageData.setStoreEntireFk(storeEntireFk);
+		
+		int recordTotalCount = adminDAO.noticeGetTotal(sqlSession, noticePageData);
+		
+		int pageTotalCount = 0;
+
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData couponPageDataResult = new CouponPageData();
+		couponPageDataResult.setCurrentPage(currentPage);
+		couponPageDataResult.setStartNavi(startNavi);
+		couponPageDataResult.setEndNavi(endNavi);
+		couponPageDataResult.setPageTotalCount(pageTotalCount);
+		couponPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return couponPageDataResult;
+	}
 
 }

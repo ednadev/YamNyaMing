@@ -47,7 +47,7 @@ function blockBtn(){
 <body>
 	<header id="admin-login-header">
 		<h1>
-			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
 			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
@@ -117,7 +117,7 @@ function blockBtn(){
 					<td>${o.owId}</td>
 					<td>${o.owName} </td>
 					<td>${o.owEmail} </td>
-					<td>0${o.phone}</td>
+					<td>${o.phone}</td>
 					<td>${o.owBankAccount} </td>
 					<td><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
 				</tr>

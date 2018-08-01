@@ -18,11 +18,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 			</head>
 <body>
 <header id="admin-login-header">
 		<h1>
-			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
 			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
@@ -37,6 +39,8 @@
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
+	
+	<!-- 내용 ㄱ -->
 	<form action="Update.do" method="post">
      <div class="container">    
                   <div class="row">
@@ -84,8 +88,8 @@
             </div>
 
 </form>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<!-- 내용끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

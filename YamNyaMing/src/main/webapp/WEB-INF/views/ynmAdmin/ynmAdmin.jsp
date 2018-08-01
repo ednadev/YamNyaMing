@@ -12,7 +12,7 @@
 </head>
 <body>
 <header id="admin-login-header">
-	<h1><a href="ynmAdmin.do">YamNyaMing 관리자</a></h1>
+	<h1><a href="/ynmAdmin.do">YamNyaMing 관리자</a></h1>
 	<h1><a href="/enrollAdmin.do" id="enroll">회원가입</a></h1>
 </header>
 <section id="admin-login-section">

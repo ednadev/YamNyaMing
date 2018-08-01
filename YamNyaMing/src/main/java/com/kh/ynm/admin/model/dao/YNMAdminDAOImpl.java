@@ -9,9 +9,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ynm.admin.model.vo.AdminStatistics;
+import com.kh.ynm.admin.model.vo.BoardPaging;
 import com.kh.ynm.admin.model.vo.Notice;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -91,17 +94,11 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	//게시물 목록 표시(페이징)
 	@Override
 	public List<Notice> writeList(SqlSessionTemplate sqlSession,int offset, int noOfRecords) throws Exception{
-	List<Notice> writeList = new ArrayList<Notice>(); 
-	     
+		List<Notice> writeList = new ArrayList<Notice>(); 
 	    HashMap<String, Object> params = new HashMap<String, Object>(); 
-	     
 	    params.put("offset", offset); 
 	    params.put("noOfRecords", noOfRecords); 
-	     
-	    writeList = sqlSession.selectList("writeList", params); 
-	    this.noOfRecords = sqlSession.selectOne("writeGetCount");
-	     
-	    return writeList;
+	    return writeList = sqlSession.selectList("writeList", params); 
 	  }
 	 
 	// 페이징
@@ -109,6 +106,18 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public int writeGetCount(SqlSessionTemplate sqlSession) throws Exception {
 	  return sqlSession.selectOne("writeGetCount");
 	}
+
+	@Override
+	public ArrayList<Notice> noticeListPaging(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
+		List list= sqlSession.selectList("admin.noticeList", noticePageData);
+		return (ArrayList<Notice>)list;
+	}
+	@Override
+	public int noticeGetTotal(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
+		return sqlSession.selectOne("admin.noticeTotal", noticePageData);
+	}
+
+	
 
 
 

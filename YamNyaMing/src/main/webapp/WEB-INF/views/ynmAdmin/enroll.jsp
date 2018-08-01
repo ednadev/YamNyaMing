@@ -11,7 +11,6 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 <script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
 </head>
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script type="text/javascript" src="httpRequest.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">  //아이디 체크여부 확인 

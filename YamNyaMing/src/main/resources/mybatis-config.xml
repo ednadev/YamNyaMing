@@ -13,7 +13,6 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>		
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="reviewLikes"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberSetting" alias="settings"/>
-		<typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admin"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearch" alias="search"/>
@@ -21,6 +20,7 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.MenuInfo" alias="menuInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponEnroll" alias="couponEnrollData"/>
+		<typeAlias type="com.kh.ynm.admin.model.vo.BoardPaging" alias="noticePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponPageData" alias="couponPageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StorePageData" alias="storePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>

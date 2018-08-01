@@ -19,7 +19,7 @@
 <body>
 	<header id="admin-login-header">
 		<h1>
-			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
 			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="/logoutAdmin.do">로그아웃</a>
@@ -34,7 +34,9 @@
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
+
 	<section id="admin-main-section">
+
 	<div>
 		<div id="main-section-member">
 		
@@ -183,22 +185,27 @@
 		</div>
 		<div id="main-section-owner">
 			<h4>음식점 현황 (Top10)</h4>
-			<input type="button" onclick="test11();" value="ㄱㄱ"/>
-			<table border="1" class="sortable" id="tablList" class="tablList" name="tablList" id="userTb1">
+			<table border="1" class="sortable" id="tablList" class="tablList">
 			<thead>
 			<tr>
 				<th>상호명</th><th class="sorting">예약수</th><th class="sorting">평점</th><th class="sorting">추천수</th><th class="sorting">즐겨찾기</th>
 			</tr>
-			</thead>
-			<tbody>
 			
+		
+			</thead>
 
-
-
-																									
+			<tbody>
+			<c:forEach items="${list2}" var="store" step="1" end="10">
+			<td>${store.name}</td>
+			<td>${store.book}</td>
+			<td>${store.grade}</td>
+			<td>${store.jjim}</td>
+			<td>${store.favorite}</td>
+			</c:forEach>																						
 			</tbody>
 			</table>
 		</div>
+		
 		<div id="admin-main-board">
 			<h4>문의/답변관리</h4>
 			<table>
@@ -212,7 +219,7 @@
 				<th>점장문의</th><td>${list.ownerQ}건</td>
 			</tr>			
 			</table>
-		</div>		
+		</div>	
 	</div>
 		<div>
 			<div id="admin-main-stat">
@@ -295,17 +302,18 @@
 				var japan = ${list.japan}
 				var usa = ${list.usa}
 				var dessert = ${list.dessert}
-				var sul = ${list.sul}
-				var gita = ${list.gita}
+				var sul = ${list.bar}
+				var buffet = ${list.buffet}
+				var gita = ${list.other}
 				
 				new Chart(document.getElementById("store-chart"), {
 				    type: 'bar',
 				    data: {
-				      labels: ["한식","중식","일식","양식","디저트","술집","기타"],
+				      labels: ["한식","중식","일식","양식","디저트","술집","뷔페","기타"],
 				      datasets: [{
 				        label: "업종별",
-				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5","yellow","red"],
-				        data: [korea,china,japan,usa,dessert,sul,gita]
+				        backgroundColor: ["#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5","yellow","red","blue"],
+				        data: [korea,china,japan,usa,dessert,sul,buffet,gita]
 				      }]
 				    },
 				    options: {
@@ -315,42 +323,8 @@
 				      }
 				    }
 				});	
-				
-			
-
+	
 				</script>
-					<script>
-	function test11()
-	{
-		$.ajax({
-			url : "/storeList.do",
-			type : "get",
-			success : function(data)
-			{
-				console.log("성공");
-				var result = "";
-				for(var i=0;i<data.length;10)
-					{
-					result +="이름 : "+data[i].name+"/"
-							+"예약수 : "+data[i].book+"/"
-							+"평점 : "+data[i].grade+"/"
-							+"즐겨찾기 : "+data[i].jjim+"/"
-							+"좋아요 : "+data[i].favorite+"/"
-					}
-			$('#userTb1').html(result);	
-			},
-			
-			error : function() {
-				console.log("실패");
-			}
-		
-		});
-		
-	}
-	
-	</script>
-
-	
 			</div>
 
 		</div>

@@ -1,14 +1,12 @@
 package com.kh.ynm.admin.controller;
 
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,9 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.admin.model.service.YNMAdminServiceImpl;
 import com.kh.ynm.admin.model.vo.AdminStatistics;
-import com.kh.ynm.admin.model.vo.Paging;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
+import com.kh.ynm.owner.model.vo.StorePageData;
+import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -188,25 +189,27 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			}
 		}
 		@RequestMapping(value="/boardAdmin.do")
-		  public String list(Model model, HttpServletRequest req) throws Exception{
-		    int currentPageNo = 1; 
-		    int maxPost = 10; 
-		     
-		    if(req.getParameter("pages") != null)                            
-		      currentPageNo = Integer.parseInt(req.getParameter("pages"));  
-		     
-		    Paging paging = new Paging(currentPageNo, maxPost); 
-		     
-		    int offset = (paging.getCurrentPageNo() -1) * paging.getmaxPost(); 
-		     
-		    ArrayList<Notice> page = new ArrayList<Notice>(); 
-		    page = (ArrayList<Notice>) ynmAdminServiceImpl.writeList(offset, paging.getmaxPost());                              
-		    paging.setNumberOfRecords(ynmAdminServiceImpl.writeGetCount());		     
-		    paging.makePaging(); 
-		    model.addAttribute("page", page);
-		    model.addAttribute("paging", paging);
-		     
-		    return "ynmAdmin/boardAdmin";
+		  public ModelAndView boardAdmin(HttpSession session,HttpServletRequest request) throws Exception{
+			ModelAndView view = new ModelAndView();
+			if(session.getAttribute("owner")!=null) {
+				YNMAdmin admin = (YNMAdmin)session.getAttribute("admin");
+				
+				int currentPage = 1;
+				if(request.getParameter("currentPage")==null) currentPage=1;
+				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+				int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+				int naviCountPerPage = 5; //2.
+				ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage, admin.getAdmin_info_pk() , 1);
+				CouponPageData pageNavi = ynmAdminServiceImpl.noticePageNavi(currentPage,recordCountPerPage,naviCountPerPage,admin.getAdmin_info_pk() , 1);
+				view.addObject("noticeListData", noticeList);
+				view.addObject("pageNaviData", pageNavi);
+				view.setViewName("ynmAdmin/boardAdmin");
+			}else
+			{
+				view.setViewName("ynmAdmin/boardAdmin");
+				//error
+			}
+			return view;
 		  }
 	
 		
@@ -214,6 +217,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		public Object statAdmin(HttpSession session,AdminStatistics vo) 
 		{
 			vo =  ynmAdminServiceImpl.statAdmin();
+			ArrayList<YNMStoreInfo> list = ynmAdminServiceImpl.storeList();
 			ModelAndView view = new ModelAndView();
 			//오늘날짜
 			String today = new java.text.SimpleDateFormat("MM/dd").format(new java.util.Date());
@@ -255,6 +259,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			String sevenday = sdf5.format(c6.getTime()); // String으로 저장
 			vo.setSevenday(sevenday);
 			view.addObject("list",vo);
+			view.addObject("list2",list);
 			view.setViewName("ynmAdmin/mainAdmin");
 			return view;
 		}
@@ -280,12 +285,6 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 				return "ynmAdmin/enrollFailed";	
 			}
 		}
-		@RequestMapping(value="/storeList.do")
-		public ArrayList<YNMStoreInfo> storeList(HttpSession session,YNMStoreInfo vo)
-		{
-			ArrayList<YNMStoreInfo> list = ynmAdminServiceImpl.storeList();
-		    return list; 
-		}	
 
 		
 		

@@ -28,8 +28,9 @@ public class AdminStatistics {
 	private int japan;
 	private int usa;
 	private int dessert;
-	private int sul;
-	private int gita;
+	private int buffet;
+	private int bar;
+	private int other;
 	private int owall6day;
 	private int memall6day;
 	private int owall5day;
@@ -95,7 +96,7 @@ public AdminStatistics() {}
 public AdminStatistics(String today, String yesterday, String threeday, String fourday, String fiveday, String sixday,
 		String sevenday, int boy, int girl, int age1020, int age2030, int age3040, int age4050, int age5060, int age60,
 		int time0910, int time1112, int time1314, int time1516, int time1718, int time1924, int korea, int china,
-		int japan, int usa, int dessert, int sul, int gita, int owall6day, int memall6day, int owall5day,
+		int japan, int usa, int dessert, int buffet, int bar, int other, int owall6day, int memall6day, int owall5day,
 		int memall5day, int owall4day, int memall4day, int owall3day, int memall3day, int owall2day, int memall2day,
 		int owallyesterday, int memallyesterday, int owalltoday, int memalltoday, int ownerall, int memberall,
 		int todaynewowner, int todaynewmember, int yesterdaynewowner, int yesternewmember, int threedaynewowner,
@@ -134,8 +135,9 @@ public AdminStatistics(String today, String yesterday, String threeday, String f
 	this.japan = japan;
 	this.usa = usa;
 	this.dessert = dessert;
-	this.sul = sul;
-	this.gita = gita;
+	this.buffet = buffet;
+	this.bar = bar;
+	this.other = other;
 	this.owall6day = owall6day;
 	this.memall6day = memall6day;
 	this.owall5day = owall5day;
@@ -405,20 +407,28 @@ public void setDessert(int dessert) {
 	this.dessert = dessert;
 }
 
-public int getSul() {
-	return sul;
+public int getBuffet() {
+	return buffet;
 }
 
-public void setSul(int sul) {
-	this.sul = sul;
+public void setBuffet(int buffet) {
+	this.buffet = buffet;
 }
 
-public int getGita() {
-	return gita;
+public int getBar() {
+	return bar;
 }
 
-public void setGita(int gita) {
-	this.gita = gita;
+public void setBar(int bar) {
+	this.bar = bar;
+}
+
+public int getOther() {
+	return other;
+}
+
+public void setOther(int other) {
+	this.other = other;
 }
 
 public int getOwall6day() {
@@ -892,9 +902,4 @@ public int getOwnerQ() {
 public void setOwnerQ(int ownerQ) {
 	this.ownerQ = ownerQ;
 }
-
-
-
-
-
 }
