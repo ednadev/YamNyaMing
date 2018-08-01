@@ -75,6 +75,7 @@
 	var html;
 	function reviewFilesUpload(){
 		$("#mainImage").trigger('click');
+		$("#menuImage").trigger('click');
 	}
 
 	function reviewPhotoSelect(e){
@@ -159,7 +160,7 @@
 		var menuTapArr = document.getElementsByClassName("menuTapClass");
 		for(var i = 0; i<menuTapArr.length;i++)
 		{
-			if(menuTapArr[i].id=menuTapId)
+			if(menuTapArr[i].id==menuTapId)
 			{
 				menuTapArr[i].style.display = "block";
 			}else{
@@ -175,7 +176,6 @@
 		var menuPrice = $("#owRecommandMenuPrice").val();
 		var menuExplain = $("#menuDesc").val();
 		var storeIndexValue =storeIndex;
-		console.log(storeIndexValue  +" " + menuCate +" " + menu+" " + menuPrice +" " +menuExplain);
 		
 		$.ajax({
 			url:"/menuTextNewAdd.do",
@@ -189,11 +189,65 @@
 			type : "post",
 			success : function(data){
 				console.log(data);
+				if(data.result=="success"){
+					$('#enrollMenuList').append();
+				}
+				else{
+					alert("메뉴 등록에 실패했습니다.");
+				}
 			},
 			error : function(){
 				console.log("실패");	
 			}
 		});
+	}
+	
+	function menuEditMode(openGroup, closeGroup)
+	{
+		var openArr = document.getElementsByClassName(openGroup);
+		var closeArr =document.getElementsByClassName(closeGroup);
+		console.log(openArr.length + " " + closeArr.length);
+		$('#'+openGroup).css('display','block');
+		for(var i = 0; openArr.length;i++)
+		{
+			
+			//openArr[i].setAttribute("display","block");
+			//openArr[i].style.display = "block";
+		}
+		for(var i = 0; closeArr.length;i++)
+		{
+			closeArr[i].style.display = "none";
+		}
 		
+	}
+	
+	function textMenuUpdate(menuIndex, updateInputClass)
+	{
+		var inputArr = document.getElementsByClassName(updateInputClass);
+		var menuSubTitle = inputArr[0].value;
+		var menuExplain = inputArr[1].value; 
+		var menuCost = inputArr[2].value;
+		
+		$.ajax({
+			url:"/textMenuUpdate.do",
+			data : {
+						menuIndex:menuIndex,
+						menuSubTitle:menuSubTitle,
+						menuExplain:menuExplain,
+						menuCost:menuCost,
+				   },
+			type : "post",
+			success : function(data){
+				if(data==1)
+				{
+					alert("메뉴 업데이트 성공");
+				}else{
+					alert("메뉴 업데이트 실패");
+				}
+			},
+			error : function(){
+				console.log("실패");	
+			}
+		});
 	}
 	

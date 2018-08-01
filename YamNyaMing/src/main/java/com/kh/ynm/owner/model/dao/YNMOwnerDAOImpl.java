@@ -129,11 +129,6 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	}
 
 	@Override
-	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
-		return sqlSession.update("stores.detailInfoHeadPhotoUpdate", paramVo);
-	}
-
-	@Override
 	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex) {
 		return sqlSession.selectOne("stores.storeMenuDataGet", storeInfoIndex);
 	}
@@ -150,8 +145,9 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return (ArrayList<MenuInfo>)list;
 	}
 
-	public int storeDetailMenuInfoUpdate(SqlSessionTemplate sqlSession, YNMStoreDetailInfo storeDetailInfo) {
-		return sqlSession.update("stores.detailInfoUpdate",storeDetailInfo);
+	@Override
+	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo) {
+		return sqlSession.update("stores.storeTextMenuUpdate", menuInfo);
 	}
 
 }

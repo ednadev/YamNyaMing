@@ -243,21 +243,30 @@
 		</div>
 		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
-			<c:if test="${menuInfoList!=null}">
-				<c:forEach var="menuTitle" items="${menuTitleGroup}">
-					<button onclick=""> ${menuTitle} </button>
-				</c:forEach>
-				<c:forEach var="menu" items="${menuInfoList}">
-					<div class="menuTapClass" id="menu_${menu.owMenuInfoPk}" onclick="menuChangeMode(menu_${menu.owMenuInfoPk});">
-						<form action="/menuUpdate.do" method="post">
+			<div id="enrollMenuList">
+				<c:if test="${menuInfoList!=null}">
+					<c:forEach var="menuTitle" items="${menuTitleGroup}">
+						<button class="menuTitleBtn" onclick="menuChangeMode('${menuTitle} ');"> ${menuTitle} </button>
+					</c:forEach>
+					<c:forEach var="menu" items="${menuInfoList}">
+						<div class="menuTapClass" id="${menu.menuTitle} " style="border:1px solid lightgray;">
+							<input type="hidden" name="menuIndex" value="${menu.owMenuInfoPk}">
 							메뉴 이름 : <span id="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span>
-							<input type="text" id="menu_input_${menu.owMenuInfoPk}" name="menu_titel" value="${menu.subTitle}"> <br>
-							메뉴 설명 : <span id="menu_${menu.owMenuInfoPk}"> ${menu.explain}  </span>  <br>
-							메뉴 가격 : <span id="menu_${menu.owMenuInfoPk}"> ${menu.menuCost} </span> <br>
-						</form>
-					</div>
-				</c:forEach>
-			</c:if>
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuTitle" value="${menu.subTitle}" > <br>
+							
+							메뉴 설명 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuExplain" value="${menu.explain}" > <br>
+							
+							메뉴 가격 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuCost" value="${menu.menuCost}" "><br>
+							
+							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}')">메뉴 수정</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="">메뉴 삭제</button>
+							<button type="button" id="menu_edit_${menu.owMenuInfoPk}" onclick="textMenuUpdate('${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}');" >수정 완료</button>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
 			<c:if test="${menuPhotoList!=null}">
 				<c:forEach var="menuPhoto" items="${menuPhotoList}">
 					<input type="hidden" id="${menuPhoto.owStorePhotoPk}_route" value="${menuPhoto.photoRoute}">
@@ -333,7 +342,10 @@
 				}
 				else storeDivArr[i].style.display="none";
 			}
+			menuChangeMode("${firstMenutitle} ");
 		}
+		
+		
 	</script>
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>

@@ -37,7 +37,7 @@ public interface YNMOwnerDAO {
 	public int storeInfoDetailEdiy(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD);
 	public ArrayList<OwnerUploadPhoto> headPhotoList(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
 	public int storeHeadPhotoDelete(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
-	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
 	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex);
 	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, String storeMenuList);
+	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo);
 }

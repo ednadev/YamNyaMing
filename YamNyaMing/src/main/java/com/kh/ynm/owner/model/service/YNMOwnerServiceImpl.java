@@ -241,12 +241,12 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return result;
 	}
 	
-	@Override
+	/*@Override
 	public int storeDetailInfoHeadPhotoUpdate(OwnerUploadPhoto paramVo) {
 		int result = ynmOwnerDAO.storeDetailInfoHeadPhotoUpdate(sqlSession, paramVo);
 		return result;
 	}
-
+*/
 	@Override
 	public StoreMenuData storeMenuData(int storeInfoIndex) {
 		StoreMenuData storeMenuData = ynmOwnerDAO.storeMenuData(sqlSession, storeInfoIndex);
@@ -259,10 +259,10 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return list;
 	}
 
-	public int storeDetailMenuInfoUpdate(YNMStoreDetailInfo storeDetailInfo) {
-		int result = ynmOwnerDAO.storeDetailMenuInfoUpdate(sqlSession, storeDetailInfo);
-		System.out.println("업데이트 결과 " + result);
-		return result;
+	@Override
+	public int textMenuUpdate(MenuInfo menuInfo) {
+		int updateResult = ynmOwnerDAO.textMenuUpdate(sqlSession, menuInfo);
+		return updateResult;
 	}
 
 

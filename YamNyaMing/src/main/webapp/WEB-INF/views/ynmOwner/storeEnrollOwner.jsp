@@ -261,7 +261,7 @@
 			//menuSelectMain.add(option);
 			for(var i = 0; i<menuSelect.length;i++){
 				var option = document.createElement("option");
-				option.selected = true;
+				if(i==0||i==menuSelect.length-1)option.selected = true;
 				option.value =  $('input[name=owMenuType]').val();
 				option.text = $('input[name=owMenuType]').val();
 				menuSelect[i].add(option);

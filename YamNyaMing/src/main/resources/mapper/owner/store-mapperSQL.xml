@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="stores">
-	
+<mapper  namespace="stores">
 	<!--가게 등록 -->
 	<insert id="storeAdd" parameterType="storeInfo">
 		insert into owner_store_info_tb 
@@ -19,7 +18,7 @@
  	<!-- 메뉴 업로드 -->
  	<insert id="menuUpload" parameterType="menuInfo">
  		insert into owner_menu_info_detail_tb 
- 		values(owner_menu_info_detail_tb_SEQ.nextval,#{menuId}, #{menuTitle}, #{subTitle}, #{explain}, #{menuCost})
+ 		values(owner_menu_info_detail_tb_SEQ.nextval,#{owStoreInfoFk},#{menuId}, #{menuTitle}, #{subTitle}, #{explain}, #{menuCost})
  	</insert>
  	
  	<!--등록한 메뉴 아이디로 선택하기 -->
@@ -77,7 +76,9 @@
             	where OW_ENTIRE_FK=ow_store_info_pk) as storeStarPoint 
 			from owner_store_info_tb,
 			(select * from owner_store_detail_tb, owner_store_photo_tb
-			where OW_STORE_PHOTO_PK  in (TRIM(REGEXP_SUBSTR(ow_store_head_photo, '[^,]+')),  null))
+			where OW_STORE_PHOTO_PK = (select min(OW_STORE_PHOTO_PK) 
+			from owner_store_photo_tb
+			where ow_store_info_fk = OW_STORE_INDEX and OW_PHOTO_TYPE_FK = 3))
 			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{owEntirePk}
  	</select>
  	
@@ -113,8 +114,7 @@
  		OW_STORE_TABLE_INFO as storeTableInfo,
  		OW_BUDGET as budgetInfo,
  		OW_SUB_INFO as owSubInfo,
- 		OW_DRINK_LIST_INFO as owDrinkListInfo,
- 		OW_STORE_HEAD_PHOTO as owStoreHeadPhoto
+ 		OW_DRINK_LIST_INFO as owDrinkListInfo
  		from owner_store_info_tb oi, owner_store_detail_tb od
  		where OW_STORE_INFO_PK = #{storeIndex} and OW_STORE_INDEX =  #{storeIndex}
  	</select>
@@ -168,13 +168,6 @@
          where OW_STORE_INDEX =#{storeInfoIndex}
 	</select>
 	
-	<!-- 가게 상세 정보 업데이트 -->
-	<update id="detailInfoUpdate" parameterType="storeDetailInfo">
-		update owner_store_detail_tb
-		set OW_STORE_MENU_INFO_DETAIL = #{owStoreMenuInfoDetail}
-		where OW_STORE_DETAIL_PK =  #{owStoreDetailPk}
-	</update>
-	
 	
 	<!-- 가게 메뉴 리스트 불러오기 -->
 	<select id="storeMenuInfoList" resultType="menuInfo">
@@ -192,5 +185,11 @@
 		</foreach>
 	</select>
  	
+ 	<update id="storeTextMenuUpdate" parameterType="menuInfo">
+ 		update owner_menu_info_detail_tb
+ 		set 
+ 		OW_MENU_SUB_TITLE = #{subTitle} ,OW_MENU_SUB_EXPLAIN = #{explain}, OW_MENU_SUB_COST = #{menuCost}
+ 		where OW_MENU_INFO_DETAIL_PK = #{owMenuInfoPk}
+ 	</update>
 	
 </mapper>

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -235,6 +236,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						{
 							MenuInfo menuInfo = new MenuInfo();
 							String menuId = System.currentTimeMillis()+"_"+owner.getOwEntirePk()+"_"+menuArr[i];
+							menuInfo.setOwStoreInfoFk(storeInfoIndex);
 							menuInfo.setMenuId(menuId);
 							menuInfo.setMenuTitle(menuCateArr[i]);
 							menuInfo.setSubTitle(menuArr[i]);
@@ -551,6 +553,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 							menuTitleList.add(menuInfoList.get(i).getMenuTitle());
 						}
 					}
+					if(menuInfoList.size()>0)view.addObject("firstMenutitle", menuTitleList.get(0));
 					view.addObject("menuTitleGroup", menuTitleList );
 					view.addObject("menuInfoList",menuInfoList);
 				}
@@ -593,19 +596,13 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					}
 				}
 				paramVo.setHeadStoreList(updateHeadPhotoArr);
-				
-				int detailInfoUpdate = ynmOwnerServiceImpl.storeDetailInfoHeadPhotoUpdate(paramVo);
-				if(detailInfoUpdate>0) {
-					File file = new File(paramVo.getPhotoRoute() +"/" + paramVo.getRemakeName());
-					if(file.exists())
-					{
-						file.delete();
-						return "delSuccess";
-					}else {
-						return "delFail";
-					}
+				File file = new File(paramVo.getPhotoRoute() +"/" + paramVo.getRemakeName());
+				if(file.exists())
+				{
+					file.delete();
+					return "delSuccess";
 				}else {
-					
+					return "delFail";
 				}
 			}
 			else {
@@ -699,9 +696,9 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping("/menuTextNewAdd.do")
 	public String menuTextNewAdd(HttpSession session,  HttpServletRequest request)
 	{
+		JSONObject obj = new JSONObject();
 		if(session.getAttribute("owner")!=null)
 		{
-			
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			String menuCate = request.getParameter("menuCate");
 			String menu = request.getParameter("menu");
@@ -714,6 +711,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			MenuInfo menuInfo = new MenuInfo();
 			String menuId = System.currentTimeMillis()+"_"+owner.getOwEntirePk()+"_"+menu;
 			
+			menuInfo.setOwStoreInfoFk(storeIndex);
 			menuInfo.setMenuId(menuId);
 			menuInfo.setMenuTitle(menuCate);
 			menuInfo.setSubTitle(menu);
@@ -721,42 +719,57 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			menuInfo.setMenuCost(Integer.parseInt(menuPrice));
 			
 			int menuResult = ynmOwnerServiceImpl.ownerMenuUpload(menuInfo);
+			
 			if(menuResult>0)
 			{
 				int menuIndex =  ynmOwnerServiceImpl.selectMenuWithId(menuId);
 				if(menuIndex>0) {
 					menuInfoList+=menuIndex;
-					int detailInfoUpdateResult = storeDetailMenuInfoUpdate(storeIndex, menuInfoList);
-					if(detailInfoUpdateResult>0)
-					{
-						return "success";
-					}
-					else
-					{
-						return "detailUpdateFail";
-					}
+		
+					obj.put("result", "success");
+					obj.put("storeIndex", storeIndex);
+					obj.put("menuId", menuId);
+					obj.put("menuCate", menuCate);
+					obj.put("menuTitle", menu);
+					obj.put("menuExplain", menuExplain);
+					obj.put("menuCost", menuPrice);
+					return obj.toJSONString();
 				}else {
-					return "menuIndexGetFail";
+					obj.put("result", "menuIndexGetFail");
+					return obj.toJSONString();
 				}
 			}
 			else
 			{
-				return "insertFail";
+				obj.put("result", "insertFail");
+				return obj.toJSONString();
 			}
 				
 		}
 		else {
-			return "ownerNoneFail";
+			obj.put("result", "ownerNoneFail");
+			return obj.toJSONString();
 		}
 	}
 	
-	public int storeDetailMenuInfoUpdate(int storeIndex, String newMenuInfoList)
+	@ResponseBody
+	@RequestMapping("/textMenuUpdate.do")
+	public String textMenuUpdate(HttpSession session, HttpServletRequest request)
 	{
-		YNMStoreDetailInfo storeDetailInfo = new YNMStoreDetailInfo();
-		storeDetailInfo.setOwStoreInfoFk(storeIndex);
-		storeDetailInfo.setOwStoreMenuInfoDetail(newMenuInfoList);
-		return  ynmOwnerServiceImpl.storeDetailMenuInfoUpdate(storeDetailInfo);
+		int menuIndex = Integer.parseInt(request.getParameter("menuIndex"));
+		String menuSubTitle = request.getParameter("menuSubTitle");
+		String menuExplain  = request.getParameter("menuExplain");
+		int menuCost = Integer.parseInt(request.getParameter("menuCost"));
+		
+		MenuInfo menuInfo = new MenuInfo();
+		menuInfo.setOwMenuInfoPk(menuIndex);
+		menuInfo.setSubTitle(menuSubTitle);
+		menuInfo.setExplain(menuExplain);
+		menuInfo.setMenuCost(menuCost);
+		
+		int menuUpdate = ynmOwnerServiceImpl.textMenuUpdate(menuInfo);
+		
+		return menuUpdate + "";
 	}
-
 
 }
