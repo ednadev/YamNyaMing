@@ -279,6 +279,16 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMReviewJjim> list=memberDAO.jjimInfo(sqlSession,memberNo);
 		return list;
 	}
+	//사용자가 리뷰 올린 개수
+	public int reviewTotal(int memberEntireNo) {
+		int reviewTotal=memberDAO.reviewTotal(sqlSession,memberEntireNo);
+		return reviewTotal;
+	}
+	//사용자를 팔로우 한 인원 수
+	public int followTotal(int memberEntireNo) {
+		int followTotal=memberDAO.followTotal(sqlSession,memberEntireNo);
+		return followTotal;
+	}
 
 
 	

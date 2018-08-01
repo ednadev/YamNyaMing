@@ -188,8 +188,18 @@
 		from 
 			member_follow_tb
 		where 
-			mb_follow_user_id_fk=#{followMemberIdNo}
+			mb_follow_user_id_fk=#{memberEntireNo}
 	</select>
+	
+	<select id="reviewTotal" resultType="int">
+		select
+			count(*)
+		from 
+			member_store_review_tb
+		where 
+			mb_entire_fk=#{memberEntireNo}
+	</select>
+	
 	
 	
 

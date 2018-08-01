@@ -64,10 +64,23 @@ function like(storeReviewNo,memberEntireNo,pId){
 					var like=document.getElementById(pId).innerHTML;
 					var result=parseInt(like)-1;
 					document.getElementById(pId).innerHTML=result;
+					name[0].style.backgroundColor="white";
+					name[0].style.border="1px solid #fb0";
+					name[1].innerHTML="";
+					name[1].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/like.png'>");
+					name[2].style.color="#fb0";
+					name[3].style.color="#fb0";
+					
 				}else if(data==2){
 					var like=document.getElementById(pId).innerHTML;
 					var result=parseInt(like)+1;
 					document.getElementById(pId).innerHTML=result;
+					name[0].style.backgroundColor="#fb0";
+					name[1].innerHTML="";
+					name[1].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/like-white.png'>");
+					name[2].style.color="white";
+					name[3].style.color="white";
+					
 				}else{
 					alert("실패");
 				}	
@@ -75,7 +88,9 @@ function like(storeReviewNo,memberEntireNo,pId){
 		});	
 	
 }
-function jjim(storeReviewNo,memberEntireNo,pId){
+function jjim(storeReviewNo,memberEntireNo,pId,jjimName){
+	var name=document.getElementsByName(jjimName);
+	console.log(name[4]);
 	$.ajax({
 		url : "/jjimInsert.do",
 		data : {memberEntireNo : memberEntireNo,storeReviewNo:storeReviewNo},
@@ -86,11 +101,25 @@ function jjim(storeReviewNo,memberEntireNo,pId){
 				var jjim=document.getElementById(pId).innerHTML;
 				var result=parseInt(jjim)-1;
 				document.getElementById(pId).innerHTML=result;
+				
+				name[4].style.backgroundColor="white";
+				name[4].style.border="1px solid #fb0";
+				name[5].innerHTML="";
+				name[5].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart-yellow.png'>");
+				name[6].style.color="#fb0";
+				name[7].style.color="#fb0";
+				
 			}else if(data==2){
 				alert("찜 했다");
 				var jjim=document.getElementById(pId).innerHTML;
 				var result=parseInt(jjim)+1;
 				document.getElementById(pId).innerHTML=result;
+				name[4].style.backgroundColor="#fb0";
+				name[5].innerHTML="";
+				name[5].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart.png'>");
+				name[6].style.color="white";
+				name[7].style.color="white";
+				
 			}else{
 				alert("실패");
 			}

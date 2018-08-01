@@ -589,8 +589,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			YNMStoreReview tempStoreReview = ysrList.get(i);
 			int likeTotal=ynmMemberServiceImpl.likeTotal(ysrList.get(i).getStoreReviewNo());
 			int jjimTotal=ynmMemberServiceImpl.jjimTotal(ysrList.get(i).getStoreReviewNo());
+			int reviewTotal=ynmMemberServiceImpl.reviewTotal(ysrList.get(i).getMemberEntireNo());
+			int followTotal=ynmMemberServiceImpl.followTotal(ysrList.get(i).getMemberEntireNo());
 			ysrList.get(i).setLikeTotal(likeTotal);
 			ysrList.get(i).setJjimTotal(jjimTotal);
+			ysrList.get(i).setFollowTotal(followTotal);
+			ysrList.get(i).setReviewTotal(reviewTotal);
 			if(imgList!=null && !imgList.isEmpty())
 			{
 				for(int j =0 ; j<imgList.size();j++) 

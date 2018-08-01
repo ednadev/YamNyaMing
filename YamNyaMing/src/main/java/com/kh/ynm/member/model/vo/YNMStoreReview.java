@@ -18,6 +18,8 @@ public class YNMStoreReview {
 	private String[] reviewImgArr;
 	private int likeTotal;
 	private int jjimTotal;
+	private int reviewTotal;
+	private int followTotal;
 	private String memberNickName;
 	private ArrayList<YNMFollow> followList=new ArrayList<YNMFollow>();
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
@@ -25,6 +27,18 @@ public class YNMStoreReview {
 	private int myJjimChk = 0;
 	
 	
+	public int getReviewTotal() {
+		return reviewTotal;
+	}
+	public void setReviewTotal(int reviewTotal) {
+		this.reviewTotal = reviewTotal;
+	}
+	public int getFollowTotal() {
+		return followTotal;
+	}
+	public void setFollowTotal(int followTotal) {
+		this.followTotal = followTotal;
+	}
 	public int getMyJjimChk() {
 		return myJjimChk;
 	}

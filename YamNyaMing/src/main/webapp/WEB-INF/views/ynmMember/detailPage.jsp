@@ -353,7 +353,7 @@
 		function starPoint(star){
 			lock(star);
 			document.reviewform.reviewStar.value=star;
-		} 
+		}
 
       </script>
 		</div>
@@ -414,7 +414,7 @@
 					</div>
 					<div>
 						<p>${r.memberNickName}</p>
-						<p>4 리뷰, 4팔로워</p>				
+						<p>리뷰${r.reviewTotal}, 팔로워${r.followTotal}</p>				
 					</div>
 					<c:if test="${follow!=null }">
 						<c:forEach items="${follow}" var="f">
@@ -479,29 +479,31 @@
 					<p>정범진님, 김수한님 외 18명이 좋아합니다.</p>
 					
 					<p>
-						
+				<%-- 		
 						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
 								<button onclick="sameMember();">
 				 				<div></div>
 				 				<p>좋아요</p>
 				 				<p id="${r}">${r.likeTotal}</p>
 				 				</button>
-						</c:if>		
-					<c:if test="${sessionScope.member!=null && sessionScope.member.memberEntireNo != r.memberEntireNo }">
+						</c:if>	 
+						 && sessionScope.member.memberEntireNo != r.memberEntireNo 
+						--%>	
+					<c:if test="${sessionScope.member!=null}">
 
 							
 				 			<c:if test="${r.myLikeChk==0}">
-				 				<button onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
-				 				<div></div>
-				 				<p>좋아요</p>
-				 				<p id="${r}">${r.likeTotal}</p>
+				 				<button name="${r}" onmouseover="likeover(${r});" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+				 				<div name="${r}"></div>
+				 				<p name="${r}">좋아요</p>
+				 				<p name="${r}" id="${r}">${r.likeTotal}</p>
 				 				</button>
 				 			</c:if>
 				 			<c:if test="${r.myLikeChk==1}">
-				 				<button style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
-					 				<div><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
-					 				<p style="color:white;">좋아요</p>
-					 				<p id="${r}" style="color:white;">${r.likeTotal}</p>
+				 				<button name="${r}" style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
+					 				<p name="${r}" style="color:white;">좋아요</p>
+					 				<p name="${r}" id="${r}" style="color:white;">${r.likeTotal}</p>
 				 				</button>
 				 			</c:if>
 				 						
@@ -511,28 +513,28 @@
 				 		<button onclick="nomember();"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>				
 					</c:if>
 					
-						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+	<%-- 					<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
 								<button onclick="sameMember();">
 				 				<div></div>
 				 				<p>찜하기</p>
 				 				<p id="${r}">${r.likeTotal}</p>
 				 				</button>
 						</c:if>		
+					 --%>
 					
-					
-							<c:if test="${sessionScope.member!=null  && sessionScope.member.memberEntireNo != r.memberEntireNo}">
+							<c:if test="${sessionScope.member!=null}">
 				 			<c:if test="${r.myJjimChk==0}">
-				 				<button onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');">
-								<div></div>
-								<p>찜하기</p>
-								<p id="${r}${r}">${r.jjimTotal}</p>
+				 				<button name="${r}" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+								<div name="${r}"></div>
+								<p name="${r}">찜하기</p>
+								<p name="${r}" id="${r}${r}">${r.jjimTotal}</p>
 								</button>
 				 			</c:if>
 				 			<c:if test="${r.myJjimChk==1}">
-				 				<button style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');">
-					 				<div><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
-					 				<p style="color:white;">찜하기</p>
-					 				<p id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
+				 				<button name="${r}" style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
+					 				<p name="${r}" style="color:white;">찜하기</p>
+					 				<p name="${r}" id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
 				 				</button>
 				 			</c:if>
 				 						
