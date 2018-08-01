@@ -490,8 +490,38 @@
 					</div>
 					<div>${search.owStoreComment}</div>
 				</div>
-				<button>예약하기</button>
+				<script>
+				 function popupPost(value){
+	               var reserve = document.reserve;
+	               var pop = window.open;
+				   var windowW = 560;
+				   var windowH = 560;
+				   var left = Math.ceil((window.screen.width - windowW) / 2);
+				   var top = Math.ceil((window.screen.height - windowH) / 2);
+	               pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
+	               reserve.target="popup";
+	               reserve.method="get";
+	               reserve.submit();
+	            }
+				 
+					function idSearch() {
+						var windowW = 400; // 창의 가로 길이
+						var windowH = 400; // 창의 세로 길이
+						var left = Math.ceil((window.screen.width - windowW) / 2);
+						var top = Math.ceil((window.screen.height - windowH) / 2);
+
+						window.open("/idSearchPage.do", "pop_01", "l top=" + top + ", left="
+								+ left + ", height=" + windowH + ", width=" + windowW);
+					}
+				 
+	            </script>  	            
+	                
+	            <form action="reservation.do" method="get" name="reserve">
+	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
+	            </form>
 				<button>리뷰쓰기</button>
+				
+
 			</div>
 		</c:forEach>
 		<div class="content-title"></div>
