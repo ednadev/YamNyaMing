@@ -14,16 +14,35 @@ public class YNMStoreReview {
 	private char jjimCheck;
 	private Date reviewDate;
 	private char reviewOpenCheck;
-	private String reviewImgList;
+	private String reviewImgList="";
 	private String[] reviewImgArr;
 	private int likeTotal;
 	private int jjimTotal;
 	private String memberNickName;
+	private ArrayList<YNMFollow> followList=new ArrayList<YNMFollow>();
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
+	private int myLikeChk = 0;
+	private int myJjimChk = 0;
 	
 	
-	
-	
+	public int getMyJjimChk() {
+		return myJjimChk;
+	}
+	public void setMyJjimChk(int myJjimChk) {
+		this.myJjimChk = myJjimChk;
+	}
+	public int getMyLikeChk() {
+		return myLikeChk;
+	}
+	public void setMyLikeChk(int myLikeChk) {
+		this.myLikeChk = myLikeChk;
+	}
+	public ArrayList<YNMFollow> getFollowList() {
+		return followList;
+	}
+	public void setFollowList(ArrayList<YNMFollow> followList) {
+		this.followList = followList;
+	}
 	public int getJjimTotal() {
 		return jjimTotal;
 	}

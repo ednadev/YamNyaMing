@@ -53,6 +53,8 @@ function deleteImageAction(index){
 
 
 function like(storeReviewNo,memberEntireNo,pId){
+	var name=document.getElementsByName(pId);
+	console.log(name[0]);
 	$.ajax({
 			url : "/likeInsert.do",
 			data : {memberEntireNo : memberEntireNo,storeReviewNo:storeReviewNo},
@@ -126,4 +128,11 @@ function follow(memberEntireNo,userMemberEntireNo,btnName){
 			}
 		}
 	});	
+}
+
+function nomember(){
+	alert("로그인후 이용해주세요");
+}
+function sameMember(){
+	alert("나쁜놈");
 }

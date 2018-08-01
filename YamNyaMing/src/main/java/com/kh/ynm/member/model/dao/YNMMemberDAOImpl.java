@@ -239,6 +239,21 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int jjimTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		return sqlSession.selectOne("review.jjimTotal",storeReviewNo);
+	}
+
+	public ArrayList<YNMFollow> followInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.followInfo",memberNo);
+		return (ArrayList<YNMFollow>)list;
+	}
+
+	public ArrayList<YNMReviewLike> likeInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.likeInfo",memberNo);
+		return (ArrayList<YNMReviewLike>)list;
+	}
+
+	public ArrayList<YNMReviewJjim> jjimInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.jjimInfo",memberNo);
+		return (ArrayList<YNMReviewJjim>)list;
 	}	
 
 }

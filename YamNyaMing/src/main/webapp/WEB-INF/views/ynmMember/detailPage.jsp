@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=1">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=2">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -292,6 +292,7 @@
 			</div>
 		
 		<script>
+		
         	var locked=0;
 			function show(star){
 			if(locked)
@@ -401,6 +402,8 @@
 			</form>
 			<h4>리뷰</h4>
 			<p><span>최신순</span> | <span>인기순</span></p>
+			
+
 				<c:forEach items="${review}" var="r">
 			<div>
 				<div>
@@ -413,31 +416,156 @@
 						<p>${r.memberNickName}</p>
 						<p>4 리뷰, 4팔로워</p>				
 					</div>
-				 	<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>				
+					<c:if test="${follow!=null }">
+						<c:forEach items="${follow}" var="f">
+						<c:choose>
+							<c:when test="${f.followMemberIdNo==r.memberEntireNo}">
+							<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>
+							</c:when>
+							<c:otherwise>
+							<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>
+							</c:otherwise>
+						</c:choose>	
+						</c:forEach>
+					</c:if>
+					
+				
+					<c:if test="${follow==null && sessionScope.member!=null}">
+				 		<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>				
+					</c:if>
+					
+					<c:if test="${sessionScope.member.memberEntireNo==null}">
+					<button onclick="nomember();">팔로우</button>
+					</c:if>
+					
 				</div>
 				<div>
 					<p>
-						<span class="star-yellow"></span>
-						<span class="star-yellow"></span>
-						<span class="star-yellow"></span>
-						<span class="star-yellow"></span>
-						<span class="star-yellow"></span>
-						4.5 / 오랫동안 기억에 남을 만한 곳이에요.
+						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
+						<span class="star-full"></span>
+						</c:forEach>
+						<c:forEach var="i" begin="1" end="${5- r.reviewStar}" step="1">
+						<span class="star-yellow2"></span>
+						</c:forEach>
+						
+						${r.reviewStar} / 
+						<c:choose>
+							<c:when test="${r.reviewStar ==1}">
+								실망이에요. 집에서 먹는게 나을 뻔 했어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==2}">
+								평균이하! 이정도 레스토랑은 어디에나 있죠.
+							</c:when>
+							<c:when test="${r.reviewStar ==3}">
+								보통이에요. 이정도면 괜찮네요.
+							</c:when>
+							<c:when test="${r.reviewStar ==4}">
+								인상적이네요.꼭 추천하고 싶어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==5}">
+								완벽 그 자체!! 환상적이에요.
+							</c:when>
+						</c:choose>
 					</p>
-					<p>티본을 메인으로 다양한 단품을 먹어봤습니다. 육즙 폭팔한 티본, 생면 파스타와 피자 등 모두 맛있게 먹었습니다. 
-					자극적이지 않아 더 좋았고 친절한 서비스도 감동~~^^ 멀리까지 찾아간 보람이 있었어요.</p>
+					<p>${r.reviewContent}</p>
 					<div>
-						<div></div>
+					<c:forEach items="${r.photoObjList}" var="photo">
+						<div>
+	
+							<img id="img" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
+		</div>
+						</c:forEach>
 					</div>
 					<p>정범진님, 김수한님 외 18명이 좋아합니다.</p>
-					<p><button onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>
-					<button onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');"><div></div><p>찜하기</p><p id="${r}${r}">${r.jjimTotal}</p></button>
-					<button><div></div><p>댓글 0</p></button>
-					<button><div></div><p>공유</p></button></p>
+					
+					<p>
+						
+						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>좋아요</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>		
+					<c:if test="${sessionScope.member!=null && sessionScope.member.memberEntireNo != r.memberEntireNo }">
+
+							
+				 			<c:if test="${r.myLikeChk==0}">
+				 				<button onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+				 				<div></div>
+				 				<p>좋아요</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 			<c:if test="${r.myLikeChk==1}">
+				 				<button style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+					 				<div><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
+					 				<p style="color:white;">좋아요</p>
+					 				<p id="${r}" style="color:white;">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 		<button onclick="nomember();"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>				
+					</c:if>
+					
+						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>찜하기</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>		
+					
+					
+							<c:if test="${sessionScope.member!=null  && sessionScope.member.memberEntireNo != r.memberEntireNo}">
+				 			<c:if test="${r.myJjimChk==0}">
+				 				<button onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');">
+								<div></div>
+								<p>찜하기</p>
+								<p id="${r}${r}">${r.jjimTotal}</p>
+								</button>
+				 			</c:if>
+				 			<c:if test="${r.myJjimChk==1}">
+				 				<button style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');">
+					 				<div><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
+					 				<p style="color:white;">찜하기</p>
+					 				<p id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 	<button onclick="nomember();"><div></div>
+					<p>찜하기</p>
+					<p id="${r}${r}">${r.jjimTotal}</p>
+					</button>				
+					</c:if>
+
   				</div>
   				<div>
-  					<div></div>
-  					<input type="text" placeholder="댓글을 입력해주세요">
+  					<div>
+  						<c:if test="${sessionScope.member==null }">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo==1}">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo!=1}">
+  							<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
+  						</c:if>
+  						
+  					</div>
+  					
+  					<form action="/storeUnderReviewInsert.do">
+  					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
+					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
+  					<input type="text" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<input type="submit" value="등록">
+  					</form>
   				</div>
 			</div>
 			</c:forEach>
@@ -448,7 +576,7 @@
 		<div id="Map" class="tabInfo" style="display:none;">
 			<div id="map-info"></div>
 			<script>
-			//지도
+/* 			//지도
 			var mapContainer = document.getElementById('map-info'), // 지도를 표시할 div 
 			mapOption = {
 			    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -484,7 +612,7 @@
 			    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			    map.setCenter(coords);
 			} 
-			}); 
+			});  */
 			</script>
 		</div>
 	

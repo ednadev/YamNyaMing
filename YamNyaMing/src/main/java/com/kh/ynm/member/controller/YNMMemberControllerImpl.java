@@ -516,15 +516,63 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reviewCheck.do")
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response) {
 		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
+		YNMStoreReview ysr=new YNMStoreReview();
+		YNMFollow yf=new YNMFollow();
 		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("owStoreInfoPk"));
-
+		ArrayList<YNMStoreReview> ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
 		HttpSession session=request.getSession(false);
-		
-		if(session !=null) {
-			
+		ArrayList<YNMFollow> fList=null;
+		ArrayList<YNMReviewLike> lList=null;
+		ArrayList<YNMReviewJjim> jList=null;
+		if(session.getAttribute("member") !=null) {
+			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+			fList=ynmMemberServiceImpl.followInfo(memberNo);
+			if(fList.size()==0) {
+				fList=null;
+			}
+		}
+		if(session.getAttribute("member") !=null) {
+			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+			lList=ynmMemberServiceImpl.likeInfo(memberNo);
+			if(lList.size()==0) {
+				lList=null;
+			}else {
+				for(int i=0; i<ysrList.size(); i++) {
+					for(int j=0; j<lList.size(); j++) {
+						if(ysrList.get(i).getStoreReviewNo()==lList.get(j).getStoreReviewNo()) {
+							if(memberNo==lList.get(j).getMemberEntireNo())
+							{
+								ysrList.get(i).setMyLikeChk(1);
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 		
-		ArrayList<YNMStoreReview> ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
+		
+		if(session.getAttribute("member") !=null) {
+			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+			jList=ynmMemberServiceImpl.jjimInfo(memberNo);
+			System.out.println(jList.size());
+			if(jList.size()==0) {
+				jList=null;
+			}else {
+				for(int i=0; i<ysrList.size(); i++) {
+					for(int j=0; j<jList.size(); j++) {
+						if(ysrList.get(i).getStoreReviewNo()==jList.get(j).getStoreReviewNo()) {
+							if(memberNo==jList.get(j).getMemberEntireNo())
+							{
+								ysrList.get(i).setMyJjimChk(1);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		
 
 		StringBuilder strBuilder = new StringBuilder();
 		String[] imgArr;
@@ -564,6 +612,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ModelAndView view=new ModelAndView();
 		if(!ysrList.isEmpty()) {
 			view.addObject("review",ysrList);
+			view.addObject("follow",fList);
+			view.addObject("lList",lList);
+			view.addObject("jList",jList);
 			return view;
 
 		}else {
@@ -809,6 +860,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 	}
 	
+	   //예약하기 팝업창
+	   @RequestMapping(value="/reservation.do")
+	   public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
+	      YNMSearch vo = new YNMSearch();
+	      String info = request.getParameter("owStoreInfoPk");
+	      System.out.println(info);
+	      vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
+	      YNMSearch reservation = ynmMemberServiceImpl.detailPage(vo);
+	      
+	      ModelAndView view=new ModelAndView();
+	      if(reservation!=null) {
+	         view.addObject("reservation",reservation);
+	         view.setViewName("ynmMember/reservation");
+	         return view;
+	      }
+	      return null;
+	   }   
+	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
 	public String ynmAdmin() {
@@ -819,6 +888,12 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/mainAdmin.do")
 	public String adminMain() {
 		return "ynmAdmin/mainAdmin";
+	}
+	
+	@RequestMapping(value="/test.do")
+	public String test(HttpServletRequest request) {
+		String test=request.getParameter("name");
+		return "ynmMember/test";
 	}
 }
 
