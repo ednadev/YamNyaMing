@@ -29,6 +29,25 @@
 			
 	</select>
 	
+		<select id="selectOneMember2" resultType="members">
+		select 
+			mb_entire_pk as memberEntireNo,
+			mb_id as memberId,
+			mb_pw as memberPw,
+			mb_name as memberName,
+			mb_nickname as memberNickName,
+			mb_gender as memberGender,
+			mb_birth as memberBirth,
+			mb_email as memberEmail,
+			mb_phone as memberPhone,
+			mb_regdate as memberRegDate,
+			mb_upload_photo_fk as memberUploadPhotoNo
+			from member_entire_tb
+			
+			where mb_id=#{memberId}
+			
+	</select>
+	
 	<select id="memberInfo" resultType="memberCheck">
 			select 
 			mb_entire_pk as memberEntireNo,
@@ -76,11 +95,100 @@
 	
 	</select>
 	
+	<select id="emailCheck" resultType="members">
+	select 
+			mb_email as memberEmail
+	from member_entire_tb
+	where mb_email=#{memberEmail}
 	
+	</select>
+	
+	<select id="idSearch" resultType="members">
+		select
+			mb_id as memberId,
+			mb_email as memberEmail,
+			mb_name as memberName
+		from member_entire_tb
+		where mb_name=#{memberName} and mb_email=#{memberEmail}
+	</select>
+	
+	<select id="pwSearch" resultType="members">
+		select
+			mb_id as memberId,
+			mb_email as memberEmail,
+			mb_name as memberName
+		from member_entire_tb
+		where mb_id=#{memberId} and mb_email=#{memberEmail}
+	</select>
+	
+	<update id="pwUpdateMember">
+		update member_entire_tb set mb_pw=#{memberPw} where mb_id=#{memberId} and mb_email=#{memberEmail} 
+	</update>
+	
+<!-- 	
 	<select id="selectOneStore" resultType="storeInfo">
-		select ow_store_phone as owStorePhone
+		select ow_store_phone as owStoreTel
 		from owner_store_info_tb
 		where ow_store_info_pk=#{ownerStoreEntireNo}
+	</select> -->
+	
+	
+	<!-- 사용자 설정 table -->
+	
+	<update id="updateSetting">
+		update member_setting_tb set mb_theme_push_update=#{themePushUpdate},mb_alarm_push_review_like=#{alarmPushReviewLike},mb_alarm_push_review_comment=#{alarmPushReviewComment},
+										mb_alarm_push_review_jjim=#{alarmPushReviewJjim},mb_alarm_push_follow=#{alarmPushFollow},mb_myinfo_agree=#{myinfoAgree},mb_alarm_event_email=#{alarmEventEmail},
+										mb_alarm_event_sms=#{alarmEventSms},mb_myinfo_review_open=#{myinfoReviewOpen},mb_myinfo_review_jjim=#{myinfoReviewJjim},mb_myinfo_store_jjim=#{myinfoStoreJjim}
+									where mb_entire_fk=#{memberEntireNo}
+
+	</update>
+	
+	<select id="settingInfo" resultType="settings"> 
+	select
+		mb_theme_push_update as themePushUpdate,
+		mb_alarm_push_review_like as alarmPushReviewLike,
+		mb_alarm_push_review_comment as alarmPushReviewComment,
+		mb_alarm_push_review_jjim as alarmPushReviewJjim,
+		mb_alarm_push_follow as alarmPushFollow,
+		mb_myinfo_agree as myinfoAgree,
+		mb_alarm_event_email as alarmEventEmail,
+		mb_alarm_event_sms as alarmEventSms,
+		mb_myinfo_review_open as myinfoReviewOpen,
+		mb_myinfo_review_jjim as myinfoReviewJjim,
+		mb_myinfo_store_jjim as myinfoStoreJjim
+		
+		from member_setting_tb
+		where mb_entire_fk=#{memberEntireNo}
+		</select>
+	
+	<!-- 팔로우 table -->
+	
+	<select id="followChk" resultType="int">
+		select
+			count(*)
+		from 
+			member_follow_tb
+		where 
+			mb_follow_user_id_fk=#{followMemberIdNo} and mb_follower_fk=#{followerNo}
+	</select>
+	
+	
+	<insert id="followInsert">
+		insert into member_follow_tb values(member_follow_tb_seq.nextval,#{followMemberIdNo},#{followerNo})
+	</insert>
+	
+	<delete id="deleteFollow">
+		delete from member_follow_tb where mb_follower_fk=#{followerNo}
+	</delete>
+	
+	
+	<select id="followTotal" resultType="int">
+		select
+			count(*)
+		from 
+			member_follow_tb
+		where 
+			mb_follow_user_id_fk=#{followMemberIdNo}
 	</select>
 	
 	

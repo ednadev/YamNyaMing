@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
-*{margin:0;color:black;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
+*{margin:0;padding:0;color:black;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
 
 #owner-signUp-header{
 	background-color:#fb0;
@@ -220,6 +220,41 @@
 	margin-top:10px;
 	text-align:center;
 }
+#menu-image{
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:#cecece;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
+
+#menu-info-type{
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:#cecece;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
+#menu-info-type-click{
+	background-color:#fb0;
+	border:1px solid #cecece;
+	cursor:pointer;
+	color:white;
+	padding:10px;
+	display:inline;
+	width:88px;
+	font-size:0.8em;
+	margin-top:10px;
+	text-align:center;
+}
 .signUp-table>.menuPriceInfo{
 	display:block;
 }
@@ -238,16 +273,21 @@
 	margin-bottom:20px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#menu-file-text{
-	position:absolute;
+	/* position:absolute;
 	right:140px;
 	bottom:5px;
-	cursor:pointer;
+	cursor:pointer; */
+	position: relative;
+    bottom: 5px;
+    top: 20px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#addButton{
-	right:85px;
+	right:200px;
 }
 .signUp-table>#menuPriceInfo>.menuInfo>#delButton{
-	right:30px;
+	right:150px;
 }
 .signUp-table>#timeStyle>input[type="text"]{
 	font-size:0.8em;
@@ -264,4 +304,165 @@
 	display:inline-block;
 	cursor:pointer;
 	margin-bottom:5px;
+	margin-top:20px;
+}
+
+#menuImage{
+	display:none;
+}
+#menuImage+label{
+	background-color:black;
+	color:white;
+	padding:10px;
+	display:inline-block;
+	cursor:pointer;
+	margin-bottom:5px;
+	margin-top:20px;
+}
+
+.menuCateBtn{
+	background-color:black;
+	color:white;
+	padding:10px;
+	display:inline-block;
+	cursor:pointer;
+	margin-bottom:5px;
+	margin-top:20px;
+}
+
+.menuCategory{
+	height:38px;
+	color:#cecece;
+}
+/* 점장 메인 페이지 */
+#owner-main-header{
+	background-color:#fb0;
+	overflow:hidden;
+}
+#owner-main-header>h1{
+	font-size:1.2em;
+	padding:15px 10px;
+	float:left;
+}
+#owner-main-header>h1>a,
+#owner-main-header>h1>a:visited{
+	color:white;
+}
+#owner-main-header>p:nth-child(2){
+	float:left;
+	height:52.4px;
+	line-height:52.4px;
+	margin-left:20px;
+}
+#owner-main-header>p:nth-child(2)>a{
+	background-color:black;
+	color:white;
+	padding:10px;
+	border-radius:7px;
+}
+#owner-main-header>p:nth-child(3){
+	float:right;
+	font-size:0.9em;
+	text-align:right;
+	height:52.4px;
+	line-height:52.4px;
+	margin-right:10px;
+}
+#owner-main-header>p>a{
+	font-weight:bold;
+}
+
+/* footer */
+#owner-main-footer{
+	background-color:rgba(0,0,0,0.8);
+	padding:10px;
+}
+#owner-main-footer>h2,
+#owner-main-footer>p{
+	color:white;
+}
+#owner-main-footer>address{
+	color:white;
+	font-size:0.7em;
+	font-style:normal;
+	margin-top:15px;
+}
+
+
+/* nav */
+#owner-main-nav>ul{
+	display:flex;
+}
+#owner-main-nav>ul>li{
+	font-weight:bold;
+	flex-grow:1;
+	text-align:center;
+}
+#owner-main-nav>ul>li>a{
+	display:block;
+	padding:10px 0;
+	font-size:1em;
+	border-bottom:3px solid black;
+}
+#owner-main-nav>ul>li>a:hover{
+	border-bottom:3px solid #fb0;
+}
+
+/* section */
+#owner-main-section>div{
+	display:flex;
+	margin-top:30px;
+}
+#owner-main-section>div:nth-child(3){
+	margin-bottom:30px;
+}
+#owner-main-section>div>div{
+	margin-left:20px;
+}
+#owner-main-section>div>div>h4{
+	border-bottom:1.5px solid #555;
+	padding-bottom:10px;
+	margin-bottom:10px;
+}
+#owner-main-section>div>div>table{
+	border-collapse:collapse;
+}
+#owner-main-section>div>div>table>thead{
+	background-color:rgba(0,0,0,0.7);
+}
+#owner-main-section>div>div>table>thead>tr>th{
+	color:white;
+	padding:10px;
+	font-size:0.9em;
+	font-weight:normal;
+}
+#owner-main-section>div>div>table>tbody>tr>td{
+	padding:10px;
+}
+#owner-main-section>div>#main-section-store>table>tbody>tr>td:nth-child(2),
+#owner-main-section>div>#main-section-store>table>tbody>tr>td:nth-child(3),
+#owner-main-section>div>#main-section-store>table>tbody>tr>td:nth-child(6),
+#owner-main-section>div>#main-section-reservation>table>tbody>tr>td,
+#owner-main-section>div>#main-section-coupon>table>tbody>tr>td:nth-child(1),
+#owner-main-section>div>#main-section-coupon>table>tbody>tr>td:nth-child(3){
+	text-align:center;
+}
+#owner-main-section>div>#main-section-reservation>table>tbody>tr>td:nth-child(6){
+	text-align:left;
+}
+#owner-main-section>div>#main-section-reservation>table>tbody>tr>td:nth-child(8),
+#owner-main-section>div>#main-section-coupon>table>tbody>tr>td:nth-child(3){
+	background-color:#fff7e1;
+	cursor:pointer;
+}
+#owner-main-section>div>#main-section-board>table{
+	border-bottom:1px solid black;
+	width:200px;
+}
+#owner-main-section>div>#main-section-stat>div{
+	display:flex;
+	width:39%;
+}
+#owner-main-section>div>#main-section-stat>div>canvas{
+	
 }

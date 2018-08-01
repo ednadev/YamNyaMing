@@ -35,4 +35,39 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	public String ownerMyPage() {
 		return "ynmOwner/ownerMyPage";
 	}	
+	
+	//점장 : 점장 메인 페이지로 이동
+	@RequestMapping(value="/mainOwner.do")
+	public String mainOwner() {
+		return "ynmOwner/mainOwner";
+	}
+
+	// 점장 가게 관리 페이지
+	
+	// 점장 예약 관리 페이지
+	@Override
+	@RequestMapping(value="/reservationManage.do")
+	public String bookMngPage() {
+		return "ynmOwner/bookManagePage";
+	}
+
+	// 점장 게시판 관리 페이지
+	@Override
+	@RequestMapping(value="/boardOwner.do")
+	public String boardMngPage() {
+		return "ynmOwner/boardManagePage";
+	}
+
+	// 점장 통계 분석 관리 페이지
+	@Override
+	@RequestMapping(value="/analysisOwner.do")
+	public String analysisMngPage() {
+		return "ynmOwner/analysisManagePage";
+	}
+
+	@Override
+	@RequestMapping(value="/ownerInfo.do")
+	public String ownerInfoPage() {
+		return "ynmOwner/ownerInfo";
+	}
 }

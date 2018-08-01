@@ -5,6 +5,4 @@
 	<insert id="storeUnderReviewInsert"> 
 		insert into member_store_under_review_tb values(member_store_under_review__SEQ.nextval,#{storeReviewNo},#{memberEntireNo},#{underReviewContent},sysdate,'n')
 	</insert>
-
-
 </mapper>

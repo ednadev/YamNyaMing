@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="owphotos">
+  	<insert id="ownerPhotoUpload" parameterType="owUploadPhoto">
+  		insert into owner_store_photo_tb values(owner_store_photo_tb_SEQ.nextval, #{owPhotoTypeFk},#{storeInfoFk},
+  		#{originName}, #{remakeName}, #{photoRoute}, sysdate)
+  	</insert>
+  	<select id="photoSelectWithName" resultType="int">
+  		select ow_store_photo_pk from owner_store_photo_tb
+  		where ow_remake_name = #{remakeName}
+  	</select>
+  	
+  	<select id="headPhotoList"  parameterType="owUploadPhoto" resultType="owUploadPhoto">
+  		select 
+  			OW_STORE_PHOTO_PK as owStorePhotoPk,
+  			OW_PHOTO_TYPE_FK as owPhotoTypeFk,
+  			OW_STORE_INFO_FK  as storeInfoFk,
+  			OW_ORIGIN_NAME as originName,
+  			OW_REMAKE_NAME as remakeName,
+  			OW_PHOTO_ROUTE as photoRoute,
+  			OW_PHOTO_UPLOAD_DATE as owPhotoUploadDate,
+  			OW_PHOTO_ROUTE||'\'||OW_REMAKE_NAME	as owPhotoViewRoute,
+            OW_STORE_DETAIL_PK as storeDetailPk,
+            OW_STORE_HEAD_PHOTO as headStoreList
+  		from owner_store_photo_tb,
+  		(select OW_STORE_DETAIL_PK,OW_STORE_HEAD_PHOTO from owner_store_detail_tb
+  		where OW_STORE_INDEX = #{storeInfoFk} )
+  		where OW_STORE_INFO_FK = #{storeInfoFk} and OW_PHOTO_TYPE_FK = #{owPhotoTypeFk}
+  	</select>
+  	
+  	<delete id="headPhotoDelete" parameterType="owUploadPhoto">
+  		delete from owner_store_photo_tb
+  		where OW_STORE_PHOTO_PK = #{owStorePhotoPk}
+  	</delete>
+</mapper>

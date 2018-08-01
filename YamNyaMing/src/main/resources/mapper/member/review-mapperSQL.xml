@@ -4,23 +4,82 @@
 	<!-- review 쿼리 -->
 	<insert id="storeReviewInsert">
 		insert into member_store_review_tb values(member_store_review_tb_SEQ.nextval,#{ownerStoreEntireNo},#{memberEntireNo},
-													#{reviewTitle},#{reviewContent},#{reviewStar},default,sysdate,default,#{reviewImgList})
+													#{reviewContent},#{reviewStar},default,sysdate,default,#{reviewImgList})
 	</insert>
 	
 	<select id="storeReviewCheck" resultType="reviews">
-		select
+      select
+      		mb_upload_photo_fk as memberUploadPhotoNo,
 			mb_store_review_pk as storeReviewNo,
-			ow_entire_fk as ownerStoreEntireNo,
+            mb_photo_view_route as photoViewRoute,
+			ow_store_info_fk as ownerStoreEntireNo,
 			mb_entire_fk as memberEntireNo,
-			ow_store_review_title as reviewTitle,
 			ow_store_review_content as reviewContent,
 			ow_store_review_star as reviewStar,
 			ow_store_jjim_check as jjimCheck,
 			ow_store_review_date as reviewDate,
 			ow_store_review_open_check as reviewOpenCheck,
-			ow_store_review_img_list as reviewImgList
-			from member_store_review_tb
-			where ow_entire_fk=#{ownerStoreEntireNo}
+			ow_store_review_img_list as reviewImgList,
+            mb_nickname as memberNickName
+			from member_store_review_tb re,member_entire_tb en,member_upload_photo_tb ph
+			where re.mb_entire_fk=en.mb_entire_pk and en.mb_upload_photo_fk=ph.mb_upload_photo_pk and ow_store_info_fk=#{ownerStoreEntireNo}
 	</select>
+	
+	<!-- 좋아요 table -->
+	<insert id="likeInsert">
+		insert into member_review_like_tb values(member_review_like_tb_seq.nextval,#{storeReviewNo},#{memberEntireNo})
+	</insert>
+	<select id="likeChk" resultType="int">
+		select
+			count(*)
+		from 
+			member_review_like_tb
+		where 
+			mb_store_review_fk=#{storeReviewNo} and mb_entire_fk=#{memberEntireNo}
+	</select>
+	
+	<select id="likeTotal" resultType="int">
+		select
+			count(*)
+		from 
+			member_review_like_tb
+		where 
+			mb_store_review_fk=#{storeReviewNo}
+	</select>
+	
+	
+	
+	<delete id="likeDelete">
+		delete from member_review_like_tb where mb_entire_fk=#{memberEntireNo}
+	</delete>
+	
+	<!-- 찜 table -->
+	
+	<select id="jjimChk" resultType="int">
+		select
+			count(*)
+		from 
+			member_review_jjim_tb
+		where 
+			mb_store_review_fk=#{storeReviewNo} and mb_entire_fk=#{memberEntireNo}
+	</select>
+	
+	<select id="jjimTotal" resultType="int">
+		select
+			count(*)
+		from 
+			member_review_jjim_tb
+		where 
+			mb_store_review_fk=#{storeReviewNo}
+	</select>
+	
+	
+	<insert id="jjimInsert">
+		insert into member_review_jjim_tb values(member_review_jjim_tb_seq.nextval,#{storeReviewNo},#{memberEntireNo})
+	</insert>
+	
+	<delete id="deleteJjim">
+		delete from member_review_jjim_tb where mb_entire_fk=#{memberEntireNo}
+	</delete>
 
 </mapper>

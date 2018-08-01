@@ -31,7 +31,12 @@ public class MemberPasswordAdvice {
 	
 	@Pointcut("execution(* com.kh.ynm.owner.model.service.*ServiceImpl.selectOneOwner(..))")
 	public void selectOneOwner() {}
+	
+	@Pointcut("execution(* com.kh.ynm.owner.model.service.*ServiceImpl.ynmOwnerInfoUpdate(..))")
+	public void updateOwnerInfo() {}
 
+	@Pointcut("execution(* com.kh.ynm.member.model.service.*ServiceImpl.pwUpdateMember(..))")
+	public void pwUpdateMember() {}
 	
 	
 	@Before("login()")
@@ -75,6 +80,21 @@ public class MemberPasswordAdvice {
 	
 	@Before("selectOneOwner()")
 	public void selectOneOwner(JoinPoint jp)throws Exception{
+		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
+		String ownerPw=yo.getOwPw();
+		String encryPw=SHA256Util.encryData(ownerPw);
+		yo.setOwPw(encryPw);
+	}
+	@Before("pwUpdateMember()")
+	public void pwUpdateMember(JoinPoint jp)throws Exception{
+		YNMMember ym=(YNMMember)(jp.getArgs()[0]);
+		String userPw=ym.getMemberPw();
+		String encryPw=SHA256Util.encryData(userPw);
+		ym.setMemberPw(encryPw);
+	}
+	
+	@Before("updateOwnerInfo()")
+	public void updateOwnerInfo(JoinPoint jp)throws Exception{
 		YNMOwner yo=(YNMOwner)(jp.getArgs()[0]);
 		String ownerPw=yo.getOwPw();
 		String encryPw=SHA256Util.encryData(ownerPw);

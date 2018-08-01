@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+#owner-coupon-section{
+    border: 1px solid #cecece;
+    padding:10px;
+}
+
+
+/*쿠폰 등록 div*/
+#coupon-enroll{
+
+}
+
+/*쿠폰 타입 선택버튼*/
+#coupon-type-btn-click{
+    background-color: #fb0;
+    border: 1px solid #cecece;
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+    display: inline;
+    width: 88px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    text-align: center;
+}
+#coupon-type-btn{
+    background-color: white;
+    border: 1px solid #cecece;
+    cursor: pointer;
+    color: #cecece;
+    padding: 10px;
+    display: inline;
+    width: 88px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#couponEnrollBtn{
+   background-color: #fb0;
+   color: white;
+   border: none;
+   margin: 20px auto;
+   display: block;
+   padding: 20px 60px;
+   font-size: 1em;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+/*쿠폰 리스트 div*/
+#owner-section-coupon{
+	clear:both;
+	min-height:230px;
+	margin-bottom:30px;
+}
+/*쿠폰 목록 보여주기*/
+#enrollCouponList{
+	padding:20px;
+}
+/*쿠폰 테이블*/
+#keywords {
+  margin: 0 auto;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  width:90%;
+}
+#keywords thead {
+  cursor: pointer;
+  background: #fb0;
+}
+#keywords thead tr th { 
+  font-weight: bold;
+  padding: 12px 30px;
+  padding-left: 42px;
+}
+
+#keywords tbody tr td {
+  text-align: center;
+  padding: 15px 10px;
+  max-width:350px;
+}
+
+textarea{
+	color: #555;
+    padding: 10px;
+    width: 50%;
+    height:80px;
+}
+#couponDelBtn{
+	width:100%;
+	height:100%;
+	background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+	border:0;
+	cursor: pointer;
+}
+.signUp-table>div:nth-child(2)>input[type="number"] {
+    color: #555;
+    padding: 10px;
+    width: 50%;
+}
+.signUp-table>div:nth-child(2)>input[type="date"] {
+    color: #555;
+    padding: 10px;
+    width: 22.5%;
+}
+/*
+#owner-main-footer{
+	background-color:rgba(0,0,0,0.8);
+   position:absolute;
+   bottom:0;
+   width:100%;
+   overflow:hidden;
+}
+*/
+
+#pagingNumber{
+	margin: 0 auto;
+ 	width: 100%;
+    text-align: center;
+    margin-left:45%;
+    margin-right:45%;
+}
+
+#pagingNumber form{
+	float:left;
+	
+}
+
+.paging-num{
+	background-color: #cecece;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+    border: 0;
+    cursor: pointer;
+}
+
+.paging-num-select{
+	background-color: #fb0;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+    border: 0;
+    cursor: pointer;
+}
+
+
+

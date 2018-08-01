@@ -7,10 +7,11 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=3">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerCheckPrice.js?ver=1"></script>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 </head>
@@ -28,7 +29,7 @@
 				<div class="signUp-table">
 					<div>사업자 등록번호</div>
 					<div>
-						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호" onkeydown="owStoreBizCheck();" onchange="owStoreBizCheck();">
+						<input type="text" name="owStoreBizNum" placeholder="사업자 등록번호"/> <!-- onkeydown="owStoreBizCheck();" onchange="owStoreBizCheck();"> -->
 						<p id="owStoreBizNumResult">사업자 등록번호를 입력해주세요.</p>
 					</div>
 				</div>	
@@ -65,13 +66,13 @@
 						<p id="owStoreTel">연락 가능한 전화번호를 입력해주세요.</p>
 					</div>
 				</div>
-				<div class="signUp-table">
+	<!-- 			<div class="signUp-table">
 					<div>휴대폰</div>
 					<div>
 						<input type="tel" name="owPhone" placeholder="휴대폰">
 						<p>연락 가능한 휴대폰 번호를 입력해주세요.</p>
 					</div>
-				</div>	
+				</div>	 -->
 				<div class="signUp-table">
 					<div>업종</div>
 					<div>
@@ -93,9 +94,10 @@
 				<div class="signUp-table">
 					<div>주소</div>
 					<div>					
-					<input type="text" id="storePostCode" placeholder="우편번호" onfocus="storeAddress();">
-					<input type="text" id="storeRoadAddr" placeholder="도로명주소">
-					<input type="text" id="storeJibunAddr" placeholder="지번주소">
+					<input type="text" id="storePostCode" name="postNum" placeholder="우편번호 (클릭하면 주소를 검색 할 수 있습니다.)" onclick="storeAddress();">
+					<input type="text" id="storeRoadAddr" name="addrStreet" placeholder="도로명주소">
+					<input type="hidden" id="storeJibunAddr" name="addrState" placeholder="지번주소">
+					<input type="text" id="storeRoadAddr" name="detailAddr" placeholder="상세주소">
 					<span id="guide" style="color:#999"></span>
 					<p id="addressOwner">주소를 입력해주세요.</p>
 					</div>
@@ -103,26 +105,33 @@
 				<div class="signUp-table">
 					<div>영업시간</div>
 					<div id="timeStyle">
-						<select>
-							<option>매일</option>
-							<option>평일</option>
-							<option>주말</option>
-							<option>월요일</option>
-							<option>화요일</option>
-							<option>수요일</option>
-							<option>목요일</option>
-							<option>금요일</option>
-							<option>토요일</option>
-							<option>일요일</option>
+						<select name="workingWeek">
+							<option value="매일">매일</option>
+							<option value="평일">평일</option>
+							<option value="주말">주말</option>
+							<option value="월">월요일</option>
+							<option value="화">화요일</option>
+							<option value="수">수요일</option>
+							<option value="목">목요일</option>
+							<option value="금">금요일</option>
+							<option value="토">토요일</option>
+							<option value="일">일요일</option>
 						</select>
-						<input type="time" name="owStoreWorkingTime">
+						<input type="time" name="owStoreWorkingTimeStart">
 						<span> - </span>
-						<input type="time" name="owStoreWorkingTime">
-						<input type="text" placeholder="예) 화요일 휴무">
+						<input type="time" name="owStoreWorkingTimeEnd">
+						<input type="text" name="extWorkingOption" placeholder="예) 화요일 휴무">
 						<p>주요 영업시간을 입력해주세요. 예외는 기타 사항에 입력해주세요.</p>
 					</div>
 				</div>	
-				<h3>상세 정보 입력</h3>	
+				<h3>상세 정보 입력</h3>
+				<div class="signUp-table">
+					<div>가게 한줄평</div>
+					<div>
+						<input type="text" name="owStoreLineComment" class="keywordStyle">
+						<p id="tipResult">(가게를 소개할 한줄 코멘트를 적어주세요.)</p>
+					</div>
+				</div>	
 				<div class="signUp-table">
 					<div>대표 키워드</div>
 					<div>
@@ -136,8 +145,8 @@
 				</div>	
 				<div class="signUp-table">
 					<div>대표 이미지</div>
-					<div>
-						<input type="file" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" maxlength="10" multiple/>
+					<div id="menuType">
+						<input type="file" name="mainImgFile" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
 						<label for="mainImage">이미지 추가</label>
 						<div>
 							<div class="imgs_wrap">
@@ -151,21 +160,51 @@
 				<div class="signUp-table">
 					<div>메뉴 정보</div>
 					<div id="menuPriceInfo">
-						<div class="menuInfo">
-							<input type="text" name="owMenuType" placeholder="예) 꽃등심" class="menuStyle">
+						<div id="menuType"  style="margin-top: 10px;">
+							<label id="menu-info-type-click" class="menu-type" onclick="menuTypeChange(this);">메뉴 사진으로 등록</label>
+							<label id="menu-info-type" class="menu-type" onclick="menuTypeChange(this);">메뉴 직접 입력</label>
+						</div>
+						<!-- 사진만 등록 -->
+						<div class="menuInfo">  
+							<div>
+							<input type="file" name="menuImageFile" id="menuImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
+							<label for="menuImage" id="menu-image">사진등록/편집</label>
+								<div class="imgs_wrap_menu">
+									<img id="img"/>
+								</div>
+							<img id="output"/>
+							</div> 	
+						</div>
+						<!-- 글씨만 등록 -->
+						<div class="menuInfo" style="display:none;">
+							<select class="menuCategory">
+								<option>분류 항목 </option>
+							</select>
+							<input type="text" name="owMenuType" placeholder="예)식사,요리,스페셜" class="menuStyle">
+							<label class="menuCateBtn" id="addMenuCateBtn" onclick="addMenuCategory();">추가</label>
+							<label class="menuCateBtn" id="removeMenuCateBtn" onclick="removeMenuCategory();">삭제</label>
+						</div>
+						<div class="menuInfo" id="menu-info-text" style="display:none;">
+							<select name="menuCategoryTitle" class="menuCategory">
+								<option>분류 항목 </option>
+							</select>
 							<br>
 							<input type="text" name="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
 							<input type="text" name="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
 							<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
 							<label><input type="checkbox"> 추천메뉴</label>
 							<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
-							<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
-							<label for="menu-file" id="menu-file-text">사진등록/편집</label>
-							<input type="file" style="display:none;" id="menu-file" name="owRecommandMenuFile" multiple/>
+							<textarea id="menuDesc" name="owMenuExplain" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
 							<button id="addButton" type="button" onclick="menuInfoAdd();">추가</button>
 						</div>
 					</div>
-				</div>				
+				</div>
+				<div class="signUp-table">
+					<div>가게 추천 메뉴</div>
+					<div>
+						<input type="text" name="owStoreRecommandMenuList" placeholder="추천메뉴">
+					</div>
+				</div>					
 				<div class="signUp-table">
 					<div>테이블 정보</div>
 					<div>
@@ -191,6 +230,7 @@
 					</div>
 				</div>																																																										
 			</section>
+			<input type="hidden" id="storeMenuTypeId" name="storeMenuType" value="1" />
 			<input type="submit" value="입점 신청하기">
 		</form>
 	</div>
@@ -206,15 +246,13 @@
 	<script>
 	function menuInfoAdd(){
 		var menuInfo = "";
-		menuInfo = menuInfo + "<div class='menuInfo'>"+
-		            $('.menuInfo').html()+"<button id='delButton' type='button' onclick='menuInfoDel();'>삭제</button></div>";
+		menuInfo = menuInfo + "<div class='menuInfo' id='menu-info-text'>"+
+		            $('#menu-info-text').html()+"<button id='delButton' type='button' onclick='menuInfoDel();'>삭제</button></div>";
 		$('#menuPriceInfo').append(menuInfo);
 	}
 	function menuInfoDel(){
 		$('.menuInfo:last').remove();
 	}
-<<<<<<< Updated upstream
-=======
 	function addMenuCategory()
 	{
 		if($('input[name=owMenuType]').val().length>0)
@@ -245,7 +283,6 @@
 			}
 		}
 	}
->>>>>>> Stashed changes
 	</script>
 </body>
 </html>

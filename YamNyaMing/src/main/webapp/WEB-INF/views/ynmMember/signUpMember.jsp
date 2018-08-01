@@ -8,10 +8,78 @@
 <title>얌냐밍</title>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
-<script src="${pageContext.request.contextPath}/resources/js/member/member.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/signup.css?ver=2">
+<script src="${pageContext.request.contextPath}/resources/js/member/memberSignUp.js"></script>
 </head>
+
 <script>
+
+var timer = 180;
+window.onload = function()
+{
+	startAlert = function() {
+		  $('#emailConfirmInput').attr('readonly', false);
+		  playAlert = setInterval(function() {
+			  timer-=1;
+			  var minute = Math.floor(timer/60);
+			  var second = Math.floor(timer%60);
+			  
+			  if(minute<=0 && second <=0)
+			  {
+				 clearInterval(playAlert); 
+				 timer = 180;
+				 $('#emailChkTimer').text("인증번호 재발급");
+			  }else{
+				  $('#emailChkTimer').text( (minute>9?minute:"0"+minute) +":"+ (second>9?second:"0"+second) );
+				  $('#emailConfirmInput').show();
+			  }
+		  }, 1000);
+	};
+}
+
+function emailConfirm()
+{
+	var insertEmail  = $('#memberEmail').val(); // 이메일 입력 결과
+	if(timer==180){
+		$.ajax({
+			url:"/emailConCheck.do",
+			data : {
+				emailConfirm:insertEmail,
+				   },
+			type : "post",
+			success : function(data){	
+				console.log("이메일 결과" + data);
+			},
+			error : function(){
+				
+			},
+		});
+		timer = 180;
+		startAlert();
+	}
+}
+
+function emailKeyMatchCheck()
+{
+	var emailConfirmInput = $('#emailConfirmInput').val();
+	$.ajax({
+		url:"/emailAccessKey.do",
+		type : "post",
+		success : function(data){	
+			if(emailConfirmInput==data){
+				$('#email_check').html("이메일 인증 완료");
+				$('#emailConfirmInput').attr('readonly', true);
+				timer = 180;
+				clearInterval(playAlert); 
+				emailChkBool=true;
+			}
+		},
+		error : function(){
+			
+		},
+	});
+}
+
 
 var phoneBool=false;
 var idBool=false;
@@ -24,6 +92,7 @@ var birthYearBool=false;
 var birthMonthBool=false;
 var birthDayBool=false;
 var emailBool=false;
+var emailChkBool=false;
 var check1Bool=false;
 var check2Bool=false;
 var check3Bool=false;
@@ -57,10 +126,6 @@ function idCheck(){
  					$('#id_check').html("<span style='color:red;'>이미 사용중이거나 탈퇴한 아이디입니다.</span>");
  					idBool=false;
  				} else{
- 					
- 		
- 					
- 					
  					if(idCheckBool){
  					$('#id_check').html("<span style='color:#26a69a;'>사용할 수 있는 아이디입니다.</span>");
  					idBool=true;
@@ -280,20 +345,36 @@ function memberNameChk()
 		var rightFormChk = true;
 		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
+		
 		if (insertEmail.match(regExp) == null) {
 			rightFormChk = false;
 			emailCheckResult.html("<span style='color:red;'>이메일 형식에 맞게 작성해주세요.</span>");
 			emailBool=false;
 		}	
-		
-		if(rightFormChk){
-			emailBool=true;		
+		else{
+			$.ajax({
+	 			url : "/emailCheck.do",
+	 			data : {memberEmail : insertEmail},
+	 			dataType:'json',
+	 			success : function(data){
+	 				if(data==1){
+	 					emailCheckResult.html("<span style='color:red;'>이미 사용중인 이메일 입니다.</span>");
+	 					rightFormChk=false;
+	 					emailBool=false;
+	 				} else{
+	 					if(rightFormChk){
+	 					emailCheckResult.html("이메일 인증 대기상태<button id='emailChkTimer' type='button' style='background-color:black;color:white;border:none;cursor:pointer;padding:10px 30px;display:inline;margin-left:5px;' onclick='emailConfirm();'>인증 메일 보내기</button>");
+	 					emailBool=true;		
+	 					
+	 				} 
+	 				}
+	 			}
+	 		});	
 			
 		}
 	}
-	
-	
 	var sel_file;
+	var html;
 	$(document).ready(function(){
 		$("#input_avatarPhoto").on("change",avatarPhotoSelect);
 	});
@@ -311,10 +392,20 @@ function memberNameChk()
 			sel_file=f;
 			var reader=new FileReader();
 			reader.onload=function(e){
-				$("#img").attr("src",e.target.result);
+				$("#avatarImg").attr("src",e.target.result);
 			}
 			reader.readAsDataURL(f);
 		});
+	}
+	
+	function deleteImageAction(){
+		$('#avatarImg').remove();
+		
+		var img = document.createElement("img");
+		img.id="avatarImg";
+		var div=document.getElementById("profile-img");
+		div.appendChild(img);
+		
 	}
 	
 	function checkService1(chk){
@@ -366,7 +457,7 @@ function memberNameChk()
 	$(document).keyup(function() {
 	    $('input[type="submit"]').attr('disabled', true);
 	        if(idBool==true && pwBool==true && pw2Bool==true && nameBool==true && nickNameBool==true && genderBool==true && birthYearBool==true && 
-	        		birthMonthBool==true && birthDayBool==true && emailBool==true && check1Bool==true && check2Bool==true && check3Bool==true) {
+	        		birthMonthBool==true && birthDayBool==true && emailBool==true && check1Bool==true && check2Bool==true && check3Bool==true &&emailChkBool==true) {
 	            $('input[type="submit"]').attr('disabled' , false);
 	        }else{
 	            $('input[type="submit"]').attr('disabled' , true);
@@ -398,7 +489,7 @@ function memberNameChk()
 			<div class="signUp-table">
 				<div>휴대전화인증</div>
 				<div>
-					<input type="tel" name="mbPhone" placeholder="휴대폰 번호">
+					<input type="tel" name="memberPhone" placeholder="휴대폰 번호">
 					<button>휴대전화인증</button>
 					<p>회원님의 보안 강화 및 편리한 서비스를 제공해 드리기 위해 휴대전화 인증을 하고 있습니다.</p>
 				</div>
@@ -459,7 +550,8 @@ function memberNameChk()
 				<div>이메일</div>
 				<div>
 					<input type="email" id="memberEmail" name="memberEmail" placeholder="이메일" onChange="emailCheck();">
-					<button>이메일 인증</button>
+						<br>
+						<input type="text" id="emailConfirmInput" placeholder="인증번호 입력" onchange="emailKeyMatchCheck();" onkeydown="emailKeyMatchCheck();" style="display:none"/>
 					<p id="email_check">얌냐밍에서 이용하실 이메일을 입력해주세요.</p>
 				</div>
 			</div>
@@ -468,11 +560,13 @@ function memberNameChk()
 				<div>프로필 사진</div>
 				<div>
 					<div id="profileStyle">
-						 <div id="profile-img"></div>
+						 <div id="profile-img" onclick="deleteImageAction();">
+						 	<img id="avatarImg"/>
+						 </div>
 						<div>						
 							
 							<label for="input_avatarPhoto">찾아보기</label>
-							<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/profile.png">
+							<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
 						</div>
 					</div>
 					<p id="profileText">얌냐밍의 회원 프로필 사진으로 사용될 이미지를 등록해 주세요.</p>
@@ -918,7 +1012,6 @@ function memberNameChk()
 			</div>
 			<input type="submit" value="회원가입하기">
 		</form>
-		<button onclick="test();">확인</button>
 	
 	</section>
 	<footer id="member-main-footer">

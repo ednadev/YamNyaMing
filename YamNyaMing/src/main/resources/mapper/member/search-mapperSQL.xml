@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="search">
+	<select id="searchList" parameterType="search" resultType="search">
+       select
+       		ow_store_info_pk as owStoreInfoPk,
+			ow_store_name as owStoreName, 
+		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
+		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
+		    ow_photo_route as owPhotoRoute,
+		    store_cate_detail_name as storeCateDetailName,
+		    ow_store_comment as owStoreComment,
+		    ow_store_addr as owStoreAddr,
+            store_cate_main_name as storeCateMainName
+        from (
+        select * from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
+				owner_store_detail_tb detail, store_category_main_tb maincate
+		where photo.ow_store_info_fk = info.ow_store_info_pk
+		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
+		and info.ow_store_info_pk = detail.ow_store_index
+		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
+        and ow_store_info_fk between #{start} and #{end}
+        and ow_photo_type_fk = 3
+        order by ow_store_info_pk)
+        <trim prefix="where" prefixOverrides="AND|OR">
+			<if test="food!=null and food!=''">
+				store_cate_main_name = #{food}
+			</if>
+			<if test="storeCateDetailName!=null and storeCateDetailName!=''">
+				store_cate_detail_name in
+				<foreach item="storeCateDetailName" collection="array" open="(" separator="," close=")">
+					 #{storeCateDetailName}
+				</foreach>
+			</if>			
+		</trim>
+	</select>
+	
+	<select id="searchCount" parameterType="search" resultType="int"> 
+		select count(*) from owner_store_info_tb
+	</select>
+	
+	<select id="detailPage" resultType="search">
+		select 
+			ow_store_info_pk as owStoreInfoPk,
+		    ow_store_name as owStoreName, 
+		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
+		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
+		    ow_photo_route as owPhotoRoute,
+		    store_cate_detail_name as storeCateDetailName,
+		    ow_store_comment as owStoreComment,
+		    ow_store_head_photo as owStoreHeadPhoto,
+		    ow_store_tel as owStoreTel,
+		    ow_store_url as owStoreUrl,
+		    ow_store_addr as owStoreAddr,
+		    substr(ow_store_working_time,4,13) as owStoreWorkingTime,
+		    ow_budget as owBudget,
+		    store_cate_main_name as storeCateMainName,
+		    ow_store_table_info as owStoreTableInfo,
+		    ow_sub_info as owSubInfo,
+		    ow_drink_list_info as owDrinkListInfo
+		from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
+				owner_store_detail_tb detail, store_category_main_tb maincate
+		where photo.ow_store_info_fk = info.ow_store_info_pk
+		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
+		and info.ow_store_info_pk = detail.ow_store_index
+		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
+		and ow_photo_type_fk = 3
+		and ow_store_info_pk = #{owStoreInfoPk}
+	</select>
+	
+	<select id="detailPageImg" resultType="search">
+		select ow_photo_route as owPhotoRoute from owner_store_photo_tb, owner_store_info_tb
+		where ow_store_info_fk = ow_store_info_pk
+		and ow_store_info_pk = #{owStoreInfoPk}
+	</select>	
+	
+	
+</mapper>

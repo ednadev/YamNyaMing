@@ -50,6 +50,7 @@ function resultStyleChk(resultChk,chk)
 	if(!chk)resultChk.css('color','red');
 	else resultChk.css('color','lightgreen');
 }
+
 // 아이디 체크
 function ownerIdChk()
 {
@@ -75,7 +76,6 @@ function ownerIdChk()
 				    if (insertId == "") {
 				    	rightFormChk = false;	
 				        idCheckResult.html("아이디를 입력하지 않았습니다.");	
-				        return false;
 				    }
 				    
 				    //숫자로 시작하면 안됨
@@ -91,28 +91,27 @@ function ownerIdChk()
 				        if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')) {
 				        	rightFormChk = false;	
 				        	idCheckResult.html("아이디는 영어 대소문자, 숫자만 입력가능합니다.");	
-				            return false;
 				        }
 				    }
 				    //아이디에 공백 사용하지 않기
 				    if (insertId.indexOf(" ") >= 0) {
 				    	rightFormChk = false;	
 				    	idCheckResult.html("아이디에 공백을 사용할 수 없습니다.");	
-				        return false;
 				    }
 				    //아이디 길이 체크 (4~12자)
 				    if (insertId.length<4 || insertId.length>12) {
 				    	rightFormChk = false;	
 				    	idCheckResult.html("아이디를 4~12자까지 입력해주세요.");	
-				        return false;
 				    }
+				    
 				}
 				
 				if(rightFormChk){
 					idCheckResult.html("사용할 수 있는 아이디 입니다.");
-					return true;
+					rightFormChk = true;
 				}
 				resultStyleChk(idCheckResult,rightFormChk);
+				
 				idChk = rightFormChk ;
 			},
 		error : function(){
@@ -132,19 +131,16 @@ function owPwCheck(){
     if (insertPw == "") {
         rightFormChk = false;	
         pwCheckResult.html("비밀번호를 입력하지 않았습니다.");	
-        return false;
     }
     
     if ($("input[name=owId]").val().length>0 && insertPw.match($("input[name=owId]").val())) {
         rightFormChk = false;	
         pwCheckResult.html("비밀번호에 아이디를 포함할수 없습니다.");	
-        return false;
     }
     //비밀번호 길이 체크(8~12자 까지 허용)
     if (insertPw.length<8 || insertPw.length>16) {
         rightFormChk = false;	
         pwCheckResult.html("비밀번호를 8~16자까지 입력해주세요.");	
-        return false;
     }
     
     var num = insertPw.search(/[0-9]/g);
@@ -156,11 +152,12 @@ function owPwCheck(){
     if(num < 0 || eng < 0 || spe < 0 ){
 	  	rightFormChk = false;	
 	    pwCheckResult.html("영문,숫자, 특수문자를 혼합하여 입력해주세요.");	
-  	  	return false;
 	 }
     
     if(rightFormChk)pwCheckResult.html("사용할 수 있는 비밀번호 입니다.");	
 	resultStyleChk(pwCheckResult,rightFormChk);
+	
+	passChk = rightFormChk;
 }
 
 
@@ -175,17 +172,17 @@ function ownerPwReChk()
     if (insertRePw == "") {
         rightFormChk = false;	
         pwCheckReResult.html("비밀번호를 입력하지 않았습니다.");	
-        return false;
     }
     
     // 위에 입력한 비밀번호와 체크
     if (insertPw != insertRePw) {
         rightFormChk = false;	
         pwCheckReResult.html("입력한 비밀번호가 일치하지 않습니다.");	
-        return false;
     }
     if(rightFormChk)pwCheckReResult.html("비밀번호가 일치합니다.");	
 	resultStyleChk(pwCheckReResult,rightFormChk);
+	
+	passReChk = rightFormChk;
 }
 
 function ownerNameChk()
@@ -199,12 +196,10 @@ function ownerNameChk()
 	if(insertName == "") {
     	rightFormChk = false;
     	nameCheckResult.html("이름을 입력하지 않았습니다.");
-        return false;
     }
     if(insertName.length<2){
     	rightFormChk = false;
     	nameCheckResult.html("이름을 2자 이상 입력해주십시오.");
-        return false;
     }
     for(var i = 0; i<nameArr.length;i++)
 	{
@@ -221,6 +216,8 @@ function ownerNameChk()
     if(rightFormChk)nameCheckResult.html("확인");	
     else nameCheckResult.html("존재하지 않는 성씨입니다.");
 	resultStyleChk(nameCheckResult,rightFormChk);
+	
+	nameChk = rightFormChk;
 }
 
 // 이메일 체크
@@ -251,11 +248,11 @@ function emailConfirm()
 		$.ajax({
 			url:"/emailConCheck.do",
 			data : {
-						ownerEmail:insertEmail,
+						emailConfirm:insertEmail,
 				   },
 			type : "post",
 			success : function(data){	
-				console.log("이메일 결과" + data);
+
 			},
 			error : function(){
 				
@@ -276,6 +273,7 @@ function emailKeyMatchCheck()
 			if(emailConfirmInput==data){
 				$('#ownerEmailChk').html("이메일 인증 완료");
 				$('#emailConfirmInput').attr('readonly', true);
+				emailChk = true;
 				timer = 180;
 				clearInterval(playAlert); 
 			}
@@ -284,6 +282,7 @@ function emailKeyMatchCheck()
 			
 		},
 	});
+	signUpValidChk();
 }
 
 var idChk = false;
@@ -291,8 +290,8 @@ var passChk = false;
 var passReChk =false;
 var nameChk = false;
 var emailChk = false;
-var phoneChk = false;
-var accountChk = false;
+var phoneChk = true;
+var accountChk = true;
 function signUpValidChk()
 {
 	console.log(idChk&&passChk&&passReChk&&nameChk&&emailChk&&phoneChk&&accountChk);

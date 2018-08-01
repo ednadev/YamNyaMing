@@ -10,6 +10,7 @@
 	
 	<select id="ownerLogin" parameterType="owner" resultType="owner">	
 		 select 
+		 ow_entire_pk as owEntirePk,
 		 ow_id as owId,
 		 ow_name as owName,
 		 ow_email as owEmail,
@@ -23,7 +24,12 @@
 	 
 	 <insert id="storeAdd" parameterType="storeInfo">
 	 	 insert into owner_store_info_tb valus(owner_store_info_tb_SEQ.nextval,
-	 	 #{owEntireFk}, #{owStoreBizNum}, #{owStoreNum}, #{owStoreTel}, #{owStorePhone}, 
+	 	 #{owEntireFk}, #{owStoreBizNum}, #{owStoreName}, #{owStoreTel}, #{owStorePhone}, 
 	 	 #{owStoreBigTypeFk}, #{owStoreDetailTypeFk}, #{owStoreUrl}, sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
 	 </insert>
+	 
+	 <update id="updateOwnerInfo" parameterType="owner">
+	 	update owner_entire_tb set ow_pw= #{owPw}, ow_email=#{owEmail}, ow_phone=#{phone}, ow_bank_account=#{owBankAccount}
+	 	where ow_id = #{owId}
+	 </update>
 </mapper>

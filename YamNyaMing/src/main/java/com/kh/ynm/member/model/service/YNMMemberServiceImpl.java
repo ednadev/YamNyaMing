@@ -1,6 +1,8 @@
 package com.kh.ynm.member.model.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -11,9 +13,15 @@ import org.springframework.stereotype.Service;
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
+import com.kh.ynm.member.model.vo.YNMMemberSetting;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
+import com.kh.ynm.member.model.vo.YNMReviewJjim;
+import com.kh.ynm.member.model.vo.YNMSearch;
+import com.kh.ynm.member.model.vo.YNMSearchPaging;
+import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -35,6 +43,12 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	//로그인 
 	public YNMMember selectOneMember(YNMMember vo) {
 		YNMMember ym=memberDAO.selectOneMember(sqlSession,vo);
+		return ym;
+		
+	}
+	//내정보 확인
+	public YNMMember selectOneMember2(YNMMember vo) {
+		YNMMember ym=memberDAO.selectOneMember2(sqlSession,vo);
 		return ym;
 		
 	}
@@ -65,6 +79,12 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		YNMMember ym=memberDAO.nickCheck(sqlSession,memberNickName);
 		return ym;
 	}
+	//이메일 유효성
+	public YNMMember emailCheck(String memberEmail) {
+		YNMMember ym=memberDAO.emailCheck(sqlSession,memberEmail);
+		return ym;
+	}
+	
 	//사용자 아바타 사진 등록
 	public int memberUploadPhoto(YNMMemberUploadPhoto ymup) {
 		int result=memberDAO.memberUploadPhoto(sqlSession,ymup);
@@ -125,8 +145,127 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int result=memberDAO.storeUnderReviewInsert(sqlSession,ysur);
 		return result;
 	}
+	//댓글 좋아요 insert
+	public int likeInsert(YNMReviewLike yrl) {
+		int result=memberDAO.likeInsert(sqlSession,yrl);
+		return result;
+	}
+	//댓글 좋아요 중복 체크
+	public int likeChk(YNMReviewLike yrl) {
+		int likeChk=memberDAO.likeChk(sqlSession,yrl);
+		return likeChk;
+	}
+
+	//댓글 좋아요 총수
+	public int likeTotal(int storeReviewNo) {
+		int likeTotal=memberDAO.likeTotal(sqlSession,storeReviewNo);
+		return likeTotal;
+	}
+	//댓글 좋아요 취소
+	public int deleteLike(YNMReviewLike yrl) {
+		int result=memberDAO.deleteLike(sqlSession,yrl);
+		return result;
+	}
+	//내정보 이미지 불러오기
+	public String viewPath(int memberUploadPhotoNo) {
+		String viewPath=memberDAO.viewPath(sqlSession,memberUploadPhotoNo);
+		return viewPath;
+	}
+	//댓글 찜 총수
+	public int jjimTotal(int storeReviewNo) {
+		int jjimTotal=memberDAO.jjimTotal(sqlSession,storeReviewNo);
+		return jjimTotal;
+	}		
+	//찜 체크
+	public int jjimChk(YNMReviewJjim yrj) {
+		int jjimChk=memberDAO.jjimChk(sqlSession,yrj);
+		return jjimChk;
+	}
+	//찜 하기
+	public int jjimInsert(YNMReviewJjim yrj) {
+		int result=memberDAO.jjimInsert(sqlSession,yrj);
+		return result;
+	}
+	//찜 취소
+	public int deletejjim(YNMReviewJjim yrj) {
+		int result=memberDAO.deletejjim(sqlSession,yrj);
+		return result;
+	}
+	//팔로우 체크
+	public int followChk(YNMFollow yf) {
+		int followChk=memberDAO.followChk(sqlSession,yf);
+		return followChk;
+	}
+	//팔로우 해제
+	public int deletefollow(YNMFollow yf) {
+		int deletefollow=memberDAO.deletefollow(sqlSession,yf);
+		return deletefollow;
+	}
+	//팔로우 등록
+	public int followInsert(YNMFollow yf) {
+		int result=memberDAO.followInsert(sqlSession,yf);
+		return result;
+	}
+	//아이디 찾기
+	public YNMMember idSearch(YNMMember vo) {
+		YNMMember ym=memberDAO.idSearch(sqlSession,vo);
+		return ym;
+	}
+	public YNMMember pwSearch(YNMMember vo) {
+		YNMMember ym=memberDAO.pwSearch(sqlSession,vo);
+		return ym;
+	}
+	public int pwUpdateMember(YNMMember vo) {
+		int result=memberDAO.pwUpdateMember(sqlSession,vo);
+		return result;
+	}
+	public int updateSetting(YNMMemberSetting yms) {
+		int result=memberDAO.updateSetting(sqlSession,yms);
+		return result;
+	}
+	public YNMMemberSetting settingInfo(int memberEntireNo) {
+		YNMMemberSetting yms=memberDAO.settingInfo(sqlSession,memberEntireNo);
+		return yms;
+	}
+
+	// 사용자 검색
+	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
+		int recordCountPerPage=9;
+		int naviCountPerPage=5;
+		
+		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage,check);
+		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage,check);
+		
+		int resultcurrentPage=qpd.getCurrentPage();
+		int endNavi=qpd.getEndNavi();
+		int startNavi=qpd.getStartNavi();
+		int pageTotalCount=qpd.getPageTotalCount();
+		int recordTotalCount=qpd.getRecordTotalCount();
+		
+		YNMSearchPaging qpd2=null;
+		
+		if(!list.isEmpty()) {
+			qpd2=new YNMSearchPaging();
+			qpd2.setNoticelist(list);
+			qpd2.setCurrentPage(resultcurrentPage);
+			qpd2.setEndNavi(endNavi);
+			qpd2.setStartNavi(startNavi);
+			qpd2.setPageTotalCount(pageTotalCount);
+			qpd2.setRecordTotalCount(recordTotalCount);
+			
+		}
+		return qpd2;
+	}
+	public YNMSearch detailPage(YNMSearch vo) {
+		YNMSearch store = memberDAO.detailPage(sqlSession, vo);
+		return store;
+	}
+	public ArrayList<YNMSearch> detailPageImg(YNMSearch vo) {
+		ArrayList<YNMSearch> storeImg = memberDAO.detailPageImg(sqlSession, vo);
+		return storeImg;
+	}
+
+
 	
-
-
-
+	
 }

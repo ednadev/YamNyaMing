@@ -24,7 +24,8 @@ html,body{height:100%;}
 	font-size:0.9em;
 	text-align:right;
 	margin-right:10px;
-	margin-top:10px;
+	height:52.4px;
+	line-height:52.4px;
 }
 #admin-login-header>p>a{
 	font-weight:bold;
@@ -59,7 +60,7 @@ html,body{height:100%;}
 #admin-main-footer>address{
 	color:white;
 	font-size:0.7em;
-	font-size:normal;
+	font-style:normal;
 	margin-top:15px;
 }
 
