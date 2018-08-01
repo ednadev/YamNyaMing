@@ -1,10 +1,14 @@
 package com.kh.ynm.admin.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,10 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.admin.model.service.YNMAdminServiceImpl;
 import com.kh.ynm.admin.model.vo.AdminStatistics;
+import com.kh.ynm.admin.model.vo.Paging;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
+
+import com.kh.ynm.admin.model.vo.Notice;
 
 @Controller
 public class YNMAdminControllerImpl implements YNMAdminController{
@@ -163,21 +171,43 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			vo.setAd_password(ad_pw);
 			YNMAdmin admin = ynmAdminServiceImpl.adminLogin(vo);
 			session = request.getSession();
-			if(admin!=null)
+			String grade = admin.getAd_grade();
+			System.out.println(grade);
+			if(grade.equals("1"))
 			{
 				session.setAttribute("admin", admin);
 				return "ynmAdmin/adminInfo";	
-			}else
+			}
+			else if(grade.equals("2"))
 			{
-				return "ynmAdmin/ynmAdmin";
+				return "ynmAdmin/loginfailed";
+			}
+			else
+			{
+				return "ynmAdmin/loginErrod";
 			}
 		}
 		@RequestMapping(value="/boardAdmin.do")
-		public String boardAdmin(HttpSession session,YNMAdmin vo) 
-		{
-			
-			return "ynmAdmin/boardAdmin";	
-		}
+		  public String list(Model model, HttpServletRequest req) throws Exception{
+		    int currentPageNo = 1; 
+		    int maxPost = 10; 
+		     
+		    if(req.getParameter("pages") != null)                            
+		      currentPageNo = Integer.parseInt(req.getParameter("pages"));  
+		     
+		    Paging paging = new Paging(currentPageNo, maxPost); 
+		     
+		    int offset = (paging.getCurrentPageNo() -1) * paging.getmaxPost(); 
+		     
+		    ArrayList<Notice> page = new ArrayList<Notice>(); 
+		    page = (ArrayList<Notice>) ynmAdminServiceImpl.writeList(offset, paging.getmaxPost());                              
+		    paging.setNumberOfRecords(ynmAdminServiceImpl.writeGetCount());		     
+		    paging.makePaging(); 
+		    model.addAttribute("page", page);
+		    model.addAttribute("paging", paging);
+		     
+		    return "ynmAdmin/boardAdmin";
+		  }
 	
 		
 		@RequestMapping(value="/statAdmin.do")
@@ -240,6 +270,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		public String ownerBlock(HttpSession session,YNMOwner vo)
 		{
 			int result = ynmAdminServiceImpl.ownerBlock(vo);
+			
 			if(result>0)
 			{
 				return "ynmAdmin/allOwnerView";	
@@ -254,8 +285,46 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		{
 			ArrayList<YNMStoreInfo> list = ynmAdminServiceImpl.storeList();
 		    return list; 
+		}	
+
+		
+		
+		@RequestMapping(value="/adminList.do")
+		public Object adminList(HttpSession session)
+		{
+			ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminList();
+			ModelAndView view = new ModelAndView();
+			view.addObject("list",list);
+			view.setViewName("ynmAdmin/allAdminView");
+			return view;
+		}
+		
+		@RequestMapping(value="/downGrade.do")
+		public Object dounGrade(HttpSession session,HttpServletRequest request)
+		{
+			String ad_id = request.getParameter("ad_id");
+			int list = ynmAdminServiceImpl.dounGrade(ad_id);
+			return "ynmAdmin/fixsuccess";
 		}
 		
 		
+		@RequestMapping(value="/upGrade.do")
+		public Object upGrade(HttpSession session ,HttpServletRequest request)
+		{
+			String ad_id = request.getParameter("ad_id");
+			int list = ynmAdminServiceImpl.upGrade(ad_id);
+			return "ynmAdmin/fixsuccess";
+	
+		}
+		@RequestMapping(value="/logoutAdmin.do")
+		public Object logoutAdmin(HttpSession session ,HttpServletRequest request)
+		{
+			session.invalidate();
+			return "ynmAdmin/logoutSuccess";	
+		}
 		
+		
+	
+
+
 }

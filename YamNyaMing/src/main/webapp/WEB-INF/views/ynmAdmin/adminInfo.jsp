@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"
 	import="com.kh.ynm.admin.model.vo.*"
 	%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% YNMAdmin ad = (YNMAdmin)session.getAttribute("admin");%>
 <!DOCTYPE html>
 <html>
@@ -16,16 +17,15 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
-</head>
+			</head>
 <body>
 <header id="admin-login-header">
 		<h1>
 			<a href="ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
@@ -48,18 +48,36 @@
                       </div>
                       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
                           <div class="container" >
-                          <h2>[${sessionScope.admin.ad_nickname}] 님 안녕하세요</h2> 
+          				     
+          				      <h2>[${sessionScope.admin.ad_nickname}]님 안녕하세요</h2> 
                           </div>
                            <hr>
                           <ul class="container details" >
-                            <li><p><span class="glyphicon glyphicon-user one" style="width:50px;"></span>${sessionScope.admin.ad_id}</p></li>
-                            <li><p><span class="glyphicon glyphicon-user one" style="width:50px;"></span>${sessionScope.admin.ad_grade}</p></li>
+                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"></span>${sessionScope.admin.ad_id}</p></li>
+                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"></span>
+                      <c:choose>
+                      <c:when  test="${sessionScope.admin.ad_id eq 'admin'}">
+                      운영자
+                      </c:when>
+                      <c:otherwise>
+                      관리자
+                      </c:otherwise>
+                      </c:choose>
+                            
+                            </p></li>
                           </ul>
                           <hr>
-                          <div class="col-sm-5 col-xs-6 tital ">비밀번호</div><br><br>
-                                      비밀번호<input type="password" name="userPw" value="${sessionScope.admin.ad_password}"/><br>
-            	   비번확인<input type="password" name="userPw_re" value="${sessionScope.admin.ad_password}"/><br>
-                          <input type="submit" value="회원정보 변경"/>
+                          
+         					<c:choose>
+      						<c:when test="${sessionScope.admin.ad_id == 'admin'}">
+        					<a href="/adminList.do" style="background-color:white; width:300px; height:100px; font-size:35px;  font-family: 'Sunflower'; border:0px solid maroon">관리자 권한 설정</a>
+       						</c:when>
+     				   	
+     				   	    <c:otherwise>
+          				         
+     					    </c:otherwise>
+  					  	    </c:choose>
+  							
                       </div>
                 </div>
             </div>
@@ -68,10 +86,6 @@
 </form>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	
-	
-	
-
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

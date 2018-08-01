@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ynm.admin.model.dao.YNMAdminDAO;
 import com.kh.ynm.admin.model.dao.YNMAdminDAOImpl;
 import com.kh.ynm.admin.model.vo.AdminStatistics;
+import com.kh.ynm.admin.model.vo.Notice;
 import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -89,5 +90,31 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		ArrayList<YNMStoreInfo>list = adminDAO.storeList(sqlSession);
 		return list;
 	}
+
+
+	public ArrayList<YNMAdmin> adminList() {
+		ArrayList<YNMAdmin>list = adminDAO.adminList(sqlSession);
+		return list;
+	}
+
+
+	public int dounGrade(String ad_id) {
+		int list = adminDAO.dounGrade(sqlSession,ad_id);
+		return list;
+	}
+	public int upGrade(String ad_id) {
+		int list = adminDAO.upGrade(sqlSession,ad_id);
+		return list;
+	}
+	 // 게시물 목록 표시(페이징)
+	  @Override
+	  public List<Notice> writeList(int offset, int noOfRecords) throws Exception {
+	    return adminDAO.writeList(sqlSession, offset, noOfRecords);
+	  }
+	// 전체 게시물 수 조회
+	  @Override
+	  public int writeGetCount() throws Exception {
+	    return adminDAO.writeGetCount(sqlSession);
+	  }
 
 }

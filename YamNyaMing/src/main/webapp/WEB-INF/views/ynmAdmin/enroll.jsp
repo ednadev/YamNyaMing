@@ -116,8 +116,7 @@ function idCheck(){
          <div class="signUp-table">
 	     <div>권한</div>
          <SELECT name="combo" id="ad_grade" style="width:420px; height: 45px; margin:10px; color:black;">
-    <OPTION value="1">슈퍼관리자</OPTION>
-    <OPTION value="2">일반관리자</OPTION>
+    <OPTION value="2">관리자신청 (운영자가 수락시 로그인 가능)</OPTION>
           </SELECT>
 
          </div>

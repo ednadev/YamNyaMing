@@ -86,6 +86,9 @@ public class AdminStatistics {
 	private int deleteow15day;
 	private int deletemem30day;
 	private int deleteow30day;
+	private int hugi;
+	private int userQ;
+	private int ownerQ;
 	
 public AdminStatistics() {}
 
@@ -102,7 +105,8 @@ public AdminStatistics(String today, String yesterday, String threeday, String f
 		int deleteowtoday, int deleteyestermemday, int deleteowyestermemday, int deletememthreeday,
 		int deleteowthreeday, int deletememfourday, int deleteowfourday, int deletememfiveday, int deleteowfiveday,
 		int deletememsixday, int deleteowsixday, int deletememsevenday, int deleteowsevenday, int deletemem7day,
-		int deleteow7day, int deletemem15day, int deleteow15day, int deletemem30day, int deleteow30day) {
+		int deleteow7day, int deletemem15day, int deleteow15day, int deletemem30day, int deleteow30day, int hugi,
+		int userQ, int ownerQ) {
 	super();
 	this.today = today;
 	this.yesterday = yesterday;
@@ -188,6 +192,9 @@ public AdminStatistics(String today, String yesterday, String threeday, String f
 	this.deleteow15day = deleteow15day;
 	this.deletemem30day = deletemem30day;
 	this.deleteow30day = deleteow30day;
+	this.hugi = hugi;
+	this.userQ = userQ;
+	this.ownerQ = ownerQ;
 }
 
 public String getToday() {
@@ -861,6 +868,32 @@ public int getDeleteow30day() {
 public void setDeleteow30day(int deleteow30day) {
 	this.deleteow30day = deleteow30day;
 }
+
+public int getHugi() {
+	return hugi;
+}
+
+public void setHugi(int hugi) {
+	this.hugi = hugi;
+}
+
+public int getUserQ() {
+	return userQ;
+}
+
+public void setUserQ(int userQ) {
+	this.userQ = userQ;
+}
+
+public int getOwnerQ() {
+	return ownerQ;
+}
+
+public void setOwnerQ(int ownerQ) {
+	this.ownerQ = ownerQ;
+}
+
+
 
 
 

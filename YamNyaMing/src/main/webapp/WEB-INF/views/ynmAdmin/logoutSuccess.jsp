@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-성공형2
+<script>
+alert("로그아웃 완료"); 
+window.location.href="/index.jsp"
+</script>
 </body>
 </html>
