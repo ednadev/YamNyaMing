@@ -615,7 +615,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return null;
 	}
 	
-	@RequestMapping("/storeHeadPhotoUpload")
+	@RequestMapping("/storeHeadPhotoUpload.do")
 	public ModelAndView storeHeadPhotoUpload(MultipartHttpServletRequest mainImgFile, HttpSession session,  HttpServletRequest request)
 	{
 		List<MultipartFile> files = mainImgFile.getFiles("mainImgFile");
@@ -770,6 +770,63 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		int menuUpdate = ynmOwnerServiceImpl.textMenuUpdate(menuInfo);
 		
 		return menuUpdate + "";
+	}
+	
+
+	@RequestMapping("/storeMenuPhotoUpload.do")
+	public ModelAndView storeMenuPhotoUpload(MultipartHttpServletRequest menuImageFile, HttpSession session,  HttpServletRequest request)
+	{
+		
+		List<MultipartFile> files = menuImageFile.getFiles("menuImageFile");
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			if(files.size()>0) {
+				int tapOrder  = 3;
+				int storeInfoIndex = Integer.parseInt(request.getParameter("storeIndex"));
+				String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\menuP_");
+				String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
+				System.out.println("ㅍ일 사이즈 " + files.size());
+				for(int j = 0; j<files.size(); j++)
+				{
+					String originName= files.get(j).getOriginalFilename();
+					String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+					File f=new File(photoRoute + remakeName);
+					//해당 디렉토리의 존재여부를 확인
+					if(!f.exists()){
+						//없다면 생성
+						f.mkdirs(); 
+					}
+					try {
+						files.get(j).transferTo(f);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+					uploadPhoto.setOwPhotoTypeFk(4);
+					uploadPhoto.setStoreInfoFk(storeInfoIndex);
+					uploadPhoto.setOriginName(originName);
+					uploadPhoto.setRemakeName("menuP_" + remakeName);
+					uploadPhoto.setPhotoRoute(photoSaveRoute);
+					
+					int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+					if(photoUpload>0) {
+						view = storeManageEnrollList(session, request);
+						view.addObject("menuPhotoList", storeHeadPhotoList(3,storeInfoIndex));
+						view.addObject("storeTapType", tapOrder);
+						return view;
+					}else {
+						System.out.println("이미지 업로드 실패");
+						break;
+					}
+//					view = storePageTypeLoad(session, request);
+				}
+			}
+		}
+		return view;
 	}
 
 }

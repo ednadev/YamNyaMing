@@ -281,14 +281,18 @@
 			<c:if test="${menuInfoData.menuType==1}">
 				<!-- 사진만 등록 -->
 				<div class="menuInfo">  
-					<div>
-						<input type="file" name="menuImageFile" id="menuImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
-						<label for="menuImage" id="menu-image">사진등록/편집</label>
-							<div class="imgs_wrap_menu">
-								<img id="img"/>
-							</div>
-						<img id="output"/>
-					</div> 	
+					<form action="/storeMenuPhotoUpload.do" method="post" enctype="multipart/form-data">
+						<div>
+							<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+							<input type="file" name="menuImageFile" id="menuImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
+							<label for="menuImage" id="menu-image">사진등록/편집</label>
+								<div class="imgs_wrap_menu">
+									<img id="img"/>
+								</div>
+							<img id="output"/>
+							<input type="submit" value="메뉴사진 등록">
+						</div> 
+					</form>	
 				</div>
 			</c:if>
 			<c:if test="${menuInfoData.menuType==2}">
