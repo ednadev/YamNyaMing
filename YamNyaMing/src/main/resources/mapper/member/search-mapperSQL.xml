@@ -3,6 +3,7 @@
 <mapper namespace="search">
 	<select id="searchList" resultType="search">
        select
+       		ow_store_info_pk as owStoreInfoPk,
 			ow_store_name as owStoreName, 
 		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
@@ -27,6 +28,7 @@
 	
 	<select id="detailPage" resultType="search">
 		select 
+			ow_store_info_pk as owStoreInfoPk,
 		    ow_store_name as owStoreName, 
 		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
@@ -50,13 +52,13 @@
 		and info.ow_store_info_pk = detail.ow_store_index
 		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
 		and ow_photo_type_fk = 3
-		and ow_store_name = #{owStoreName}
+		and ow_store_info_pk = #{owStoreInfoPk}
 	</select>
 	
 	<select id="detailPageImg" resultType="search">
 		select ow_photo_route as owPhotoRoute from owner_store_photo_tb, owner_store_info_tb
 		where ow_store_info_fk = ow_store_info_pk
-		and ow_store_name = #{owStoreName}
+		and ow_store_info_pk = #{owStoreInfoPk}
 	</select>	
 	
 	

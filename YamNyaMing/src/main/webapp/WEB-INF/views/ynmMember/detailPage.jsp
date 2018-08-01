@@ -11,11 +11,11 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=8">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/lightslider.css" />                  
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=1">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
+
 </head>
+
 <body>
 <header id="member-search-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
@@ -226,6 +226,8 @@
 	</div>
 	<div class="member-detail-page-wrapper">
 		<div class="tab">
+			<input type="hidden" value="review" name="detailMenu" id="storeInfoType">
+			<input type="hidden" name="owStoreInfoPk" value="${store.owStoreInfoPk}"> 
 			<button class="tablink click" onclick="openTab(event,'Info')">정보</button>
 		    <button class="tablink" onclick="openTab(event,'Photo')">포토</button>
 		    <button class="tablink" onclick="openTab(event,'Review')">리뷰</button>
@@ -284,81 +286,131 @@
 			  </c:forEach>
 			  </div>
 			</div>
-
+		
 		<script>
-			var slideIndex = 1;
-			showSlides(slideIndex);
+        	var locked=0;
+		function show(star){
+			if(locked)
+				return;
+			var image;
+			var el;
+			var e=document.getElementById('startext');
+			var stateMsg;
 			
-			function plusSlides(n) {
-			  showSlides(slideIndex += n);
+			for(var i=0; i<star; i++){
+				image='image' +i;
+				var image2=document.getElementById(image);
+		        image2.src="${pageContext.request.contextPath}/resources/image/member/search/star-full.png";
 			}
+			switch(star){
+			case 1:
+				stateMsg="실망이에요. 집에서 먹는게 나을 뻔 했어요.";
+				break;
+			case 2:
+				stateMsg="평균이하! 이정도 레스토랑은 어디에나 있죠.";
+				break;
+			case 3:
+				stateMsg="보통이에요. 이정도면 괜찮네요.";
+				break;
+			case 4:
+				stateMsg="인상적이네요.꼭 추천하고 싶어요.";
+				break;
+			case 5:
+				stateMsg="완벽 그 자체!! 환상적이에요.";
+				break;
+			default:
+				stateMsg="";
+			}
+			e.innerHTML=stateMsg;
 			
-			function currentSlide(n) {
-			  showSlides(slideIndex = n);
+		} 
+		function noshow(star){
+			if(locked)
+				return;
+			var image;
+			var el;
+			for(var i=0; i<star; i++);{
+				image='image'+i;
+				el=document.getElementById(image);
+				el.src="${pageContext.request.contextPath}/resources/image/member/search/star.png";
 			}
-			
-			function showSlides(n) {
-			  var i;
-			  var slides = document.getElementsByClassName("mySlidesPhoto");
-			  var dots = document.getElementsByClassName("demo");
-			  var captionText = document.getElementById("caption");
-			  if (n > slides.length) {slideIndex = 1}
-			  if (n < 1) {slideIndex = slides.length}
-			  for (i = 0; i < slides.length; i++) {
-			      slides[i].style.display = "none";
-			  }
-			  for (i = 0; i < dots.length; i++) {
-			      dots[i].className = dots[i].className.replace(" active", "");
-			  }
-			  slides[slideIndex-1].style.display = "flex";
-			  dots[slideIndex-1].className += " active";
-			  captionText.innerHTML = dots[slideIndex-1].alt;
+		}
+		var chk=false;
+		function lock(star){
+			if(chk=false){
+			show(star);
+			locked=1;
+			chk=true;
+			}else{
+			locked=0;
 			}
-		</script>
+		}
+		function starPoint(star){
+			lock(star);
+			document.reviewform.reviewStar.value=star;
+		} 
+
+      </script>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">
+			<form action="/storeReviewInsert.do" enctype="multipart/form-data" method="post" name="reviewform">
 			<h4>리뷰 쓰기</h4>
+			<input type="hidden" name="owStoreInfoPk" value="${store.owStoreInfoPk}"/>
 			<table>
 			<tbody>
 			<tr>
 				<th>별점</th>
 				<td>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
-					<span class="star-yellow"></span>
+					<img id="image0" style="width:20px; height:20px;" onmouseout="noshow(1);" onmouseover="show(1);" onclick="starPoint(1);" src="${pageContext.request.contextPath}/resources/image/member/search/star.png">
+					<img id="image1" style="width:20px; height:20px;" onmouseout="noshow(2);" onmouseover="show(2);" onclick="starPoint(2);" src="${pageContext.request.contextPath}/resources/image/member/search/star.png">
+					<img id="image2" style="width:20px; height:20px;" onmouseout="noshow(3);" onmouseover="show(3);" onclick="starPoint(3);" src="${pageContext.request.contextPath}/resources/image/member/search/star.png">
+					<img id="image3" style="width:20px; height:20px;" onmouseout="noshow(4);" onmouseover="show(4);" onclick="starPoint(4);" src="${pageContext.request.contextPath}/resources/image/member/search/star.png">
+					<img id="image4" style="width:20px; height:20px;" onmouseout="noshow(5);" onmouseover="show(5);" onclick="starPoint(5);" src="${pageContext.request.contextPath}/resources/image/member/search/star.png">
+					<span id="startext">평가평가</span>
+					<input type="hidden" name="reviewStar">
 				</td>
 			</tr>
 			<tr>
 				<th>리뷰</th>
-				<td><textarea placeholder="매장에 대한 리뷰를 30자 이상 작성해주세요.&#13;&#10;매장과 관계없는 글, 광고성, 욕성, 비방, 도배 등의 글은 예고 없이 삭제됩니다."></textarea></td>
+				<td><textarea id="reviewContent" name="reviewContent" placeholder="매장에 대한 리뷰를 30자 이상 작성해주세요.&#13;&#10;매장과 관계없는 글, 광고성, 욕성, 비방, 도배 등의 글은 예고 없이 삭제됩니다."></textarea></td>
 			</tr>
 			<tr>
 				<th>사진 등록</th>
 				<td>
-					<input type="file" id="photoEnroll"><label for="photoEnroll">사진 등록하기</label>
+					<input type="file" id="input_reviewPhoto" name="reviewImgList" multiple/>
+					<label for="input_reviewPhoto" onclick="reviewFilesUpload();">사진 등록하기</label>
 				</td>
 			</tr>
 			<tr>
 				<th></th>
 				<td>
-					<div style="display:none;"></div>
+					<div class="imgs_wrap" style="display:block;width:100%;">
+							
+
+						
+					</div>
 				</td>
 			</tr>
 			</tbody>
 			</table>
 			<button>리뷰 올리기</button>
+			</form>
+			
 			<h4>리뷰</h4>
 			<p><span>최신순</span> | <span>인기순</span></p>
+				<c:forEach items="${review}" var="r">
 			<div>
 				<div>
-					<div id="profile-image"></div>
-					<div>
-						<p>Jihae</p>
-						<p>4 리뷰, 4 팔로워</p>				
+					<div id="profile-image">
+						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
+						</c:if>
 					</div>
-				 	<button>팔로우</button>				
+					<div>
+						<p>${r.memberNickName}</p>
+						<p>4 리뷰, 4팔로워</p>				
+					</div>
+				 	<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>				
 				</div>
 				<div>
 					<p>
@@ -375,13 +427,17 @@
 						<div></div>
 					</div>
 					<p>정범진님, 김수한님 외 18명이 좋아합니다.</p>
-					<p><button><div></div><p>좋아요 20</p></button><button><div></div><p>찜하기 0</p></button><button><div></div><p>댓글 0</p></button><button><div></div><p>공유</p></button></p>
+					<p><button onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>
+					<button onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}');"><div></div><p>찜하기</p><p id="${r}${r}">${r.jjimTotal}</p></button>
+					<button><div></div><p>댓글 0</p></button>
+					<button><div></div><p>공유</p></button></p>
   				</div>
   				<div>
   					<div></div>
   					<input type="text" placeholder="댓글을 입력해주세요">
   				</div>
 			</div>
+			</c:forEach>
 		</div>
 		<div id="Menu" class="tabInfo" style="display:none;">
 			메뉴
@@ -389,7 +445,7 @@
 		<div id="Map" class="tabInfo" style="display:none;">
 			지도
 		</div>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=3"></script>
 	</div>
 </section>
 

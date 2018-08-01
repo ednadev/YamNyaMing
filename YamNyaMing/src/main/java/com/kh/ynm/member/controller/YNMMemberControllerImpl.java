@@ -450,7 +450,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	//리뷰 table
 	@Override
 	@RequestMapping(value="/storeReviewInsert.do")
-	public String storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException {
 
 		
@@ -466,7 +466,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			file.mkdirs(); //디렉토리가 존재하지 않는다면 생성
 		}
 		if(files.get(0).getSize()>0) {
-			System.out.println("나 왔성");
 		for (int i = 0; i < files.size(); i++) {
 			remakeName=System.currentTimeMillis()+"_"+files.get(i).getOriginalFilename();
 			file = new File(path+remakeName);
@@ -491,15 +490,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		YNMStoreReview ysr=new YNMStoreReview();
 		ysr.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-		ysr.setReviewTitle(request.getParameter("reviewTitle"));
-		ysr.setOwnerEntireNo(Integer.parseInt(request.getParameter("ownerStoreEntireNo")));
+		ysr.setOwnerEntireNo(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		ysr.setReviewContent(request.getParameter("reviewContent"));
-		ysr.setReviewStar(request.getParameter("reviewStar"));
+		ysr.setReviewStar(Integer.parseInt(request.getParameter("reviewStar")));
 		ysr.setReviewImgList(reviewImgList);
 		int result=ynmMemberServiceImpl.storeReviewInsert(ysr);
+		int owStoreInfoPk=Integer.parseInt(request.getParameter("owStoreInfoPk"));
+		ModelAndView view=new ModelAndView();
+		if(result>0) {
+		view=detailPage(request,response);
 		
 		
-		return null;
+		}else {
+			view.setViewName("ynmMember/Error");
+		}
+		return view;
+		
+		
+		
 	}
 
 	//리뷰 정보 가져오기
@@ -507,9 +515,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reviewCheck.do")
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response) {
 		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
-		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("OwnerStoreEntireNo"));
+		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("owStoreInfoPk"));
 
-		YNMStoreInfo ysi=ynmMemberServiceImpl.storeInfo(OwnerStoreEntireNo);
+		HttpSession session=request.getSession(false);
+		
+		if(session !=null) {
+			
+		}
+		
 		ArrayList<YNMStoreReview> ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
 
 		StringBuilder strBuilder = new StringBuilder();
@@ -526,7 +539,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		{
 			YNMStoreReview tempStoreReview = ysrList.get(i);
 			int likeTotal=ynmMemberServiceImpl.likeTotal(ysrList.get(i).getStoreReviewNo());
+			int jjimTotal=ynmMemberServiceImpl.jjimTotal(ysrList.get(i).getStoreReviewNo());
 			ysrList.get(i).setLikeTotal(likeTotal);
+			ysrList.get(i).setJjimTotal(jjimTotal);
 			if(imgList!=null && !imgList.isEmpty())
 			{
 				for(int j =0 ; j<imgList.size();j++) 
@@ -546,14 +561,15 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		ModelAndView view=new ModelAndView();
-		if(ysi!=null && !ysrList.isEmpty()) {
-			view.addObject("storeInfo",ysi);
+		if(!ysrList.isEmpty()) {
 			view.addObject("review",ysrList);
-			view.setViewName("ynmMember/reviewTest");
 			return view;
 
+		}else {
+			view.addObject("noReview"," 등록된 리뷰가 없습니다.");
+		return view;
+		
 		}
-		return null;
 	}
 	//리뷰 대댓글 작성
 	@Override
@@ -750,18 +766,22 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 	// 음식점 상세 페이지
 	@RequestMapping(value="/detailPage.do")
-	public String detailPage(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView detailPage(HttpServletRequest request, HttpServletResponse response) {
 		YNMSearch vo = new YNMSearch();
-		vo.setOwStoreName(request.getParameter("owStoreName"));
+		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
 		int size=storeImg.size();
-		HttpSession session = request.getSession();
+		
+		ModelAndView view=new ModelAndView();
+		
+		view=reviewCheck(request,response);
 		if(store!=null && storeImg!=null) {
-			session.setAttribute("store", store);
-			session.setAttribute("size", size);
-			session.setAttribute("storeImg", storeImg);
-			return "ynmMember/detailPage";
+			view.addObject("store", store);
+			view.addObject("size", size);
+			view.addObject("storeImg", storeImg);
+			view.setViewName("ynmMember/detailPage");
+			return view;
 		}else {
 			return null;
 		}

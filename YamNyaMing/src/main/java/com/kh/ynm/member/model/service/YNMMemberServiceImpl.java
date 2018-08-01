@@ -171,6 +171,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		String viewPath=memberDAO.viewPath(sqlSession,memberUploadPhotoNo);
 		return viewPath;
 	}
+	//댓글 찜 총수
+	public int jjimTotal(int storeReviewNo) {
+		int jjimTotal=memberDAO.jjimTotal(sqlSession,storeReviewNo);
+		return jjimTotal;
+	}		
 	//찜 체크
 	public int jjimChk(YNMReviewJjim yrj) {
 		int jjimChk=memberDAO.jjimChk(sqlSession,yrj);
@@ -258,7 +263,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public ArrayList<YNMSearch> detailPageImg(YNMSearch vo) {
 		ArrayList<YNMSearch> storeImg = memberDAO.detailPageImg(sqlSession, vo);
 		return storeImg;
-	}		
+	}
 
 
 	
