@@ -77,7 +77,7 @@
             	where OW_ENTIRE_FK=ow_store_info_pk) as storeStarPoint 
 			from owner_store_info_tb,
 			(select * from owner_store_detail_tb, owner_store_photo_tb
-			where OW_STORE_PHOTO_PK = TRIM(REGEXP_SUBSTR(ow_store_head_photo, '[^,]+')))
+			where OW_STORE_PHOTO_PK  in (TRIM(REGEXP_SUBSTR(ow_store_head_photo, '[^,]+')),  null))
 			where ow_store_info_pk = OW_STORE_INDEX  and ow_entire_fk = #{owEntirePk}
  	</select>
  	

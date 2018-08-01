@@ -113,7 +113,7 @@
 		<hr style="clear:both;">
 		가게 상세 정보
 		
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:block;">
 			<form action="/storeInfoEdit.do" method="post">
 			
 				<h3>위에 정보</h3>
@@ -200,8 +200,8 @@
 				<input type="submit" value="가게 정보 업데이트">
 			</form>
 		</div>
-		<div class="store-info-div">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+		<div class="store-info-div" style="display:none;">
+			
 			<h3>이미지를  클릭해서 삭제 할 수 있습니다.</h3>
 			<!-- <form action="/storeHeadPhotoEdit.do" method="post"> -->
 			<c:if test="${headPhotoList!=null}">
@@ -218,22 +218,39 @@
 			<c:if test="${headPhotoList==null}">
 				대표사진이 없습니다.
 			</c:if>
+			<form action="/storeHeadPhotoUpload.do" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+				<input type="hidden" name="storeTapType" value="정보">
+				<div id="menuType">
+					<input type="file" name="mainImgFile" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
+					<label for="mainImage">이미지 추가</label>
+					<div>
+						<div class="imgs_wrap">
+							<img id="img"/>
+						</div>
+					</div>
+					<img id="output"/>
+					<p>업체를 대표하는 이미지를 추가해주세요.</p>
+				</div>
+				<input type="submit" value="대표사진 등록">
+			</form>
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			리뷰
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			메뉴
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			맵
 		</div>
 	</section>
 	<script>
 		window.onload=function(){
+			$("#mainImage").on("change",reviewPhotoSelect);
 			var storeDivArr = document.getElementsByClassName("store-info-div");
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
@@ -293,12 +310,64 @@
 					   },
 				type : "post",
 				success : function(data){	
-					
+					if(data=="delSuccess"){
+						alert("사진을 삭제했습니다.");
+						$('#'+route).remove();
+						$('#'+name).remove();
+						$('#' + detail).remove();
+						$('#' + headList).remove();
+						$('#' + photoIndex).remove();
+					}else{
+						alert("사진 삭제에 실패했습니다.");
+					}
 				},
 				error : function(){
 					console.log("실패");	
 				}
 			});
+			
+		}
+
+		var sel_files=[];
+		var html;
+		function reviewFilesUpload(){
+			$("#mainImage").trigger('click');
+		}
+
+		function reviewPhotoSelect(e){
+			
+//			$(".imgs_wrap").empty();
+			
+			var files=e.target.files;
+			var filesArr=Array.prototype.slice.call(files);
+			
+			var index=sel_files.length;
+			filesArr.forEach(function(f){
+				if(!f.type.match("image.*")){
+					alert("확장자는 이미지 확장자만 가능합니다.");
+					return;
+				}
+				if(sel_files.length<30){
+					sel_files.push(f);
+					
+					var reader=new FileReader();
+					reader.onload=function(e){
+						html="<a href=\"javascript:void(0);\"  onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img style='width:120px; height:120px;' src=\""+e.target.result+"\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+						$(".imgs_wrap").append(html);
+						index++;
+					}
+					reader.readAsDataURL(f);
+				}else
+				{
+					alert("대표 사진은 30개 이하만 등록할수 있습니다.");
+				}
+			});
+		}
+		
+		function deleteImageAction(index){
+			sel_files.splice(index,1);
+			var img_id="#img_id_"+index;
+			$(img_id).remove();
 			
 		}
 	</script>

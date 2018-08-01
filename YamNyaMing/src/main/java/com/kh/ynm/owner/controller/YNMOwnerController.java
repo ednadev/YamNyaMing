@@ -1,6 +1,7 @@
 package com.kh.ynm.owner.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.MenuInfo;
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -62,4 +65,11 @@ public interface YNMOwnerController {
 
 	// 사진 삭제하기
 	public String storeHeadPhotoDelete(HttpSession session, HttpServletRequest request);
+
+	// 메인 사진 리스트 불러오는곳.
+	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int storeInfoIndex);
+
+	// 메뉴 정보 불러오기
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeInfoIndex);
+	
 }

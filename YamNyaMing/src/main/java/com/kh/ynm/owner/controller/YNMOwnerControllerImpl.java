@@ -430,7 +430,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
 
-			System.out.println("전체 내 데이터" +ownerIndex );
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<StoreTitleData> storeInfoList = ynmOwnerServiceImpl.ynmStoreInfoList(ownerIndex, currentPage,recordCountPerPage);
@@ -446,7 +445,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				}else
 				{
 					int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
-					System.out.println("머임??");
 					view.addObject("currentStoreIndex", storeIndex);
 					StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
 					view.addObject("storeInfoPageData", storeInfoPD);
@@ -521,7 +519,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(session.getAttribute("owner")!=null) {
 			String storeTapType = request.getParameter("storeTapType");
 			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
-			System.out.println("현재 가게 인덱스 " + storeIndex);
 			int tapOrder = 0;
 			
 			view = storeManageEnrollList(session, request);
@@ -530,11 +527,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view = storeDetailInfo(session,request);
 			}else if(storeTapType.equals("포토")) {
 				tapOrder = 1;
-				OwnerUploadPhoto paramVo = new OwnerUploadPhoto();
-				paramVo.setOwPhotoTypeFk(3);
-				paramVo.setStoreInfoFk(storeIndex);
-				ArrayList<OwnerUploadPhoto> photoList = ynmOwnerServiceImpl.headPhotoList(paramVo);
-				view.addObject("headPhotoList", photoList);
+				view.addObject("headPhotoList", storeHeadPhotoList(storeIndex));
 			}else if(storeTapType.equals("리뷰")) {
 				tapOrder = 2;
 			}else if(storeTapType.equals("메뉴")) {
@@ -578,13 +571,17 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				paramVo.setHeadStoreList(updateHeadPhotoArr);
 				
 				int detailInfoUpdate = ynmOwnerServiceImpl.storeDetailInfoHeadPhotoUpdate(paramVo);
-				File file = new File(paramVo.getPhotoRoute() +"/" + paramVo.getRemakeName());
-				if(file.exists())
-				{
-					file.delete();
-					return "delSuccess";
+				if(detailInfoUpdate>0) {
+					File file = new File(paramVo.getPhotoRoute() +"/" + paramVo.getRemakeName());
+					if(file.exists())
+					{
+						file.delete();
+						return "delSuccess";
+					}else {
+						return "delFail";
+					}
 				}else {
-					return "delFail";
+					
 				}
 			}
 			else {
@@ -596,6 +593,82 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		}
 		return null;
 	}
+	
+	@RequestMapping("/storeHeadPhotoUpload")
+	public ModelAndView storeHeadPhotoUpload(MultipartHttpServletRequest mainImgFile, HttpSession session,  HttpServletRequest request)
+	{
+		List<MultipartFile> files = mainImgFile.getFiles("mainImgFile");
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			if(files.size()>0) {
+				String uploadPhotoImg = "";
+				int tapOrder  = 1;
+				int storeInfoIndex = Integer.parseInt(request.getParameter("storeIndex"));
+				String storeTapType = request.getParameter("storeTapType");
+				String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\headPhoto_");
+				String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\");
+				for (int i = 0; i < files.size(); i++) 
+				{
+					String originName= files.get(i).getOriginalFilename();
+					String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+					File f=new File(photoRoute + remakeName);
+					//해당 디렉토리의 존재여부를 확인
+					if(!f.exists()){
+						//없다면 생성
+						f.mkdirs(); 
+					}
+					try {
+						files.get(i).transferTo(f);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+					uploadPhoto.setOwPhotoTypeFk(3);
+					uploadPhoto.setStoreInfoFk(storeInfoIndex);
+					uploadPhoto.setOriginName(originName);
+					uploadPhoto.setRemakeName("headPhoto_" + remakeName);
+					uploadPhoto.setPhotoRoute(photoSaveRoute);
+					
+					int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+					if(photoUpload>0) {
+						int photoIndex =ynmOwnerServiceImpl.photoSelectWithName("headPhoto_" +remakeName);
+						if(i<files.size()-1) uploadPhotoImg+=photoIndex+",";
+						else uploadPhotoImg+=photoIndex;
+					}else {
+						System.out.println("이미지 업로드 실패");
+						break;
+					}
+					view = storePageTypeLoad(session, request);
+					view.addObject("headPhotoList", storeHeadPhotoList(storeInfoIndex));
+					view.addObject("storeTapType", tapOrder);
+				}
+			}
+		}
+		return view;
+	}
+	
+	@Override
+	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int storeInfoIndex)
+	{
+		OwnerUploadPhoto paramVo = new OwnerUploadPhoto();
+		paramVo.setOwPhotoTypeFk(3);
+		paramVo.setStoreInfoFk(storeInfoIndex);
+		ArrayList<OwnerUploadPhoto> photoList = ynmOwnerServiceImpl.headPhotoList(paramVo);
+		return photoList;
+	}
+	
+	@Override
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeInfoIndex)
+	{
+//		int menuType = ynmOwnerServiceImpl.storeMenuInfoList(storeInfoIndex); 
+				
+		return null;
+	}
+	
 
 
 }
