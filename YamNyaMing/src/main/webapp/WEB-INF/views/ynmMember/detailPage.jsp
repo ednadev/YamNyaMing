@@ -11,10 +11,9 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=8">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/lightslider.css" />                  
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=9">
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
 <body>
 <header id="member-search-header">
@@ -275,14 +274,16 @@
 				</div>
 			</c:forEach>				
 			  <a class="next" onclick="plusSlides(1)">❯</a>
-			
-			  <div class="row">
+
+			  <a class="row-prev" onclick="plusSlidesPhoto(-1)">❮</a>
+			  <div class="row">		  
 			  <c:forEach items="${storeImg}" var="storeImg" begin="0" varStatus="status" end="${size}">
 			    <div class="column">
 			      <img class="demo cursor" src="${pageContext.request.contextPath}/resources/${storeImg.owPhotoRoute}" onclick="currentSlide(${status.index+1})">
 			    </div>
 			  </c:forEach>
 			  </div>
+			  <a class="row-next" onclick="plusSlidesPhoto(1)">❯</a>
 			</div>
 
 		<script>
@@ -317,6 +318,7 @@
 		</script>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">
+			<form>
 			<h4>리뷰 쓰기</h4>
 			<table>
 			<tbody>
@@ -349,6 +351,7 @@
 			</tbody>
 			</table>
 			<button>리뷰 올리기</button>
+			</form>
 			<h4>리뷰</h4>
 			<p><span>최신순</span> | <span>인기순</span></p>
 			<div>
@@ -387,9 +390,48 @@
 			메뉴
 		</div>
 		<div id="Map" class="tabInfo" style="display:none;">
-			지도
+			<div id="map-info"></div>
+			<script>
+			//지도
+			var mapContainer = document.getElementById('map-info'), // 지도를 표시할 div 
+			mapOption = {
+			    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			    level: 3 // 지도의 확대 레벨
+			};  
+
+			//지도를 생성합니다    
+			var map = new daum.maps.Map(mapContainer, mapOption); 
+
+			//주소-좌표 변환 객체를 생성합니다
+			var geocoder = new daum.maps.services.Geocoder();
+
+			//주소로 좌표를 검색합니다
+			geocoder.addressSearch('${store.owStoreAddr}', function(result, status) {
+
+			// 정상적으로 검색이 완료됐으면 
+			 if (status === daum.maps.services.Status.OK) {
+
+			    var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+			    // 결과값으로 받은 위치를 마커로 표시합니다
+			    var marker = new daum.maps.Marker({
+			        map: map,
+			        position: coords
+			    });
+
+			    // 인포윈도우로 장소에 대한 설명을 표시합니다
+			    var infowindow = new daum.maps.InfoWindow({
+			        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+${store.owStoreName}+'</div>'
+			    });
+			    infowindow.open(map, marker);
+
+			    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			    map.setCenter(coords);
+			} 
+			}); 
+			</script>
 		</div>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=2"></script>
 	</div>
 </section>
 

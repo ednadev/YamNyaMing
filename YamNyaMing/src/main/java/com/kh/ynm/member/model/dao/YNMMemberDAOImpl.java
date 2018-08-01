@@ -187,7 +187,6 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		check.setStart(start);
 		check.setEnd(end);
 		
-		
 		List list=sqlSession.selectList("search.searchList",check);
 
 		return (ArrayList<YNMSearch>)list;
