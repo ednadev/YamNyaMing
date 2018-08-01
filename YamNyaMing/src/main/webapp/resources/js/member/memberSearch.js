@@ -1,13 +1,16 @@
-//지도API
 //마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
 
+
+
+
+
+
+
+
+/*
+//지도API
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
 
@@ -78,13 +81,10 @@ function displayMarker(place) {
     	location.href="detailPage.do?owStoreName="+place.place_name;
     });
 }
-
+*/
 
 //ajax를 이용하여 자세히 검색 기능
-
-
 function check(){
-	
 	var storeCateDetailName = [];
 	var owBudget = [];
 	var owSubInfo = [];
@@ -111,6 +111,7 @@ function check(){
 		type:"GET",
 		data:{storeCateDetailName:storeCateDetailName,owBudget:owBudget,owSubInfo:owSubInfo,owDrinkListInfo:owDrinkListInfo},
 		success:function(data){
+			
 		}
 	});
 }

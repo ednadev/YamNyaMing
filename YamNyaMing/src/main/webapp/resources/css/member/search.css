@@ -110,19 +110,19 @@
 	color:black;
 	margin-top:30px;
 }
-#member-search-section>.member-search-wrapper>.detailSearch{
+#member-search-section>.member-search-wrapper>form>.detailSearch{
 	display:flex;
 	margin:10px 20px 30px;
 }
-#member-search-section>.member-search-wrapper>.detailSearch>h3{
+#member-search-section>.member-search-wrapper>form>.detailSearch>h3{
 	color:black;
 	font-size:1em;
 	margin-right:20px;
 }
-#member-search-section>.member-search-wrapper>.detailSearch>div>input{
+#member-search-section>.member-search-wrapper>form>.detailSearch>div>input{
 	display:none;
 }
-#member-search-section>.member-search-wrapper>.detailSearch>div>label{
+#member-search-section>.member-search-wrapper>form>.detailSearch>div>label{
 	cursor:pointer;
 	border:1px solid #bcbcbc;
 	padding:10px;
@@ -130,10 +130,20 @@
 	border-radius:10px;
 	font-size:0.9em;
 }
-#member-search-section>.member-search-wrapper>.detailSearch>div>input:checked+label{
+#member-search-section>.member-search-wrapper>form>.detailSearch>div>input:checked+label{
 	background-color:#fb0;
 	border:1px solid #fb0;
 	color:white;
+}
+#member-search-section>.member-search-wrapper>form>input{
+	width:100%;
+	font-size:1em;
+	padding:10px;
+	background-color:#555;
+	border:none;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
 }
 #member-search-section>.member-search-wrapper>h4{
 	margin-top:50px;

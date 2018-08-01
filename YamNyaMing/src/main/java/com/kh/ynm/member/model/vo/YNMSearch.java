@@ -21,10 +21,11 @@ public class YNMSearch {
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
-	public YNMSearch(String owStoreName, String owStoreAddrFirst, String owStoreAddrFinal, String storeCateDetailName,
-			String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto, String owStoreTel, String owStoreUrl,
-			String owStoreAddr, String owStoreWorkingTime, String owBudget, String storeCateMainName,
-			String owStoreTableInfo, String owSubInfo, String owDrinkListInfo) {
+	public YNMSearch(int owStoreInfoPk, String owStoreName, String owStoreAddrFirst, String owStoreAddrFinal,
+			String storeCateDetailName, String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto,
+			String owStoreTel, String owStoreUrl, String owStoreAddr, String owStoreWorkingTime, String owBudget,
+			String storeCateMainName, String owStoreTableInfo, String owSubInfo, String owDrinkListInfo) {
+		this.owStoreInfoPk = owStoreInfoPk;
 		this.owStoreName = owStoreName;
 		this.owStoreAddrFirst = owStoreAddrFirst;
 		this.owStoreAddrFinal = owStoreAddrFinal;
@@ -41,6 +42,12 @@ public class YNMSearch {
 		this.owStoreTableInfo = owStoreTableInfo;
 		this.owSubInfo = owSubInfo;
 		this.owDrinkListInfo = owDrinkListInfo;
+	}
+	public int getOwStoreInfoPk() {
+		return owStoreInfoPk;
+	}
+	public void setOwStoreInfoPk(int owStoreInfoPk) {
+		this.owStoreInfoPk = owStoreInfoPk;
 	}
 	public String getOwStoreName() {
 		return owStoreName;
@@ -138,11 +145,4 @@ public class YNMSearch {
 	public void setOwDrinkListInfo(String owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
 	}
-	public int getOwStoreInfoPk() {
-		return owStoreInfoPk;
-	}
-	public void setOwStoreInfoPk(int owStoreInfoPk) {
-		this.owStoreInfoPk = owStoreInfoPk;
-	}
-	
 }

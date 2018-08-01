@@ -1,6 +1,5 @@
 
-
-
+//TAB!!
 function openTab(event, tabName){
 	var i, x, tablinks;
 	$('#storeInfoType').val(tabName);

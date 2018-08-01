@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -731,6 +732,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+		
 
 		YNMSearchPaging check = new YNMSearchPaging();
 		
@@ -741,6 +743,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setOwBudget(owBudget);
 		check.setOwSubInfo(owSubInfo);
 		check.setOwDrinkListInfo(owDrinkListInfo);
+		
 		
 		int currentPage;
 
@@ -755,13 +758,31 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
 
+		JSONObject resultMap=new JSONObject();
+		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
+		
+		int index = 0;
+		while(index<(qpd.getNoticelist()).size()) {
+			YNMSearch search = qpd.getNoticelist().get(index);
+			JSONObject result = new JSONObject();
+			result.put("owStoreInfoPk", search.getOwStoreInfoPk());
+			result.put("owStoreName", search.getOwStoreName());
+			result.put("owStoreAddr", search.getOwStoreAddr());
+			resultMap.put(index, result);
+			index++;
+		}
+		
+		
 		ModelAndView view=new ModelAndView();
 		if(qpd!=null) {
+			view.addObject("resultMap",resultMap);
 			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
+		}else {
+			view.setViewName("ynmMember/searchZero");
+			return view;
 		}
-		return null;
 	}
 
 	// 음식점 상세 페이지
@@ -787,8 +808,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 		
 	}
-
-	
 	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
