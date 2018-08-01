@@ -33,6 +33,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -527,10 +528,33 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view = storeDetailInfo(session,request);
 			}else if(storeTapType.equals("포토")) {
 				tapOrder = 1;
-				view.addObject("headPhotoList", storeHeadPhotoList(storeIndex));
+				view.addObject("headPhotoList", storeHeadPhotoList(3,storeIndex));
 			}else if(storeTapType.equals("리뷰")) {
 				tapOrder = 2;
 			}else if(storeTapType.equals("메뉴")) {
+				StoreMenuData storeMenuData = ynmOwnerServiceImpl.storeMenuData(storeIndex); 
+				String menuInfo  = storeMenuData.getMenuInfoList();
+				int menuType = storeMenuData.getMenuType();
+				if(menuType==1) // 사진용
+				{
+					ArrayList<OwnerUploadPhoto> menuPhotoList = storeHeadPhotoList(4,storeIndex);
+					view.addObject("menuPhotoList",menuPhotoList);
+				}
+				else if(menuType==2)  // 직접 입력함.
+				{
+					ArrayList<MenuInfo> menuInfoList = storeMenuInfoList(menuInfo);
+					ArrayList<String> menuTitleList = new ArrayList<String>();
+					for(int i = 0; i<menuInfoList.size();i++)
+					{
+						if(!menuTitleList.contains(menuInfoList.get(i).getMenuTitle()))
+						{
+							menuTitleList.add(menuInfoList.get(i).getMenuTitle());
+						}
+					}
+					view.addObject("menuTitleGroup", menuTitleList );
+					view.addObject("menuInfoList",menuInfoList);
+				}
+				view.addObject("menuInfoData", storeMenuData);
 				tapOrder = 3;
 			}else if(storeTapType.equals("지도")) {
 				tapOrder = 4;
@@ -642,8 +666,9 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						System.out.println("이미지 업로드 실패");
 						break;
 					}
-					view = storePageTypeLoad(session, request);
-					view.addObject("headPhotoList", storeHeadPhotoList(storeInfoIndex));
+//					view = storePageTypeLoad(session, request);
+					view = storeManageEnrollList(session, request);
+					view.addObject("headPhotoList", storeHeadPhotoList(3,storeInfoIndex));
 					view.addObject("storeTapType", tapOrder);
 				}
 			}
@@ -652,23 +677,86 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 	
 	@Override
-	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int storeInfoIndex)
+	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int photoType,int storeInfoIndex)
 	{
 		OwnerUploadPhoto paramVo = new OwnerUploadPhoto();
-		paramVo.setOwPhotoTypeFk(3);
+		paramVo.setOwPhotoTypeFk(photoType);
 		paramVo.setStoreInfoFk(storeInfoIndex);
 		ArrayList<OwnerUploadPhoto> photoList = ynmOwnerServiceImpl.headPhotoList(paramVo);
 		return photoList;
 	}
 	
 	@Override
-	public ArrayList<MenuInfo> storeMenuInfoList(int storeInfoIndex)
+	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList)
 	{
-//		int menuType = ynmOwnerServiceImpl.storeMenuInfoList(storeInfoIndex); 
-				
-		return null;
+		ArrayList<MenuInfo> menuList = ynmOwnerServiceImpl.storeMenuInfoList(storeMenuList);		
+		return menuList;
 	}
 	
+	
+	@Override
+	@ResponseBody
+	@RequestMapping("/menuTextNewAdd.do")
+	public String menuTextNewAdd(HttpSession session,  HttpServletRequest request)
+	{
+		if(session.getAttribute("owner")!=null)
+		{
+			
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			String menuCate = request.getParameter("menuCate");
+			String menu = request.getParameter("menu");
+			String menuPrice = request.getParameter("menuPrice");
+			String menuExplain = request.getParameter("menuExplain");
+			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			
+			StoreMenuData storeMenuData = ynmOwnerServiceImpl.storeMenuData(storeIndex); 
+			String menuInfoList = storeMenuData.getMenuInfoList();
+			MenuInfo menuInfo = new MenuInfo();
+			String menuId = System.currentTimeMillis()+"_"+owner.getOwEntirePk()+"_"+menu;
+			
+			menuInfo.setMenuId(menuId);
+			menuInfo.setMenuTitle(menuCate);
+			menuInfo.setSubTitle(menu);
+			menuInfo.setExplain(menuExplain);
+			menuInfo.setMenuCost(Integer.parseInt(menuPrice));
+			
+			int menuResult = ynmOwnerServiceImpl.ownerMenuUpload(menuInfo);
+			if(menuResult>0)
+			{
+				int menuIndex =  ynmOwnerServiceImpl.selectMenuWithId(menuId);
+				if(menuIndex>0) {
+					menuInfoList+=menuIndex;
+					int detailInfoUpdateResult = storeDetailMenuInfoUpdate(storeIndex, menuInfoList);
+					if(detailInfoUpdateResult>0)
+					{
+						return "success";
+					}
+					else
+					{
+						return "detailUpdateFail";
+					}
+				}else {
+					return "menuIndexGetFail";
+				}
+			}
+			else
+			{
+				return "insertFail";
+			}
+				
+		}
+		else {
+			return "ownerNoneFail";
+		}
+	}
+	
+	public int storeDetailMenuInfoUpdate(int storeIndex, String newMenuInfoList)
+	{
+		YNMStoreDetailInfo storeDetailInfo = new YNMStoreDetailInfo();
+		storeDetailInfo.setOwStoreInfoFk(storeIndex);
+		storeDetailInfo.setOwStoreMenuInfoDetail(newMenuInfoList);
+		return  ynmOwnerServiceImpl.storeDetailMenuInfoUpdate(storeDetailInfo);
+	}
 
 
 }

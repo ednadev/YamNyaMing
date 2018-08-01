@@ -6,6 +6,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -78,5 +79,11 @@ public interface YNMOwnerService {
 
 	// 가게 상세 정보에서 이미지 리스트 수정하기
 	public int storeDetailInfoHeadPhotoUpdate(OwnerUploadPhoto paramVo);
+
+	// 가게 메뉴 정보 가져오기
+	public StoreMenuData storeMenuData(int storeInfoIndex);
+
+	// 가게 메뉴 가져오기
+	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList);
 	
 }

@@ -11,6 +11,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -127,8 +128,30 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return sqlSession.delete("owphotos.headPhotoDelete", paramVo);
 	}
 
+	@Override
 	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
 		return sqlSession.update("stores.detailInfoHeadPhotoUpdate", paramVo);
+	}
+
+	@Override
+	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex) {
+		return sqlSession.selectOne("stores.storeMenuDataGet", storeInfoIndex);
+	}
+
+	@Override
+	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, String storeMenuList) {
+		String [] menuArrTemp = storeMenuList.split(",");
+		int [] menuArr = new int[menuArrTemp.length];
+		for(int i = 0; i<menuArrTemp.length;i++)
+		{
+			menuArr[i] = Integer.parseInt(menuArrTemp[i]);
+		}
+		List list = sqlSession.selectList("stores.storeMenuInfoList", menuArr);
+		return (ArrayList<MenuInfo>)list;
+	}
+
+	public int storeDetailMenuInfoUpdate(SqlSessionTemplate sqlSession, YNMStoreDetailInfo storeDetailInfo) {
+		return sqlSession.update("stores.detailInfoUpdate",storeDetailInfo);
 	}
 
 }

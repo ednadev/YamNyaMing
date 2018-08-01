@@ -16,6 +16,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -66,10 +67,13 @@ public interface YNMOwnerController {
 	// 사진 삭제하기
 	public String storeHeadPhotoDelete(HttpSession session, HttpServletRequest request);
 
-	// 메인 사진 리스트 불러오는곳.
-	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int storeInfoIndex);
+	// 가게 사진 리스트 불러오는곳.
+	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int photoType, int storeInfoIndex);
 
 	// 메뉴 정보 불러오기
-	public ArrayList<MenuInfo> storeMenuInfoList(int storeInfoIndex);
+	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList);
+
+	// 새로운 텍스트 메뉴 추가하기
+	public String menuTextNewAdd(HttpSession session, HttpServletRequest request);
 	
 }

@@ -128,7 +128,7 @@
 				<div class="signUp-table">
 					<div>가게 한줄평</div>
 					<div>
-						<input type="text" name="owStoreLineComment" class="keywordStyle">
+						<input type="text" name="owStoreLineComment" class="keywordStyle" style="width:50%;">
 						<p id="tipResult">(가게를 소개할 한줄 코멘트를 적어주세요.)</p>
 					</div>
 				</div>	

@@ -22,5 +22,6 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.StorePageData" alias="storePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreInfoPageData" alias="storeInfoPageData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.StoreMenuData" alias="storeMenuData"/>
 	</typeAliases>
 </configuration>

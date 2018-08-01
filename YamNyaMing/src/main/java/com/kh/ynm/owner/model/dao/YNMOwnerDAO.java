@@ -9,6 +9,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -36,4 +37,7 @@ public interface YNMOwnerDAO {
 	public int storeInfoDetailEdiy(SqlSessionTemplate sqlSession, StoreInfoPageData storeInfoPD);
 	public ArrayList<OwnerUploadPhoto> headPhotoList(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
 	public int storeHeadPhotoDelete(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
+	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo);
+	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex);
+	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, String storeMenuList);
 }

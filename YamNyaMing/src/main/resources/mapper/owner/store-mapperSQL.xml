@@ -149,13 +149,48 @@
  	 	where OW_STORE_INDEX = #{owStoreInfoPk}
  	</update>
  	
- 	<!-- 가게 상세정보  헤더 사진 업데이트 -->
+ 	<!-- 가게 상세정보  사진 업데이트 -->
 	<update id="detailInfoHeadPhotoUpdate" parameterType="owUploadPhoto">
 		update owner_store_detail_tb
 		set
 		OW_STORE_HEAD_PHOTO = #{headStoreList}
 		where OW_STORE_DETAIL_PK = #{storeDetailPk}
 	</update>
+	
+	<!-- 가게 상세정보-->
+	<select id="storeMenuDataGet" resultType="storeMenuData">
+		 select 
+		 	OW_STORE_DETAIL_PK as storeDetailInfoPK,
+		 	OW_STORE_INDEX as storeIndex,
+		 	OW_STORE_MENU_TYPE_FK as menuType,
+		  	OW_STORE_MENU_INFO_DETAIL as menuInfoList
+         from owner_store_detail_tb
+         where OW_STORE_INDEX =#{storeInfoIndex}
+	</select>
+	
+	<!-- 가게 상세 정보 업데이트 -->
+	<update id="detailInfoUpdate" parameterType="storeDetailInfo">
+		update owner_store_detail_tb
+		set OW_STORE_MENU_INFO_DETAIL = #{owStoreMenuInfoDetail}
+		where OW_STORE_DETAIL_PK =  #{owStoreDetailPk}
+	</update>
+	
+	
+	<!-- 가게 메뉴 리스트 불러오기 -->
+	<select id="storeMenuInfoList" resultType="menuInfo">
+		select
+			OW_MENU_INFO_DETAIL_PK as owMenuInfoPk,
+			OW_MENU_ID as menuId,
+			OW_MENU_TITLE as menuTitle,
+			OW_MENU_SUB_TITLE as subTitle,
+			OW_MENU_SUB_EXPLAIN as explain,
+			OW_MENU_SUB_COST as menuCost
+		from owner_menu_info_detail_tb
+		where OW_MENU_INFO_DETAIL_PK in
+		<foreach close=")" separator="," open="(" collection="array" item="menu"> 
+			#{menu} 
+		</foreach>
+	</select>
  	
 	
 </mapper>
