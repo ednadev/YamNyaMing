@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ynm.member.model.dao.YNMMemberDAO;
 import com.kh.ynm.member.model.dao.YNMMemberDAOImpl;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFavorite;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
@@ -28,13 +29,13 @@ import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
 public class YNMMemberServiceImpl implements YNMMemberService{
-	
+
 	@Resource(name="ynmMemberDAO")
 	private YNMMemberDAOImpl memberDAO;
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	//회원가입
 	public int signUpMember(YNMMember ym) {
 		int result=memberDAO.signUpMember(sqlSession,ym);
@@ -44,13 +45,13 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public YNMMember selectOneMember(YNMMember vo) {
 		YNMMember ym=memberDAO.selectOneMember(sqlSession,vo);
 		return ym;
-		
+
 	}
 	//내정보 확인
 	public YNMMember selectOneMember2(YNMMember vo) {
 		YNMMember ym=memberDAO.selectOneMember2(sqlSession,vo);
 		return ym;
-		
+
 	}
 	//회원 탈퇴
 	public int signOutMember(YNMMember ym) {
@@ -61,13 +62,13 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int bookInsert(YNMBook yb) {
 		int result=memberDAO.bookInsert(sqlSession,yb);
 		return result;
-		
+
 	}
 	//예약정보 가져오기
 	public ArrayList bookselect(YNMBook vo) {
 		ArrayList list=memberDAO.bookselect(sqlSession,vo);
 		return list;
-		
+
 	}
 	//아이디 유효성
 	public YNMMember idCheck(String memberId) {
@@ -84,7 +85,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		YNMMember ym=memberDAO.emailCheck(sqlSession,memberEmail);
 		return ym;
 	}
-	
+
 	//사용자 아바타 사진 등록
 	public int memberUploadPhoto(YNMMemberUploadPhoto ymup) {
 		int result=memberDAO.memberUploadPhoto(sqlSession,ymup);
@@ -232,18 +233,18 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
 		int recordCountPerPage=9;
 		int naviCountPerPage=5;
-		
+
 		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage,check);
 		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage,check);
-		
+
 		int resultcurrentPage=qpd.getCurrentPage();
 		int endNavi=qpd.getEndNavi();
 		int startNavi=qpd.getStartNavi();
 		int pageTotalCount=qpd.getPageTotalCount();
 		int recordTotalCount=qpd.getRecordTotalCount();
-		
+
 		YNMSearchPaging qpd2=null;
-		
+
 		if(!list.isEmpty()) {
 			qpd2=new YNMSearchPaging();
 			qpd2.setNoticelist(list);
@@ -252,7 +253,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 			qpd2.setStartNavi(startNavi);
 			qpd2.setPageTotalCount(pageTotalCount);
 			qpd2.setRecordTotalCount(recordTotalCount);
-			
+
 		}
 		return qpd2;
 	}
@@ -303,8 +304,26 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMSearch> list=memberDAO.starAvg(sqlSession,owStoreInfoPk);
 		return list;
 	}
+	//즐겨찾기 체크
+	public int favoriteChk(YNMFavorite yf) {
+		int result=memberDAO.favoriteChk(sqlSession,yf);
+		return result;
+	}
+	//즐겨찾기 해제
+	public int deletefavorite(YNMFavorite yf) {
+		int result=memberDAO.deletefavorite(sqlSession,yf);
+		return result;
+	}
+	//즐겨찾기 등록
+	public int favoriteInsert(YNMFavorite yf) {
+		int result=memberDAO.favoriteInsert(sqlSession,yf);
+		return result;
+	}
+	//즐겨찾기 총 수
+	public int favoriteTotal(int parseInt) {
+		int result=memberDAO.favoriteTotal(sqlSession,parseInt);
+		return result;
+	}
 
 
-	
-	
 }

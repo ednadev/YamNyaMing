@@ -20,8 +20,13 @@ public class YNMSearch {
 	private String owDrinkListInfo;
 	private int starPoint;
 	private float starAvg;
-	
-
+	private int favoriteTotal;
+	public int getFavoriteTotal() {
+		return favoriteTotal;
+	}
+	public void setFavoriteTotal(int favoriteTotal) {
+		this.favoriteTotal = favoriteTotal;
+	}
 	public int getStarPoint() {
 		return starPoint;
 	}

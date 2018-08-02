@@ -84,7 +84,7 @@ ${likeTotal}
 			<div style="float: left;">
 				<p
 					style="margin-top: 20px; color: black; font-weight: bold; margin-left: 11px;">${l.memberName}</p>
-				<p style="font-size: 0.9em; color: black; margin-left: 10px;">리뷰${l.followTotal},팔로워${l.reviewTotal}</p>
+				<p style="font-size: 0.9em; color: black; margin-left: 10px;">리뷰${l.reviewTotal},팔로워${l.followTotal}</p>
 			</div>
 
 			<button>팔로우</button>

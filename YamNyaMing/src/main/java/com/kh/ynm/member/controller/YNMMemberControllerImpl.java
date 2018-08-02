@@ -37,6 +37,7 @@ import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFavorite;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberSetting;
@@ -743,6 +744,34 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}
 		}
 	}
+	//즐겨찾기
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/favoriteInsert.do")
+	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		int memberEntireNo=Integer.parseInt(request.getParameter("memberEntireNo"));
+		int owStoreInfoNo=Integer.parseInt(request.getParameter("owStoreInfoNo"));
+
+		YNMFavorite yf=new YNMFavorite();
+		yf.setMemberEntireNo(memberEntireNo);
+		yf.setOwStoreInfoNo(owStoreInfoNo);
+		int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+		if(favoriteChk>0) {
+			int result=ynmMemberServiceImpl.deletefavorite(yf);
+			String chk="1";
+			return chk;
+		}
+		else {
+			int result=ynmMemberServiceImpl.favoriteInsert(yf);
+			if(result>0) {
+				String chk="2";
+				return chk;
+			}else {
+				String chk="0";
+				return chk;
+			}
+		}
+	}
 
 
 
@@ -881,11 +910,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
 		int size=storeImg.size();
-
+		int memberEntireNo=0;
+		//로그인한 사용자 찜 여부 확인
+		HttpSession session=request.getSession(false);
+		if(((YNMMember)session.getAttribute("member"))!=null) {
+		memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
+		}
+		YNMFavorite yf=new YNMFavorite();
+		yf.setMemberEntireNo(memberEntireNo);
+		yf.setOwStoreInfoNo(Integer.parseInt(request.getParameter("owStoreInfoPk")));
+		int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+		int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(Integer.parseInt(request.getParameter("owStoreInfoPk")));
+		System.out.println(favoriteTotal);
+		store.setFavoriteTotal(favoriteTotal);
 		ModelAndView view=new ModelAndView();
 
 		view=reviewCheck(request,response);
 		if(store!=null && storeImg!=null) {
+			view.addObject("favoriteChk",favoriteChk);
 			view.addObject("store", store);
 			view.addObject("size", size);
 			view.addObject("storeImg", storeImg);

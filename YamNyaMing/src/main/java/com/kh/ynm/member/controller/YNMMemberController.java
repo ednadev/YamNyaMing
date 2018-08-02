@@ -57,6 +57,8 @@ public interface YNMMemberController {
 	public String jjimInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//팔로우 table
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	//즐겨찾기 table
+	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 
 

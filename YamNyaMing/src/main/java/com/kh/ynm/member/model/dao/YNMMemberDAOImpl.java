@@ -11,6 +11,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFavorite;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
@@ -277,6 +278,22 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMSearch> starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
 		List list=sqlSession.selectList("review.starAvg",owStoreInfoPk);
 		return (ArrayList<YNMSearch>)list;
+	}
+
+	public int favoriteChk(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.selectOne("member.favoriteChk",yf);
+	}
+
+	public int deletefavorite(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.delete("member.deletefavorite",yf);
+	}
+
+	public int favoriteInsert(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.insert("member.favoriteInsert",yf);
+	}
+
+	public int favoriteTotal(SqlSessionTemplate sqlSession, int parseInt) {
+		return sqlSession.selectOne("member.favoriteTotal",parseInt);
 	}	
 
 }

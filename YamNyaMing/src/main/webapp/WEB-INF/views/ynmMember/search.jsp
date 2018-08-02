@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=6">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=7">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -481,12 +481,27 @@
 				</div>
 				<div class="search-result-text">
 					<div>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<p class="star-result">0점</p>
+							<c:choose>
+								<c:when test="${search.starAvg>=1}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=2}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=3}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=4}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=5}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+						<p class="star-result">${search.starAvg}</p>
 					</div>
 					<div>${search.owStoreComment}</div>
 				</div>

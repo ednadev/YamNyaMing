@@ -15,7 +15,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=3"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=4"></script>
 </head>
 
 <body>
@@ -157,8 +157,18 @@
 		<div class="member-detail-wrapper">
 			<h3>${store.owStoreName}</h3>
 			<p>${store.owStoreAddrFirst} > ${store.owStoreAddrFinal} ㆍ ${store.storeCateDetailName}</p>
-			<p>대기인원 0 추천 0</p>
-			<div class="heart"></div>
+			<p>대기인원 0 추천 ${store.favoriteTotal}</p>
+			<c:if test="${favoriteChk==1}">
+			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">
+				<img style=width:100%;height:100%; src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
+			</div>
+			</c:if>
+			<c:if test="${favoriteChk!=1}">
+			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">
+				<img style=width:100%;height:100%; src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+			</div>
+			</c:if>
+			
 			<p>추천</p>
 			<hr>
 			<div class="main-detail">
@@ -505,7 +515,7 @@
 						<div>
 	
 							<img id="img" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
-		</div>
+						</div>
 						</c:forEach>
 					</div>
 					

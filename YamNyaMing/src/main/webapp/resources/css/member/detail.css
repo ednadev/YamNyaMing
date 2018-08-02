@@ -143,7 +143,24 @@
 	float:right;
 	margin-top:30px;
 	margin-right:20px;
+	cursor:pointer;
 	
+}
+#member-detail-section>div:nth-child(2)>.member-detail-wrapper>.heartfull{
+	background-image:url('../../image/member/search/heart-click.png');
+	width:30px;
+	height:30px;
+	background-size:cover;
+	background-position:center;
+	float:right;
+	margin-top:30px;
+	margin-right:20px;
+	cursor:pointer;
+	
+}
+
+.heart:hover{
+	background-image:url('../../image/member/search/heart-click.png');
 }
 #member-detail-section>div:nth-child(2)>.member-detail-wrapper>p:nth-child(5){
 	float:right;
