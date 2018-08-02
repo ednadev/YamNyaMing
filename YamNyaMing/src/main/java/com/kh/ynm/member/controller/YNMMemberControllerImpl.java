@@ -297,7 +297,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 			view.addObject("info",ym);
 			view.addObject("img",viewPath);
-			view.setViewName("ynmMember/infoTest");
+			view.setViewName("ynmMember/myInfo");
 			return view;
 		}
 		else {
