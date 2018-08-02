@@ -109,35 +109,21 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		int list = adminDAO.upGrade(sqlSession,ad_id);
 		return list;
 	}
-	 // 게시물 목록 표시(페이징)
-	  @Override
-	  public List<Notice> writeList(int offset, int noOfRecords) throws Exception {
-	    return adminDAO.writeList(sqlSession, offset, noOfRecords);
-	  }
-	// 전체 게시물 수 조회
-	  @Override
-	  public int writeGetCount() throws Exception {
-	    return adminDAO.writeGetCount(sqlSession);
-	  }
 
 
-	public ArrayList<Notice> noticeListPaging(int currentPage,int recordCountPerPage,int owEntirePk, int storeEntireFk) {
+	public ArrayList<Notice> noticeListPaging(int currentPage,int recordCountPerPage) {
 		//시작 페이지 계산
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
 		BoardPaging noticePageData = new BoardPaging();
 		noticePageData.setStartPage(start);
 		noticePageData.setEndPage(end);
-		noticePageData.setOwEntirePk(owEntirePk);
-		noticePageData.setStoreEntireFk(storeEntireFk);
+
 		return adminDAO.noticeListPaging(sqlSession,noticePageData);
 	}
 	
-	public CouponPageData noticePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int owEntirePk, int storeEntireFk) {
+	public CouponPageData noticePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
 		BoardPaging noticePageData = new BoardPaging();
-		noticePageData.setOwEntirePk(owEntirePk);
-		noticePageData.setStoreEntireFk(storeEntireFk);
-		
 		int recordTotalCount = adminDAO.noticeGetTotal(sqlSession, noticePageData);
 		
 		int pageTotalCount = 0;
@@ -173,6 +159,21 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		couponPageDataResult.setRecordTotalCount(recordTotalCount);
 		
 		return couponPageDataResult;
+	}
+
+
+	public Notice noticeView(int noticeNo) {
+		 return adminDAO.noticeView(sqlSession,noticeNo);
+	}
+
+
+	public int adminBoardFix(Notice vo) {
+		 return adminDAO.adminBoardFix(sqlSession,vo);
+	}
+
+
+	public int adminBoardDelete(Notice vo) {
+		 return adminDAO.adminBoardDelete(sqlSession,vo);
 	}
 
 }

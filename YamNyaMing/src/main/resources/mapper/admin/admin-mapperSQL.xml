@@ -231,26 +231,52 @@ SET ADMIN_ACCESS_GRADE_FK = 1
 WHERE ADMIN_ID = #{ad_id}
 </update>
 
-<!--쿠폰의 페이징-->
- 	<select id="noticeList" resultType="notice" parameterType="noticePageData">
- 		select
- 			   NOTICENO as noticeNo,
- 			   SUBJECT as subject,
- 			   CONTENTS as contents,
- 			   USERID as userId,
- 			   REGDATE as regDate
- 		from ( select notice.*,row_number() over(order by NOTICENO desc) as num 
-	 	where num between #{startPage} and #{endPage}
- 	</select>
+<!--게시판 페이징-->
+<select id="noticeList" resultType="notice" parameterType="noticePageData">
+select
+NOTICE_NO_PK as noticeNo,
+SUBJECT as subject,
+CONTENTS as contents,
+USERID as userId,
+REGDATE as regDate
+from (select notice.*,row_number() over(order by NOTICE_NO_PK desc) as num from notice)
+where num between #{startPage} and #{endPage}
+</select>
+<!--from ( select owner_coupon_info_tb.*,row_number() over(order by OW_COUPON_INFO_PK desc) as num 
+ 		from owner_coupon_info_tb where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk})
+	 	where num between #{startPage} and #{endPage} -->
  	
- 	<!--쿠폰의 페이지 넘버링 -->
- 	<select id="noticeTotal" parameterType="noticePageData" resultType="int">
- 		select count(*) from notice
- 	</select>
+ 	
+<!--게시판 페이지 넘버링 -->
+<select id="noticeTotal" parameterType="noticePageData" resultType="int">
+select count(*) from notice
+</select>
+
+
+<select id="noticeView" parameterType="int" resultType="notice">
+select
+NOTICE_NO_PK as noticeNo,
+SUBJECT as subject,
+CONTENTS as contents,
+USERID as userId,
+REGDATE as regDate
+from notice
+where NOTICE_NO_PK = #{noticeNo}
+</select>
+
+
+<!-- 글 수정 -->
+<update id="adminBoardFix" parameterType="notice">
+ update notice set
+ SUBJECT = #{subject},
+ CONTENTS = #{contents}
+ where NOTICE_NO_PK = #{noticeNo}
 
 
 
-
-
-
+</update>
+<!-- 글 삭제 -->
+<delete id="adminBoardDelete" parameterType="notice">
+delete from notice where NOTICE_NO_PK = #{noticeNo}
+</delete>
 </mapper>

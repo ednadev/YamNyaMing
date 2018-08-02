@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 
 	import="com.kh.ynm.admin.model.vo.*"%>
+  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 </head>
+<style>
+.paging-num {
+	position: static;
+	width: 80px;
+	display: inline-block;
+	color: #ecf0f1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: solid 1px #FFBB00;
+	background: #FFBB00;
+	padding: 16px 18px 14px;
+	font-size: 20px;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
+	-moz-box-shadow: 0px 6px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+}
+.paging-num:active {
+	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
+	-moz-box-shadow: 0px 2px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+	position: relative;
+	top: -1px;
+}
+
+</style>
 <body>
 	<header id="admin-login-header">
 		<h1>
@@ -54,10 +83,16 @@
         <c:forEach var="infolist" items="${noticeListData}">
         <tr>
           <td class="text-center">${infolist.noticeNo}</td>
-          <td>${infolist.subject}</td>
+		  <td>
+		  <form action="/noticeView.do">
+		  <input type="hidden" value="${infolist.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
+          <input type="submit" value="${infolist.subject}" style="background-color:white; border:solid 0px white;"/>
+          </form>
+          </td>
           <td class="text-center">${infolist.userId}</td>
           <td class="text-center">
-          <fmt:formatDate value="${infolist.regDate}" pattern="YYYY-MM-dd" />
+          
+          <fmt:formatDate value="${infolist.regDate}" pattern="YYYY-MM-dd"/>
           </td>
         </tr>
         </c:forEach> 
@@ -65,42 +100,52 @@
      
 
      <!-- 페이지 -->
+     
     <c:if test="${pageNaviData!=null}">
+    				<center>
 					<div id="pagingNumber">
 						<c:if test="${pageNaviData.startNavi!=1}">
-							<form action="/couponManage.do" method="post">
+							<form action="/boardAdmin.do" method="post">
 								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
 								<input type="submit" class="paging-num" value="<">
 							</form>
 						</c:if>
+					
 						<c:forEach var="i" begin="${pageNaviData.startNavi}"
 							end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/couponManage.do" method="post">
+								<form action="/boardAdmin.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
-									<input type="submit" class="paging-num-select" value="${i}">
+									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/couponManage.do" method="post">
+								<form action="/boardAdmin.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/couponManage.do" method="post">
+							<form action="/boardAdmin.do" method="post">
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
 							</form>
 						</c:if>
 					</div>
+						</center>
 				</c:if>
+		
+			
 <script>
 function goPage(pages, lines) {
     location.href = '?' + "pages=" + pages;
 }
 </script>
+<!-- 페이징 끝 -->
+
+
+
 <footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

@@ -196,11 +196,13 @@
 
 			<tbody>
 			<c:forEach items="${list2}" var="store" step="1" end="10">
+			<tr>
 			<td>${store.name}</td>
 			<td>${store.book}</td>
 			<td>${store.grade}</td>
 			<td>${store.jjim}</td>
 			<td>${store.favorite}</td>
+			</tr>
 			</c:forEach>																						
 			</tbody>
 			</table>
