@@ -280,3 +280,5 @@ function menuTypeChange(menuType)
 		}
 	}
 }
+
+

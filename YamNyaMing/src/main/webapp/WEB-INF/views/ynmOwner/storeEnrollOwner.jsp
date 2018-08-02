@@ -8,10 +8,13 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/datePickerCss.css?ver=3">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCheckPrice.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/datePickerbasic.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/odatePickerUi.js?ver=1"></script>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 </head>
@@ -117,7 +120,8 @@
 							<option value="토">토요일</option>
 							<option value="일">일요일</option>
 						</select>
-						<input type="time" name="owStoreWorkingTimeStart">
+						
+						<input type="time" name="owStoreWorkingTimeStart" >
 						<span> - </span>
 						<input type="time" name="owStoreWorkingTimeEnd">
 						<input type="text" name="extWorkingOption" placeholder="예) 화요일 휴무">
