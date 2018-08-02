@@ -18,6 +18,14 @@ public class YNMSearch {
 	private String owStoreTableInfo;
 	private String owSubInfo;
 	private String owDrinkListInfo;
+	private float starAvg;
+	
+	public float getStarAvg() {
+		return starAvg;
+	}
+	public void setStarAvg(float starAvg) {
+		this.starAvg = starAvg;
+	}
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}

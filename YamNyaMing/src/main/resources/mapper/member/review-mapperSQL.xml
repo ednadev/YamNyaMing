@@ -21,7 +21,8 @@
 		ow_store_review_date as reviewDate,
 		ow_store_review_open_check as reviewOpenCheck,
 		ow_store_review_img_list as reviewImgList,
-		mb_nickname as memberNickName
+		mb_nickname as memberNickName,
+		mb_name as memberName
 		from member_store_review_tb re,member_entire_tb en,member_upload_photo_tb
 		ph
 		where re.mb_entire_fk=en.mb_entire_pk and

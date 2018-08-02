@@ -127,9 +127,8 @@ function jjim(storeReviewNo,memberEntireNo,pId,jjimName){
 	});	
 }
 
-function follow(memberEntireNo,userMemberEntireNo,btnName){
-	console.log(memberEntireNo);
-	console.log(userMemberEntireNo);
+function follow(memberEntireNo,userMemberEntireNo,btnName,labelName){
+
 
 	$.ajax({
 		url : "/followInsert.do",
@@ -139,14 +138,29 @@ function follow(memberEntireNo,userMemberEntireNo,btnName){
 			if(data==1){
 				alert("팔로우 해제");
 				var follow=document.getElementsByName(btnName);
+				var followNum=document.getElementsByName(labelName);
+				var result=parseInt(followNum[0].innerHTML)-1;
+				var followlabel=document.getElementsByName(labelName);
+				for(var i=0; i<followlabel.length; i++){
+					followlabel[i].innerHTML=result;
+				}
+				
 				for(var i=0; i<follow.length; i++){
 				follow[i].style.backgroundColor="white";
 				follow[i].style.color="#fb0";
 				follow[i].style.border="1px solid #fb0";
 				}
 				
+				
 			}else if(data==2){
 				var follow=document.getElementsByName(btnName);
+				var followNum=document.getElementsByName(labelName);
+				var result=parseInt(followNum[0].innerHTML)+1;
+				var followlabel=document.getElementsByName(labelName);
+				for(var i=0; i<followlabel.length; i++){
+					followlabel[i].innerHTML=result;
+				}
+				
 				for(var i=0; i<follow.length; i++){
 				follow[i].style.backgroundColor="#fb0";
 				follow[i].style.color="white";

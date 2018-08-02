@@ -177,9 +177,7 @@
 	display:inline-block;
 	cursor:pointer;
 }
-.star:hover{
-	background-image:url('../../image/member/search/star-full.png');
-}
+
 .star-yellow{
 	background-image:url('../../image/member/search/star.png');
 	background-size:cover;

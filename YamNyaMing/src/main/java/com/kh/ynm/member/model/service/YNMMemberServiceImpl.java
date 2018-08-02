@@ -289,6 +289,16 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int followTotal=memberDAO.followTotal(sqlSession,memberEntireNo);
 		return followTotal;
 	}
+	//좋아요 한 사람들 목록
+	public ArrayList<YNMMember> likeTotalMember(int storeReviewNo) {
+		ArrayList<YNMMember> list = memberDAO.likeTotalMember(sqlSession,storeReviewNo);
+		return list;
+	}
+	//좋아요 한 사람들 목록 정보
+	public ArrayList<YNMMember> likeTotalMemberInfo(int storeReviewNo) {
+		ArrayList<YNMMember> list = memberDAO.likeTotalMemberInfo(sqlSession,storeReviewNo);
+		return list;
+	}
 
 
 	

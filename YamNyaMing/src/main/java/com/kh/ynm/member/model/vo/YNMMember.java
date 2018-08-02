@@ -14,11 +14,29 @@ public class YNMMember {
 	private String memberPhone;
 	private Date memberRegDate;
 	private int memberUploadPhotoNo;
-
+	private int followTotal;
+	private int reviewTotal;
+	private String photoViewRoute;
 
 	
-
-
+	public String getPhotoViewRoute() {
+		return photoViewRoute;
+	}
+	public void setPhotoViewRoute(String photoViewRoute) {
+		this.photoViewRoute = photoViewRoute;
+	}
+	public int getFollowTotal() {
+		return followTotal;
+	}
+	public void setFollowTotal(int followTotal) {
+		this.followTotal = followTotal;
+	}
+	public int getReviewTotal() {
+		return reviewTotal;
+	}
+	public void setReviewTotal(int reviewTotal) {
+		this.reviewTotal = reviewTotal;
+	}
 	public int getMemberUploadPhotoNo() {
 		return memberUploadPhotoNo;
 	}

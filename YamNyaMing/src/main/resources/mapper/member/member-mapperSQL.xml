@@ -200,7 +200,39 @@
 			mb_entire_fk=#{memberEntireNo}
 	</select>
 	
-	
-	
+		<select id="likeTotalMember" resultType="members">
+            select
+			mb_entire_pk as memberEntireNo,
+			mb_id as memberId,
+			mb_pw as memberPw,
+			mb_name as memberName,
+			mb_nickname as memberNickName,
+			mb_gender as memberGender,
+			mb_birth as memberBirth,
+			mb_email as memberEmail,
+			mb_phone as memberPhone,
+			mb_regdate as memberRegDate,
+			mb_upload_photo_fk as memberUploadPhotoNo,
+			rownum
+			from member_entire_tb mb,member_review_like_tb li
+			where mb.mb_entire_pk=li.mb_entire_fk and mb_store_review_fk=#{storeReviewNo} and rownum between 1 and 2
+	</select>
 
+	<select id="likeTotalMemberInfo" resultType="members">
+            select
+			mb_entire_pk as memberEntireNo,
+			mb_id as memberId,
+			mb_pw as memberPw,
+			mb_name as memberName,
+			mb_nickname as memberNickName,
+			mb_gender as memberGender,
+			mb_birth as memberBirth,
+			mb_email as memberEmail,
+			mb_phone as memberPhone,
+			mb_regdate as memberRegDate,
+			mb_upload_photo_fk as memberUploadPhotoNo,
+			mb_photo_view_route as photoViewRoute
+			from member_entire_tb mb,member_review_like_tb li,member_upload_photo_tb ph
+			where mb.mb_entire_pk=li.mb_entire_fk and mb.mb_upload_photo_fk=ph.mb_upload_photo_pk and li.mb_store_review_fk=#{storeReviewNo}
+	</select>
 </mapper>

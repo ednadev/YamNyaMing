@@ -21,12 +21,20 @@ public class YNMStoreReview {
 	private int reviewTotal;
 	private int followTotal;
 	private String memberNickName;
+	private String memberName;
 	private ArrayList<YNMFollow> followList=new ArrayList<YNMFollow>();
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
+	private ArrayList<YNMMember> memberLikeInfo=new ArrayList<YNMMember>();
 	private int myLikeChk = 0;
 	private int myJjimChk = 0;
 	
 	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 	public int getReviewTotal() {
 		return reviewTotal;
 	}
@@ -160,6 +168,15 @@ public class YNMStoreReview {
 	public void setPhotoObjList(YNMMemberUploadPhoto photoObj) {
 		this.photoObjList.add(photoObj);
 	}
+	public ArrayList<YNMMember> getMemberLikeInfo() {
+		return memberLikeInfo;
+	}
+	public void setMemberLikeInfo(ArrayList<YNMMember> memberLikeInfo) {
+		this.memberLikeInfo = memberLikeInfo;
+	}
+	
+	
+	
 	
 	
 	

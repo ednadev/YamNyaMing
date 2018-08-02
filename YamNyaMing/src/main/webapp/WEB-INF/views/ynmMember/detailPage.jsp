@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=2">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=3">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -167,11 +167,27 @@
 					<tr>
 						<th>별점</th>
 						<td>
-							<span class="star"></span>
-							<span class="star"></span>
-							<span class="star"></span>
-							<span class="star"></span>
-							<span class="star"></span>
+							<c:choose>
+								<c:when test="${starAvg>=1}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${starAvg>=2}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${starAvg>=3}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${starAvg>=4}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${starAvg>=5}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							/${starAvg}
 						</td>
 					</tr>
 					<tr>
@@ -354,6 +370,19 @@
 			lock(star);
 			document.reviewform.reviewStar.value=star;
 		}
+		
+		 function likeTotalMemberInfo(value,total){
+			 console.log(total);
+             var reserve = document.reserve;
+             var pop = window.open;
+			   var windowW = 300;
+			   var windowH = 420;
+			   var left = Math.ceil((window.screen.width - windowW) / 2);
+			   var top = Math.ceil((window.screen.height - windowH) / 2);
+             pop("/likeTotalMemberInfo.do?storeReviewNo="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
+             reserve.target="popup";
+             reserve.method="get";
+          }
 
       </script>
 		</div>
@@ -408,22 +437,25 @@
 			<div>
 				<div>
 					<div id="profile-image">
+						<c:if test="${r.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+						</c:if>
 						<c:if test="${r.memberUploadPhotoNo ne 1}">	
 						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
 						</c:if>
 					</div>
 					<div>
 						<p>${r.memberNickName}</p>
-						<p>리뷰${r.reviewTotal}, 팔로워${r.followTotal}</p>				
+						<p>리뷰${r.reviewTotal},팔로워<label id="${r.memberEntireNo + 1}" name="${r.memberEntireNo + 1}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
 					<c:if test="${follow!=null }">
 						<c:forEach items="${follow}" var="f">
 						<c:choose>
 							<c:when test="${f.followMemberIdNo==r.memberEntireNo}">
-							<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>
+							<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>
 							</c:when>
 							<c:otherwise>
-							<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>
+							<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>
 							</c:otherwise>
 						</c:choose>	
 						</c:forEach>
@@ -431,7 +463,7 @@
 					
 				
 					<c:if test="${follow==null && sessionScope.member!=null}">
-				 		<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}');">팔로우</button>				
+				 		<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>				
 					</c:if>
 					
 					<c:if test="${sessionScope.member.memberEntireNo==null}">
@@ -476,8 +508,27 @@
 		</div>
 						</c:forEach>
 					</div>
-					<p>정범진님, 김수한님 외 18명이 좋아합니다.</p>
 					
+					
+					
+					<p onclick="likeTotalMemberInfo('${r.storeReviewNo}','${r.likeTotal}');" style="cursor:pointer;">
+					<c:if test="${r.memberLikeInfo!=null}">
+						<c:forEach items='${r.memberLikeInfo}' var="li" >
+						<label>${li.memberName}</label>
+						</c:forEach>
+						<c:if test="${r.likeTotal >3}">
+						님 외 ${r.likeTotal - 2}명이 좋아합니다.
+						</c:if>
+						<c:if test="${r.likeTotal <= 2}">
+						님이 좋아합니다.
+						</c:if>
+						
+					</c:if>
+					
+					<c:if test="${r.memberLikeInfo==null}">
+						<label>0</label>명이 좋아합니다.
+					</c:if>
+					</p>
 					<p>
 				<%-- 		
 						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">

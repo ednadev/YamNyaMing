@@ -490,7 +490,6 @@
 					</div>
 					<div>${search.owStoreComment}</div>
 				</div>
-				<button>예약하기</button>
 				<button>리뷰쓰기</button>
 			</div>
 		</c:forEach>
