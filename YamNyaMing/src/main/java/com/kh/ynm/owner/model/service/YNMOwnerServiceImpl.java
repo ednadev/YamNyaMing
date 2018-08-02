@@ -254,8 +254,8 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	}
 
 	@Override
-	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList) {
-		ArrayList<MenuInfo> list = ynmOwnerDAO.storeMenuInfoList(sqlSession, storeMenuList);
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeIndex) {
+		ArrayList<MenuInfo> list = ynmOwnerDAO.storeMenuInfoList(sqlSession, storeIndex);
 		return list;
 	}
 
@@ -263,6 +263,12 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	public int textMenuUpdate(MenuInfo menuInfo) {
 		int updateResult = ynmOwnerDAO.textMenuUpdate(sqlSession, menuInfo);
 		return updateResult;
+	}
+
+	@Override
+	public int menuTextDelete(int menuIndex) {
+		int result  = ynmOwnerDAO.menuTextDelete(sqlSession, menuIndex);
+		return result;
 	}
 
 

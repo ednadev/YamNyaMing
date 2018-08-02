@@ -188,9 +188,21 @@
 				   },
 			type : "post",
 			success : function(data){
-				console.log(data);
+				var resultData = data;
 				if(data.result=="success"){
-					$('#enrollMenuList').append();
+					var resultTag =	'<div class="menuTapClass" id="menu_title_'+data.menuCate+'" name="menu_title_'+data.storeIndex+'" style="border:1px solid lightgray;">'
+						+'<input type="hidden" name="menuIndex" value='+data.storeIndex+'>'
+						+'메뉴 이름 : <input type="text" class="menu_edit_'+data.storeIndex+'" name="menuTitle" value="'+data.menuTitle+'" > <br>'
+						+'메뉴 설명 : <input type="text" class="menu_edit_'+data.storeIndex+'" name="menuExplain" value="'+data.menuExplain+'" > <br>'
+						+'메뉴 가격 : <input type="text" class="menu_edit_'+data.storeIndex+'" name="menuCost" value="'+data.menuCost+'" "><br>'
+						+'<button type="button" id="menu_'+data.storeIndex+'" onclick="menuEditMode("menu_'+data.storeIndex+'","menu_edit_'+data.storeIndex+'")">메뉴 수정</button>'
+						+'<button type="button" id="menu_'+data.storeIndex+'" onclick="menuTextDelete("menu_title_'+data.storeIndex+'", "'+data.storeIndex+'")">메뉴 삭제</button>'
+						+'<button type="button" id="menu_edit_'+data.storeIndex+'" onclick="textMenuUpdate("'+data.storeIndex+'","menu_edit_'+data.storeIndex+'");" >수정 완료</button>'
+						+'</div>';
+					$('#enrollMenuList').append(resultTag);
+					$("#owRecommandMenu").val("");
+					$("#owRecommandMenuPrice").val("");
+					$("#menuDesc").val("");
 				}
 				else{
 					alert("메뉴 등록에 실패했습니다.");
@@ -243,6 +255,29 @@
 					alert("메뉴 업데이트 성공");
 				}else{
 					alert("메뉴 업데이트 실패");
+				}
+			},
+			error : function(){
+				console.log("실패");	
+			}
+		});
+	}
+	
+	function menuTextDelete(menuTitle, menuTextIndex)
+	{
+		$.ajax({
+			url:"/textMenuDelete.do",
+			data : {
+						menuIndex:menuTextIndex,
+				   },
+			type : "post",
+			success : function(data){
+				if(data=="success")
+				{
+					alert("메뉴 삭제 성공");
+					document.getElementsByName(menuTitle)[0].remove();
+				}else{
+					alert("메뉴 삭제 실패");
 				}
 			},
 			error : function(){

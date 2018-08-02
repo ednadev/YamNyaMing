@@ -16,7 +16,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerMenuManage.js?ver=2"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerMenuManage.js?ver=3"></script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -246,22 +246,22 @@
 			<div id="enrollMenuList">
 				<c:if test="${menuInfoList!=null}">
 					<c:forEach var="menuTitle" items="${menuTitleGroup}">
-						<button class="menuTitleBtn" onclick="menuChangeMode('${menuTitle} ');"> ${menuTitle} </button>
+						<button class="menuTitleBtn" onclick="menuChangeMode('menu_title_${menuTitle}');"> ${menuTitle} </button>
 					</c:forEach>
 					<c:forEach var="menu" items="${menuInfoList}">
-						<div class="menuTapClass" id="${menu.menuTitle} " style="border:1px solid lightgray;">
+						<div class="menuTapClass" id="menu_title_${menu.menuTitle}" name="menu_title_${menu.owMenuInfoPk}" style="border:1px solid lightgray;">
 							<input type="hidden" name="menuIndex" value="${menu.owMenuInfoPk}">
-							메뉴 이름 : <span id="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span>
+							메뉴 이름 :<%--  <span id="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span> --%>
 							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuTitle" value="${menu.subTitle}" > <br>
 							
-							메뉴 설명 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> 
+							메뉴 설명 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> --%> 
 							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuExplain" value="${menu.explain}" > <br>
 							
-							메뉴 가격 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> 
+							메뉴 가격 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> --%> 
 							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuCost" value="${menu.menuCost}" "><br>
 							
 							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}')">메뉴 수정</button>
-							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="">메뉴 삭제</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuTextDelete('menu_title_${menu.owMenuInfoPk}', '${menu.owMenuInfoPk}')">메뉴 삭제</button>
 							<button type="button" id="menu_edit_${menu.owMenuInfoPk}" onclick="textMenuUpdate('${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}');" >수정 완료</button>
 						</div>
 					</c:forEach>
@@ -302,7 +302,7 @@
 						<select class="menuCategory">
 							<option>분류 항목 </option>
 							<c:forEach var="menuTitle" items="${menuTitleGroup}">
-								<option value="${menuTitle}"> ${menuTitle} </button>
+								<option value="${menuTitle}"> ${menuTitle} </option>
 							</c:forEach>
 						</select>
 						<input type="text" name="owMenuType" placeholder="예)식사,요리,스페셜" class="menuStyle">
@@ -337,8 +337,9 @@
 	</section>
 	<script>
 		window.onload=function(){
-			$("#mainImage").on("change",reviewPhotoSelect);
 			var storeDivArr = document.getElementsByClassName("store-info-div");
+		/* 	var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
+			console.log(data.result); */
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
 				if(i==${storeTapType}){
@@ -346,7 +347,7 @@
 				}
 				else storeDivArr[i].style.display="none";
 			}
-			menuChangeMode("${firstMenutitle} ");
+			menuChangeMode("menu_title_${firstMenutitle}");
 		}
 		
 		

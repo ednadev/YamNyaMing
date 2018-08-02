@@ -544,7 +544,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				}
 				else if(menuType==2)  // 직접 입력함.
 				{
-					ArrayList<MenuInfo> menuInfoList = storeMenuInfoList(menuInfo);
+					ArrayList<MenuInfo> menuInfoList = storeMenuInfoList(storeIndex);
 					ArrayList<String> menuTitleList = new ArrayList<String>();
 					for(int i = 0; i<menuInfoList.size();i++)
 					{
@@ -684,9 +684,9 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 	
 	@Override
-	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList)
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeIndex)
 	{
-		ArrayList<MenuInfo> menuList = ynmOwnerServiceImpl.storeMenuInfoList(storeMenuList);		
+		ArrayList<MenuInfo> menuList = ynmOwnerServiceImpl.storeMenuInfoList(storeIndex);		
 		return menuList;
 	}
 	
@@ -694,7 +694,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@Override
 	@ResponseBody
 	@RequestMapping("/menuTextNewAdd.do")
-	public String menuTextNewAdd(HttpSession session,  HttpServletRequest request)
+	public JSONObject menuTextNewAdd(HttpSession session,  HttpServletRequest request)
 	{
 		JSONObject obj = new JSONObject();
 		if(session.getAttribute("owner")!=null)
@@ -733,22 +733,22 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					obj.put("menuTitle", menu);
 					obj.put("menuExplain", menuExplain);
 					obj.put("menuCost", menuPrice);
-					return obj.toJSONString();
+					return obj;
 				}else {
 					obj.put("result", "menuIndexGetFail");
-					return obj.toJSONString();
+					return obj;
 				}
 			}
 			else
 			{
 				obj.put("result", "insertFail");
-				return obj.toJSONString();
+				return obj;
 			}
 				
 		}
 		else {
 			obj.put("result", "ownerNoneFail");
-			return obj.toJSONString();
+			return obj;
 		}
 	}
 	
@@ -786,10 +786,11 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				int storeInfoIndex = Integer.parseInt(request.getParameter("storeIndex"));
 				String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\menuP_");
 				String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
-				System.out.println("ㅍ일 사이즈 " + files.size());
-				for(int j = 0; j<files.size(); j++)
+				StoreMenuData storeMenuData = new StoreMenuData();
+				storeMenuData.setMenuType(1);
+				for(int i = 0; i<files.size();i++)
 				{
-					String originName= files.get(j).getOriginalFilename();
+					String originName= files.get(i).getOriginalFilename();
 					String remakeName= System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 					File f=new File(photoRoute + remakeName);
 					//해당 디렉토리의 존재여부를 확인
@@ -798,7 +799,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						f.mkdirs(); 
 					}
 					try {
-						files.get(j).transferTo(f);
+						files.get(i).transferTo(f);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -812,21 +813,43 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					uploadPhoto.setRemakeName("menuP_" + remakeName);
 					uploadPhoto.setPhotoRoute(photoSaveRoute);
 					
+		
 					int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
 					if(photoUpload>0) {
-						view = storeManageEnrollList(session, request);
-						view.addObject("menuPhotoList", storeHeadPhotoList(3,storeInfoIndex));
-						view.addObject("storeTapType", tapOrder);
-						return view;
+							
 					}else {
 						System.out.println("이미지 업로드 실패");
-						break;
 					}
-//					view = storePageTypeLoad(session, request);
 				}
+				view = storeManageEnrollList(session, request);
+				view.addObject("menuInfoData", storeMenuData);
+				view.addObject("menuPhotoList", storeHeadPhotoList(4,storeInfoIndex));
+				view.addObject("storeTapType", tapOrder);
+				view.addObject("currentStoreIndex",storeInfoIndex);
+				view.setViewName("ynmOwner/storeManagePage");
 			}
 		}
 		return view;
 	}
 
+	@ResponseBody
+	@RequestMapping("/textMenuDelete.do")
+	public String menuTextDelete(HttpSession session, HttpServletRequest request)
+	{
+		if(session.getAttribute("owner")!=null)
+		{
+			int menuIndex = Integer.parseInt(request.getParameter("menuIndex"));
+			
+			int deleteResult  = ynmOwnerServiceImpl.menuTextDelete(menuIndex);
+			if(deleteResult>0)
+			{
+				return "success";
+			}
+			else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
+	}
 }

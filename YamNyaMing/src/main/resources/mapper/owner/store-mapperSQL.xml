@@ -179,17 +179,21 @@
 			OW_MENU_SUB_EXPLAIN as explain,
 			OW_MENU_SUB_COST as menuCost
 		from owner_menu_info_detail_tb
-		where OW_MENU_INFO_DETAIL_PK in
-		<foreach close=")" separator="," open="(" collection="array" item="menu"> 
-			#{menu} 
-		</foreach>
+		where OW_STORE_INFO_FK = #{storeIndex}
 	</select>
  	
+ 	<!-- 메뉴 항목 업데이트 -->
  	<update id="storeTextMenuUpdate" parameterType="menuInfo">
  		update owner_menu_info_detail_tb
  		set 
  		OW_MENU_SUB_TITLE = #{subTitle} ,OW_MENU_SUB_EXPLAIN = #{explain}, OW_MENU_SUB_COST = #{menuCost}
  		where OW_MENU_INFO_DETAIL_PK = #{owMenuInfoPk}
  	</update>
+ 	
+ 	<!--  메뉴 항목 삭제 -->
+ 	<delete id="menuTextDelete">
+ 		delete from OWNER_MENU_INFO_DETAIL_TB
+ 		where OW_MENU_INFO_DETAIL_PK = #{menuIndex}
+ 	</delete>
 	
 </mapper>

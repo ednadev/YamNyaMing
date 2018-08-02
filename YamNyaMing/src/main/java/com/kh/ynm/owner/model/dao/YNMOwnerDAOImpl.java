@@ -134,20 +134,19 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	}
 
 	@Override
-	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, String storeMenuList) {
-		String [] menuArrTemp = storeMenuList.split(",");
-		int [] menuArr = new int[menuArrTemp.length];
-		for(int i = 0; i<menuArrTemp.length;i++)
-		{
-			menuArr[i] = Integer.parseInt(menuArrTemp[i]);
-		}
-		List list = sqlSession.selectList("stores.storeMenuInfoList", menuArr);
+	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, int storeIndex) {
+		List list = sqlSession.selectList("stores.storeMenuInfoList", storeIndex);
 		return (ArrayList<MenuInfo>)list;
 	}
 
 	@Override
 	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo) {
 		return sqlSession.update("stores.storeTextMenuUpdate", menuInfo);
+	}
+
+	@Override
+	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex) {
+		return sqlSession.delete("stores.menuTextDelete", menuIndex);
 	}
 
 }

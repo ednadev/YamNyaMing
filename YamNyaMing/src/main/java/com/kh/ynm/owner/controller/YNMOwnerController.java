@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -71,9 +72,9 @@ public interface YNMOwnerController {
 	public ArrayList<OwnerUploadPhoto> storeHeadPhotoList(int photoType, int storeInfoIndex);
 
 	// 메뉴 정보 불러오기
-	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList);
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeIndex);
 
 	// 새로운 텍스트 메뉴 추가하기
-	public String menuTextNewAdd(HttpSession session, HttpServletRequest request);
+	public JSONObject menuTextNewAdd(HttpSession session, HttpServletRequest request);
 	
 }

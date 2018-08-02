@@ -81,9 +81,12 @@ public interface YNMOwnerService {
 	public StoreMenuData storeMenuData(int storeInfoIndex);
 
 	// 가게 메뉴 가져오기
-	public ArrayList<MenuInfo> storeMenuInfoList(String storeMenuList);
+	public ArrayList<MenuInfo> storeMenuInfoList(int storeIndex);
 
-	// 가게 메뉴 텍스트 업3데이트
+	// 가게 메뉴 텍스트 업데이트
 	public int textMenuUpdate(MenuInfo menuInfo);
+
+	// 가게 메뉴 항목 삭제
+	public int menuTextDelete(int menuIndex);
 	
 }
