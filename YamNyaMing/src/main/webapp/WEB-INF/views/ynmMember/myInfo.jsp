@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=4">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=5">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=4"></script>
 </head>
@@ -189,7 +189,62 @@
 			<h3>찜한 리뷰</h3>	
 		</div>
 		<div id="Like" class="tabInfo" style="display:none;">
-			찜한 매장
+			<div class="search-result">
+				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
+					<form action="/detailPage.do" method="get">
+						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
+						<input type="submit" value="">
+					</form>
+					<div>
+						<p>대기인원 0 추천 ${search.owStoreInfoPk},${search.owStoreInfoPk}</p>
+						<div class="heart"></div>
+					</div>
+					<div>
+						<h5>${search.owStoreName }</h5>
+						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
+					</div>
+				</div>
+				<div class="search-result-text">
+					<div>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<p class="star-result">0점</p>
+					</div>
+					<div>${search.owStoreComment}</div>
+				</div>
+				<script>
+				 function popupPost(value){
+	               var reserve = document.reserve;
+	               var pop = window.open;
+				   var windowW = 560;
+				   var windowH = 560;
+				   var left = Math.ceil((window.screen.width - windowW) / 2);
+				   var top = Math.ceil((window.screen.height - windowH) / 2);
+	               pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
+	               reserve.target="popup";
+	               reserve.method="get";
+	               reserve.submit();
+	            }
+				 
+					function idSearch() {
+						var windowW = 400; // 창의 가로 길이
+						var windowH = 400; // 창의 세로 길이
+						var left = Math.ceil((window.screen.width - windowW) / 2);
+						var top = Math.ceil((window.screen.height - windowH) / 2);
+						window.open("/idSearchPage.do", "pop_01", "l top=" + top + ", left="
+								+ left + ", height=" + windowH + ", width=" + windowW);
+					}
+				 
+	            </script>  	            
+	                
+	            <form action="reservation.do" method="get" name="reserve">
+	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
+	            </form>
+				<button>리뷰쓰기</button>
+			</div>
 		</div>
 		<div id="Setting" class="tabInfo" style="display:none;">
 			<h3>기본 정보</h3>
