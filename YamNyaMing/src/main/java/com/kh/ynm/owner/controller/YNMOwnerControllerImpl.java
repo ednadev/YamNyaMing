@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ynm.common.model.vo.YNMTotalRefModel;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
@@ -90,8 +91,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			storeInfo.setOwStoreName(request.getParameter("owStoreName"));
 			String tel = request.getParameter("regionTel")+request.getParameter("owTel");
 			storeInfo.setOwStoreTel(tel);
-			storeInfo.setOwBigTypeFk(1);
-			storeInfo.setOwSmallTypeFk(1);
+			storeInfo.setOwBigTypeFk(YNMTotalRefModel.getCateMainIndex(request.getParameter("owStoreBigType")));
+			storeInfo.setOwSmallTypeFk(YNMTotalRefModel.getCateDetailIndex(request.getParameter("owStoreSmallType")));
 			storeInfo.setOwStoreMapInfo("");
 			storeInfo.setOwStoreUrl(request.getParameter("owStoreUrl"));
 			String addr = request.getParameter("postNum") + request.getParameter("addrStreet") + request.getParameter("detailAddr");
