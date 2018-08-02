@@ -299,6 +299,10 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMMember> list = memberDAO.likeTotalMemberInfo(sqlSession,storeReviewNo);
 		return list;
 	}
+	public ArrayList<YNMSearch> starAvg(int owStoreInfoPk) {
+		ArrayList<YNMSearch> list=memberDAO.starAvg(sqlSession,owStoreInfoPk);
+		return list;
+	}
 
 
 	

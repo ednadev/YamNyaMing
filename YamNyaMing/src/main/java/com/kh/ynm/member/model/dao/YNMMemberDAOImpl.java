@@ -272,6 +272,11 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMMember> likeTotalMemberInfo(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		List list=sqlSession.selectList("member.likeTotalMemberInfo",storeReviewNo);
 		return (ArrayList<YNMMember>)list;
+	}
+
+	public ArrayList<YNMSearch> starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
+		List list=sqlSession.selectList("review.starAvg",owStoreInfoPk);
+		return (ArrayList<YNMSearch>)list;
 	}	
 
 }

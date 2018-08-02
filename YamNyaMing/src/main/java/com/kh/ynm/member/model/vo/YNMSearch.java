@@ -18,8 +18,16 @@ public class YNMSearch {
 	private String owStoreTableInfo;
 	private String owSubInfo;
 	private String owDrinkListInfo;
+	private int starPoint;
 	private float starAvg;
 	
+
+	public int getStarPoint() {
+		return starPoint;
+	}
+	public void setStarPoint(int starPoint) {
+		this.starPoint = starPoint;
+	}
 	public float getStarAvg() {
 		return starAvg;
 	}

@@ -115,5 +115,12 @@
 		from member_review_jjim_tb
 		where mb_entire_fk=#{memberNo}
 	</select>
+	
+	<select id="starAvg" resultType="search">
+		select 
+			ow_store_review_star as starPoint
+		from member_store_review_tb
+		where ow_store_info_fk=#{owStoreInfoPk}
+	</select>
 
 </mapper>

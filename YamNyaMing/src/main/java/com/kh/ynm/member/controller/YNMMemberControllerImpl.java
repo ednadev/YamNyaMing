@@ -535,9 +535,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		for(int i=0; i<ysrList.size(); i++ ) {
 				starSum+=ysrList.get(i).getReviewStar();
 			}
-		starAvg=starSum/ysrList.size();
+		starAvg=(float)starSum/ysrList.size();
 		}
-		
+		System.out.println(starAvg);
 		if(session.getAttribute("member") !=null) {
 			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 			fList=ynmMemberServiceImpl.followInfo(memberNo);
@@ -833,7 +833,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-
+		int starNum=0;
+		float starAvg=0;
+		if(!qpd.getNoticelist().isEmpty()) {
+		for(int i=0; i<qpd.getNoticelist().size(); i++){
+			ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
+			for(int j=0; j<ys.size(); j++) {
+			starNum+=ys.get(i).getStarPoint();
+			starAvg=(float)starNum/ys.size();
+			}
+			qpd.getNoticelist().get(0).setStarAvg(starAvg);
+		}
+		}
 		
 		JSONObject resultMap=new JSONObject();
 		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
@@ -849,7 +860,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			index++;
 		}
 
-
+		System.out.println(starAvg);
 		ModelAndView view=new ModelAndView();
 		if(qpd!=null) {
 			view.addObject("resultMap",resultMap);
