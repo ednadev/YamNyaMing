@@ -10,6 +10,21 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
+	<script>
+		window.onload = fucntion()
+		{
+			firstLoadAlert();
+		}
+		function firstLoadAlert()
+		{
+			if(typeof Android !=="undefined" && Android !== null){
+				Android.firstLoadTest();
+			}else{
+				alert("Not viewing in webView!!");
+			}
+			 
+		}
+	</script>
 </head>
 <body>
 	
