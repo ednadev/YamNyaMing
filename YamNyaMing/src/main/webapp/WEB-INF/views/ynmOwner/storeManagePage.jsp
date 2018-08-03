@@ -201,7 +201,7 @@
 			</form>
 		</div>
 		<div class="store-info-div" style="display:none;">
-			
+			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			<h3>이미지를  클릭해서 삭제 할 수 있습니다.</h3>
 			<!-- <form action="/storeHeadPhotoEdit.do" method="post"> -->
 			<c:if test="${headPhotoList!=null}">
