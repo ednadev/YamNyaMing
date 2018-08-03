@@ -12,7 +12,7 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=2">
+	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=3">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -39,7 +39,7 @@
 		<li><a href="/ownerInfo.do">정보 관리</a></li>
 		<li><a href="/storeManage.do">음식점 관리</a></li>
 		<li><a href="/reservationManage.do">예약 관리</a></li>
-		<li><a href="/couponManage.do">쿠폰 관리</a></li>
+		<li><a href="/couponManage.do" style="border-bottom:3px solid #fb0;">쿠폰 관리</a></li>
 		<li><a href="/boardOwner.do">게시판 관리</a></li>
 		<li><a href="/analysisOwner.do">통계 관리</a></li>
 	</ul>

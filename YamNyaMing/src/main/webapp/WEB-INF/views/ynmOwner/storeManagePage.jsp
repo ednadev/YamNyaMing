@@ -31,7 +31,7 @@
 	<nav id="owner-main-nav">
 		<ul>
 			<li><a href="/ownerInfo.do">정보 관리</a></li>
-			<li><a href="/storeManage.do">음식점 관리</a></li>
+			<li><a href="/storeManage.do" style="border-bottom:3px solid #fb0;">음식점 관리</a></li>
 			<li><a href="/reservationManage.do">예약 관리</a></li>
 			<li><a href="/couponManage.do">쿠폰 관리</a></li>
 			<li><a href="/boardOwner.do">게시판 관리</a></li>
