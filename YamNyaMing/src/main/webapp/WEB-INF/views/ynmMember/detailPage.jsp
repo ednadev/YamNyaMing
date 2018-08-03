@@ -380,18 +380,7 @@
 			document.reviewform.reviewStar.value=star;
 		}
 		
-		 function likeTotalMemberInfo(value,total){
-			 console.log(total);
-             var reserve = document.reserve;
-             var pop = window.open;
-			   var windowW = 300;
-			   var windowH = 420;
-			   var left = Math.ceil((window.screen.width - windowW) / 2);
-			   var top = Math.ceil((window.screen.height - windowH) / 2);
-             pop("/likeTotalMemberInfo.do?storeReviewNo="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
-             reserve.target="popup";
-             reserve.method="get";
-          }
+
 
       </script>
 		</div>

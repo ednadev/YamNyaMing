@@ -10,9 +10,9 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=5">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=7">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=4"></script>
+
 </head>
 
 <body>
@@ -164,7 +164,31 @@
 					<span onclick="openTab(event,'Reservation')">예약 0</span>
 					<span onclick="openTab(event,'Review')">리뷰 0</span>
 					<span onclick="openTab(event,'Like')">찜한 매장 0</span>
-					<span onclick="openTab(event,'Follow')">팔로워 0</span></p>
+					<span id="myBtn">팔로워 0</span></p>
+					<div id="myModal" class="modal">
+					  <div class="modal-content">
+					    <span class="close">&times;</span>
+					    <div class="tab">
+					    	<button class="tablink click" onclick="openModal(event,'Follower')">팔로워</button>
+		   					 <button class="tablink" onclick="openModal(event,'Following')">팔로잉</button>
+					    </div>
+					    <div id="Follower" class="tabInfo">
+					    	<div id="profile-follow">
+					    		<div id="profile-follow-image"></div>
+					    		<div>
+					    			<p>닉네임</p>
+					    			<p>88 리뷰, 1079 팔로워</p>
+					    			<button>팔로우</button>
+					    		</div>
+					    	</div>
+					    	<div id="profile-follow"></div>
+					    </div>
+					    <div id="Following" class="tabInfo" style="display:none;">
+					    
+					    </div>
+					  </div>
+					</div>
+					<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
 			</div>
 		</div>
 	</div>
