@@ -7,12 +7,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
+	<script>
+		window.onload = fucntion()
+		{
+			firstLoadAlert();
+		}
+		function firstLoadAlert()
+		{
+			if(typeof Android !=="undefined" && Android !== null){
+				Android.firstLoadTest();
+			}else{
+				alert("Not viewing in webView!!");
+			}
+			 
+		}
+	</script>
 </head>
 <body>
+	
 	<header id="member-main-header">
 		<h1>
 			<a href="/index.jsp">YamNyaMing</a>
@@ -20,7 +35,9 @@
 		<a href="/ynmMemberTest.do">맴버test</a>
 
 		<ul>
-		
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
 			<c:if test="${sessionScope.naver!=null}" var="result">
 				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
 				<li><a href="/memberInfo.do">마이페이지</a></li>

@@ -15,6 +15,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerMenuManage.js?ver=3"></script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -113,7 +115,7 @@
 		<hr style="clear:both;">
 		가게 상세 정보
 		
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:block;">
 			<form action="/storeInfoEdit.do" method="post">
 			
 				<h3>위에 정보</h3>
@@ -200,8 +202,8 @@
 				<input type="submit" value="가게 정보 업데이트">
 			</form>
 		</div>
-		<div class="store-info-div">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+		<div class="store-info-div" style="display:none;">
+			
 			<h3>이미지를  클릭해서 삭제 할 수 있습니다.</h3>
 			<!-- <form action="/storeHeadPhotoEdit.do" method="post"> -->
 			<c:if test="${headPhotoList!=null}">
@@ -218,16 +220,117 @@
 			<c:if test="${headPhotoList==null}">
 				대표사진이 없습니다.
 			</c:if>
+			<form action="/storeHeadPhotoUpload.do" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+				<input type="hidden" name="storeTapType" value="정보">
+				<div id="menuType">
+					<input type="file" name="mainImgFile" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
+					<label for="mainImage">이미지 추가</label>
+					<div>
+						<div class="imgs_wrap">
+							<img id="img"/>
+						</div>
+					</div>
+					<img id="output"/>
+					<p>업체를 대표하는 이미지를 추가해주세요.</p>
+				</div>
+				<input type="submit" value="대표사진 등록">
+			</form>
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			리뷰
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
-			메뉴
+			<div id="enrollMenuList">
+				<c:if test="${menuInfoList!=null}">
+					<c:forEach var="menuTitle" items="${menuTitleGroup}">
+						<button class="menuTitleBtn" onclick="menuChangeMode('menu_title_${menuTitle}');"> ${menuTitle} </button>
+					</c:forEach>
+					<c:forEach var="menu" items="${menuInfoList}">
+						<div class="menuTapClass" id="menu_title_${menu.menuTitle}" name="menu_title_${menu.owMenuInfoPk}" style="border:1px solid lightgray;">
+							<input type="hidden" name="menuIndex" value="${menu.owMenuInfoPk}">
+							메뉴 이름 :<%--  <span id="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span> --%>
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuTitle" value="${menu.subTitle}" > <br>
+							
+							메뉴 설명 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> --%> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuExplain" value="${menu.explain}" > <br>
+							
+							메뉴 가격 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> --%> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuCost" value="${menu.menuCost}" "><br>
+							
+							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}')">메뉴 수정</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuTextDelete('menu_title_${menu.owMenuInfoPk}', '${menu.owMenuInfoPk}')">메뉴 삭제</button>
+							<button type="button" id="menu_edit_${menu.owMenuInfoPk}" onclick="textMenuUpdate('${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}');" >수정 완료</button>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
+			<c:if test="${menuPhotoList!=null}">
+				<c:forEach var="menuPhoto" items="${menuPhotoList}">
+					<input type="hidden" id="${menuPhoto.owStorePhotoPk}_route" value="${menuPhoto.photoRoute}">
+					<input type="hidden" id="${menuPhoto.owStorePhotoPk}_name" value="${menuPhoto.remakeName}">
+					<input type="hidden" id="${menuPhoto.owStorePhotoPk}_detailPk" value="${menuPhoto.storeDetailPk}">
+					<input type="hidden" id="${menuPhoto.owStorePhotoPk}_headList" value="${menuPhoto.headStoreList}">
+					<img src="${menuPhoto.owPhotoViewRoute}" id="${menuPhoto.owStorePhotoPk}"
+					onclick='deleteHeadPhoto(${menuPhoto.owStorePhotoPk});' 
+					style="width:200px; height:200px;" />
+				</c:forEach>
+			</c:if>
+			<c:if test="${menuInfoData.menuType==1}">
+				<!-- 사진만 등록 -->
+				<div class="menuInfo">  
+					<form action="/storeMenuPhotoUpload.do" method="post" enctype="multipart/form-data">
+						<div>
+							<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
+							<input type="file" name="menuImageFile" id="menuImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
+							<label for="menuImage" id="menu-image">사진등록/편집</label>
+								<div class="imgs_wrap_menu">
+									<img id="img"/>
+								</div>
+							<img id="output"/>
+							<input type="submit" value="메뉴사진 등록">
+						</div> 
+					</form>	
+				</div>
+			</c:if>
+			<c:if test="${menuInfoData.menuType==2}">
+				<!-- 글씨만 등록 -->
+				<div id="menuPriceInfo">
+					<div class="menuInfo">
+						<select class="menuCategory">
+							<option>분류 항목 </option>
+							<c:forEach var="menuTitle" items="${menuTitleGroup}">
+								<option value="${menuTitle}"> ${menuTitle} </option>
+							</c:forEach>
+						</select>
+						<input type="text" name="owMenuType" placeholder="예)식사,요리,스페셜" class="menuStyle">
+						<label class="menuCateBtn" id="addMenuCateBtn" onclick="addMenuCategory();">추가</label>
+						<label class="menuCateBtn" id="removeMenuCateBtn" onclick="removeMenuCategory();">삭제</label>
+					</div>
+					<div class="menuInfo" id="menu-info-text">
+						<select id="menuCategoryTitle" class="menuCategory">
+							<option>분류 항목 </option>
+							<c:forEach var="menuTitle" items="${menuTitleGroup}">
+								<option value="${menuTitle}"> ${menuTitle} </option>
+							</c:forEach>
+						</select>
+						<br>
+						<input type="text" id="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
+						<input type="text" id="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
+						<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
+						<label><input type="checkbox"> 추천메뉴</label>
+						<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
+						<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
+						<button id="storeIndex" onclick="newMenuAdd(${currentStoreIndex});">메뉴 추가</button>
+					</div>
+				</div>
+			</c:if>
+			
+			
 		</div>
-		<div class="store-info-div">
+		<div class="store-info-div" style="display:none;">
 			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			맵
 		</div>
@@ -235,6 +338,8 @@
 	<script>
 		window.onload=function(){
 			var storeDivArr = document.getElementsByClassName("store-info-div");
+		/* 	var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
+			console.log(data.result); */
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
 				if(i==${storeTapType}){
@@ -242,65 +347,10 @@
 				}
 				else storeDivArr[i].style.display="none";
 			}
-		}
-		function editShow(showPId,inputId)
-		{
-			if(inputId.style.display=="none")
-			{
-				showPId.style.display="none";
-				inputId.style.display="inline";
-			}
-			else{
-				showPId.style.display="inline";
-				inputId.style.display = "none";
-			}
+			menuChangeMode("menu_title_${firstMenutitle}");
 		}
 		
-		function storeInfoTapBtn(currentTap, tapType)
-		{
-			var storeDivArr = document.getElementsByClassName("store-info-div");
-			for(var i = 0; i<storeDivArr.length;i++)
-			{
-				if(currentTap==i){
-					storeDivArr[i].style.display = "block";
-				}
-				else storeDivArr[i].style.display="none";
-			}
-			$('#storeInfoTapBtn').val(tapType);
-		}
-		function deleteHeadPhoto(photoIndex)
-		{
-			var route = photoIndex + "_route"
-			var photoRoute = $('#'+route).val();
-			
-			var name = photoIndex + "_name";
-			var photoRemakeName = $('#'+name).val();
-			
-			var detail = photoIndex + "_detailPk";
-			var detailPk = $('#' + detail).val();
-			
-			var headList = photoIndex + "_headList";
-			var headPhotoList = $('#' + headList).val();
-			
-			$.ajax({
-				url:"/storeHeadPhotoDelete.do",
-				data : {
-						photoIndex:photoIndex,
-						photoRoute:photoRoute,
-						photoRemakeName:photoRemakeName,
-						detailPk:detailPk,
-						headPhotoList:headPhotoList
-					   },
-				type : "post",
-				success : function(data){	
-					
-				},
-				error : function(){
-					console.log("실패");	
-				}
-			});
-			
-		}
+		
 	</script>
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>

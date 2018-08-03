@@ -31,7 +31,9 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("serverTime", formattedDate);
+		
+		System.out.println("인덱스");
 		
 		return "home";
 	}

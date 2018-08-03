@@ -8,10 +8,13 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/datePickerCss.css?ver=3">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCheckPrice.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/datePickerbasic.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/odatePickerUi.js?ver=1"></script>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 </head>
@@ -117,7 +120,8 @@
 							<option value="토">토요일</option>
 							<option value="일">일요일</option>
 						</select>
-						<input type="time" name="owStoreWorkingTimeStart">
+						
+						<input type="time" name="owStoreWorkingTimeStart" >
 						<span> - </span>
 						<input type="time" name="owStoreWorkingTimeEnd">
 						<input type="text" name="extWorkingOption" placeholder="예) 화요일 휴무">
@@ -128,7 +132,7 @@
 				<div class="signUp-table">
 					<div>가게 한줄평</div>
 					<div>
-						<input type="text" name="owStoreLineComment" class="keywordStyle">
+						<input type="text" name="owStoreLineComment" class="keywordStyle" style="width:50%;">
 						<p id="tipResult">(가게를 소개할 한줄 코멘트를 적어주세요.)</p>
 					</div>
 				</div>	
@@ -261,7 +265,7 @@
 			//menuSelectMain.add(option);
 			for(var i = 0; i<menuSelect.length;i++){
 				var option = document.createElement("option");
-				option.selected = true;
+				if(i==0||i==menuSelect.length-1)option.selected = true;
 				option.value =  $('input[name=owMenuType]').val();
 				option.text = $('input[name=owMenuType]').val();
 				menuSelect[i].add(option);

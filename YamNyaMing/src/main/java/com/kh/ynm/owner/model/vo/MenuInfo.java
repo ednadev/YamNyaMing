@@ -2,6 +2,7 @@ package com.kh.ynm.owner.model.vo;
 
 public class MenuInfo {
 	private int owMenuInfoPk;
+	private int owStoreInfoFk;
 	private String menuId;
 	private String menuTitle;
 	private String subTitle;
@@ -10,15 +11,24 @@ public class MenuInfo {
 	
 	public MenuInfo() {}
 
-	public MenuInfo(int owMenuInfoPk, String menuId, String menuTitle, String subTitle, String explain,
-			int menuCost) {
+	public MenuInfo(int owMenuInfoPk, int owStoreInfoFk, String menuId, String menuTitle, String subTitle,
+			String explain, int menuCost) {
 		super();
 		this.owMenuInfoPk = owMenuInfoPk;
+		this.owStoreInfoFk = owStoreInfoFk;
 		this.menuId = menuId;
 		this.menuTitle = menuTitle;
 		this.subTitle = subTitle;
 		this.explain = explain;
 		this.menuCost = menuCost;
+	}
+
+	public int getOwStoreInfoFk() {
+		return owStoreInfoFk;
+	}
+
+	public void setOwStoreInfoFk(int owStoreInfoFk) {
+		this.owStoreInfoFk = owStoreInfoFk;
 	}
 
 	public String getMenuId() {

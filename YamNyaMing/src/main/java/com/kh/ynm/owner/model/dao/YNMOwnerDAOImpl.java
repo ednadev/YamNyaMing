@@ -11,6 +11,7 @@ import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -127,8 +128,25 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return sqlSession.delete("owphotos.headPhotoDelete", paramVo);
 	}
 
-	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
-		return sqlSession.update("stores.detailInfoHeadPhotoUpdate", paramVo);
+	@Override
+	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex) {
+		return sqlSession.selectOne("stores.storeMenuDataGet", storeInfoIndex);
+	}
+
+	@Override
+	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, int storeIndex) {
+		List list = sqlSession.selectList("stores.storeMenuInfoList", storeIndex);
+		return (ArrayList<MenuInfo>)list;
+	}
+
+	@Override
+	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo) {
+		return sqlSession.update("stores.storeTextMenuUpdate", menuInfo);
+	}
+
+	@Override
+	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex) {
+		return sqlSession.delete("stores.menuTextDelete", menuIndex);
 	}
 
 }

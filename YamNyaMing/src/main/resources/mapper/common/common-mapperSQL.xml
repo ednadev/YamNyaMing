@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commonsMap">
+	<select id="storeCategoryMainLoad" resultType="storeCategoryMain">
+		select 
+		STORE_CATE_MAIN_PK as storeCateMainPk,
+		STORE_CATE_MAIN_CODE as storeCateMainCode,
+		STORE_CATE_MAIN_NAME as storeCateMainName
+		from store_category_main_tb
+	</select>
+	
+	<select id="storeCategoryDetailLoad" resultType="storeCategoryDetail">
+		select 
+		STORE_CATE_DETAIL_PK as storeCateDetailPk,
+		STORE_CATE_MAIN_FK as storeCateMainFk,
+		STORE_CATE_DETAIL_CODE as storeCateDetailCode,
+		STORE_CATE_DETAIL_NAME as storeCateDetailName
+		from store_category_detail_tb
+	</select>
+</mapper>
