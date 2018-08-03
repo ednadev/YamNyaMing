@@ -159,12 +159,12 @@
 			<p>대기인원 0 추천 ${store.favoriteTotal}</p>
 			<c:if test="${favoriteChk==1}">
 			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">
-				<img style=width:100%;height:100%; src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
+				<img style=width:100%;height:100%;cursor:pointer; src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
 			</div>
 			</c:if>
 			<c:if test="${favoriteChk!=1}">
 			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">
-				<img style=width:100%;height:100%; src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+				<img style=width:100%;height:100%;cursor:pointer; src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 			</div>
 			</c:if>
 			
@@ -436,7 +436,12 @@
 			</tr>
 			</tbody>
 			</table>
+			<c:if test="${sessionScope.member != null }">
 			<button>리뷰 올리기</button>
+			</c:if>
+			<c:if test="${sessionScope.member == null }">
+				<input type="button" value="리뷰 올리기"  style="background-color: #fb0; border: none; color: white;width: 100%;height: 40px; margin-top: 20px;font-size: 1em; font-weight: bold; cursor: pointer;"onclick="nomember();">
+			</c:if>
 			</form>
 			<h4>리뷰</h4>
 			<p><span>최신순</span> | <span>인기순</span></p>

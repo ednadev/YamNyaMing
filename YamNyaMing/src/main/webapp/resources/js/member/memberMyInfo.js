@@ -38,3 +38,82 @@ function nickChange(){
 		title.innerHTML = "변경하기";
 	}
 }
+
+
+var sel_file;
+var html;
+$(document).ready(function(){
+	$("#input_avatarPhoto").on("change",avatarPhotoSelect);
+});
+
+
+function avatarPhotoSelect(e){
+	var files=e.target.files;
+	var filesArr=Array.prototype.slice.call(files);
+	
+	filesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("이미지확장자만");
+			return;
+		}
+		sel_file=f;
+		var reader=new FileReader();
+		reader.onload=function(e){
+			$("#img").attr("src",e.target.result);
+		}
+		reader.readAsDataURL(f);
+	});
+}
+
+function deleteImageAction(){
+	$('#img').remove();
+	
+	var img = document.createElement("img");
+	img.id="img";
+	var div=document.getElementById("profile-img");
+	div.appendChild(img);
+	
+}
+
+function imgUpdate(){
+
+	var form = $('form')[0];
+    var formData = new FormData(form);
+        $.ajax({
+           url: '/updateMemberPhoto.do',
+           processData: false,
+           contentType: false,
+           data: formData,
+           type: 'POST',
+           success: function(result){
+               alert("업로드 성공!!");
+           }
+       });
+
+}
+
+
+function favorite(memberEntireNo,owStoreInfoPk){
+	var favoriteImg=document.getElementById(owStoreInfoPk);
+	$.ajax({
+		url : "/favoriteInsert.do",
+		data : {memberEntireNo : memberEntireNo,owStoreInfoNo:owStoreInfoPk},
+		success : function(data){
+			if(data==1){
+				favoriteImg.innerHTML="";
+				favoriteImg.insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart.png'>");		
+			}else if(data==2){
+				favoriteImg.innerHTML="";
+				favoriteImg.insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart-click.png'>");
+			}else{
+				alert("실패");
+			}	
+		}
+	});	
+}
+
+function nomember(){
+	alert("로그인후 이용해주세요");
+}
+
+ 

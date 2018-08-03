@@ -75,10 +75,9 @@
 		and mb_pw=#{memberPw}
 	</delete>
 
-	<update id="updateMember">
+	<update id="updateMemberPhoto">
 		update member_entire_tb set
-		mb_nickname=#{memberNickName},
-		mb_email=#{memberEmail}
+		mb_upload_photo_fk=#{memberUploadPhotoNo}
 		where mb_entire_pk=#{memberEntireNo}
 
 	</update>
@@ -281,6 +280,31 @@
 		member_favorite_tb
 		where
 		ow_store_info_fk=#{owStoreInfoNo}
+	</select>
+	
+	<select id="memberJjimTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_favorite_tb
+		where
+		mb_entire_fk=#{memberEntireNo}
+	</select>
+	
+	<select id="reservationTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_book_tb
+		where
+		mb_entire_fk=#{memberEntireNo}
+	</select>
+	
+	<select id="favoriteList" resultType="favorite">
+		select
+			ow_store_info_fk as owStoreInfoNo
+			from member_favorite_tb
+			where mb_entire_fk=#{favoriteNo}
 	</select>
 
 

@@ -21,6 +21,14 @@ public class YNMSearch {
 	private int starPoint;
 	private float starAvg;
 	private int favoriteTotal;
+	private int favoriteChk;
+	
+	public int getFavoriteChk() {
+		return favoriteChk;
+	}
+	public void setFavoriteChk(int favoriteChk) {
+		this.favoriteChk = favoriteChk;
+	}
 	public int getFavoriteTotal() {
 		return favoriteTotal;
 	}
