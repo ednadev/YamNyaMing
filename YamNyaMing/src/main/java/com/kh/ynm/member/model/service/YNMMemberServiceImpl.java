@@ -117,13 +117,19 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		return ymc;
 	}
 	//내정보 아바타 사진 업데이트
-	public int updateUploadPhoto(YNMMemberUploadPhoto ymup) {
-		int result=memberDAO.updateUploadPhoto(sqlSession,ymup);
+	public int insertUploadPhoto(YNMMemberUploadPhoto ymup) {
+		int result=memberDAO.insertUploadPhoto(sqlSession,ymup);
 		return result;
 	}
+	//내정보 아바타 사진 삭제
+	public int deleteUploadPhoto(YNMMemberUploadPhoto ymup) {
+		int result=memberDAO.insertUploadPhoto(sqlSession,ymup);
+		return result;
+	}
+	
 	//내정보 text 업데이트
-	public int updateMember(YNMMember ym) {
-		int result=memberDAO.updateMember(sqlSession,ym);
+	public int updateMemberPhoto(YNMMember ym) {
+		int result=memberDAO.updateMemberPhoto(sqlSession,ym);
 		return result;
 	}
 	//가게 정보 가져오기
@@ -323,6 +329,20 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public int favoriteTotal(int parseInt) {
 		int result=memberDAO.favoriteTotal(sqlSession,parseInt);
 		return result;
+	}
+	//사용자 찜한 가게 총 수
+	public int memberJjimTotal(int memberEntireNo) {
+		int result=memberDAO.memberJjimTotal(sqlSession,memberEntireNo);
+		return result;
+	}
+	//사용자 총 예약 수
+	public int reservationTotal(int memberEntireNo) {
+		int result=memberDAO.reservationTotal(sqlSession,memberEntireNo);
+		return result;
+	}
+	public ArrayList<YNMFavorite> favoriteList(int memberEntireNo) {
+		ArrayList<YNMFavorite> list=memberDAO.favoriteList(sqlSession,memberEntireNo);
+		return list;
 	}
 
 

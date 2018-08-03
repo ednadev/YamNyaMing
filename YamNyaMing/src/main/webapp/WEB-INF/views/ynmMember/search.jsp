@@ -11,6 +11,7 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=7">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -472,11 +473,24 @@
 						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
 						<input type="submit" value="">
 					</form>
-					<div>
-						<p>대기인원 0 추천 ${search.owStoreInfoPk},${search.owStoreInfoPk}</p>
-						<div class="heart"></div>
-					</div>
-					<div>
+							<div>
+								<p>대기인원 0 추천${search.favoriteTotal}</p>
+								<c:if test="${search.favoriteChk==1}">
+									<div class="heart" id="${search.owStoreInfoPk}"
+										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
+									</div>
+								</c:if>
+								<c:if test="${search.favoriteChk!=1}">
+									<div class="heart" id="${search.owStoreInfoPk}"
+										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+									</div>
+								</c:if>
+							</div>
+							<div>
 						<h5>${search.owStoreName }</h5>
 						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
 					</div>

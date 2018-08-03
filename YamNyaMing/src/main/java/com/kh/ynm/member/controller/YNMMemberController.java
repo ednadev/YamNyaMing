@@ -28,6 +28,8 @@ public interface YNMMemberController {
 	public String signUpMember(MultipartFile file,HttpServletRequest request, HttpServletResponse response);// ȸ������
 	public String signOutMember(HttpSession session,HttpServletRequest request, HttpServletResponse response);// ȸ��Ż��
 	public Object memberInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView updateMemberPhoto(MultipartFile file, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response);
 	public String updateMember(MultipartFile file, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response);
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);

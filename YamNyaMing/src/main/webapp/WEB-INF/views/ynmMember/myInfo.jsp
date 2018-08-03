@@ -12,7 +12,7 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=7">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
 </head>
 
 <body>
@@ -152,19 +152,122 @@
 	<div id="main"></div>
 	<div>
 		<div class="member-myinfo-wrapper">
-			<label for="profile"><img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'></label>
-			<input type="file" id="profile">
+			<form action="/updateMemberPhoto.do" method="post" enctype="multipart/form-data">
+			<label id="profile-img" for="input_avatarPhoto">
+			<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'>
+			
+			</label>
+			
+			<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
+			<input type="submit" value="변경">
+			</form>
 			<div>
 				<h2>${info.memberName}</h2>
 				<p>LV.1 맛있는 즐거움, 얌냐밍에 오신 것을 환영합니다</p>
 				<p>
-					<span class="nemo-box first"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box"></span><span class="nemo-box final"></span>
+						<c:choose>
+							<c:when test="${info.memberPoint>=1 }">
+								<span class="nemo-box-white first"></span>
+							</c:when>
+							<c:otherwise>
+								<span class="nemo-box first"></span>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${info.memberPoint>2 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>3 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>4 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>5 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>6 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>7 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>8 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>9 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>10 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+									<c:choose>
+							<c:when test="${info.memberPoint>11 }">
+									<span class="nemo-box-white"></span>
+							</c:when>
+							<c:otherwise>
+									<span class="nemo-box"></span>
+							</c:otherwise>
+						</c:choose>
+			
+						<c:choose>
+							<c:when test="${info.memberPoint>2 }">
+								<span class="nemo-box-white final"></span>
+							</c:when>
+							<c:otherwise>
+								<span class="nemo-box final"></span>
+							</c:otherwise>
+						</c:choose>
 				</p>
 				<p>
-					<span onclick="openTab(event,'Reservation')">예약 0</span>
-					<span onclick="openTab(event,'Review')">리뷰 0</span>
-					<span onclick="openTab(event,'Like')">찜한 매장 0</span>
-					<span id="myBtn">팔로워 0</span></p>
+					<span onclick="openTab(event,'Reservation')">예약 ${info.reservationTotal}</span>
+					<span onclick="openTab(event,'Review')">리뷰 ${info.reviewTotal}</span>
+					<span onclick="openTab(event,'Like')">찜한 매장${info.jjimTotal}</span>
+					<span id="myBtn" >팔로워 ${info.followTotal}</span>
 					<div id="myModal" class="modal">
 					  <div class="modal-content">
 					    <span class="close">&times;</span>
@@ -189,7 +292,10 @@
 					  </div>
 					</div>
 					<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
+				
+					
 			</div>
+	
 		</div>
 	</div>
 	<div class="member-myinfo-page-wrapper">
@@ -213,33 +319,7 @@
 			<h3>찜한 리뷰</h3>	
 		</div>
 		<div id="Like" class="tabInfo" style="display:none;">
-			<div class="search-result">
-				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
-					<form action="/detailPage.do" method="get">
-						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
-						<input type="submit" value="">
-					</form>
-					<div>
-						<p>대기인원 0 추천 ${search.owStoreInfoPk},${search.owStoreInfoPk}</p>
-						<div class="heart"></div>
-					</div>
-					<div>
-						<h5>${search.owStoreName }</h5>
-						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
-					</div>
-				</div>
-				<div class="search-result-text">
-					<div>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<p class="star-result">0점</p>
-					</div>
-					<div>${search.owStoreComment}</div>
-				</div>
-				<script>
+		<script>
 				 function popupPost(value){
 	               var reserve = document.reserve;
 	               var pop = window.open;
@@ -252,23 +332,76 @@
 	               reserve.method="get";
 	               reserve.submit();
 	            }
-				 
-					function idSearch() {
-						var windowW = 400; // 창의 가로 길이
-						var windowH = 400; // 창의 세로 길이
-						var left = Math.ceil((window.screen.width - windowW) / 2);
-						var top = Math.ceil((window.screen.height - windowH) / 2);
-						window.open("/idSearchPage.do", "pop_01", "l top=" + top + ", left="
-								+ left + ", height=" + windowH + ", width=" + windowW);
-					}
-				 
 	            </script>  	            
-	                
+			
+	
+			<c:forEach items="${search.noticelist}" var="search">
+				<c:forEach items="${favorite}" var="f">
+				<c:if test="${f.owStoreInfoNo eq search.owStoreInfoPk}">
+				<div class="search-result">
+				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
+					<form action="/detailPage.do" method="get">
+						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
+						<input type="submit" value="">
+					</form>
+							<div>
+								<p>대기인원 0 추천${search.favoriteTotal}</p>
+								<c:if test="${search.favoriteChk==1}">
+									<div class="heart" id="${search.owStoreInfoPk}"
+										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
+									</div>
+								</c:if>
+								<c:if test="${search.favoriteChk!=1}">
+									<div class="heart" id="${search.owStoreInfoPk}"
+										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+									</div>
+								</c:if>
+							</div>
+							<div>
+						<h5>${search.owStoreName }</h5>
+						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
+					</div>
+				</div>
+				<div class="search-result-text">
+					<div>
+							<c:choose>
+								<c:when test="${search.starAvg>=1}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=2}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=3}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=4}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${search.starAvg>=5}"><span class="star-full"></span></c:when>
+								<c:otherwise><span class="star"></span></c:otherwise>
+							</c:choose>
+						<p class="star-result">${search.starAvg}</p>
+					</div>
+					<div>${search.owStoreComment}</div>
+				</div>	            	                
 	            <form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
 	            </form>
 				<button>리뷰쓰기</button>
 			</div>
+			</c:if>
+			</c:forEach>
+			</c:forEach>
+			
+			
 		</div>
 		<div id="Setting" class="tabInfo" style="display:none;">
 			<h3>기본 정보</h3>

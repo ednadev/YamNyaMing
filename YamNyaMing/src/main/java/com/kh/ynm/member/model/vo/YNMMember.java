@@ -17,8 +17,28 @@ public class YNMMember {
 	private int followTotal;
 	private int reviewTotal;
 	private String photoViewRoute;
-
+	private int jjimTotal;
+	private int reservationTotal;
+	private int memberPoint;
 	
+	public int getReservationTotal() {
+		return reservationTotal;
+	}
+	public void setReservationTotal(int reservationTotal) {
+		this.reservationTotal = reservationTotal;
+	}
+	public int getMemberPoint() {
+		return memberPoint;
+	}
+	public void setMemberPoint(int memberPoint) {
+		this.memberPoint = memberPoint;
+	}
+	public int getJjimTotal() {
+		return jjimTotal;
+	}
+	public void setJjimTotal(int jjimTotal) {
+		this.jjimTotal = jjimTotal;
+	}
 	public String getPhotoViewRoute() {
 		return photoViewRoute;
 	}
