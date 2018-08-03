@@ -11,7 +11,6 @@
  *
  */
 
-
 .fc,
 .fc .fc-header,
 .fc .fc-content {
@@ -116,7 +115,7 @@ table.fc-header {
 	border-style: solid;
 	border-width: 1px 0 1px 1px;
 	padding: 3px 5px;
-	}
+}
 	
 .fc-header .ui-state-default {
 	padding: 4px 6px;
@@ -158,15 +157,19 @@ table.fc-header {
 	
 .fc-header .fc-state-default,
 .fc-header .fc-state-default a {
-	border-color: #777; /* outer border */
-	color: #333;
-	}
+	/* border-color: #777; outer border
+	color: #333; */
+	border:0px;
+}
 
 .fc-header .fc-state-default span {
-	border-color: #fff #fff #d1d1d1; /* inner border */
-	background: #e8e8e8;
-	}
-	
+	height:22px;
+	background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+}
+
 /* PRESSED button COLORS (down and active) */
 	
 .fc-header .fc-state-active a {
@@ -182,18 +185,21 @@ table.fc-header {
 /* DISABLED button COLORS */
 	
 .fc-header .fc-state-disabled a {
-	color: #999;
-	}
+	/* color: #999; */
+}
 	
 .fc-header .fc-state-disabled,
 .fc-header .fc-state-disabled a {
-	border-color: #ccc; /* outer border */
-	}
+	/* border-color: #ccc; outer border */
+	border:0px;	
+}
 	
 .fc-header .fc-state-disabled span {
-	border-color: #fff #fff #f0f0f0; /* inner border */
-	background: #f0f0f0;
-	}
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 7px;
+}
 	
 	
 	
@@ -241,8 +247,8 @@ table.fc-header {
 .fc-agenda .fc-event-time,
 .fc-event a {
 	border-style: solid; 
-	border-color: #36c;     /* default BORDER color (probably the same as background-color) */
-	background-color: #36c; /* default BACKGROUND color */
+	border-color: #fb0;     /* default BORDER color (probably the same as background-color) */
+	background-color: #fb0; /* default BACKGROUND color */
 	color: #fff;            /* default TEXT color */
 	}
 	

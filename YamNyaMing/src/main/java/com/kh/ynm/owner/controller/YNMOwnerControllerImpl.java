@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,6 +68,10 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(resultOwner!=null)
 		{
 			session.setAttribute("owner", resultOwner);
+			if(session.getAttribute("member")!=null)
+			{
+				session.removeAttribute("member");
+			}
 			return "redirect:/";
 		}
 		else
@@ -858,21 +865,41 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	
 	@ResponseBody
 	@RequestMapping("/bookListInStore.do")
-	public JSONObject bookListLoadWithStoreIndex(HttpSession session,  HttpServletRequest request)
+	public JSONArray bookListLoadWithStoreIndex(HttpSession session,  HttpServletRequest request)
 	{
-		JSONObject obj = new JSONObject();
+		JSONArray objArr = new JSONArray();
 		if(session.getAttribute("owner")!=null) {
 			BookSearchVo bookSearch = new BookSearchVo();
 			bookSearch.setStoreIndex(Integer.parseInt(request.getParameter("storeIndex")));
 			bookSearch.setBookYear(Integer.parseInt(request.getParameter("currentYear")));
 			bookSearch.setBookMonth(Integer.parseInt(request.getParameter("currentMonth")));
 			ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookListLoadWidthStoreIndex(bookSearch);
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 			
-			System.out.println("예약갯수 " + bookList.size());
+			for(int i = 0; i<bookList.size();i++)
+			{
+				YNMBook book = bookList.get(i);
+				JSONObject obj = new JSONObject();
+				Calendar calendar = GregorianCalendar.getInstance(); 
+				calendar.setTime(book.getBookDate());  
+				; 
+				calendar.get(Calendar.HOUR);        
+				calendar.get(Calendar.MONTH);   
+				obj.put("title" , "[" +book.getBookNo() +"]" + book.getBookName()+"님의 예약");
+				obj.put("start", sdf.format(book.getBookDate()));
+				obj.put("year", calendar.get(Calendar.YEAR));
+				obj.put("month", calendar.get(Calendar.MONTH));
+				obj.put("day", calendar.get(Calendar.DAY_OF_MONTH));
+				obj.put("hour", calendar.get(Calendar.HOUR_OF_DAY));
+				obj.put("minute", calendar.get(Calendar.MINUTE));
+//				obj.put("end",  sdf.format(book.getBookDate()));
+				objArr.add(obj);
+			}
+			
 		}else
 		{
 			
 		}
-		return obj;
+		return objArr;
 	}
 }

@@ -201,16 +201,18 @@
 		select 
 			MB_BOOK_PK as bookNo,
 			MB_ENTIRE_FK as memberEntireNo,
-			OW_ENTIRE_FK as storeEntireNo,
+			STORE_ENTIRE_FK as storeEntireNo,
 			MB_BOOK_DATE as bookDate,
 			MB_BOOK_ORDER_COUNT as bookOrderCount,
 			MB_BOOK_PARTY_COUNT as bookPartyCount,
 			MB_BOOK_TYPE as bookType,
 			MB_BOOK_OPTION as bookOption,
 			MB_BOOK_STATE as bookState,
-			MB_BOOK_DEPOSIT as bookDeposit
-		from member_book_tb
-		where OW_ENTIRE_FK = #{storeIndex}
+			MB_BOOK_DEPOSIT as bookDeposit,
+			(select mb_name from member_entire_tb mn
+			where mn.mb_entire_pk = mb.MB_ENTIRE_FK) as bookname
+		from member_book_tb mb
+		where STORE_ENTIRE_FK = #{storeIndex}
 	</select>
 	
 </mapper>

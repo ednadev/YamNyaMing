@@ -14,6 +14,7 @@ public class YNMBook {
 	private String bookOption;
 	private String bookState;
 	private int bookDeposit;
+	private String bookName;
 	
 	
 	
@@ -24,9 +25,13 @@ public class YNMBook {
 	
 	
 	
+	
+
+
+
 	public YNMBook(int bookNo, int memberEntireNo, int storeEntireNo, Date bookDate, String bookDate2,
 			int bookOrderCount, int bookPartyCount, String bookType, String bookOption, String bookState,
-			int bookDeposit) {
+			int bookDeposit, String bookName) {
 		super();
 		this.bookNo = bookNo;
 		this.memberEntireNo = memberEntireNo;
@@ -39,9 +44,15 @@ public class YNMBook {
 		this.bookOption = bookOption;
 		this.bookState = bookState;
 		this.bookDeposit = bookDeposit;
+		this.bookName = bookName;
+	}
+	public String getBookName() {
+		return bookName;
 	}
 
-
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
 
 	public String getBookDate2() {
 		return bookDate2;

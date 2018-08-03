@@ -32,7 +32,6 @@
 		<h1>
 			<a href="/index.jsp">YamNyaMing</a>
 		</h1>
-		<a href="/ynmMemberTest.do">맴버test</a>
 
 		<ul>
 			<c:if test="${sessionScope.totalRefModel==null}">
