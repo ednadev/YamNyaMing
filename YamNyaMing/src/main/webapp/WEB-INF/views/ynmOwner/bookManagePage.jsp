@@ -7,10 +7,18 @@
 <title>얌냐밍-예약관리</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
+<link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/resources/css/owner/fullcalendar.css?ver=1' />
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js"></script>
+
+<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/jquery/jquery.js'></script>
+<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/jquery/jquery-ui-custom.js'></script>
+<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/ownerfullcalendar.min.js'></script>
+	
 </head>
 <body>
 	<header id="owner-main-header">
@@ -34,6 +42,7 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
+	<!-- <div id='calendar'></div> -->
 	
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>

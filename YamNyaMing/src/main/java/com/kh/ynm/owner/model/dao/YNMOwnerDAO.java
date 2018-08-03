@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
@@ -41,4 +43,5 @@ public interface YNMOwnerDAO {
 	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, int storeIndex);
 	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo);
 	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex);
+	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch);
 }

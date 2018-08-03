@@ -2,6 +2,8 @@ package com.kh.ynm.owner.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
@@ -88,5 +90,8 @@ public interface YNMOwnerService {
 
 	// 가게 메뉴 항목 삭제
 	public int menuTextDelete(int menuIndex);
+
+	// 가게 예약 정보 리스트
+	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(BookSearchVo bookSearch);
 	
 }

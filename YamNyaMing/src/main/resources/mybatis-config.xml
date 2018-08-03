@@ -26,6 +26,7 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreInfoPageData" alias="storeInfoPageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreMenuData" alias="storeMenuData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.BookSearchVo" alias="bookSearchVo"/>
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryMain" alias="storeCategoryMain"/>
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryDetail" alias="storeCategoryDetail"/>
 	</typeAliases>

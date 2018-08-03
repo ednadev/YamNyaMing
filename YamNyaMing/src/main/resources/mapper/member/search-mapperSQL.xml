@@ -35,7 +35,7 @@
 	
 	<select id="detailPage" resultType="search">
 		select 
-			ow_store_info_pk as owStoreInfoPk,
+			distinct ow_store_info_pk as owStoreInfoPk,
 		    ow_store_name as owStoreName, 
 		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,

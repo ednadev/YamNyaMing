@@ -838,14 +838,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		int starNum=0;
 		float starAvg=0;
 		if(!qpd.getNoticelist().isEmpty()) {
-		for(int i=0; i<qpd.getNoticelist().size(); i++){
-			ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-			for(int j=0; j<ys.size(); j++) {
-			starNum+=ys.get(i).getStarPoint();
-			starAvg=(float)starNum/ys.size();
+			for(int i=0; i<qpd.getNoticelist().size(); i++){
+				ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
+				for(int j=0; j<ys.size(); j++) {
+				starNum+=ys.get(i).getStarPoint();
+				starAvg=(float)starNum/ys.size();
+				}
+				qpd.getNoticelist().get(0).setStarAvg(starAvg);
 			}
-			qpd.getNoticelist().get(0).setStarAvg(starAvg);
-		}
 		}
 		
 		JSONObject resultMap=new JSONObject();
@@ -956,9 +956,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	//예약하기 삽입
 	@Override
 	@RequestMapping(value="/bookInsert.do")
-	public String bookInsert(YNMBook yb) {
-		ynmMemberServiceImpl.bookInsert(yb);
-		return null;
+	public ModelAndView bookInsert(YNMBook yb, HttpSession session) {
+		yb.setMemberEntireNo( ((YNMMember)session.getAttribute("member")).getMemberEntireNo() );
+		ModelAndView view = new ModelAndView();
+		int result = ynmMemberServiceImpl.bookInsert(yb);
+		view.addObject("reservationResult", result);
+		view.setViewName("ynmMember/reservation");
+		return view;
 	}
 
 	//예약정보 가져오기

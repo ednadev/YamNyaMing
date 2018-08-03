@@ -121,7 +121,6 @@
 	<hr>
 		<form id="fileForm" action="/storeReviewInsert.do" enctype="multipart/form-data" method="post">
 		<input type="text" id="ownerStoreEntireNo" name="ownerStoreEntireNo">
-		<input type="text" id="reviewTitle" name="reviewTitle">
 		<input type="text" id="reviewContent" name="reviewContent">
 		<input type="text" id="reviewStar" name="reviewStar">
 			

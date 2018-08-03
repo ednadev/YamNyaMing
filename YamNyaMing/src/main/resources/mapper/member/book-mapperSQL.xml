@@ -4,7 +4,7 @@
 	<!-- 예약 정보 쿼리 -->
 	
 	<insert id="bookInfo">
-		insert into member_book_tb values(member_book_tb_SEQ.nextval,23,1,
+		insert into member_book_tb values(member_book_tb_SEQ.nextval,#{memberEntireNo},#{storeEntireNo},
 																		sysdate,#{bookOrderCount},#{bookPartyCount},
 																		#{bookType},#{bookOption},1,#{bookDeposit})
 	</insert>

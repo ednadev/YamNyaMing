@@ -6,6 +6,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
@@ -147,6 +149,12 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	@Override
 	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex) {
 		return sqlSession.delete("stores.menuTextDelete", menuIndex);
+	}
+
+	@Override
+	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch) {
+		List list = sqlSession.selectList("stores.bookListWithStoreIndex", bookSearch);
+		return (ArrayList<YNMBook>)list;
 	}
 
 }

@@ -27,9 +27,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.common.model.vo.YNMTotalRefModel;
+import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberUploadPhoto;
 import com.kh.ynm.owner.model.service.YNMOwnerServiceImpl;
+import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
@@ -852,5 +854,25 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		}else {
 			return "fail";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/bookListInStore.do")
+	public JSONObject bookListLoadWithStoreIndex(HttpSession session,  HttpServletRequest request)
+	{
+		JSONObject obj = new JSONObject();
+		if(session.getAttribute("owner")!=null) {
+			BookSearchVo bookSearch = new BookSearchVo();
+			bookSearch.setStoreIndex(Integer.parseInt(request.getParameter("storeIndex")));
+			bookSearch.setBookYear(Integer.parseInt(request.getParameter("currentYear")));
+			bookSearch.setBookMonth(Integer.parseInt(request.getParameter("currentMonth")));
+			ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookListLoadWidthStoreIndex(bookSearch);
+			
+			System.out.println("예약갯수 " + bookList.size());
+		}else
+		{
+			
+		}
+		return obj;
 	}
 }
