@@ -41,11 +41,17 @@
 	</dependency>
 	
 		<!-- mail -->
+
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		
+
+		
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
-		</dependency>	
+		   <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -107,9 +113,14 @@
                <artifactId>spring-jdbc</artifactId>
                <version>5.0.6.RELEASE</version>
         </dependency>
-		
-		
+		<!-- json -->
+		<dependency>
+		<groupId>net.sf.json-lib</groupId>
+		<artifactId>json-lib-ext-spring</artifactId>
+		<version>1.0.2</version>
+		</dependency>
 		<!-- OJDBC 6 -->
+		
 		<dependency>
 			<groupId>com.jslsolucoes</groupId>
 			<artifactId>ojdbc6</artifactId>

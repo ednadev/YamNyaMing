@@ -36,6 +36,7 @@ public class StoreInfoPageData {
 
 
 	public void setOwStoreName(String owStoreName) {
+		System.out.println(owStoreName);
 		this.owStoreName = owStoreName;
 	}
 

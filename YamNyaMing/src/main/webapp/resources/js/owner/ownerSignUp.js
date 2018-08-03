@@ -294,6 +294,7 @@ var phoneChk = true;
 var accountChk = true;
 function signUpValidChk()
 {
+	console.log(idChk&&passChk&&passReChk&&nameChk&&emailChk&&phoneChk&&accountChk);
 	return idChk&&passChk&&passReChk&&nameChk&&emailChk&&phoneChk&&accountChk;
 }
 

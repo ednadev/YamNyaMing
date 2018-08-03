@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="stores">
+	<insert id="storeAdd" parameterType="storeInfo">
+		insert into owner_store_info_tb 
+		values(owner_store_info_tb_SEQ.nextval, #{owEntireFk},
+		#{owStoreBizNum}, #{owStoreName}, #{owStoreTel}, #{owBigTypeFk}, #{owSmallTypeFk},
+		#{owStoreUrl},#{owStoreAddr},sysdate, #{owStoreMapInfo}, #{owStoreWorkingTime})
+ 	</insert> 
+ 	
+ 	<select id="storeSearchWithBizNum">
+ 		select OW_STORE_INFO_PK from owner_store_info_tb 
+ 		where OW_STORE_BIZ_NUM = #{bizNum} 
+ 	</select>
+</mapper>
