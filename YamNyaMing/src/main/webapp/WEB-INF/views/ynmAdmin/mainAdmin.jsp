@@ -188,7 +188,11 @@
 			<table border="1" class="sortable" id="tablList" class="tablList">
 			<thead>
 			<tr>
-				<th>상호명</th><th class="sorting">예약수</th><th class="sorting">평점</th><th class="sorting">추천수</th><th class="sorting">즐겨찾기</th>
+				<th>상호명</th>
+				<th class="sorting">예약수</th>
+				<th class="sorting">평점</th>
+				<th class="sorting">좋아요</th>
+				<th class="sorting">즐겨찾기</th>
 			</tr>
 			
 		
@@ -198,10 +202,10 @@
 			<c:forEach items="${list2}" var="store" step="1" end="10">
 			<tr>
 			<td>${store.name}</td>
-			<td>${store.book}</td>
-			<td>${store.grade}</td>
-			<td>${store.jjim}</td>
-			<td>${store.favorite}</td>
+			<td><center>${store.book}</center></td>
+			<td><center>${store.grade}</center></td>
+			<td><center>${store.jjim}</center></td>
+			<td><center>${store.favorite}</center></td>
 			</tr>
 			</c:forEach>																						
 			</tbody>

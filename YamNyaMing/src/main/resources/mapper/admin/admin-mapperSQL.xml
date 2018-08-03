@@ -30,13 +30,15 @@ from member_entire_tb
 
 <!-- 점주 전체보기 -->
 <select id="allOwnerView" parameterType="owner" resultType="owner">
-SELECT OW_ID as owId, 
-	   OW_NAME as owName,
-	   OW_EMAIL as owEmail,
-	   OW_PHONE as phone,
-	   OW_REGDATE as owRegDate, 
-	   OW_BANK_ACCOUNT as owBankAccount 
-	   from OWNER_ENTIRE_TB
+SELECT 
+ow_entire_pk as owEntirePk, 
+OW_ID as owId, 
+OW_NAME as owName,
+OW_EMAIL as owEmail,
+OW_PHONE as phone,
+OW_REGDATE as owRegDate, 
+OW_BANK_ACCOUNT as owBankAccount 
+from OWNER_ENTIRE_TB
 </select>
 
 <!-- 점주 검색 -->
@@ -187,23 +189,13 @@ FROM DUAL
 <!-- 통계에서 가게순위 리스트  -->
 <select id="storeList" resultType="com.kh.ynm.admin.model.vo.YNMStoreInfo">
 select 
-	   ow_store_name as name,
-       book as book,
-       grade as grade,
-       jjim as jjim,
-       favorite as favorite 
-       from owner_store_info_tb,
-(select                         
-count(b.mb_entire_fk) as book,
-avg(r.ow_store_review_star) as grade,
-count(r.ow_store_jjim_check) as jjim,
-count(f.mb_favorite_pk) as favorite
-from owner_store_info_tb o
-left join member_book_tb b on (o.ow_store_info_pk = b.ow_entire_fk) 
-left join member_store_review_tb r on (o.ow_store_info_pk = r.ow_store_info_fk)
-left join member_favorite_tb f on (o.ow_store_info_pk = f.ow_store_info_fk)
-where r.ow_store_jjim_check='J'
-order by b.mb_entire_fk DESC)
+distinct 
+ow_store_name as name,
+(select count(ow_store_info_pk) from member_book_tb where ow_entire_fk = ow_store_info_pk) as book,
+(select avg(ow_store_review_star) from member_store_review_tb where ow_store_info_fk = ow_store_info_pk)as grade,
+(select count(mb_favorite_pk) from member_favorite_tb where ow_store_info_fk = ow_store_info_pk)as favorite,
+(select count(ow_store_jjim_check)from member_store_review_tb where ow_store_info_pk = ow_store_info_fk and ow_store_jjim_check='j')as jjim
+from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk = b.ow_entire_fk order by book desc
 </select>
 
 <!-- 관리자 수락/강등에서 관리자리스트 -->
@@ -231,45 +223,48 @@ SET ADMIN_ACCESS_GRADE_FK = 1
 WHERE ADMIN_ID = #{ad_id}
 </update>
 
+
+
 <!--게시판 페이징-->
 <select id="noticeList" resultType="notice" parameterType="noticePageData">
 select
 NOTICE_NO_PK as noticeNo,
-SUBJECT as subject,
-CONTENTS as contents,
-USERID as userId,
-REGDATE as regDate
-from (select notice.*,row_number() over(order by NOTICE_NO_PK desc) as num from notice)
+NOTICE_SUBJECT as subject,
+NOTICE_CONTENTS as contents,
+NOTICE_USERID as userId,
+NOTICE_NICKNAME as userNickname,
+NOTICE_REGDATE as regDate
+from (select NOTICE_ADMIN_TB.*,row_number() over(order by NOTICE_NO_PK desc) as num from NOTICE_ADMIN_TB)
 where num between #{startPage} and #{endPage}
 </select>
-<!--from ( select owner_coupon_info_tb.*,row_number() over(order by OW_COUPON_INFO_PK desc) as num 
- 		from owner_coupon_info_tb where OW_ENTIRE_FK=#{owEntirePk} and OW_STORE_INFO_FK=#{storeEntireFk})
-	 	where num between #{startPage} and #{endPage} -->
- 	
- 	
+
+
+
 <!--게시판 페이지 넘버링 -->
 <select id="noticeTotal" parameterType="noticePageData" resultType="int">
-select count(*) from notice
+select count(*) from NOTICE_ADMIN_TB
 </select>
+
 
 
 <select id="noticeView" parameterType="int" resultType="notice">
 select
 NOTICE_NO_PK as noticeNo,
-SUBJECT as subject,
-CONTENTS as contents,
-USERID as userId,
-REGDATE as regDate
-from notice
+NOTICE_SUBJECT as subject,
+NOTICE_CONTENTS as contents,
+NOTICE_USERID as userId,
+NOTICE_NICKNAME as userNickname,
+NOTICE_REGDATE as regDate
+from NOTICE_ADMIN_TB
 where NOTICE_NO_PK = #{noticeNo}
 </select>
 
 
 <!-- 글 수정 -->
 <update id="adminBoardFix" parameterType="notice">
- update notice set
- SUBJECT = #{subject},
- CONTENTS = #{contents}
+ update NOTICE_ADMIN_TB set
+ NOTICE_SUBJECT = #{subject},
+ NOTICE_CONTENTS = #{contents}
  where NOTICE_NO_PK = #{noticeNo}
 
 
@@ -277,6 +272,53 @@ where NOTICE_NO_PK = #{noticeNo}
 </update>
 <!-- 글 삭제 -->
 <delete id="adminBoardDelete" parameterType="notice">
-delete from notice where NOTICE_NO_PK = #{noticeNo}
+delete from NOTICE_ADMIN_TB where NOTICE_NO_PK = #{noticeNo}
 </delete>
+
+
+<!-- 글쓰기전 권한체크 -->
+<select id="noticeWriteIdCheck" parameterType="admins" resultType="int">
+SELECT count(*)
+from admin_info_tb 
+where
+ADMIN_INFO_PK  			= #{admin_info_pk} and 
+ADMIN_ID 	  			= #{ad_id} 		   and 
+ADMIN_PASSWORD		    = #{ad_password}   and 
+ADMIN_NICKNAME 			= #{ad_nickname}   and 
+ADMIN_ACCESS_GRADE_FK 	= #{ad_grade}
+</select>
+
+
+<!-- 글쓰기 -->
+<insert id="adminNoticeWrite" parameterType="notice">
+insert into NOTICE_ADMIN_TB values(notice_admin_tb_SEQ.nextval,#{subject},#{contents},#{userId},#{userNickname},sysdate)
+</insert>
+
+<!-- 점주 가게목록 -->
+<select id="ownerStoreList" resultType="storePageData" parameterType="storePageData2">
+select 
+OW_STORE_INFO_PK as owStoreInfoPk,
+OW_ENTIRE_FK as owEntireFk,
+OW_STORE_NAME as owStoreName,
+OW_STORE_TEL as owStoreTel,
+OW_STORE_BIG_TYPE_FK as owBigTypeFk,
+OW_STORE_DETAIL_TYPE_FK as owSmallTypeFk,
+OW_STORE_URL as owStoreUrl,
+OW_STORE_ADDR as owStoreAddr,
+OW_STORE_WORKING_TIME as owStoreWorkingTime
+from (select owner_store_info_tb.*,row_number() over(order by OW_STORE_INFO_PK desc) as num from owner_store_info_tb)
+where ow_entire_fk = #{owEntirePk} and
+num between #{startPage} and #{endPage} 
+
+
+</select>
+
+
+<!--가게목록 페이지 넘버링 -->
+<select id="ownerGetTotal" parameterType="storePageData" resultType="int">
+select count(*) from owner_store_info_tb
+</select>
+
 </mapper>
+
+

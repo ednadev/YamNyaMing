@@ -107,43 +107,23 @@
         </tr>
       </thead>  
        
-        <c:forEach var="infolist" items="${noticeListData}">
+        <c:forEach var="storeList" items="${storeList}">
         <tr>
-          <td class="text-center">${infolist.noticeNo}</td>
-		  <td>
-		  <form action="/noticeView.do">
-		  
-
-         
-
-         <input type="hidden" value="${infolist.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
-         <input type="submit" value="${infolist.subject}" style="background-color:white; border:solid 0px white;"/>
-
-          </form>
-          </td>
-          <td class="text-center">${infolist.userNickname}(${infolist.userId})</td>
-          <td class="text-center">
-          
-          <fmt:formatDate value="${infolist.regDate}" pattern="YYYY-MM-dd"/>
-          </td>
+          <td class="text-center">${storeList.storeName}</td>
+		
+      
+  
         </tr>
         </c:forEach> 
     </table>
-     <form action="/noticeWrite.do">
-     <input type="hidden" value="${sessionScope.admin.admin_info_pk}" id="admin_info_pk" name="admin_info_pk" class="admin_info_pk"/>
-     <input type="hidden" value="${sessionScope.admin.ad_id}" id="ad_id" name="ad_id" class="ad_id"/>
-     <input type="hidden" value="${sessionScope.admin.ad_password}" id="ad_password" name="ad_password" class="ad_password"/>
-     <input type="hidden" value="${sessionScope.admin.ad_nickname}" id="ad_nickname" name="ad_nickname" class="ad_nickname"/>
-  	 <input type="hidden" value="${sessionScope.admin.ad_grade}" id="ad_grade" name="ad_grade" class="ad_grade"/>
-     <input type="submit" class="btn" value="글쓰기"/>
-     </form>
+
 	
      <!-- 페이지 -->
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
 						<c:if test="${pageNaviData.startNavi!=1}">
-							<form action="/boardAdmin.do" method="post">
+							<form action="/ownerStoreList.do" method="post">
 								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
 								<input type="submit" class="paging-num" value="<">
 							</form>
@@ -152,13 +132,13 @@
 						<c:forEach var="i" begin="${pageNaviData.startNavi}"
 							end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/boardAdmin.do" method="post">
+								<form action="/ownerStoreList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/boardAdmin.do" method="post">
+								<form action="/ownerStoreList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
@@ -166,7 +146,7 @@
 						</c:forEach>
 	
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/boardAdmin.do" method="post">
+							<form action="/ownerStoreList.do" method="post">
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
 							</form>

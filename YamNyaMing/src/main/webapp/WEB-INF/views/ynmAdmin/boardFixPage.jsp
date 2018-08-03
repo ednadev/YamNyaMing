@@ -62,11 +62,11 @@
 		</ul>
 	</nav>
 <!-- 내용 시작 -->
-
+<center>
 
 <h1>[${notice.noticeNo} 번글]   ${notice.subject}</h1><br>
 
-<h1>글쓴이:${notice.userId}</h1><br>
+<h1>글쓴이:${notice.userNickname}(${notice.userId})</h1><br>
 <h1>쓴날:${notice.regDate}</h1><br>
 
 
@@ -80,10 +80,13 @@
 <textarea  cols="60" rows="10" placeholder="수정할 내용을 입력하세요" id="contents" name="contents" class="contents" required>
 </textarea>
 
+<center>
 <input type="submit" value="수정" class="btn">
+<input type="button" value="취소" class="btn" onclick="history.back(-1);">
+</center>
 </form>
 
-
+</center>
 <!-- 내용 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>

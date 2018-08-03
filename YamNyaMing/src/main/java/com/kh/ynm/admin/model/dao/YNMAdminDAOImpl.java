@@ -15,6 +15,7 @@ import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -108,11 +109,34 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public Notice noticeView(SqlSessionTemplate sqlSession, int noticeNo) {
 		return sqlSession.selectOne("admin.noticeView", noticeNo);
 	}
+	//글수정
 	public int adminBoardFix(SqlSessionTemplate sqlSession, Notice vo) {
 		return sqlSession.update("admin.adminBoardFix", vo);
 	}
+	//글삭제
 	public int adminBoardDelete(SqlSessionTemplate sqlSession, Notice vo) {
 		return sqlSession.delete("admin.adminBoardDelete", vo);
+	}
+	//글쓰기전 관리자인지 체크
+	public int noticeWriteIdCheck(SqlSessionTemplate sqlSession, YNMAdmin vo) {
+		return sqlSession.selectOne("admin.noticeWriteIdCheck", vo);
+	}
+	
+	//글쓰기
+	public int adminNoticeWrite(SqlSessionTemplate sqlSession, Notice vo) {
+		return sqlSession.insert("admin.adminNoticeWrite", vo);
+	}
+	
+	
+	//점주  가게정보
+	public ArrayList<StoreInfoPageData> ownerStoreList(SqlSessionTemplate sqlSession, BoardPaging storePageData2) {
+		List list= sqlSession.selectList("admin.ownerStoreList", storePageData2);
+		return (ArrayList<StoreInfoPageData>)list;
+	}
+	
+	//점주 페이징 토탈
+	public int ownerGetTotal(SqlSessionTemplate sqlSession, BoardPaging storePageData) {
+		return sqlSession.selectOne("admin.ownerGetTotal", storePageData);
 	}
 
 	

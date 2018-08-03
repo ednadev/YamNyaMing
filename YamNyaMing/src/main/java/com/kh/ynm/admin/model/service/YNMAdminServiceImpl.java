@@ -19,6 +19,7 @@ import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
+import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
@@ -175,5 +176,72 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	public int adminBoardDelete(Notice vo) {
 		 return adminDAO.adminBoardDelete(sqlSession,vo);
 	}
+
+
+	public int noticeWriteIdCheck(YNMAdmin vo) {
+		return adminDAO.noticeWriteIdCheck(sqlSession,vo);
+	}
+
+
+	public int adminNoticeWrite(Notice vo) {
+		return adminDAO.adminNoticeWrite(sqlSession,vo);
+	}
+
+
+	public ArrayList<StoreInfoPageData> ownerStoreList(int owEntirePk, int currentPage, int recordCountPerPage) {
+
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		BoardPaging storePageData2 = new BoardPaging();
+		storePageData2.setStartPage(start);
+		storePageData2.setEndPage(end);
+		storePageData2.setOwEntirePk(owEntirePk);
+		return adminDAO.ownerStoreList(sqlSession,storePageData2);
+	}
+
+
+	public CouponPageData ownerPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging storePageData = new BoardPaging();
+		int recordTotalCount = adminDAO.ownerGetTotal(sqlSession, storePageData);
+		
+		int pageTotalCount = 0;
+
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData couponPageDataResult = new CouponPageData();
+		couponPageDataResult.setCurrentPage(currentPage);
+		couponPageDataResult.setStartNavi(startNavi);
+		couponPageDataResult.setEndNavi(endNavi);
+		couponPageDataResult.setPageTotalCount(pageTotalCount);
+		couponPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return couponPageDataResult;
+	}
+
+
+
+
+	
 
 }

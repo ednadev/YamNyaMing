@@ -19,7 +19,7 @@
 <style>
 .btn {
 	position: static;
-	width: 80px;
+	width: 100px;
 	display: inline-block;
 	color: #ecf0f1;
 	text-decoration: none;
@@ -64,46 +64,19 @@
 <!-- 내용 시작 -->
 
 <center>
-<h1>[${notice.noticeNo} 번글]   ${notice.subject}</h1>
-
-<h1>글쓴이:${notice.userNickname}(${notice.userId}) </h1><h1>쓴날:${notice.regDate}</h1>
-<h1>내용:${notice.contents}</h1>
-<h1></h1>
+<form action="/adminNoticeWrite.do">
+<input type="text" style="width:425px; height: 45px; margin:10px; color:black;" placeholder="제목을 입력하세요" id="subject" name="subject" class="subject" required/><br>
+<textarea  cols="60" rows="10" placeholder="내용을 입력하세요" id="contents" name="contents" class="contents" required>
+</textarea>
+<input type="hidden" value="${sessionScope.admin.ad_id}" id="ad_id" name="ad_id"/>
+<input type="hidden" value="${sessionScope.admin.ad_nickname}" id="ad_nickname" name="ad_nickname"/>
+<center>
+<input type="submit" value="글쓰기" class="btn">
+<input type="button" value="취소" class="btn" onclick="history.back(-1);">
+</center>
+</form>
 </center>
 
-<form action="/adminBoardFix.do">
-<input type="hidden" value="${notice.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
-<input type="hidden" value="${notice.userId}" id="userId" name="userId" class="userId"/>
-<input type="hidden" value="${notice.subject}" id="subject" name="subject" class="subject"/>
-<input type="hidden" value="${notice.regDate}" id="regDate" name="regDate" class="regDate"/>
-<input type="hidden" value="${notice.contents}" id="contents" name="contents" class="contents"/>
-<input type="hidden" value="${notice.userNickname}" id="contents" name="contents" class="contents"/>
-<input type="submit" value="수정" class="btn">
-</form>
-<form action="/adminBoardDelete.do" name="removefrm" method="post">
-<input type="hidden" value="${notice.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
-<input type="hidden" value="${notice.userId}" id="userId" name="userId" class="userId"/>
-<input type="button" onclick="removeCheck()" value="삭제" class="btn">
-</form>
-
-
-<script>
-JavaScript
-
-function removeCheck() {
-
- if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-
-     document.removefrm.submit();
-
- }else{   //취소
-
-     return false;
-
- }
-}
-</script>
-</center>
 <!-- 내용 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>

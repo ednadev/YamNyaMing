@@ -19,29 +19,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-<script type="text/javascript">
-function blockBtn(){
-    var block = $('#block').value;
-        $.ajax({
-             url : "/ownerBlock.do",
-             data : {block : block},
-             dataType:'json',
-             success : function(data){
-                 console.log(data);
-                 if(data>0){
-                	 alert("실패했어욧..");
-                    return false;
-                 } else{
-                    alert("블락성공 ^-^"); 
-                 }   
-             }
-         });    
-}    
-
-</script>
 <style>
-
-
+.btn {
+	width: 100px;
+	display: inline-block;
+	color: #ecf0f1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: solid 1px #FFBB00;
+	background: #FFBB00;
+	padding: 16px 18px 14px;
+	font-size: 10px;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
+	-moz-box-shadow: 0px 6px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+}
+.btn:active {
+	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
+	-moz-box-shadow: 0px 2px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+	position: relative;
+	top: -1px;
+}
 </style>
 </head>
 <body>
@@ -113,14 +115,18 @@ function blockBtn(){
 			   <c:forEach items="${list}" var="o">
 			   <thead>
 				<tbody class="points_table_scrollbar">
+				 <form action="/ownerStoreList.do">
 				  <tr class="edit" id="detail">
 					<td>${o.owId}</td>
 					<td>${o.owName} </td>
 					<td>${o.owEmail} </td>
 					<td>${o.phone}</td>
 					<td>${o.owBankAccount} </td>
-					<td><input type="button" value="삭제" id="block" name="${o.owId}" onclick ="blockBtn()"/>
+					<td>
+					<input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk" class="btn"/>
+					<input type="submit" value="점주 가게 현황" class="btn"/></td>
 				</tr>
+				</form>
 			</c:forEach>
 			</tbody>
 		</table>
