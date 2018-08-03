@@ -21,6 +21,9 @@ public class YNMSearch {
 	private int starPoint;
 	private float starAvg;
 	private int favoriteTotal;
+	private int favoriteChk;
+	
+	
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
@@ -49,6 +52,12 @@ public class YNMSearch {
 		this.starPoint = starPoint;
 		this.starAvg = starAvg;
 		this.favoriteTotal = favoriteTotal;
+	}
+	public int getFavoriteChk() {
+		return favoriteChk;
+	}
+	public void setFavoriteChk(int favoriteChk) {
+		this.favoriteChk = favoriteChk;
 	}
 	public int getOwStoreInfoPk() {
 		return owStoreInfoPk;
