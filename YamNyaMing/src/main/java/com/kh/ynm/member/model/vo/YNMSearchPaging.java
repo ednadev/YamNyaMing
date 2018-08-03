@@ -2,6 +2,8 @@ package com.kh.ynm.member.model.vo;
 
 import java.util.ArrayList;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 public class YNMSearchPaging {
 	String keyword;
 	String food;
@@ -13,7 +15,7 @@ public class YNMSearchPaging {
 
 	int start;
 	int end;
-	private ArrayList<YNMSearch> noticelist;
+	private ArrayList<YNMSearch> noticelist = new ArrayList<YNMSearch>();
 	private String pageNavi;
 	private int startNavi;
 	private int endNavi;
@@ -140,6 +142,5 @@ public class YNMSearchPaging {
 		this.recordTotalCount = recordTotalCount;
 	}
 
-	
 	
 }

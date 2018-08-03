@@ -51,8 +51,8 @@
 			</c:if>
 
 			<c:if test="${sessionScope.owner!=null}" var="result">
-				<li>${sessionScope.owner.owName}사장님 환영합니다.</li>
-				<li><a href="/ownerMyPage.do">마이페이지</a></li>
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
 				<li><a href="/ownerLogout.do">로그아웃</a></li>
 			</c:if>
 			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
@@ -78,24 +78,24 @@
 		</article>
 		<article>
 			<div>
-				<a href="/search.do?food=한식">한식</a>
+				<a href="/search.do?place=홍대&food=한식">한식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=양식">양식</a>
+				<a href="/search.do?place=홍대&food=양식">양식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=일식">일식</a>
+				<a href="/search.do?place=홍대&food=일식">일식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=중식">중식</a>
+				<a href="/search.do?place=홍대&food=중식">중식</a>
 			</div>
 		</article>
 		<article>
 			<div>
-				<a href="/search.do?food=디저트">디저트</a>
+				<a href="/search.do?place=홍대&food=디저트">디저트</a>
 			</div>
 			<div>
-				<a href="/search.do?food=술집">술집</a>
+				<a href="/search.do?place=홍대&food=술집">술집</a>
 			</div>
 		</article>
 	</section>

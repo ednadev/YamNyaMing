@@ -19,21 +19,13 @@
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
     <form action="/search.do" method="get">
     	<select name="place" id="place">
-    	<c:choose>
-    		<c:when test="${place eq '홍대'}">
-	    		<option disabled>지역 선택</option>
-	    		<option value="홍대" selected>홍대</option>
-    		</c:when> 
-    		<c:otherwise>
-	    		<option selected disabled>지역 선택</option>
-	    		<option value="홍대">홍대</option>    		
-    		</c:otherwise>   	
-    	</c:choose>
+    		<option disabled>지역 선택</option>
+	    	<option value="홍대" selected>홍대</option>
     	</select>
     	<select name="food" id="food">
     	<c:choose>
     		<c:when test="${food eq '한식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식" selected>한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -44,7 +36,7 @@
 	    		<option value="기타">기타</option>   		
     		</c:when>
     		<c:when test="${food eq '중식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식" selected>중식</option>
 	    		<option value="일식">일식</option>
@@ -55,7 +47,7 @@
 	    		<option value="기타">기타</option>   	
     		</c:when>
     		<c:when test="${food eq '일식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식" selected>일식</option>
@@ -66,7 +58,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '양식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -77,7 +69,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when> 
     		<c:when test="${food eq '뷔페'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -88,7 +80,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '디저트'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -99,7 +91,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when>  
     		<c:when test="${food eq '술집'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -110,7 +102,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>  
     		<c:when test="${food eq '기타'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -121,7 +113,7 @@
 	    		<option value="기타" selected>기타</option>    		
     		</c:when>     		  		  		    		   		    		    		
     		<c:otherwise>
-	     		<option selected>음식 종류 선택</option>
+	     		<option selected disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -255,14 +247,25 @@
 	
 	<div class="member-search-wrapper">
 	<h2>자세히 검색</h2>
+	<c:forEach items="${search.storeCateDetailName}" var="s">
+		${s}
+	</c:forEach>
 	<form action="/search.do" method="get">
 	<c:choose>
 		<c:when test="${food eq '한식' }">
+		<input type="hidden" name="food" value="한식">
 
 	<div class="detailSearch">
 		<h3>세부 음식 검색</h3>
 		<div>
-			<input type="checkbox" id="homeFood" name="storeCateDetailName" onclick="check()" value="백반,가정식"><label for="homeFood">백반,가정식</label>
+			<c:choose>
+				<c:when test="${storeCateDetailName eq '백반가정식'}">
+					<input type="checkbox" id="homeFood" name="storeCateDetailName" value="백반가정식" checked><label for="homeFood">백반,가정식</label>
+				</c:when>
+				<c:otherwise>
+					<input type="checkbox" id="homeFood" name="storeCateDetailName" value="백반가정식"><label for="homeFood">백반,가정식</label>
+				</c:otherwise>
+			</c:choose>
 			<input type="checkbox" id="koreanRestaurant" name="storeCateDetailName" onclick="check()" value="한정식"><label for="koreanRestaurant">한정식</label>
 			<input type="checkbox" id="ssambap" name="storeCateDetailName" onclick="check()" value="쌈밥"><label for="ssambap">쌈밥</label>
 			<input type="checkbox" id="boribap" name="storeCateDetailName" onclick="check()" value="보리밥"><label for="boribap">보리밥</label>
@@ -464,7 +467,7 @@
 	<div class="search-page">
 		<c:forEach items="${search.noticelist}" var="search">
 			<div class="search-result">
-				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
+				<div class="search-result-img" style="background-image:url('${pageContext.request.contextPath}/${search.owPhotoRoute}');">
 					<form action="/detailPage.do" method="get">
 						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
 						<input type="submit" value="">
@@ -517,21 +520,12 @@
 	               reserve.method="get";
 	               reserve.submit();
 	            }
-				 
-					function idSearch() {
-						var windowW = 400; // 창의 가로 길이
-						var windowH = 400; // 창의 세로 길이
-						var left = Math.ceil((window.screen.width - windowW) / 2);
-						var top = Math.ceil((window.screen.height - windowH) / 2);
-						window.open("/idSearchPage.do", "pop_01", "l top=" + top + ", left="
-								+ left + ", height=" + windowH + ", width=" + windowW);
-					}
-				 
 	            </script>  	            
 	                
-	            <form action="reservation.do" method="get" name="reserve">
+	            <!-- form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
-	            </form>
+	            </form> -->
+	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}');">예약하기</button>
 				<button>리뷰쓰기</button>
 			</div>
 		</c:forEach>
@@ -549,6 +543,88 @@
 		</c:if> --%>
 	</div>
 	</div>
+	
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p id="modalValue"></p>
+  </div>
+
+</div>	
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function modalPopup(storeIndex,storeAddr) {
+    modal.style.display = "block";
+    $('#modalValue').html(storeIndex + storeAddr);
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+	
 </section>
 
 <footer id="member-main-footer">

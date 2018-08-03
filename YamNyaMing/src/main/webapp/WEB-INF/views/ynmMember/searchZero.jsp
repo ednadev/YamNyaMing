@@ -33,7 +33,7 @@
     	<select name="food" id="food">
     	<c:choose>
     		<c:when test="${food eq '한식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식" selected>한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -44,7 +44,7 @@
 	    		<option value="기타">기타</option>   		
     		</c:when>
     		<c:when test="${food eq '중식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식" selected>중식</option>
 	    		<option value="일식">일식</option>
@@ -55,7 +55,7 @@
 	    		<option value="기타">기타</option>   	
     		</c:when>
     		<c:when test="${food eq '일식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식" selected>일식</option>
@@ -66,7 +66,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '양식'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -77,7 +77,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when> 
     		<c:when test="${food eq '뷔페'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -88,7 +88,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '디저트'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -99,7 +99,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when>  
     		<c:when test="${food eq '술집'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -110,7 +110,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>  
     		<c:when test="${food eq '기타'}">
-	     		<option>음식 종류 선택</option>
+	     		<option disabled>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -121,7 +121,7 @@
 	    		<option value="기타" selected>기타</option>    		
     		</c:when>     		  		  		    		   		    		    		
     		<c:otherwise>
-	     		<option selected>음식 종류 선택</option>
+	     		<option disabled selected>음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -148,27 +148,40 @@
 
 </header>
 <section id="member-search-section">
-
-
 	<div id="map"></div>
-	<script src="${pageContext.request.contextPath}/resources/js/member/memberSearch.js"></script>
+	<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new daum.maps.LatLng(37.556888697557625, 126.92367442251489), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+	// 지도를 생성합니다    
+	var map = new daum.maps.Map(mapContainer, mapOption); 
+	</script>
 	
 	<div class="member-search-wrapper">
 	<h2>자세히 검색</h2>
+	<form action="/search.do" method="get">
 	<c:choose>
 		<c:when test="${food eq '한식' }">
-
+		<input type="hidden" name="place" value="홍대">
+		<input type="hidden" name="food" value="한식">
 	<div class="detailSearch">
 		<h3>세부 음식 검색</h3>
 		<div>
-			<input type="checkbox" id="homeFood" name="storeCateDetailName" onclick="check()" value="백반,가정식"><label for="homeFood">백반,가정식</label>
-			<input type="checkbox" id="koreanRestaurant" name="storeCateDetailName" onclick="check()" value="한정식"><label for="koreanRestaurant">한정식</label>
-			<input type="checkbox" id="ssambap" name="storeCateDetailName" onclick="check()" value="쌈밥"><label for="ssambap">쌈밥</label>
-			<input type="checkbox" id="boribap" name="storeCateDetailName" onclick="check()" value="보리밥"><label for="boribap">보리밥</label>
-			<input type="checkbox" id="bibimbap" name="storeCateDetailName" onclick="check()" value="비빔밥"><label for="bibimbap">비빔밥</label>
-			<input type="checkbox" id="juk" name="storeCateDetailName" onclick="check()" value="죽"><label for="juk">죽</label>
-			<input type="checkbox" id="soupbap" name="storeCateDetailName" onclick="check()" value="국밥"><label for="soupbap">국밥</label>
-			<input type="checkbox" id="noodle" name="storeCateDetailName" onclick="check()" value="국수"><label for="noodle">국수</label>
+		
+			${storeCateDetailName[1]}
+	
+			
+			<input type="checkbox" id="homeFood" name="storeCateDetailName" value="백반가정식"><label for="homeFood">백반,가정식</label>
+			<input type="checkbox" id="koreanRestaurant" name="storeCateDetailName" value="한정식"><label for="koreanRestaurant">한정식</label>
+			<input type="checkbox" id="ssambap" name="storeCateDetailName" value="쌈밥"><label for="ssambap">쌈밥</label>
+			<input type="checkbox" id="boribap" name="storeCateDetailName" value="보리밥"><label for="boribap">보리밥</label>
+			<input type="checkbox" id="bibimbap" name="storeCateDetailName" value="비빔밥"><label for="bibimbap">비빔밥</label>
+			<input type="checkbox" id="juk" name="storeCateDetailName" value="죽"><label for="juk">죽</label>
+			<input type="checkbox" id="soupbap" name="storeCateDetailName" value="국밥"><label for="soupbap">국밥</label>
+			<input type="checkbox" id="noodle" name="storeCateDetailName" value="국수"><label for="noodle">국수</label>
 			<input type="checkbox" id="coldNoodle" name="storeCateDetailName" onclick="check()" value="냉면"><label for="coldNoodle">냉면</label>
 			<input type="checkbox" id="makguksu" name="storeCateDetailName" onclick="check()" value="막국수"><label for="makguksu">막국수</label>
 			<input type="checkbox" id="stew" name="storeCateDetailName" onclick="check()" value="찌개,전골"><label for="stew">찌개,전골</label>
@@ -356,54 +369,9 @@
 			<input type="checkbox" id="cocktail" name="owDrinkListInfo" onclick="check()" value="칵테일"><label for="cocktail">칵테일</label>
 		</div>
 	</div>
-	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
-	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
-	<div class="search-page">
-		<c:forEach items="${search.noticelist}" var="search">
-			<div class="search-result">
-				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
-					<form action="/detailPage.do" method="get">
-						<input type="hidden" name="owStoreName" value="${search.owStoreName}">
-						<input type="submit" value="">
-					</form>
-					<div>
-						<p>대기인원 0 추천 0</p>
-						<div class="heart"></div>
-					</div>
-					<div>
-						<h5>${search.owStoreName }</h5>
-						<p>${search.owStoreAddrFirst} > ${search.owStoreAddrFinal} ㆍ ${search.storeCateDetailName}</p>		
-					</div>
-				</div>
-				<div class="search-result-text">
-					<div>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<span class="star"></span>
-						<p class="star-result">0점</p>
-					</div>
-					<div>${search.owStoreComment}</div>
-				</div>
-				<button>예약하기</button>
-				<button>리뷰쓰기</button>
-			</div>
-		</c:forEach>
-		<div class="content-title"></div>
-		<c:if test="${search.currentPage>1}" var="search">
-			<button onclick="searchPaging()"> < </button>
-		</c:if>
-<%-- <%-- 		<c:forEach items="${search}" var="search" begin="${search.startNavi}" end="${search.endNavi}" step=1>
-			<c:if test="${search.currentPage eq search.startNavi}">
-				<button onclick="searchPaging()">${search.startNavi}</button>
-			</c:if>
-		</c:forEach> --%>
-<%-- 		<c:if test="${search.currentPage < search.pageTotalCount}">
-			<button onclick="searchPaging()"> > </button>
-		</c:if> --%>
-	</div>
-	</div>
+	<input type="submit" value="상세정보 검색하기">
+	</form>
+	<h4>총 <span>0</span>개가 검색되었습니다</h4>
 </section>
 
 <footer id="member-main-footer">

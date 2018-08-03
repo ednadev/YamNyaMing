@@ -805,13 +805,11 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		session.setAttribute("keyword",keyword);
 		session.setAttribute("food", food);
 		session.setAttribute("place", place);
-
 		String [] storeCateDetailName = request.getParameterValues("storeCateDetailName");
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
-
-
+		
 		YNMSearchPaging check = new YNMSearchPaging();
 
 		check.setKeyword(keyword);
@@ -837,16 +835,19 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
 		int starNum=0;
 		float starAvg=0;
-		if(!qpd.getNoticelist().isEmpty()) {
-		for(int i=0; i<qpd.getNoticelist().size(); i++){
-			ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-			for(int j=0; j<ys.size(); j++) {
-			starNum+=ys.get(i).getStarPoint();
-			starAvg=(float)starNum/ys.size();
+		ModelAndView view=new ModelAndView();
+		if(qpd!=null) {
+			if(qpd.getNoticelist().size()>0) {
+				for(int i=0; i<qpd.getNoticelist().size(); i++){
+					ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
+					for(int j=0; j<ys.size(); j++) {
+					starNum+=ys.get(j).getStarPoint();
+					starAvg=(float)starNum/ys.size();
+					}
+					qpd.getNoticelist().get(0).setStarAvg(starAvg);
+				}
 			}
-			qpd.getNoticelist().get(0).setStarAvg(starAvg);
-		}
-		}
+		
 		
 		JSONObject resultMap=new JSONObject();
 		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
@@ -860,15 +861,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			resultMap.put(index, result);
 			index++;
 		}
-
-		System.out.println(starAvg);
-		ModelAndView view=new ModelAndView();
-		if(qpd!=null) {
+		
 			view.addObject("resultMap",resultMap);
 			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}else {
+			view.addObject("storeCateDetailName",storeCateDetailName);
 			view.setViewName("ynmMember/searchZero");
 			return view;
 		}
@@ -914,8 +913,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reservation.do")
 	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
 		YNMSearch vo = new YNMSearch();
-		String info = request.getParameter("owStoreInfoPk");
-		System.out.println(info);
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch reservation = ynmMemberServiceImpl.detailPage(vo);
 
