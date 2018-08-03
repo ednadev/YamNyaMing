@@ -298,7 +298,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 			view.addObject("info",ym);
 			view.addObject("img",viewPath);
-			view.setViewName("ynmMember/infoTest");
+			view.setViewName("ynmMember/myInfo");
 			return view;
 		}
 		else {
@@ -420,34 +420,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
-	//예약하기 삽입
-	@Override
-	@RequestMapping(value="/bookInsert.do")
-	public String bookInsert(YNMBook yb) {
-		ynmMemberServiceImpl.bookInsert(yb);
-		return null;
-	}
 
-	//예약정보 가져오기
-	@Override
-	@RequestMapping(value="/bookselect.do")
-	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		session=request.getSession(false);
-		YNMBook vo=new YNMBook();
-		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-		ArrayList list=ynmMemberServiceImpl.bookselect(vo);
-		ModelAndView view=new ModelAndView();
-		if(!list.isEmpty()) {
-
-			view.addObject("bookInfo",list);
-			view.setViewName("ynmMember/info");
-			return view;
-		}
-		else {
-
-		}
-		return null;
-	}
 
 	//리뷰 table
 	@Override
@@ -877,7 +850,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		JSONObject resultMap=new JSONObject();
 		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
-
 		int index = 0;
 		while(index<(qpd.getNoticelist()).size()) {
 			YNMSearch search = qpd.getNoticelist().get(index);
@@ -938,8 +910,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
-
-
 	//예약하기 팝업창
 	@RequestMapping(value="/reservation.do")
 	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
@@ -982,7 +952,36 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return view;
 		}
 	}  
+	
+	//예약하기 삽입
+	@Override
+	@RequestMapping(value="/bookInsert.do")
+	public String bookInsert(YNMBook yb) {
+		ynmMemberServiceImpl.bookInsert(yb);
+		return null;
+	}
 
+	//예약정보 가져오기
+	@Override
+	@RequestMapping(value="/bookselect.do")
+	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		session=request.getSession(false);
+		YNMBook vo=new YNMBook();
+		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+		ArrayList list=ynmMemberServiceImpl.bookselect(vo);
+		ModelAndView view=new ModelAndView();
+		if(!list.isEmpty()) {
+
+			view.addObject("bookInfo",list);
+			view.setViewName("ynmMember/info");
+			return view;
+		}
+		else {
+
+		}
+		return null;
+	}	
+	
 	//관리자 : 관리자 로그인 페이지로 이동
 	@RequestMapping(value="/ynmAdmin.do")
 	public String ynmAdmin() {

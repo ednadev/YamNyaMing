@@ -1,0 +1,159 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+*{margin:0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
+
+body{
+	padding:20px;
+}
+#title{
+	border-bottom:1px solid #ddd;
+	padding-bottom:10px;
+}
+#title>h1{
+	font-size:1.2em;
+	display:inline-block;
+	color:#fb0;
+	margin-right:10px;
+}
+#title>p{
+	display:inline-block;
+	font-size:0.9em;
+	color:#555;
+	font-weight:bold;
+}
+.quantity {
+  position: relative;
+  margin:10px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+
+.quantity input {
+  width: 40px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 15px;
+  border: 1px solid #ddd;
+  padding-right:15px;
+}
+
+.quantity input:focus {
+  outline: 0;
+}
+
+.quantity-nav {
+  float: left;
+  position: relative;
+  height: 42px;
+}
+
+.quantity-button {
+  position: relative;
+  cursor: pointer;
+  border-left: 1px solid #ddd;
+  width: 20px;
+  text-align: center;
+  color: #333;
+  font-size: 13px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  line-height: 1.7;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.quantity-button.quantity-up {
+  position: absolute;
+  height: 50%;
+  top: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.quantity-button.quantity-down {
+  position: absolute;
+  bottom: -1px;
+  height: 50%;
+}
+
+.quantity>label{
+	float:left;
+	line-height:42px;
+	font-size:1em;
+	margin-right:10px;
+	font-weight:bold;
+	color:#555;
+	margin-left:15px;
+}
+.date-time>label{
+	float:left;
+	line-height:42px;
+	font-size:1em;
+	margin-right:10px;
+	font-weight:bold;
+	color:#555;
+	margin-left:15px;
+}
+.date-time>input{
+	float:left;
+	height:22px;
+	padding:10px;
+	border:1px solid #ddd;
+}
+.name-tel{
+	clear:both;
+	padding-top:10px;
+}
+.name-tel>input{
+	height:22px;
+	padding:10px;
+	width:154px;
+}
+.name-tel>input:nth-child(1){
+	margin-right:5px;
+}
+.name-tel>input[type="button"]{
+	height:45px;
+	background-color:#555;
+	border:none;
+	color:white;
+	font-weight:bold;
+}
+.tel-confirm{
+	float:right;
+	padding-top:10px;
+}
+.tel-confirm>input{
+	height:22px;
+	padding:10px;
+	width:154px;
+}
+.tel-confirm>input[type="button"]{
+	height:45px;
+	background-color:#555;
+	border:none;
+	color:white;
+	font-weight:bold;
+	width:154px;
+}
+input[type="submit"]{
+	width:100%;
+	
+}

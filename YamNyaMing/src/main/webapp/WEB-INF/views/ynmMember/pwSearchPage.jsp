@@ -10,9 +10,9 @@
 </head>
 <body>
 
-	<section id="member-login-section">
-		<h2>비밀번호 재설정</h2>
-		<h2>가입하신 계정의 이메일을 입력해주세요.임의로 설정된 새로운 비밀번호가 메일로 전송됩니다.</h2>
+	<section id="member-login-section" style="padding-top:0px;">
+		<h2 style="margin-top:0px;padding-top:52px;margin-bottom:20px;">비밀번호 재설정</h2>
+		<p style="color:black;margin-left:40px;margin-right:40px;margin-bottom:20px;line-height:1.5;">가입하신 계정의 이메일을 입력해주세요.임의로 설정된 새로운 비밀번호가 메일로 전송됩니다.</p>
 		<form action="/pwSearch.do" method="post" id="pwSearchForm">
 			<p>
 				<input type="radio" name="loginSelect" id="memberSelect"

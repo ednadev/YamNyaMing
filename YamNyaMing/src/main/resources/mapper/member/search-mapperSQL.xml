@@ -25,13 +25,7 @@
         <trim prefix="where" prefixOverrides="AND|OR">
 			<if test="food!=null and food!=''">
 				store_cate_main_name = #{food}
-			</if>
-			<if test="storeCateDetailName!=null and storeCateDetailName!=''">
-				store_cate_detail_name in
-				<foreach item="storeCateDetailName" collection="array" open="(" separator="," close=")">
-					 #{storeCateDetailName}
-				</foreach>
-			</if>			
+			</if>		
 		</trim>
 	</select>
 	
