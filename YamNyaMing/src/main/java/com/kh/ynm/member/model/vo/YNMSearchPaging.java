@@ -8,10 +8,10 @@ public class YNMSearchPaging {
 	String keyword;
 	String food;
 	String place;
-	String [] storeCateDetailName;
-	String [] owBudget;
-	String [] owSubInfo;
-	String [] owDrinkListInfo;
+	ArrayList<String> storeCateDetailName;
+	ArrayList<String> owBudget;
+	ArrayList<String> owSubInfo;
+	ArrayList<String> owDrinkListInfo;
 
 	int start;
 	int end;
@@ -25,8 +25,8 @@ public class YNMSearchPaging {
 	public YNMSearchPaging() {
 		// TODO Auto-generated constructor stub
 	}
-	public YNMSearchPaging(String keyword, String food, String place, String[] storeCateDetailName, String[] owBudget,
-			String[] owSubInfo, String[] owDrinkListInfo, int start, int end, ArrayList<YNMSearch> noticelist,
+	public YNMSearchPaging(String keyword, String food, String place, ArrayList<String> storeCateDetailName, ArrayList<String> owBudget,
+			ArrayList<String> owSubInfo, ArrayList<String> owDrinkListInfo, int start, int end, ArrayList<YNMSearch> noticelist,
 			String pageNavi, int startNavi, int endNavi, int currentPage, int pageTotalCount, int recordTotalCount) {
 		this.keyword = keyword;
 		this.food = food;
@@ -63,28 +63,28 @@ public class YNMSearchPaging {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-	public String[] getStoreCateDetailName() {
+	public ArrayList<String> getStoreCateDetailName() {
 		return storeCateDetailName;
 	}
-	public void setStoreCateDetailName(String[] storeCateDetailName) {
-		this.storeCateDetailName = storeCateDetailName;
+	public void setStoreCateDetailName(ArrayList<String> storeCateDetailNameList) {
+		this.storeCateDetailName = storeCateDetailNameList;
 	}
-	public String[] getOwBudget() {
+	public ArrayList<String> getOwBudget() {
 		return owBudget;
 	}
-	public void setOwBudget(String[] owBudget) {
+	public void setOwBudget(ArrayList<String> owBudget) {
 		this.owBudget = owBudget;
 	}
-	public String[] getOwSubInfo() {
+	public ArrayList<String> getOwSubInfo() {
 		return owSubInfo;
 	}
-	public void setOwSubInfo(String[] owSubInfo) {
+	public void setOwSubInfo(ArrayList<String> owSubInfo) {
 		this.owSubInfo = owSubInfo;
 	}
-	public String[] getOwDrinkListInfo() {
+	public ArrayList<String> getOwDrinkListInfo() {
 		return owDrinkListInfo;
 	}
-	public void setOwDrinkListInfo(String[] owDrinkListInfo) {
+	public void setOwDrinkListInfo(ArrayList<String> owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
 	}
 	public int getStart() {
@@ -142,5 +142,4 @@ public class YNMSearchPaging {
 		this.recordTotalCount = recordTotalCount;
 	}
 
-	
 }

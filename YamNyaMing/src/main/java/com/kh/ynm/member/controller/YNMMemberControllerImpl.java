@@ -1,6 +1,7 @@
 package com.kh.ynm.member.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,6 +50,8 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.owner.model.vo.CouponEnroll;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
@@ -857,12 +860,25 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setKeyword(keyword);
 		check.setFood(food);
 		check.setPlace(place);
-		check.setStoreCateDetailName(storeCateDetailName);
-		check.setOwBudget(owBudget);
-		check.setOwSubInfo(owSubInfo);
-		check.setOwDrinkListInfo(owDrinkListInfo);
-
-
+		
+		if(storeCateDetailName!=null) {
+			ArrayList<String> StoreCateDetailNameList = new ArrayList<String>(Arrays.asList(storeCateDetailName));
+			check.setStoreCateDetailName(StoreCateDetailNameList);
+		}
+		if(owBudget!=null) {
+			ArrayList<String> owBudgetList = new ArrayList<String>(Arrays.asList(owBudget));
+			check.setOwBudget(owBudgetList);
+		}
+		if(owSubInfo!=null) {
+			ArrayList<String> owSubInfoList = new ArrayList<String>(Arrays.asList(owSubInfo));
+			check.setOwSubInfo(owSubInfoList);
+		}
+		if(owDrinkListInfo!=null) {
+			ArrayList<String> owDrinkListInfoList = new ArrayList<String>(Arrays.asList(owDrinkListInfo));
+			check.setOwDrinkListInfo(owDrinkListInfoList);
+		}
+		
+		
 		int currentPage;
 
 		if(request.getParameter("currentPage")==null)
@@ -875,6 +891,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
+		
 		int starNum=0;
 		float starAvg=0;
 		if(qpd!=null) {
@@ -919,13 +936,19 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			resultMap.put(index, result);
 			index++;
 		}
-		
+			view.addObject("storeCateDetailName",storeCateDetailName);
+			view.addObject("owBudget",owBudget);
+			view.addObject("owSubInfo",owSubInfo);
+			view.addObject("owDrinkListInfo",owDrinkListInfo);
 			view.addObject("resultMap",resultMap);
 			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}else {
 			view.addObject("storeCateDetailName",storeCateDetailName);
+			view.addObject("owBudget",owBudget);
+			view.addObject("owSubInfo",owSubInfo);
+			view.addObject("owDrinkListInfo",owDrinkListInfo);
 			view.setViewName("ynmMember/searchZero");
 			return view;
 		}

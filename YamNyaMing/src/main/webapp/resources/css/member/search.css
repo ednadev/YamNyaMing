@@ -318,3 +318,8 @@
 	text-decoration:none;
 	cursor:pointer;
 }
+
+/* 페이징처리 */
+#pagingNumber{
+	clear:both;
+}
