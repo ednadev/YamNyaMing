@@ -50,8 +50,6 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
-import com.kh.ynm.owner.model.vo.CouponEnroll;
-import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
@@ -862,23 +860,23 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setPlace(place);
 		
 		if(storeCateDetailName!=null) {
-			ArrayList<String> StoreCateDetailNameList = new ArrayList<String>(Arrays.asList(storeCateDetailName));
+			ArrayList<String> StoreCateDetailNameList = new ArrayList<>(Arrays.asList(storeCateDetailName));
 			check.setStoreCateDetailName(StoreCateDetailNameList);
 		}
 		if(owBudget!=null) {
-			ArrayList<String> owBudgetList = new ArrayList<String>(Arrays.asList(owBudget));
+			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
-			ArrayList<String> owSubInfoList = new ArrayList<String>(Arrays.asList(owSubInfo));
+			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
-			ArrayList<String> owDrinkListInfoList = new ArrayList<String>(Arrays.asList(owDrinkListInfo));
+			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
 			check.setOwDrinkListInfo(owDrinkListInfoList);
 		}
 		
-		
+
 		int currentPage;
 
 		if(request.getParameter("currentPage")==null)
@@ -891,7 +889,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-		
 		int starNum=0;
 		float starAvg=0;
 		if(qpd!=null) {
