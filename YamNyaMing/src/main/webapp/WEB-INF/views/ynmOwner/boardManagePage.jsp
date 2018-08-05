@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍-게시판 관리</title>
@@ -10,7 +11,20 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/owner.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBoard.js?ver=2"></script>
+
+<!-- include jquery -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- include libraries BS3 -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<!-- include summernote -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/summernote/summernote.css?ver=1">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/owner/summernote/summernote.js?ver=1"></script>
+
 </head>
 <body>
 	<header id="owner-main-header">
@@ -34,7 +48,11 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
-	
+	<div id="toolbar"></div>
+	<form id="summernote-form" action="/boardAdd.do" method="post" enctype="multipart/form-data">
+		<textarea class="summernote">공지글을 입력해주세요.</textarea>
+		<input type="submit" value="공지글 제출"/>
+	</form>
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

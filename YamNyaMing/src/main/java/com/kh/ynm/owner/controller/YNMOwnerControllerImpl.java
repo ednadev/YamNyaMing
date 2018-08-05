@@ -1,6 +1,7 @@
 package com.kh.ynm.owner.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -25,9 +27,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ynm.common.controller.CommonControllerImpl;
@@ -943,4 +947,73 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		int result = ynmOwnerServiceImpl.cancelBookAsOwner(bookVo);
 		return result+"";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/uploadBoardPhoto.do", method=RequestMethod.POST, produces="text/plain")
+	public JSONObject uploadBoardPhoto(HttpSession session, MultipartFile m_request)
+	{
+		JSONObject json = new JSONObject();
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\boardP_");
+			String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
+			System.out.println(m_request);
+			String originName= "test0101";//m_request.getOriginalFilename();
+			String remakeName=  System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+			
+			File f=new File(photoRoute+remakeName);
+			//해당 디렉토리의 존재여부를 확인
+			if(!f.exists()){
+				//없다면 생성
+				f.mkdirs(); 
+			}
+			byte[] data;
+			try {
+				data = m_request.getBytes();
+				FileOutputStream fos = new FileOutputStream(photoRoute + remakeName);
+				fos.write(data);
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+
+
+			
+//            MultipartFile mFile = m_request.getFile(uploadFile);
+//            String fileName = mFile.getOriginalFilename();
+//            System.out.println("실제 파일 이름 : " +fileName);
+//             
+//            try {
+//                mFile.transferTo(new File(photoRoute+remakeName));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+			
+			
+			OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+			uploadPhoto.setOwPhotoTypeFk(5);
+			uploadPhoto.setStoreInfoFk(currentSelectStoreIndex(session));
+			uploadPhoto.setOriginName(originName);
+			uploadPhoto.setRemakeName("boardP_" +remakeName);
+			uploadPhoto.setPhotoRoute(photoSaveRoute);
+
+			int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+			if(photoUpload>0) {
+				json.put("result", "successPhoto");
+			}else {
+				json.put("result", "failPhotoUpload");
+			}
+		}
+		return json;
+	}
+
+	@RequestMapping("/boardAdd.do")
+	public String ownerBoardAdd(HttpSession session,  HttpServletRequest request)
+	{
+		return null;
+	}
+	
 }
