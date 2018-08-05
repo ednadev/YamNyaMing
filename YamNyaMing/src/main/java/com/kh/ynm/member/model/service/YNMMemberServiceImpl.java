@@ -271,6 +271,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMSearch> storeImg = memberDAO.detailPageImg(sqlSession, vo);
 		return storeImg;
 	}
+	public ArrayList<YNMSearch> detailPageMenu(YNMSearch vo) {
+		ArrayList<YNMSearch> menuImg = memberDAO.detailPageMenu(sqlSession,vo);
+		return menuImg;
+	}	
+	
 	//팔로우 목록 확인
 	public ArrayList<YNMFollow> followInfo(int memberNo) {
 		ArrayList<YNMFollow> fList=memberDAO.followInfo(sqlSession,memberNo);
@@ -344,6 +349,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMFavorite> list=memberDAO.favoriteList(sqlSession,memberEntireNo);
 		return list;
 	}
+
 
 
 }

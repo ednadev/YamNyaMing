@@ -958,7 +958,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
+		ArrayList<YNMSearch> menuImg = ynmMemberServiceImpl.detailPageMenu(vo);
 		int size=storeImg.size();
+		int menuSize = menuImg.size();
 		int memberEntireNo=0;
 		//로그인한 사용자 찜 여부 확인
 		HttpSession session=request.getSession(false);
@@ -979,6 +981,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			view.addObject("store", store);
 			view.addObject("size", size);
 			view.addObject("storeImg", storeImg);
+			view.addObject("menuImg",menuImg);
+			view.addObject("menuSize",menuSize);
 			view.setViewName("ynmMember/detailPage");
 			return view;
 		}else {

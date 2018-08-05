@@ -73,11 +73,36 @@
         <trim prefix="where" prefixOverrides="AND|OR">
 			<if test="food!=null and food!=''">
 				store_cate_main_name = #{food}
-			</if>		
+			</if>
 			<if test="keyword!=null and keyword!=''">
 				and ow_store_name like '%'||#{keyword}||'%'
 				or ow_store_tip like '%'||#{keyword}||'%'
+				or store_cate_detail_name like '%'||#{keyword}||'%'
 			</if>		
+			<if test="storeCateDetailName!=null and storeCateDetailName!=''">
+				 and store_cate_detail_name in 
+				 <foreach item="storeCateDetailName" collection="array" open="(" separator="," close=")">
+				 	#{storeCateDetailName}
+				 </foreach>
+			</if>
+			<if test="owBudget!=null and owBudget!=''">
+				 and ow_budget in 
+				 <foreach item="owBudget" collection="array" open="(" separator="," close=")">
+				 	#{owBudget}
+				 </foreach>
+			</if>
+			<if test="owSubInfo!=null and owSubInfo!=''">
+				 and ow_sub_info in 
+				 <foreach item="owSubInfo" collection="array" open="(" separator="," close=")">
+				 	#{owSubInfo}
+				 </foreach>
+			</if>
+			<if test="owDrinkListInfo!=null and owDrinkListInfo!=''">
+				 and ow_drink_list_info in 
+				 <foreach item="owDrinkListInfo" collection="array" open="(" separator="," close=")">
+				 	#{owDrinkListInfo}
+				 </foreach>
+			</if>			
 		</trim>
 	</select>
 	
@@ -85,16 +110,16 @@
 		select 
 			distinct ow_store_info_pk as owStoreInfoPk,
 		    ow_store_name as owStoreName, 
-		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
+		    substr(ow_store_addr,6,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
-		    ow_photo_route as owPhotoRoute,
+		    ow_photo_route||'\'||ow_remake_name as owPhotoRoute,
 		    store_cate_detail_name as storeCateDetailName,
 		    ow_store_comment as owStoreComment,
 		    ow_store_head_photo as owStoreHeadPhoto,
 		    ow_store_tel as owStoreTel,
 		    ow_store_url as owStoreUrl,
 		    ow_store_addr as owStoreAddr,
-		    substr(ow_store_working_time,4,13) as owStoreWorkingTime,
+		    substr(ow_store_working_time,4,12) as owStoreWorkingTime,
 		    ow_budget as owBudget,
 		    store_cate_main_name as storeCateMainName,
 		    ow_store_table_info as owStoreTableInfo,
@@ -111,10 +136,19 @@
 	</select>
 	
 	<select id="detailPageImg" resultType="search">
-		select ow_photo_route as owPhotoRoute from owner_store_photo_tb, owner_store_info_tb
+		select ow_photo_route||'\'||ow_remake_name as owPhotoRoute 
+		from owner_store_photo_tb, owner_store_info_tb
 		where ow_store_info_fk = ow_store_info_pk
 		and ow_store_info_pk = #{owStoreInfoPk}
-	</select>	
+	</select>
+	
+	<select id="detailPageMenu" resultType="search">
+		select ow_photo_route||'\'||ow_remake_name as owPhotoRoute 
+		from owner_store_photo_tb, owner_store_info_tb
+		where ow_store_info_fk = ow_store_info_pk
+		and ow_photo_type_fk = 4
+		and ow_store_info_pk = #{owStoreInfoPk}
+	</select>		
 	
 	
 </mapper>

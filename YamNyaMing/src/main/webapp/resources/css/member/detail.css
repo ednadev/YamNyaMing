@@ -6,6 +6,7 @@
 	background-color:rgba(0,0,0,0.8);
 	padding:20px;
 	overflow:hidden;
+	clear:both;
 }
 #member-main-footer>div{
 	float:left;
@@ -173,6 +174,14 @@
 	margin-top:15px;
 	
 }
+#member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail{
+	display:flex;
+}
+#member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail>img{
+	width:350px;
+	height:273px;
+	margin:24px;
+}
 #member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail>table{
 	margin-top:10px;
 }
@@ -334,36 +343,37 @@
 
 /* 포토 */
 .member-detail-page-wrapper>#Photo>.container{
-	position:relative;
+	margin-top:20px;
 }
-.member-detail-page-wrapper>#Photo>.container>.prev{
-	position:relative;
-	top:220px;
-	left:33px;
-	font-size:1.5em;
-	color:#555;
-	cursor:pointer;
-}
-.member-detail-page-wrapper>#Photo>.container>.mySlidesPhoto>img{
-	width:800px;
-	height:450px;
-	margin:0 auto;
-}
+.member-detail-page-wrapper>#Photo>.container>.prev,
 .member-detail-page-wrapper>#Photo>.container>.next{
-	position:relative;
+	float:left;
+	margin:20px;
+	line-height:680px;
 	font-size:1.5em;
+	font-weight:bold;
 	color:#555;
-	bottom:262px;
-	left:909px;
 	cursor:pointer;
+}
+.member-detail-page-wrapper>#Photo>.container>.mySlidesPhoto{
+	width:854px;
+	height:680px;
+	background-size:cover;
+	background-poisition:center;
+	float:left;
 }
 .member-detail-page-wrapper>#Photo>.container>.row{
+	clear:both;
+	margin-bottom:30px;
 	overflow:hidden;
 }
-.member-detail-page-wrapper>#Photo>.container>.row>.column>img{
-	width:150px;
-	height:110px;
+.member-detail-page-wrapper>#Photo>.container>.row>.demo{
 	float:left;
+	width:238px;
+	height:120px;
+	background-size:cover;
+	background-position:center;
+	margin:1px;
 }
 
 /* 리뷰 */
