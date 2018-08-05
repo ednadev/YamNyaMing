@@ -210,9 +210,20 @@
 			MB_BOOK_STATE as bookState,
 			MB_BOOK_DEPOSIT as bookDeposit,
 			(select mb_name from member_entire_tb mn
-			where mn.mb_entire_pk = mb.MB_ENTIRE_FK) as bookname
+			where mn.mb_entire_pk = mb.MB_ENTIRE_FK) as bookname,
+			to_char(mb_book_date_time,'YYYY-MM-DD HH24:MI') as bookDateAndTime2
 		from member_book_tb mb
 		where STORE_ENTIRE_FK = #{storeIndex}
 	</select>
+	
+	<select id="storeIndexWithOwIndex" resultType="int">
+		select ow_store_info_pk 
+		from owner_store_info_tb
+		where ow_entire_fk = #{ownerIndex}
+	</select>
+	
+	<delete id="cancelBookAsOwner">
+		delete from member_book_tb where MB_BOOK_PK = #{bookIndex} 
+	</delete>
 	
 </mapper>

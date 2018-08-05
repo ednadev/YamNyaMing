@@ -103,7 +103,6 @@
 		<div>
 			 <form action="/storePageTypeLoad.do" method="post">
 				<!-- 현재 선택된  -->
-				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 				<input type="submit" name="storeTapType" value="정보">
 				<input type="submit" name="storeTapType" value="포토">
 				<input type="submit" name="storeTapType" value="리뷰">
@@ -121,7 +120,6 @@
 				<h3>위에 정보</h3>
 				
 				<!-- name은 바꾸면 안됨 -->
-				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 				
 				가게 이름 :<p id="owStorePId" style="display:inline;"> ${storeInfoPageData.owStoreName}</p>
 				<input type="text" style="display:none;" id="owStoreNameEditBtn" name="owStoreName" value="${storeInfoPageData.owStoreName}">
@@ -203,7 +201,6 @@
 			</form>
 		</div>
 		<div class="store-info-div" style="display:none;">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			<h3>이미지를  클릭해서 삭제 할 수 있습니다.</h3>
 			<!-- <form action="/storeHeadPhotoEdit.do" method="post"> -->
 			<c:if test="${headPhotoList!=null}">
@@ -221,7 +218,6 @@
 				대표사진이 없습니다.
 			</c:if>
 			<form action="/storeHeadPhotoUpload.do" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 				<input type="hidden" name="storeTapType" value="정보">
 				<div id="menuType">
 					<input type="file" name="mainImgFile" id="mainImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
@@ -238,11 +234,9 @@
 			</form>
 		</div>
 		<div class="store-info-div" style="display:none;">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			리뷰
 		</div>
 		<div class="store-info-div" style="display:none;">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			<div id="enrollMenuList">
 				<c:if test="${menuInfoList!=null}">
 					<c:forEach var="menuTitle" items="${menuTitleGroup}">
@@ -283,7 +277,6 @@
 				<div class="menuInfo">  
 					<form action="/storeMenuPhotoUpload.do" method="post" enctype="multipart/form-data">
 						<div>
-							<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 							<input type="file" name="menuImageFile" id="menuImage" accept="${pageContext.request.contextPath}/resources/image/*" onchange="reviewFilesUpload();" multiple/>
 							<label for="menuImage" id="menu-image">사진등록/편집</label>
 								<div class="imgs_wrap_menu">
@@ -323,7 +316,7 @@
 						<label><input type="checkbox"> 추천메뉴</label>
 						<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
 						<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
-						<button id="storeIndex" onclick="newMenuAdd(${currentStoreIndex});">메뉴 추가</button>
+						<button id="storeIndex" onclick="newMenuAdd(${sessonScope.currentStoreIndex});">메뉴 추가</button>
 					</div>
 				</div>
 			</c:if>
@@ -331,7 +324,6 @@
 			
 		</div>
 		<div class="store-info-div" style="display:none;">
-			<input type="hidden" name="storeIndex" value="${currentStoreIndex}">
 			맵
 		</div>
 	</section>

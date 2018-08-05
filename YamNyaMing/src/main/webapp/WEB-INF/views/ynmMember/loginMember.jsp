@@ -67,7 +67,6 @@
 		});
 
 		$("input[name='memberId']").keyup(function() {
-			console.log("ㅎㅇ2");
 			if ($("#idCheck").is(":checked")) {
 				var memberId = $("input[name='memberId']").val();
 				setCookie("memberId", memberId, 7);

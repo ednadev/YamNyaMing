@@ -279,6 +279,16 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return list;
 	}
 
+	@Override
+	public int selectStoreIndex(int ownerIndex) {
+		return ynmOwnerDAO.ynmSelectStoreIndex(sqlSession, ownerIndex);
+	}
+	
+	@Override
+	public int cancelBookAsOwner(int bookIndex) {
+		return ynmOwnerDAO.cancelBookAsOwner(sqlSession, bookIndex);
+	}
+
 
 	
 }

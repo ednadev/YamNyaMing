@@ -157,4 +157,14 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return (ArrayList<YNMBook>)list;
 	}
 
+	@Override
+	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, int ownerIndex) {
+		return sqlSession.selectOne("stores.storeIndexWithOwIndex", ownerIndex);
+	}
+
+	@Override
+	public int cancelBookAsOwner(SqlSessionTemplate sqlSession, int bookIndex) {
+		return sqlSession.delete("stores.cancelBookAsOwner", bookIndex);
+	}
+
 }

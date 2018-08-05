@@ -2,10 +2,11 @@ package com.kh.ynm.member.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -1010,8 +1011,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	//예약하기 삽입
 	@Override
 	@RequestMapping(value="/bookInsert.do")
-	public ModelAndView bookInsert(YNMBook yb, HttpSession session) {
+	public ModelAndView bookInsert(YNMBook yb, HttpSession session, HttpServletRequest request) {
 		yb.setMemberEntireNo( ((YNMMember)session.getAttribute("member")).getMemberEntireNo() );
+		String bookDate = request.getParameter("bookDateAndTime1");
+		String bookTime = request.getParameter("bookDateAndTime2");
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+			java.util.Date utilDate = sdf.parse(bookDate +" " +  bookTime);
+			Date date = new Date(utilDate.getTime());
+			yb.setBookDateAndTime(date);
+			yb.setBookDateAndTime2(bookDate +" " +  bookTime);
+			System.out.println(sdf.format(date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		ModelAndView view = new ModelAndView();
 		int result = ynmMemberServiceImpl.bookInsert(yb);
 		view.addObject("reservationResult", result);

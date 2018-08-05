@@ -536,9 +536,9 @@
 	            }
 	            </script>  	            
 	                
-	            <!-- form action="reservation.do" method="get" name="reserve">
+	           	<form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
-	            </form> -->
+	            </form>
 	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}');">예약하기</button>
 				<button>리뷰쓰기</button>
 			</div>

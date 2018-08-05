@@ -93,5 +93,11 @@ public interface YNMOwnerService {
 
 	// 가게 예약 정보 리스트
 	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(BookSearchVo bookSearch);
+
+	// 등록한 첫번째 가게 인덱스 가져오기
+	public int selectStoreIndex(int ownerIndex);
+
+	// 점주가 취소한 예약, 혹은 자동 취소.
+	public int cancelBookAsOwner(int bookIndex);
 	
 }

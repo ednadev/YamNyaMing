@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,8 @@ import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
 public class YNMOwnerControllerImpl implements YNMOwnerController{
+	
+	
 	@Autowired private ServletContext servletContext;
 
 	@Autowired
@@ -308,6 +311,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		{
 			session.removeAttribute("owner");
 			session.removeAttribute("ownerReCheck");
+			session.invalidate();
 		}
 		return "redirect:/";
 	}
@@ -432,6 +436,20 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return view;
 	}
 	
+	public int currentSelectStoreIndex(HttpSession session)
+	{
+		if(session.getAttribute("currentStoreIndex")!=null)
+		{
+			return Integer.parseInt(session.getAttribute("currentStoreIndex").toString());
+		}else
+		{
+			int ownerIndex = ((YNMOwner)session.getAttribute("owner")).getOwEntirePk();
+			int storeFirstIndex = ynmOwnerServiceImpl.selectStoreIndex(ownerIndex);
+			session.setAttribute("currentStoreIndex", storeFirstIndex);
+			return storeFirstIndex;
+		}
+	}
+	
 	@Override
 	@RequestMapping("/storeManage.do")
 	public ModelAndView storeList(HttpSession session, HttpServletRequest request) {
@@ -450,15 +468,15 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
 			if(storeInfoList.size()>0) {
-				if(request.getParameter("storeIndex")==null) {
-					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
+				if(session.getAttribute("currentStoreIndex")==null) {//request.getParameter("storeIndex")==null) {
 					StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeInfoList.get(0).getOwStoreInfoPk());
 					view.addObject("storeInfoPageData", storeInfoPD);
-					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
+//					view.addObject("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
+					/*가게를 들어가면 점주가 처음 등록한 인덱스를 세션에 저장함.*/
+					session.setAttribute("currentStoreIndex", storeInfoList.get(0).getOwStoreInfoPk());
 				}else
 				{
-					int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
-					view.addObject("currentStoreIndex", storeIndex);
+					int storeIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 					StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
 					view.addObject("storeInfoPageData", storeInfoPD);
 				}
@@ -476,10 +494,10 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			view = storeList(session, request);
-			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			int storeIndex = currentSelectStoreIndex(session);
+			session.setAttribute("currentStoreIndex", storeIndex);
 			StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
 			view.addObject("storeInfoPageData", storeInfoPD);
-			view.addObject("currentStoreIndex", storeIndex);
 			view.setViewName("ynmOwner/storeManagePage");
 		}
 		else
@@ -494,7 +512,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	public ModelAndView storeInfoEdit(HttpSession session, HttpServletRequest request)
 	{
 		StoreInfoPageData storeInfoPD = new StoreInfoPageData();
-		storeInfoPD.setOwStoreInfoPk(Integer.parseInt(request.getParameter("storeIndex")));
+		storeInfoPD.setOwStoreInfoPk(currentSelectStoreIndex(session));
 		storeInfoPD.setOwStoreName(request.getParameter("owStoreName"));
 		storeInfoPD.setOwStoreTel(request.getParameter("owStoreTel"));
 		storeInfoPD.setOwStoreAddr(request.getParameter("owStoreAddr"));
@@ -531,7 +549,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			String storeTapType = request.getParameter("storeTapType");
-			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			int storeIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 			int tapOrder = 0;
 			
 			view = storeManageEnrollList(session, request);
@@ -573,7 +591,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				tapOrder = 4;
 			}
 			
-			view.addObject("currentStoreIndex",storeIndex);
 			view.addObject("storeTapType", tapOrder);
 			view.setViewName("ynmOwner/storeManagePage");
 		}else {
@@ -635,7 +652,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			if(files.size()>0) {
 				String uploadPhotoImg = "";
 				int tapOrder  = 1;
-				int storeInfoIndex = Integer.parseInt(request.getParameter("storeIndex"));
+				int storeInfoIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 				String storeTapType = request.getParameter("storeTapType");
 				String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\headPhoto_");
 				String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeHeadPhoto\\");
@@ -714,7 +731,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			String menu = request.getParameter("menu");
 			String menuPrice = request.getParameter("menuPrice");
 			String menuExplain = request.getParameter("menuExplain");
-			int storeIndex = Integer.parseInt(request.getParameter("storeIndex"));
+			int storeIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 			
 			StoreMenuData storeMenuData = ynmOwnerServiceImpl.storeMenuData(storeIndex); 
 			String menuInfoList = storeMenuData.getMenuInfoList();
@@ -793,7 +810,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			if(files.size()>0) {
 				int tapOrder  = 3;
-				int storeInfoIndex = Integer.parseInt(request.getParameter("storeIndex"));
+				int storeInfoIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 				String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\menuP_");
 				String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
 				StoreMenuData storeMenuData = new StoreMenuData();
@@ -835,7 +852,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view.addObject("menuInfoData", storeMenuData);
 				view.addObject("menuPhotoList", storeHeadPhotoList(4,storeInfoIndex));
 				view.addObject("storeTapType", tapOrder);
-				view.addObject("currentStoreIndex",storeInfoIndex);
 				view.setViewName("ynmOwner/storeManagePage");
 			}
 		}
@@ -848,7 +864,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	{
 		if(session.getAttribute("owner")!=null)
 		{
-			int menuIndex = Integer.parseInt(request.getParameter("menuIndex"));
+			int menuIndex = currentSelectStoreIndex(session);
 			
 			int deleteResult  = ynmOwnerServiceImpl.menuTextDelete(menuIndex);
 			if(deleteResult>0)
@@ -870,30 +886,37 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		JSONArray objArr = new JSONArray();
 		if(session.getAttribute("owner")!=null) {
 			BookSearchVo bookSearch = new BookSearchVo();
-			bookSearch.setStoreIndex(Integer.parseInt(request.getParameter("storeIndex")));
+			bookSearch.setStoreIndex(currentSelectStoreIndex(session));//request.getParameter("storeIndex")));
 			bookSearch.setBookYear(Integer.parseInt(request.getParameter("currentYear")));
 			bookSearch.setBookMonth(Integer.parseInt(request.getParameter("currentMonth")));
 			ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookListLoadWidthStoreIndex(bookSearch);
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-			
 			for(int i = 0; i<bookList.size();i++)
 			{
 				YNMBook book = bookList.get(i);
 				JSONObject obj = new JSONObject();
-				Calendar calendar = GregorianCalendar.getInstance(); 
-				calendar.setTime(book.getBookDate());  
-				; 
-				calendar.get(Calendar.HOUR);        
-				calendar.get(Calendar.MONTH);   
-				obj.put("title" , "[" +book.getBookNo() +"]" + book.getBookName()+"님의 예약");
-				obj.put("start", sdf.format(book.getBookDate()));
-				obj.put("year", calendar.get(Calendar.YEAR));
-				obj.put("month", calendar.get(Calendar.MONTH));
-				obj.put("day", calendar.get(Calendar.DAY_OF_MONTH));
-				obj.put("hour", calendar.get(Calendar.HOUR_OF_DAY));
-				obj.put("minute", calendar.get(Calendar.MINUTE));
-//				obj.put("end",  sdf.format(book.getBookDate()));
-				objArr.add(obj);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+				try {
+					java.util.Date utilDate = sdf.parse(book.getBookDateAndTime2());
+					Calendar calendar = GregorianCalendar.getInstance(); 
+					calendar.setTime(utilDate);  
+					calendar.get(Calendar.HOUR);        
+					calendar.get(Calendar.MONTH);   
+					obj.put("id", book.getBookNo());
+					obj.put("myOrder", (i+1));
+					obj.put("title" ,book.getBookName()+"님의 예약" + "-" +book.getBookNo());
+					obj.put("start", book.getBookDateAndTime2());
+					obj.put("year", calendar.get(Calendar.YEAR));
+					obj.put("month", calendar.get(Calendar.MONTH));
+					obj.put("day", calendar.get(Calendar.DAY_OF_MONTH));
+					obj.put("hour", calendar.get(Calendar.HOUR_OF_DAY));
+					obj.put("minute", calendar.get(Calendar.MINUTE));
+					obj.put("bookType", book.getBookType());
+	//				obj.put("end",  sdf.format(book.getBookDate()));
+					objArr.add(obj);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}else
@@ -902,4 +925,13 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		}
 		return objArr;
 	}
+	@ResponseBody
+	@RequestMapping("/bookCancelOwner.do")
+	public String cancelBookAsOwner(HttpSession session,  HttpServletRequest request)
+	{
+		int bookIndex = Integer.parseInt(request.getParameter("bookIndex"));
+		int result = ynmOwnerServiceImpl.cancelBookAsOwner(bookIndex);
+		return result+"";
+	}
+	
 }

@@ -42,7 +42,7 @@ public interface YNMMemberController {
 	public ModelAndView settingInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	
 	//예약 table
-	public ModelAndView bookInsert(YNMBook yb, HttpSession session);
+	public ModelAndView bookInsert(YNMBook yb, HttpSession session, HttpServletRequest request);
 	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 	//리뷰 table
@@ -61,6 +61,8 @@ public interface YNMMemberController {
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//즐겨찾기 table
 	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
+
 
 
 
