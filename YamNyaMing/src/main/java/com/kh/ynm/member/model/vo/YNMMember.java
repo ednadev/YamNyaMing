@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class YNMMember {
 	private int memberEntireNo;
@@ -20,7 +21,37 @@ public class YNMMember {
 	private int jjimTotal;
 	private int reservationTotal;
 	private int memberPoint;
+	private ArrayList<YNMMember> memberFollowingList;
+	private int likeTotal;
+	private int followChk=0;
+	private int followerChk=0;
 	
+	
+	
+	public int getFollowerChk() {
+		return followerChk;
+	}
+	public void setFollowerChk(int followerChk) {
+		this.followerChk = followerChk;
+	}
+	public int getFollowChk() {
+		return followChk;
+	}
+	public void setFollowChk(int followChk) {
+		this.followChk = followChk;
+	}
+	public int getLikeTotal() {
+		return likeTotal;
+	}
+	public void setLikeTotal(int likeTotal) {
+		this.likeTotal = likeTotal;
+	}
+	public ArrayList<YNMMember> getMemberFollowingList() {
+		return memberFollowingList;
+	}
+	public void setMemberFollowingList(ArrayList<YNMMember> memberFollowingList) {
+		this.memberFollowingList = memberFollowingList;
+	}
 	public int getReservationTotal() {
 		return reservationTotal;
 	}

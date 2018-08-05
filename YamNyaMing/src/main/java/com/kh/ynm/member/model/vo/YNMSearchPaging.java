@@ -2,7 +2,6 @@ package com.kh.ynm.member.model.vo;
 
 import java.util.ArrayList;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class YNMSearchPaging {
 	String keyword;

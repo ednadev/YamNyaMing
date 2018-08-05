@@ -11,13 +11,85 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=3">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=6">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=4"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=6"></script>
 </head>
+<script>
+function openmodal(storeReviewNo){
+	var modal = document.getElementById('myModal');
+	modal.style.display = "block";
+	$.ajax({
+		url : "/likeTotalMemberInfo.do",
+		data : {storeReviewNo:storeReviewNo},
+		dataType:"json",
+		success : function(data){
+		if(data.length>0){
+			$("#likeTotalNum").html(data[0].likeTotal);
+			
+			$(".profile-follow").remove();
+			for(var i=0; i<data.length; i++){
+			var html = '';
+            html += '<div class="profile-follow "id="profile-follow">';
+            if(data[i].memberUploadPhotoNo==1){
+            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/profile.png"></div>';
+            }else{
+            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
+            }
+            html += '<div>';
+            html += '<p>'+data[i].memberNickName+'</p>';
+            html += '<p>'+data[i].reviewTotal+' 리뷰,<label name='+(data[i].memberEntireNo+0.1)+' style="color:black;">'+data[i].followTotal+'</label>  팔로워</p>';
+			if(data[i].followChk==1){
+            html += '<button style="background-color:#fb0; color:white;" name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
+			}else{
+			html += '<button name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
+			}
+            html += '</div>';
+            html += '</div>';
+            $("#Follower").after(html);
+			}
+		}else{
+			$("#likeTotalNum").html("");
+			$(".profile-follow").remove();
+		}
+			
+			
+		}
+	});	
+	
+}
 
+function openImagemodal(storeReviewNo){
+	console.log(storeReviewNo);
+	var modal = document.getElementById('imageModal');
+	modal.style.display = "block";
+	$.ajax({
+		url : "/reviewDetail.do",
+		data : {storeReviewNo:storeReviewNo},
+		dataType:"json",
+		success : function(data){
+  			$("#reviewImageDetail").remove();
+			var html="";
+			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
+			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="width:200%; height:100%; display:block;">';
+			if(data.length>1){
+			for(var i=1; i<data.length; i++){
+				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="width:200%; height:100%; display:none;">';
+			}	
+			}
+		html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
+		html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
+		html+='</div>';
+		$("#reviewDetail").append(html);	 
+				 
+			
+		}
+	});	
+	
+}
+</script>
 <body>
 <header id="member-search-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
@@ -317,73 +389,6 @@
 			  <a class="row-next" onclick="plusSlidesPhoto(1)">❯</a>
 			</div>
 		
-		<script>
-		
-        	var locked=0;
-			function show(star){
-			if(locked)
-				return;
-			var image;
-			var el;
-			var e=document.getElementById('startext');
-			var stateMsg;
-			
-			for(var i=0; i<star; i++){
-				image='image' +i;
-				var image2=document.getElementById(image);
-		        image2.src="${pageContext.request.contextPath}/resources/image/member/search/star-full.png";
-			}
-			switch(star){
-			case 1:
-				stateMsg="실망이에요. 집에서 먹는게 나을 뻔 했어요.";
-				break;
-			case 2:
-				stateMsg="평균이하! 이정도 레스토랑은 어디에나 있죠.";
-				break;
-			case 3:
-				stateMsg="보통이에요. 이정도면 괜찮네요.";
-				break;
-			case 4:
-				stateMsg="인상적이네요.꼭 추천하고 싶어요.";
-				break;
-			case 5:
-				stateMsg="완벽 그 자체!! 환상적이에요.";
-				break;
-			default:
-				stateMsg="";
-			}
-			e.innerHTML=stateMsg;
-			
-		} 
-		function noshow(star){
-			if(locked)
-				return;
-			var image;
-			var el;
-			for(var i=0; i<star; i++);{
-				image='image'+i;
-				el=document.getElementById(image);
-				el.src="${pageContext.request.contextPath}/resources/image/member/search/star.png";
-			}
-		}
-		var chk=false;
-		function lock(star){
-			if(chk=false){
-			show(star);
-			locked=1;
-			chk=true;
-			}else{
-			locked=0;
-			}
-		}
-		function starPoint(star){
-			lock(star);
-			document.reviewform.reviewStar.value=star;
-		}
-		
-
-
-      </script>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">
 			<form action="/storeReviewInsert.do" enctype="multipart/form-data" method="post" name="reviewform">
@@ -427,10 +432,10 @@
 			</tbody>
 			</table>
 			<c:if test="${sessionScope.member != null }">
-			<button>리뷰 올리기</button>
+			<button id="reviewInsert">리뷰 올리기</button>
 			</c:if>
 			<c:if test="${sessionScope.member == null }">
-				<input type="button" value="리뷰 올리기"  style="background-color: #fb0; border: none; color: white;width: 100%;height: 40px; margin-top: 20px;font-size: 1em; font-weight: bold; cursor: pointer;"onclick="nomember();">
+			<input type="button" value="리뷰 올리기"  style="background-color: #fb0; border: none; color: white;width: 100%;height: 40px; margin-top: 20px;font-size: 1em; font-weight: bold; cursor: pointer;"onclick="nomember();">
 			</c:if>
 			</form>
 			<h4>리뷰</h4>
@@ -442,33 +447,24 @@
 				<div>
 					<div id="profile-image">
 						<c:if test="${r.memberUploadPhotoNo eq 1}">
-						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
 						</c:if>
 						<c:if test="${r.memberUploadPhotoNo ne 1}">	
-						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}">
 						</c:if>
 					</div>
 					<div>
 						<p>${r.memberNickName}</p>
-						<p>리뷰${r.reviewTotal},팔로워<label id="${r.memberEntireNo + 1}" name="${r.memberEntireNo + 1}" style="color:black;">${r.followTotal}</label></p>				
+						<p>리뷰${r.reviewTotal},팔로워<label name="${r.memberEntireNo + 0.1}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
-					<c:if test="${follow!=null }">
-						<c:forEach items="${follow}" var="f">
-						<c:choose>
-							<c:when test="${f.followMemberIdNo==r.memberEntireNo}">
-							<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>
-							</c:when>
-							<c:otherwise>
-							<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>
-							</c:otherwise>
-						</c:choose>	
-						</c:forEach>
+					<c:if test="${r.myfollowChk==0}">
+						<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
+					</c:if>
+					<c:if test="${r.myfollowChk==1}">
+					<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
 					</c:if>
 					
 				
-					<c:if test="${follow==null && sessionScope.member!=null}">
-				 		<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 1}');">팔로우</button>				
-					</c:if>
 					
 					<c:if test="${sessionScope.member.memberEntireNo==null}">
 					<button onclick="nomember();">팔로우</button>
@@ -508,19 +504,19 @@
 					<c:forEach items="${r.photoObjList}" var="photo">
 						<div>
 	
-							<img id="img" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
+							<img onclick="openImagemodal('${r.storeReviewNo}');" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
 						</div>
 						</c:forEach>
 					</div>
 					
 					
 					
-					<p onclick="likeTotalMemberInfo('${r.storeReviewNo}','${r.likeTotal}');" style="cursor:pointer;">
+					<p onclick="openmodal('${r.storeReviewNo}');" style="cursor:pointer;">
 					<c:if test="${r.memberLikeInfo!=null}">
 						<c:forEach items='${r.memberLikeInfo}' var="li" >
 						<label>${li.memberName}</label>
 						</c:forEach>
-						<c:if test="${r.likeTotal >3}">
+						<c:if test="${r.likeTotal >=3}">
 						님 외 ${r.likeTotal - 2}명이 좋아합니다.
 						</c:if>
 						<c:if test="${r.likeTotal <= 2}">
@@ -672,9 +668,54 @@
 			});  */
 			</script>
 		</div>
+
+			<div id="myModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closemodal();">&times;</span>
+					<div class="tab">
+						<button class="likemodaltablink click">이 댓글을 좋아하는 사람들<label id="likeTotalNum"></label> </button>
+					</div>
+					<div id="Follower" class="likemodaltabInfo">
 	
-	</div>
-</section>
+					</div>
+			</div>
+
+		</div>
+				<script>
+					var slideIndex = 1;
+					showreviewDivs(slideIndex);
+					function plusreviewDivs(n){
+						showreviewDivs(slideIndex += n);
+					}
+					function showreviewDivs(n){
+						var i;
+						var x = document.getElementsByClassName("reviewImages");
+						if(n>x.length){slideIndex = 1}
+						if(n<1){slideIndex = x.length}
+						for(i=0;i<x.length;i++){
+							x[i].style.display = "none";
+						}
+						x[slideIndex-1].style.display = "block";
+					}
+				</script>
+
+			<div id="imageModal" class="modal">
+				<div class="imagemodal-content">
+					<span class="close" onclick="closeimagemodal();">&times;</span>
+					<div class="tab">
+						<button class="likemodaltablink click">댓글에 등록된 사진</button>
+					</div>
+					<div id="Follower" class="likemodaltabInfo">
+							<div id="reviewDetail">
+		
+							</div>
+							<div id="reviewContentDetail"></div> 
+					</div>
+			</div>
+
+		</div>				
+								 
+			</section>
 
 <footer id="member-main-footer">
 	<div>

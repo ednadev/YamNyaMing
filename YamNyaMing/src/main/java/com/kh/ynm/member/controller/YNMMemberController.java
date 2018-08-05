@@ -30,18 +30,18 @@ public interface YNMMemberController {
 	public Object memberInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	public ModelAndView updateMemberPhoto(MultipartFile file, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response);
-	public String updateMember(MultipartFile file, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response);
 	public String idCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String nickCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String emailCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	public String passwordUpdateMember(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView pwChange(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+	public ModelAndView nickNameChange(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	public ModelAndView idSearch(HttpServletRequest request, HttpServletResponse response);
 	public ModelAndView pwSearch(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	public String setting(HttpSession session, HttpServletRequest request, HttpServletResponse response);
-	public ModelAndView settingInfo(HttpSession session, HttpServletRequest request, HttpServletResponse response);
-	
+	public String pwCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	//예약 table
+	
 	public ModelAndView bookInsert(YNMBook yb, HttpSession session);
 	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
@@ -49,7 +49,7 @@ public interface YNMMemberController {
 	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
-	
+	public String reviewDetail(HttpServletRequest request, HttpSession session);
 	//대댓글 table
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			YNMStoreUnderReview ysur);
@@ -61,6 +61,12 @@ public interface YNMMemberController {
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//즐겨찾기 table
 	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
+
+
+
+	
+
 
 
 
