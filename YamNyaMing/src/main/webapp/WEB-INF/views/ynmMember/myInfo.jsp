@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=7">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=1">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
 </head>
@@ -153,13 +153,13 @@
 	<div>
 		<div class="member-myinfo-wrapper">
 			<form action="/updateMemberPhoto.do" method="post" enctype="multipart/form-data">
-			<label id="profile-img" for="input_avatarPhoto">
-			<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'>
-			
-			</label>
-			
-			<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
-			<input type="submit" value="변경">
+				<label id="profile-img" for="input_avatarPhoto">
+				<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'>
+				
+				</label>
+				
+				<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
+				<input type="submit" value="변경">
 			</form>
 			<div>
 				<h2>${info.memberName}</h2>
@@ -307,16 +307,40 @@
 		    <button class="tablink" onclick="openTab(event,'Setting')">설정</button>
 		</div>
 		<div id="Reservation" class="tabInfo">	
-			<h3>방문 예정 예약</h3>
-			<h3>지나간 예약</h3>	
+			<div class="tab-reservation">
+				<button class="tablink-reservation click" onclick="openReservationTab(event,'visitedReservation')">방문 예정 예약</button>
+				<button class="tablink-reservation" onclick="openReservationTab(event,'goneReservation')">지나간 예약</button>
+			</div>
+			<div id="visitedReservation" class="tabInfo-reservation">
+				방문 예정 예약
+			</div>
+			<div id="goneReservation" class="tabInfo-reservation">
+				지나간 예약
+			</div>	
 		</div>
-		<div id="Coupon" class="tabInfo" style="display:none;">			
-			<h3>사용 예정 티켓</h3>
-			<h3>이미 사용한 티켓</h3>	
+		<div id="Coupon" class="tabInfo" style="display:none;">	
+			<div class="tab-coupon">
+				<button class="tablink-coupon click" onclick="openCouponTab(event,'usedCoupon')">사용 예정 쿠폰</button>
+				<button class="tablink-coupon" onclick="openCouponTab(event,'goneCoupon')">이미 사용한 쿠폰</button>
+			</div>
+			<div id="usedCoupon" class="tabInfo-coupon">
+				사용 예정 쿠폰
+			</div>
+			<div id="goneCoupon" class="tabInfo-coupon">
+				이미 사용한 쿠폰
+			</div>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">	
-			<h3>내가 쓴 리뷰</h3>
-			<h3>찜한 리뷰</h3>	
+			<div class="tab-review">
+				<button class="tablink-review click" onclick="openReviewTab(event,'writeReview')">내가 쓴 리뷰</button>
+				<button class="tablink-review" onclick="openReviewTab(event,'jjimReview')">찜한 리뷰</button>
+			</div>
+			<div id="writeReview" class="tabInfo-review">
+				내가 쓴 리뷰
+			</div>
+			<div id="jjimReview" class="tabInfo-review">
+				찜한 리뷰
+			</div>		
 		</div>
 		<div id="Like" class="tabInfo" style="display:none;">
 		<script>

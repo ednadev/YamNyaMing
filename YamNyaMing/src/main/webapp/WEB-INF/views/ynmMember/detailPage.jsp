@@ -11,10 +11,10 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=6">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=7">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
+
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=4"></script>
 </head>
 
@@ -442,8 +442,6 @@ function showSlides(n) {
 				<p><span>최신순</span> | <span>인기순</span></p>				
 			</c:if>
 
-			
-
 				<c:forEach items="${review}" var="r">
 			<div>
 				<div>
@@ -635,12 +633,16 @@ function showSlides(n) {
 			</c:forEach>
 		</div>
 		<div id="Menu" class="tabInfo" style="display:none;">
-			${menu }
+			  <c:forEach items="${menuImg}" var="menuImg" begin="0" varStatus="status" end="${menuSize}">
+			    <div class="menu-photo" style="background-image:url('${pageContext.request.contextPath}/${menuImg.owPhotoRoute}');">
+			    </div>
+			  </c:forEach>	  
 		</div>
 		<div id="Map" class="tabInfo" style="display:none;">
 			<div id="map-info"></div>
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 			<script>
-/* 			//지도
+			//지도
 			var mapContainer = document.getElementById('map-info'), // 지도를 표시할 div 
 			mapOption = {
 			    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -649,6 +651,9 @@ function showSlides(n) {
 
 			//지도를 생성합니다    
 			var map = new daum.maps.Map(mapContainer, mapOption); 
+			
+			
+/* 			
 
 			//주소-좌표 변환 객체를 생성합니다
 			var geocoder = new daum.maps.services.Geocoder();

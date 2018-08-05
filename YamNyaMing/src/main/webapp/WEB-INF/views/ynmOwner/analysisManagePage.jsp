@@ -34,7 +34,68 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
-	
+	<section>
+			<div id="main-section-stat">
+				<h4>통계</h4>
+				<div>
+					<canvas id="gender-chart"></canvas>
+					<canvas id="year-chart"></canvas>
+					<canvas id="time-chart"></canvas>
+				</div>
+				<script>
+				new Chart(document.getElementById("gender-chart"), {
+				    type: 'pie',
+				    data: {
+				      labels: ["남자", "여자"],
+				      datasets: [{
+				    	label: "성별",
+				        backgroundColor: ["#64B5F6", "#E57373"],
+				        data: [2005,3006]
+				      }]
+				    },options: {
+				      title: {
+				        display: true,
+				        text: '성별'
+				      }
+				    }
+				});	
+				new Chart(document.getElementById("year-chart"), {
+				    type: 'pie',
+				    data: {
+				      labels: ["10대","20대","30대","40대","50대","60대 이상"],
+				      datasets: [{
+				        label: "연령대별",
+				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
+				        data: [2005,3006,1200,4003,2000,1342]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: false,
+				        text: '연령별'
+				      }
+				    }
+				});		
+				new Chart(document.getElementById("time-chart"), {
+				    type: 'bar',
+				    data: {
+				      labels: ["3-7시","7-11시","11-15시","15-19시","19-23시","23-3시"],
+				      datasets: [{
+				        label: "시간대별",
+				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
+				        data: [2005,3006,1200,4003,2000,1342]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: false,
+				        text: '시간대별'
+				      }
+				    }
+				});					
+				</script>
+			</div>		
+	</section>
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>
