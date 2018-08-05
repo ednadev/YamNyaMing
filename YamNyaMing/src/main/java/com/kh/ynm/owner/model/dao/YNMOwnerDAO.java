@@ -45,5 +45,5 @@ public interface YNMOwnerDAO {
 	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex);
 	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch);
 	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, int ownerIndex);
-	public int cancelBookAsOwner(SqlSessionTemplate sqlSession, int bookIndex);
+	public int cancelBookAsOwner(SqlSessionTemplate sqlSession, YNMBook bookVo);
 }

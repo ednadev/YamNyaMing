@@ -6,7 +6,7 @@
 	<insert id="bookInfo">
 		insert into member_book_tb values(member_book_tb_SEQ.nextval,#{memberEntireNo},#{storeEntireNo},
 																		sysdate,#{bookOrderCount},#{bookPartyCount},
-																		#{bookType},#{bookOption},1,#{bookDeposit},
+																		#{bookType},#{bookOption},'w',#{bookDeposit},
 																		(TO_DATE(#{bookDateAndTime2},'yyyy/mm/dd hh24:mi')))
 	</insert>
 	

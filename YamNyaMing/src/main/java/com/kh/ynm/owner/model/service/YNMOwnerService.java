@@ -98,6 +98,6 @@ public interface YNMOwnerService {
 	public int selectStoreIndex(int ownerIndex);
 
 	// 점주가 취소한 예약, 혹은 자동 취소.
-	public int cancelBookAsOwner(int bookIndex);
+	public int cancelBookAsOwner(YNMBook bookVo);
 	
 }

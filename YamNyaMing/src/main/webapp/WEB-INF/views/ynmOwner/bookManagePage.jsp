@@ -8,14 +8,14 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/bookManagePage.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/bookManagePage.css?ver=3">
 <link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.min.css?ver=3" />
 <link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.print.min.css?ver=3" media='print' />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=2"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=3"></script>
 
 <script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/moment.min.js"></script>
 <script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/jquery.min.js?ver=1"></script>
@@ -57,6 +57,7 @@
 	</nav>
 	
 	<!-- 일반 손님 웨이팅 -->
+	<button onclick="watingListLoad();">새로고침(1분마다 새로고침 됩니다.)</button>
  	<div id="waitingList">
            
  	</div>

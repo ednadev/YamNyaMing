@@ -285,8 +285,8 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	}
 	
 	@Override
-	public int cancelBookAsOwner(int bookIndex) {
-		return ynmOwnerDAO.cancelBookAsOwner(sqlSession, bookIndex);
+	public int cancelBookAsOwner(YNMBook bookVo) {
+		return ynmOwnerDAO.cancelBookAsOwner(sqlSession, bookVo);
 	}
 
 

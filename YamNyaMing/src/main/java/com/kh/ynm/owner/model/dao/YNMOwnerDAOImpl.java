@@ -163,8 +163,8 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	}
 
 	@Override
-	public int cancelBookAsOwner(SqlSessionTemplate sqlSession, int bookIndex) {
-		return sqlSession.delete("stores.cancelBookAsOwner", bookIndex);
+	public int cancelBookAsOwner(SqlSessionTemplate sqlSession,YNMBook bookVo) {
+		return sqlSession.update("stores.changeBookState", bookVo);
 	}
 
 }

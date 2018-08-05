@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ynm.common.controller.CommonControllerImpl;
 import com.kh.ynm.common.model.vo.YNMTotalRefModel;
 import com.kh.ynm.member.model.vo.YNMBook;
 import com.kh.ynm.member.model.vo.YNMMember;
@@ -889,6 +890,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			bookSearch.setStoreIndex(currentSelectStoreIndex(session));//request.getParameter("storeIndex")));
 			bookSearch.setBookYear(Integer.parseInt(request.getParameter("currentYear")));
 			bookSearch.setBookMonth(Integer.parseInt(request.getParameter("currentMonth")));
+			bookSearch.setBookType(request.getParameter("bookType").charAt(0));
 			ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookListLoadWidthStoreIndex(bookSearch);
 			for(int i = 0; i<bookList.size();i++)
 			{
@@ -903,7 +905,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					calendar.get(Calendar.MONTH);   
 					obj.put("id", book.getBookNo());
 					obj.put("myOrder", (i+1));
-					obj.put("title" ,book.getBookName()+"님의 예약" + "-" +book.getBookNo());
+					obj.put("title" ,book.getBookName()+"님의 예약" + "-" +book.getBookNo() + "-" + book.getBookOption());
 					obj.put("start", book.getBookDateAndTime2());
 					obj.put("year", calendar.get(Calendar.YEAR));
 					obj.put("month", calendar.get(Calendar.MONTH));
@@ -911,6 +913,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					obj.put("hour", calendar.get(Calendar.HOUR_OF_DAY));
 					obj.put("minute", calendar.get(Calendar.MINUTE));
 					obj.put("bookType", book.getBookType());
+					obj.put("bookState", YNMTotalRefModel.bookState(book.getBookState()));
 	//				obj.put("end",  sdf.format(book.getBookDate()));
 					objArr.add(obj);
 				} catch (ParseException e) {
@@ -930,8 +933,14 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	public String cancelBookAsOwner(HttpSession session,  HttpServletRequest request)
 	{
 		int bookIndex = Integer.parseInt(request.getParameter("bookIndex"));
-		int result = ynmOwnerServiceImpl.cancelBookAsOwner(bookIndex);
+		String bookReason = request.getParameter("bookOption");
+		String bookState = request.getParameter("bookState");
+		System.out.println(bookState);
+		YNMBook bookVo = new YNMBook();
+		bookVo.setBookNo(bookIndex);
+		bookVo.setBookOption(bookReason);
+		bookVo.setBookState(bookState.charAt(0));
+		int result = ynmOwnerServiceImpl.cancelBookAsOwner(bookVo);
 		return result+"";
 	}
-	
 }

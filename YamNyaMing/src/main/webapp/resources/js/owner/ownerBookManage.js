@@ -1,24 +1,133 @@
-/**
- * 
- */
 var calendar;
-var waitingList;
 var events = [];
-
+var bookMap;
 $(document).ready(function() {
+	bookMap = new Map();
+	watingListLoad();
 	bookListLoad();
-
 });
 
-
+function watingListLoad()
+{
+	$.ajax({
+		url:"/bookListInStore.do",
+		data : {
+				bookType:'s',
+				currentYear:'2018',
+				currentMonth:'8'
+		   },
+		type : "post",
+		success : function(data){
+			$('#waitingList').html("");
+			for(var i = 0; i<data.length;i++)
+			{
+				bookMap.set(i, data);
+				var tempWating ="";
+				if(i>0)tempWating+='<a href="#" class="bookCard"><ul id="bookInfo">';
+				else tempWating +='<a href="#" id="bookCard-first"><ul id="bookInfo">'
+				tempWating +=
+				'<li style="width:10%;"><h3>대기 번호 : '+ data[i].myOrder+'</h3></li>'+
+				'<li style="width:45%;"><h3>'+ data[i].title.split("-")[0]+'</h3></li>'+
+				'<li style="width:15%;"><button class="watinInnerBtn" onclick="callNext();"><h2>'+data[i].bookState+'</h2></button></li>'+
+				'<li style="width:15%;"><button class="watinInnerBtn" id="'+i+'_ready"><h2>입장 대기로 전환</h2></button></li>'+
+				'<li style="width:15%;"><button class="watinInnerBtn" id="'+i+'"><h2>예약 취소</h2></button></li>'+
+				'</ul></a>';
+				$('#waitingList').append(tempWating);
+				
+				var titleTemp = bookMap.get(i)[i].title.split("-")[0];
+				var indexTemp = bookMap.get(i)[i].id;
+				
+				$('#'+i).click(function(){
+					var deleteConfirm = confirm(titleTemp + "을 취소 하시겠습니까?");
+			    	if(deleteConfirm)
+					{
+			    		$.ajax({
+			    			url:"/bookCancelOwner.do",
+			    			data : {
+			    					bookIndex:indexTemp,
+			    					bookState:'f',
+			    					bookOption:"점주가 취소했습니다."
+			    			   },
+			    			type : "post",
+			    			success : function(data){
+			    				if(data==1){
+			    					$('#calendar').fullCalendar('removeEvents',event._id);
+			    					watingListLoad();
+			    				}
+			    				else{
+			    					alert("예약 삭제에 실패했습니다.");
+			    				} 
+			    			},
+			        		error : function(){
+			        			console.log("실패");	
+			        		}
+			        	});
+					}
+				});
+				$('#'+i +'_ready').click(function(){
+					console.log("예약대기상태");
+		    		$.ajax({
+		    			url:"/bookCancelOwner.do",
+		    			data : {
+		    					bookIndex:indexTemp,
+		    					bookState:'r',
+		    					bookOption:"입장 대기 상태입니다."
+		    			   },
+		    			type : "post",
+		    			success : function(data){
+		    				if(data==1){
+		    					$('#calendar').fullCalendar('removeEvents',event._id);
+		    					watingListLoad();
+		    				}
+		    				else{
+		    					alert("예약 삭제에 실패했습니다.");
+		    				} 
+		    			},
+		        		error : function(){
+		        			console.log("실패");	
+		        		}
+		        	});
+				});
+//				var nowDate = new Date();
+//				setTimeout(function(){
+//						$.ajax({
+//			    			url:"/bookWaitTimerSet.do",
+//			    			data : {
+//			    					bookIndex:indexTemp,
+//			    					bookState:'w',
+//			    					bookOption:"점주가 취소했습니다."
+//			    			   },
+//			    			type : "post",
+//			    			success : function(data){
+//			    				if(data==1){
+//			    					watingListLoad();
+//			    				}
+//			    				else{
+//			    					alert("예약 상태 변경에 실패했습니다.");
+//			    				} 
+//			    			},
+//			        		error : function(){
+//			        			console.log("실패");	
+//			        		}
+//			        	});
+//					}, new Date(data[i].start).getTime() - nowDate.getTime()
+//				);
+			}
+			console.log(bookMap.get(0));
+		},
+		error : function(){
+			console.log("실패");	
+		}
+	});
+}
 
 function bookListLoad()
 {
-	waitingList = $('#waitingList');
 	var bookList="";
 	$.ajax({
 		url:"/bookListInStore.do",
 		data : {
+				bookType:'g',
 				currentYear:'2018',
 				currentMonth:'8'
 		   },
@@ -26,26 +135,15 @@ function bookListLoad()
 		success : function(data){
 			for(var i = 0; i<data.length;i++)
 			{
-				if(data[i].bookType=='s'){
-					events.push({
-						id:data[i].id,
-			            title:  data[i].title,
-			            start: new Date(data[i].start),//.year,data[i].month,data[i].day,data[i].hour,data[i].minute),//data[i].start,
-			            allDay: false
-			          }); 
-				}else
-				{
-					var tempWating = '<ul>'+
-					'<li><a href="/ownerInfo.do">정보 관리</a></li>'+
-					'<li><a href="/ownerInfo.do">정보 관리</a></li>'+
-					'<li><a href="/ownerInfo.do">정보 관리</a></li>'+
-					'<li><a href="/analysisOwner.do">통계 관리</a></li>';
-					watingList.append(tempWating);
-				</ul>
-				}
+				events.push({
+					id:data[i].id,
+		            title:  data[i].title,
+		            start: new Date(data[i].start),//.year,data[i].month,data[i].day,data[i].hour,data[i].minute),//data[i].start,
+		            allDay: false
+		          }); 
 			}
 			
-			calendar = $('#calendar').fullCalendar({
+			 $('#calendar').fullCalendar({
 				header: {
 					left: 'prev,next today',
 					center: 'title',
@@ -95,9 +193,10 @@ function bookListLoad()
 		            	var bookIndex =element[0].children[0].children[1].children[0].children[0].innerHTML;
 		            	var bookTitle = bookIndex.split("-")[0];
 		            	bookIndex = bookIndex.split("-")[1];
+		            	
 		            	var deleteConfirm = confirm(bookTitle + "을 취소 하시겠습니까?");
 		            	if(deleteConfirm)
-	            		{
+		        		{
 		            		$.ajax({
 		            			url:"/bookCancelOwner.do",
 		            			data : {
@@ -107,16 +206,17 @@ function bookListLoad()
 		            			success : function(data){
 		            				if(data==1){
 		            					$('#calendar').fullCalendar('removeEvents',event._id);
+		            					bookListLoad();
 		            				}
 		            				else{
 		            					alert("예약 삭제에 실패했습니다.");
 		            				} 
 		            			},
-			            		error : function(){
-			            			console.log("실패");	
-			            		}
-			            	});
-	            		}
+		                		error : function(){
+		                			console.log("실패");	
+		                		}
+		                	});
+		        		}
 		            });
 		        },
 				editable: false,
@@ -127,5 +227,33 @@ function bookListLoad()
 			console.log("실패");	
 		}
 	});
-		
+	
+	
+	function deleteBook(bookTitle, bookIndex, delType )
+	{
+		var deleteConfirm = confirm(bookTitle + "을 취소 하시겠습니까?");
+    	if(deleteConfirm)
+		{
+    		$.ajax({
+    			url:"/bookCancelOwner.do",
+    			data : {
+    					bookIndex:bookIndex
+    			   },
+    			type : "post",
+    			success : function(data){
+    				if(data==1){
+    					$('#calendar').fullCalendar('removeEvents',event._id);
+    					if(delType==0) watingListLoad();
+    					else bookListLoad();
+    				}
+    				else{
+    					alert("예약 삭제에 실패했습니다.");
+    				} 
+    			},
+        		error : function(){
+        			console.log("실패");	
+        		}
+        	});
+		}
+	}
 }

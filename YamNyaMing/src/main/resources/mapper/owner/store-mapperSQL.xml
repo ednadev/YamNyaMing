@@ -213,7 +213,8 @@
 			where mn.mb_entire_pk = mb.MB_ENTIRE_FK) as bookname,
 			to_char(mb_book_date_time,'YYYY-MM-DD HH24:MI') as bookDateAndTime2
 		from member_book_tb mb
-		where STORE_ENTIRE_FK = #{storeIndex}
+		where STORE_ENTIRE_FK = #{storeIndex} and MB_BOOK_TYPE = #{bookType}
+		and MB_BOOK_STATE in ('r','w','g')
 	</select>
 	
 	<select id="storeIndexWithOwIndex" resultType="int">
@@ -222,8 +223,11 @@
 		where ow_entire_fk = #{ownerIndex}
 	</select>
 	
-	<delete id="cancelBookAsOwner">
-		delete from member_book_tb where MB_BOOK_PK = #{bookIndex} 
-	</delete>
+	<update id="changeBookState" parameterType="books">
+		update member_book_tb
+		set MB_BOOK_OPTION = #{bookOption},
+		MB_BOOK_STATE = #{bookState}
+		where MB_BOOK_PK = #{bookNo} 
+	</update>
 	
 </mapper>
