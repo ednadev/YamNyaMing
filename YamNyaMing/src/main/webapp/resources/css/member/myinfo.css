@@ -508,7 +508,8 @@
 	margin:0px 7px;
 	padding:7px;
 }
-.search-result>.search-result-text>div>.star{
+.search-result>.search-result-text>div>.star
+{
 	background-image:url('../../image/member/search/star.png');
 	background-size:cover;
 	background-position:center;
@@ -516,6 +517,15 @@
 	height:20px;
 	display:inline-block;
 }
+.search-result>.search-result-text>div>.star-full{
+	background-image:url('../../image/member/search/star-full.png');
+	background-size:cover;
+	background-position:center;
+	width:20px;
+	height:20px;
+	display:inline-block;
+}
+
 .search-result>.search-result-text>div>.star-result{
 	border:1px solid #fb0;
 	display:inline-block;

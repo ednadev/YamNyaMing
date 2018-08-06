@@ -5,4 +5,21 @@
 	<insert id="storeUnderReviewInsert"> 
 		insert into member_store_under_review_tb values(member_store_under_review__SEQ.nextval,#{storeReviewNo},#{memberEntireNo},#{underReviewContent},sysdate,'n')
 	</insert>
+	
+	<select id="underReviewAll" resultType="underReviews">
+	select
+		mb_store_under_review_pk as underReviewNo,
+		mb_store_review_fk as storeReviewNo,
+		mb_entire_fk as memberEntireNo,
+		mb_store_under_review_content as underReviewContent,
+		mb_store_under_review_date as underReviewDate,
+		mb_review_state as reviewState,
+		mb_photo_view_route as photoViewRoute,
+		mb_upload_photo_pk as memberUploadPhotoNo,
+		mb_nickname as memberNickName
+		 from member_store_under_review_tb,member_entire_tb,member_upload_photo_tb
+        where mb_entire_fk=mb_entire_pk and mb_upload_photo_pk=mb_upload_photo_fk and mb_store_review_fk=#{storeReviewNo}
+		
+		
+	</select>
 </mapper>

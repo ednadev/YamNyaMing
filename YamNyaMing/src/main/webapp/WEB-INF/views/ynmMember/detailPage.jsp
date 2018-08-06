@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=6">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=7">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -28,7 +28,6 @@ function openmodal(storeReviewNo){
 		success : function(data){
 		if(data.length>0){
 			$("#likeTotalNum").html(data[0].likeTotal);
-			
 			$(".profile-follow").remove();
 			for(var i=0; i<data.length; i++){
 			var html = '';
@@ -70,6 +69,7 @@ function openImagemodal(storeReviewNo){
 		data : {storeReviewNo:storeReviewNo},
 		dataType:"json",
 		success : function(data){
+			console.log(data);
   			$("#reviewImageDetail").remove();
 			var html="";
 			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
@@ -462,10 +462,11 @@ function showSlides(n) {
 						<p>${r.memberNickName}</p>
 						<p>리뷰${r.reviewTotal},팔로워<label name="${r.memberEntireNo + 0.1}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
-					<c:if test="${r.myfollowChk==0}">
+				
+					<c:if test="${r.myfollowChk==0 && sessionScope.member.memberEntireNo!=null}">
 						<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
 					</c:if>
-					<c:if test="${r.myfollowChk==1}">
+					<c:if test="${r.myfollowChk==1 && sessionScope.member.memberEntireNo!=null}">
 					<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
 					</c:if>
 					
@@ -474,7 +475,6 @@ function showSlides(n) {
 					<c:if test="${sessionScope.member.memberEntireNo==null}">
 					<button onclick="nomember();">팔로우</button>
 					</c:if>
-					
 				</div>
 				<div>
 					<p>
@@ -604,6 +604,39 @@ function showSlides(n) {
 					</c:if>
 
   				</div>
+  				
+  				<script>
+  						function insertUnderReview(storeReviewNo,memberEntireNo){
+  						var underReviewContent=$("#underReviewContent").val();
+  						
+  					 		$.ajax({
+  								url : "/storeUnderReviewInsert.do",
+  								data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
+  								success : function(data){
+									location.reload();
+  								}
+  							});
+  						}
+  				</script>
+  				<c:forEach items="${r.ysurList}" var="under">
+  				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
+  				<div>
+  					<div>
+						<c:if test="${under.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
+						</c:if>
+  					</div>
+  						<label>${under.memberNickName}</label>
+  				
+  					<input type="text" id="underReviewContent" name="underReviewContent" value="${under.underReviewContent}" readonly>
+  					
+  				</div>
+  				</c:if>
+  				</c:forEach>
+  				
   				<div>
   					<div>
   						<c:if test="${sessionScope.member==null }">
@@ -615,16 +648,17 @@ function showSlides(n) {
   						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo!=1}">
   							<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
   						</c:if>
-  						
   					</div>
-  					
-  					<form action="/storeUnderReviewInsert.do">
+  				
+  				
   					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
 					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
-  					<input type="text" name="underReviewContent" placeholder="댓글을 입력해주세요">
-  					<input type="submit" value="등록">
-  					</form>
+  					<input type="text" id="underReviewContent" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<input type="button" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
+  				
+
   				</div>
+  				
 			</div>
 			</c:forEach>
 		</div>

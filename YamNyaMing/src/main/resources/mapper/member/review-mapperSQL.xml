@@ -189,7 +189,7 @@
 	
 	<select id="starAvg" resultType="search">
 		select 
-			ow_store_review_star as starPoint
+		round(avg(ow_store_review_star),1) as starAvg
 		from member_store_review_tb
 		where ow_store_info_fk=#{owStoreInfoPk}
 	</select>

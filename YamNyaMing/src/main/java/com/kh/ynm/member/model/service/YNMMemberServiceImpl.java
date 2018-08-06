@@ -311,9 +311,9 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMMember> list = memberDAO.likeTotalMemberInfo(sqlSession,storeReviewNo);
 		return list;
 	}
-	public ArrayList<YNMSearch> starAvg(int owStoreInfoPk) {
-		ArrayList<YNMSearch> list=memberDAO.starAvg(sqlSession,owStoreInfoPk);
-		return list;
+	public YNMSearch starAvg(int owStoreInfoPk) {
+		YNMSearch ys=memberDAO.starAvg(sqlSession,owStoreInfoPk);
+		return ys;
 	}
 	//즐겨찾기 체크
 	public int favoriteChk(YNMFavorite yf) {
@@ -376,6 +376,10 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	public YNMStoreReview reviewDetail(String parameter) {
 		YNMStoreReview ysr=memberDAO.reviewDetail(sqlSession,parameter);
 		return ysr;
+	}
+	public ArrayList<YNMStoreUnderReview> underReview(int storeReviewNo) {
+		ArrayList<YNMStoreUnderReview> ysurList=memberDAO.underReview(sqlSession,storeReviewNo);
+		return ysurList;
 	}
 
 
