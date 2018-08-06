@@ -27,8 +27,15 @@ public class YNMStoreReview {
 	private ArrayList<YNMMember> memberLikeInfo=new ArrayList<YNMMember>();
 	private int myLikeChk = 0;
 	private int myJjimChk = 0;
+	private int myfollowChk = 0;
 	
 	
+	public int getMyfollowChk() {
+		return myfollowChk;
+	}
+	public void setMyfollowChk(int myfollowChk) {
+		this.myfollowChk = myfollowChk;
+	}
 	public String getMemberName() {
 		return memberName;
 	}

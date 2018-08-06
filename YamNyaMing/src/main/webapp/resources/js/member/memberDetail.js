@@ -197,3 +197,110 @@ function nomember(){
 function sameMember(){
 	alert("나쁜놈");
 }
+
+
+function closemodal(){
+	var modal = document.getElementById('myModal');
+	modal.style.display = "none";
+}
+function closeimagemodal(){
+	var modal = document.getElementById('imageModal');
+	modal.style.display = "none";
+}
+window.onclick = function(event) {
+	var modal = document.getElementById('myModal');
+	   if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+}
+window.onclick = function(event) {
+	var modal = document.getElementById('imageModal');
+	   if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+}
+
+//별점
+var starCheck=false;
+var locked=0;
+$(document).click(function() {
+    $("#reviewInsert").attr('disabled', true);
+        if(starCheck==true) {
+            $("#reviewInsert").attr('disabled' , false);
+        }else{
+            $("#reviewInsert").attr('disabled' , true);
+
+        }
+});
+$(document).keyup(function() {
+    $("#reviewInsert").attr('disabled', true);
+        if(starCheck==true) {
+            $("#reviewInsert").attr('disabled' , false);
+        }else{
+            $("#reviewInsert").attr('disabled' , true);
+
+        }
+});
+	function show(star){
+	if(locked)
+		return;
+	var image;
+	var el;
+	var e=document.getElementById('startext');
+	var stateMsg;
+	
+	for(var i=0; i<star; i++){
+		image='image' +i;
+		var image2=document.getElementById(image);
+        image2.src="/resources/image/member/search/star-full.png";
+	}
+	switch(star){
+	case 1:
+		stateMsg="실망이에요. 집에서 먹는게 나을 뻔 했어요.";
+		break;
+	case 2:
+		stateMsg="평균이하! 이정도 레스토랑은 어디에나 있죠.";
+		break;
+	case 3:
+		stateMsg="보통이에요. 이정도면 괜찮네요.";
+		break;
+	case 4:
+		stateMsg="인상적이네요.꼭 추천하고 싶어요.";
+		break;
+	case 5:
+		stateMsg="완벽 그 자체!! 환상적이에요.";
+		break;
+	default:
+		stateMsg="";
+	}
+	e.innerHTML=stateMsg;
+	
+} 
+function noshow(star){
+	if(locked)
+		return;
+	var image;
+	var el;
+	for(var i=0; i<star; i++);{
+		image='image'+i;
+		el=document.getElementById(image);
+		el.src="/resources/image/member/search/star.png";
+	}
+}
+var chk=false;
+function lock(star){
+	if(chk=false){
+	show(star);
+	locked=1;
+	chk=true;
+	}else{
+	locked=0;
+	}
+}
+function starPoint(star){
+	lock(star);
+	document.reviewform.reviewStar.value=star;
+	starCheck=true;
+	
+}
+
