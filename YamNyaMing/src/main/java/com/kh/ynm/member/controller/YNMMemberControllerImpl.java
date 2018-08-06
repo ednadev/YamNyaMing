@@ -954,10 +954,18 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setFood(food);
 		check.setPlace(place);
 		
+		ArrayList<String> StoreCateDetailNameList=new ArrayList<String>();
+		
 		if(storeCateDetailName!=null) {
-			ArrayList<String> StoreCateDetailNameList = new ArrayList<>(Arrays.asList(storeCateDetailName));
-			check.setStoreCateDetailName(StoreCateDetailNameList);
-		}
+	         List<String> list = Arrays.asList(storeCateDetailName);
+	               
+	         ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
+	         for (String data : list) {
+	            storeCateDetailNameList.add(data);
+	         }
+	         check.setStoreCateDetailName(storeCateDetailNameList);
+	      }
+
 		if(owBudget!=null) {
 			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
 			check.setOwBudget(owBudgetList);

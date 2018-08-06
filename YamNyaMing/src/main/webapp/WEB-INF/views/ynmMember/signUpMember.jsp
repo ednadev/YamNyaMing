@@ -21,14 +21,6 @@
 		<form action="signUpMember.do" method="post" enctype="multipart/form-data">
 			<h2>회원가입</h2>
 			<div class="signUp-table">
-				<div>휴대전화인증</div>
-				<div>
-					<input type="tel" name="memberPhone" placeholder="휴대폰 번호">
-					<button>휴대전화인증</button>
-					<p>회원님의 보안 강화 및 편리한 서비스를 제공해 드리기 위해 휴대전화 인증을 하고 있습니다.</p>
-				</div>
-			</div>
-			<div class="signUp-table">
 				<div>아이디</div>
 				<div>
 					<input type="text" id="memberId" name="memberId" placeholder="아이디" onChange="idCheck();">
@@ -80,6 +72,13 @@
 					<p id="birth_check">생년월일을 입력해주세요.</p>
 				</div>
 			</div>
+			<div class="signUp-table">
+				<div>휴대전화</div>
+				<div>
+					<input type="tel" name="memberPhone" placeholder="휴대폰 번호">
+					<p>회원님의 보안 강화 및 편리한 서비스를 제공해 드리기 위해 휴대전화 인증을 하고 있습니다.</p>
+				</div>
+			</div>			
 			<div class="signUp-table">
 				<div>이메일</div>
 				<div>

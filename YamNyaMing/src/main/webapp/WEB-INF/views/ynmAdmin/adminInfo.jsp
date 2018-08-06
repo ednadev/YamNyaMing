@@ -11,14 +11,12 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=3">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 			</head>
 <body>
@@ -32,7 +30,7 @@
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
-			<li><a href="/adminInfo.do">관리자 정보</a></li>
+			<li><a href="/adminInfo.do" style="border-bottom:3px solid #fb0;">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
@@ -51,14 +49,13 @@
                        <img alt="User Pic" src="https://ssl.pstatic.net/mimgnews/image/433/2017/08/30/0000034841_001_20170830102242631.jpg" id="profile-image1" class="img-circle img-responsive" style="height:300px;"> 
                       </div>
                       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
-                          <div class="container" >
+                          <div class="container" style="padding-top:89px;">
           				     
           				      <h2>[${sessionScope.admin.ad_nickname}]님 안녕하세요</h2> 
                           </div>
-                           <hr>
                           <ul class="container details" >
-                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"></span>${sessionScope.admin.ad_id}</p></li>
-                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"></span>
+                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"><img src="${pageContext.request.contextPath}/resources/image/member/search/user.png" style="width:20px;margin-right:20px;"></span>${sessionScope.admin.ad_id}</p></li>
+                            <li><p><span class="glyphicon glyphicon-user one" style="width:70px;"><img src="${pageContext.request.contextPath}/resources/image/member/search/user.png" style="width:20px;margin-right:14px;"></span>
                       <c:choose>
                       <c:when  test="${sessionScope.admin.ad_id eq 'admin'}">
                       운영자
@@ -70,11 +67,10 @@
                             
                             </p></li>
                           </ul>
-                          <hr>
                           
          					<c:choose>
       						<c:when test="${sessionScope.admin.ad_id == 'admin'}">
-        					<a href="/adminList.do" style="background-color:white; width:300px; height:100px; font-size:35px;  font-family: 'Sunflower'; border:0px solid maroon">관리자 권한 설정</a>
+        					<a href="/adminList.do" style="background-color:white; width:300px; height:100px; font-size:35px;  font-family: 'Sunflower'; border:0px solid maroon; color:#fb0;margin-left:20px;">관리자 권한 설정</a>
        						</c:when>
      				   	
      				   	    <c:otherwise>

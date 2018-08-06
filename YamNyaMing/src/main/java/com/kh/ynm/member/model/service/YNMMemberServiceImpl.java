@@ -237,8 +237,8 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 
 	// 사용자 검색
 	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
-		int recordCountPerPage=9;
-		int naviCountPerPage=5;
+		int recordCountPerPage=1;
+		int naviCountPerPage=2;
 
 		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage,check);
 		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage,check);

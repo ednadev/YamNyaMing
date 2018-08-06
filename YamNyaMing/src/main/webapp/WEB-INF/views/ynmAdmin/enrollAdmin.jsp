@@ -8,7 +8,6 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/prettydropdowns?ver=1">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerSignUp.js?ver=1"></script>
@@ -16,15 +15,15 @@
 <style>
 .btn {
 	position: static;
-	width: 80px;
 	display: inline-block;
-	color: #ecf0f1;
+	color: white;
+	font-weight:bold;
 	text-decoration: none;
 	border-radius: 5px;
-	border: solid 1px #FFBB00;
 	background: #FFBB00;
-	padding: 16px 18px 14px;
-	font-size: 10px;
+	padding: 12px 18px;
+	border:none;
+	font-size: 0.8em;
 	-webkit-transition: all 0.1s;
 	-moz-transition: all 0.1s;
 	transition: all 0.1s;
@@ -119,7 +118,7 @@ function check(){   //비밀번호 조건문
 
 <body>
 	<header id="owner-signUp-header">
-		<h1><a href="/index.jsp">YamNyamCompany</a></h1>
+		<h1 style="font-size:1.2em;padding:15px 10px;"><a href="/index.jsp">YamNyaMing 관리자</a></h1>
 	</header>
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">
