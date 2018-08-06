@@ -12,10 +12,8 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 </head>
 <style>
@@ -70,7 +68,33 @@
 	position: relative;
 	top: -1px;
 }
-
+.btn2 {
+	float:right;
+	margin:-35px;
+	margin-right:-9px;
+	width: 100px;
+	display: inline-block;
+	color: #ecf0f1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: solid 1px #FFBB00;
+	background: #FFBB00;
+	padding: 16px 18px 14px;
+	font-size: 10px;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
+	-moz-box-shadow: 0px 6px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+}
+.btn2:active {
+	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
+	-moz-box-shadow: 0px 2px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+	position: relative;
+	top: -1px;
+}
 
 </style>
 <body>
@@ -91,31 +115,66 @@
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
- 
+
+
+	    <c:forEach var="storeInfo" items="${storeList}">
+	    <div class="col-lg-4 col-md-4 col-sm-6">
+           <div class="thumbnail img-thumb-bg">
+               <div class="overlay"></div>
+               <div class="caption">
+               	  
+                   <div class="tag">${storeInfo.owStoreName}
+                   <c:choose>
+                   <c:when test="${storeInfo.owBigTypeFk==1}">(한식)</c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==2}">(중식)</c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==3}">(일식) </c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==4}">(양식)</c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==5}">(뷔페)</c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==6}">(디저트)</c:when>
+                   <c:when test="${storeInfo.owBigTypeFk==7}">(술집)</c:when>
+                   <c:otherwise>기타</c:otherwise>
+                   </c:choose>
+				   </div>
+                   <c:if test="${storeInfo.owStoreUrl!=null}">
+                   <a href="${storeInfo.owStoreUrl}">사이트 주소 : ${storeInfo.owStoreUrl}</a> 
+                   </c:if>
+                   <c:if  test="${storeInfo.owStoreUrl==null}">
+                   <a style="color:red;">사이트 없음</a>
+                   </c:if>
+                   <div>영업시간 : ${storeInfo.owStoreWorkingTime}</div>
+                   <div>주소 : ${storeInfo.owStoreAddr }</div><br>
+                   <div>Tell : ${storeInfo.owStoreTel}</div><br>
+                   <div>${storeInfo.storeTableInfo}</div>
+                   <div>
+                    <c:choose>
+      				<c:when test="${storeInfo.store_enroll_rq_state eq '2'}">
+    			    <form action="/upGrade.do">
+     			    <input type="hidden" id="owStoreInfoPk" name="owStoreInfoPk" class="owStoreInfoPk" value="${storeInfo.owStoreInfoPk}"/>
+      				<input type="submit" style="background-color:white;font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="수락"/>
+      				</form>
+      				</c:when>
+      				<c:otherwise>
+     				<form action="/downGrade.do">
+      				<input type="hidden" id="owStoreInfoPk" name="owStoreInfoPk" class="owStoreInfoPk" value="${storeInfo.owStoreInfoPk}"/>
+      				<input type="submit" style="background-color:white; font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="강등"/>
+      				</form>
+      				</c:otherwise>
+      				</c:choose>
+                   </div>
+               </div>
+           </div>
+        </div>
+	</div>
+</c:forEach> 
+
 
    
   <!-- 게시물 리스트 보여주기 -->
 
-    <table class="table table-board" style="width:100%; height:540px;">
-
-      <thead>
-        <tr>
-          <th style="text-align:center;">글 번호</th>
-          <th>제목</th>
-          <th style="text-align:center;">작성자</th>
-          <th style="text-align:center;">작성일</th>
-        </tr>
-      </thead>  
-       
-        <c:forEach var="storeList" items="${storeList}">
-        <tr>
-          <td class="text-center">${storeList.storeName}</td>
-		
-      
   
-        </tr>
-        </c:forEach> 
-    </table>
+       
+      
+   
 
 	
      <!-- 페이지 -->
@@ -124,29 +183,30 @@
 					<div id="pagingNumber">
 						<c:if test="${pageNaviData.startNavi!=1}">
 							<form action="/ownerStoreList.do" method="post">
+								<!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
 								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
 								<input type="submit" class="paging-num" value="<">
 							</form>
 						</c:if>
-			
-						<c:forEach var="i" begin="${pageNaviData.startNavi}"
-							end="${pageNaviData.endNavi}">
+						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
 								<form action="/ownerStoreList.do" method="post">
+								   <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
 								<form action="/ownerStoreList.do" method="post">
+								    <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 						</c:forEach>
-	
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/ownerStoreList.do" method="post">
+							<form action="/ownerStoreList.do" method="post">	
+							  <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> --> 
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
 							</form>

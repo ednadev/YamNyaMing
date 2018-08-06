@@ -188,24 +188,23 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	}
 
 
-	public ArrayList<StoreInfoPageData> ownerStoreList(int owEntirePk, int currentPage, int recordCountPerPage) {
 
+	//가게리스트
+	public ArrayList<StoreInfoPageData> storeListPaging(int currentPage, int recordCountPerPage, StoreInfoPageData vo) {
+		//시작 페이지 계산
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
-		BoardPaging storePageData2 = new BoardPaging();
-		storePageData2.setStartPage(start);
-		storePageData2.setEndPage(end);
-		storePageData2.setOwEntirePk(owEntirePk);
-		return adminDAO.ownerStoreList(sqlSession,storePageData2);
-	}
-
-
-	public CouponPageData ownerPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
 		BoardPaging storePageData = new BoardPaging();
-		int recordTotalCount = adminDAO.ownerGetTotal(sqlSession, storePageData);
-		
+		storePageData.setOwEntirePk(vo.getOwEntireFk());
+		storePageData.setStartPage(start);
+		storePageData.setEndPage(end);
+		return adminDAO.storeListPaging(sqlSession,storePageData);
+	}
+	//가게리스트 페이징
+	public CouponPageData storePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging storePageData = new BoardPaging();
+		int recordTotalCount = adminDAO.storeGetTotal(sqlSession, storePageData);
 		int pageTotalCount = 0;
-
 		if(recordTotalCount%recordCountPerPage!=0)
 		{
 			pageTotalCount = recordTotalCount / recordCountPerPage+1;
@@ -229,16 +228,23 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		{
 			endNavi = pageTotalCount;
 		}
-		CouponPageData couponPageDataResult = new CouponPageData();
-		couponPageDataResult.setCurrentPage(currentPage);
-		couponPageDataResult.setStartNavi(startNavi);
-		couponPageDataResult.setEndNavi(endNavi);
-		couponPageDataResult.setPageTotalCount(pageTotalCount);
-		couponPageDataResult.setRecordTotalCount(recordTotalCount);
+		CouponPageData storePageDataResult = new CouponPageData();
+		storePageDataResult.setCurrentPage(currentPage);
+		storePageDataResult.setStartNavi(startNavi);
+		storePageDataResult.setEndNavi(endNavi);
+		storePageDataResult.setPageTotalCount(pageTotalCount);
+		storePageDataResult.setRecordTotalCount(recordTotalCount);
 		
-		return couponPageDataResult;
+		return storePageDataResult;
 	}
 
+
+	public String viewStorePhoto(int owEntireFk) {
+		String viewpic=adminDAO.viewPath(sqlSession,owEntireFk);
+		return viewpic;
+	}
+
+	
 
 
 
