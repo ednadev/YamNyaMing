@@ -59,6 +59,21 @@ function openReviewTab(event, tabName){
 	event.currentTarget.className += " click";
 }
 
+//Other Tab
+function openOtherTab(event, tabName){
+	var i, x, tablinks;
+	x = document.getElementsByClassName("tabInfo");
+	for (i=0; i<x.length; i++){
+		x[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablink");
+	for(i=0; i<x.length; i++){
+		tablinks[i].className = tablinks[i].className.replace(" click", "");
+	}
+	document.getElementById(tabName).style.display="block";
+	event.currentTarget.className += " click";
+}
+
 //기본정보 변경
 function pwChange(){
 	var element = document.getElementById("pwChange");

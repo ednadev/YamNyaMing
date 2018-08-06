@@ -1210,7 +1210,8 @@
 						<input type="submit" value="">
 					</form>
 							<div>
-								<p>대기인원 0 추천${search.favoriteTotal}</p>
+								<p>대기인원 0 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
+								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
@@ -1221,6 +1222,13 @@
 								<c:if test="${search.favoriteChk!=1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+									</div>
+								</c:if>
+								</c:if>
+								<c:if test="${sessionScope.member==null}">
+									<div onclick="nomember();">
 										<img style="width: 100%; height: 100%; cursor: pointer;"
 											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 									</div>

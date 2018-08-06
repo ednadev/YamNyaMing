@@ -10,11 +10,83 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=7">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=8">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=7"></script>
 </head>
+<script>
+function openmodal(storeReviewNo){
+	var modal = document.getElementById('myModal');
+	modal.style.display = "block";
+	$.ajax({
+		url : "/likeTotalMemberInfo.do",
+		data : {storeReviewNo:storeReviewNo},
+		dataType:"json",
+		success : function(data){
+		if(data.length>0){
+			$("#likeTotalNum").html(data[0].likeTotal);
+			$(".profile-follow").remove();
+			for(var i=0; i<data.length; i++){
+			var html = '';
+            html += '<div class="profile-follow "id="profile-follow">';
+            if(data[i].memberUploadPhotoNo==1){
+            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/profile.png"></div>';
+            }else{
+            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
+            }
+            html += '<div>';
+            html += '<p>'+data[i].memberNickName+'</p>';
+            html += '<p>'+data[i].reviewTotal+' 리뷰,<label name='+(data[i].memberEntireNo+0.1)+' style="color:black;">'+data[i].followTotal+'</label>  팔로워</p>';
+			if(data[i].followChk==1){
+            html += '<button style="background-color:#fb0; color:white;" name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
+			}else{
+			html += '<button name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
+			}
+            html += '</div>';
+            html += '</div>';
+            $("#Follower").after(html);
+			}
+		}else{
+			$("#likeTotalNum").html("");
+			$(".profile-follow").remove();
+		}
+			
+			
+		}
+	});	
+	
+}
 
+function openImagemodal(storeReviewNo){
+	console.log(storeReviewNo);
+	var modal = document.getElementById('imageModal');
+	modal.style.display = "block";
+	$.ajax({
+		url : "/reviewDetail.do",
+		data : {storeReviewNo:storeReviewNo},
+		dataType:"json",
+		success : function(data){
+			console.log(data);
+  			$("#reviewImageDetail").remove();
+			var html="";
+			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
+			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="width:200%; height:100%; display:block;">';
+			if(data.length>1){
+			for(var i=1; i<data.length; i++){
+				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="width:200%; height:100%; display:none;">';
+			}	
+			}
+		html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
+		html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
+		html+='</div>';
+		$("#reviewDetail").append(html);	 
+				 
+			
+		}
+	});	
+	
+}
+</script>
 <body>
 <header id="member-search-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
@@ -266,8 +338,8 @@
 				</p>
 				<p>
 
-					<span onclick="openTab(event,'Review')">리뷰 ${info.reviewTotal}</span>
-					<span onclick="openTab(event,'Like')">찜한 매장${info.jjimTotal}</span>
+					<span onclick="openOtherTab(event,'Review')">리뷰 ${info.reviewTotal}</span>
+					<span onclick="openOtherTab(event,'Like')">찜한 매장${info.jjimTotal}</span>
 					<span id="myBtn" >팔로워 ${info.followTotal}</span>
 					<div id="myModal" class="modal">
 					  <div class="modal-content">
@@ -333,13 +405,26 @@
 	</div>
 	<div class="member-myinfo-page-wrapper">
 		<div class="tab">
-		    <button class="tablink click" onclick="openTab(event,'Review')">리뷰</button>
-		    <button class="tablink" onclick="openTab(event,'Like')">찜</button>
+		    <button class="tablink click" onclick="openOtherTab(event,'Review')">리뷰</button>
+		    <button class="tablink" onclick="openOtherTab(event,'Like')">매장</button>
 		</div>
 
 		<div id="Review" class="tabInfo">	
-			<h3>내가 쓴 리뷰</h3>
-			<h3>찜한 리뷰</h3>	
+		
+			<div class="tab-review">
+				<button class="tablink-review click" onclick="openReviewTab(event,'writeReview')">${info.memberNickName} 님이 쓴 리뷰</button>
+				<button class="tablink-review" onclick="openReviewTab(event,'jjimReview')">${info.memberNickName} 님이 찜한 리뷰</button>
+			</div>
+			<div id="writeReview" class="tabInfo-review">
+			gdgdgd		
+				
+			</div>
+			<div id="jjimReview" class="tabInfo-review">
+			
+			fghjtyhfghfr
+			</div>			
+			
+			
 		</div>
 		<div id="Like" class="tabInfo" style="display:none;">
 		<script>
@@ -362,7 +447,7 @@
 				<c:forEach items="${favorite}" var="f">
 				<c:if test="${f.owStoreInfoNo eq search.owStoreInfoPk}">
 				<div class="search-result">
-				<div class="search-result-img" style="background-image:url(${pageContext.request.contextPath}/resources/${search.owPhotoRoute});">
+				<div class="search-result-img" style="background-image:url('${pageContext.request.contextPath}/${search.owPhotoRoute}');">
 					<form action="/detailPage.do" method="get">
 						<input type="hidden" name="owStoreInfoPk" value="${search.owStoreInfoPk}">
 						<input type="submit" value="">

@@ -342,6 +342,11 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMStoreUnderReview> underReview(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		List list=sqlSession.selectList("underReview.underReviewAll",storeReviewNo);
 		return (ArrayList<YNMStoreUnderReview>)list;
-	}	
+	}
+
+	public ArrayList<YNMStoreReview> jjimMyInfoReviewCheck(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("review.jjimMyInfoReviewCheck",memberEntireNo);
+		return (ArrayList<YNMStoreReview>)list;
+	}
 
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -48,7 +49,7 @@ public interface YNMMemberController {
 	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
-	public String reviewDetail(HttpServletRequest request, HttpSession session);
+	public JSONArray reviewDetail(HttpServletRequest request, HttpSession session);
 	//대댓글 table
 	public 	String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//좋아요 table

@@ -423,3 +423,26 @@
 	background-color:#fb0;
 	border:none;
 }
+
+
+
+.member-myinfo-page-wrapper>#Review>.tab-review{
+	float:right;
+	margin-top:20px;
+	overflow:hidden;
+}
+.member-myinfo-page-wrapper>#Review>.tab-review>button{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-weight:bold;
+	font-size:1em;
+	cursor:pointer;
+}
+.member-myinfo-page-wrapper>#Review>.tab-review>.click{
+	color:#fb0;
+	
+}
+.member-myinfo-page-wrapper>#Review>.tabInfo-review{
+	clear:both;
+}
