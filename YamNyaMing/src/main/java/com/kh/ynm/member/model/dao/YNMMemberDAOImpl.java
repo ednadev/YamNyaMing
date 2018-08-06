@@ -11,6 +11,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.member.model.vo.YNMFavorite;
 import com.kh.ynm.member.model.vo.YNMFollow;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberCheck;
@@ -84,12 +85,12 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("member.memberInfo",vo);
 	}
 
-	public int updateUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
-		return sqlSession.insert("photo.updatePhoto",ymup);
+	public int insertUploadPhoto(SqlSessionTemplate sqlSession, YNMMemberUploadPhoto ymup) {
+		return sqlSession.insert("photo.avatarPhoto",ymup);
 	}
 
-	public int updateMember(SqlSessionTemplate sqlSession, YNMMember ym) {
-		return sqlSession.insert("member.updateMember",ym);
+	public int updateMemberPhoto(SqlSessionTemplate sqlSession, YNMMember ym) {
+		return sqlSession.update("member.updateMemberPhoto",ym);
 	}
 
 	public ArrayList<YNMStoreReview> storeReviewCheck(SqlSessionTemplate sqlSession, int ownerStoreEntireNo) {
@@ -239,6 +240,73 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public int jjimTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		return sqlSession.selectOne("review.jjimTotal",storeReviewNo);
+	}
+
+	public ArrayList<YNMFollow> followInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.followInfo",memberNo);
+		return (ArrayList<YNMFollow>)list;
+	}
+
+	public ArrayList<YNMReviewLike> likeInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.likeInfo",memberNo);
+		return (ArrayList<YNMReviewLike>)list;
+	}
+
+	public ArrayList<YNMReviewJjim> jjimInfo(SqlSessionTemplate sqlSession, int memberNo) {
+		List list=sqlSession.selectList("review.jjimInfo",memberNo);
+		return (ArrayList<YNMReviewJjim>)list;
+	}
+
+	public int reviewTotal(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.reviewTotal",memberEntireNo);
+	}
+
+	public int followTotal(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.followTotal",memberEntireNo);
+	}
+
+	public ArrayList<YNMMember> likeTotalMember(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		List list=sqlSession.selectList("member.likeTotalMember",storeReviewNo);
+		return (ArrayList<YNMMember>)list;
+	}
+
+	public ArrayList<YNMMember> likeTotalMemberInfo(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		List list=sqlSession.selectList("member.likeTotalMemberInfo",storeReviewNo);
+		return (ArrayList<YNMMember>)list;
+	}
+
+	public ArrayList<YNMSearch> starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
+		List list=sqlSession.selectList("review.starAvg",owStoreInfoPk);
+		return (ArrayList<YNMSearch>)list;
+	}
+
+	public int favoriteChk(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.selectOne("member.favoriteChk",yf);
+	}
+
+	public int deletefavorite(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.delete("member.deletefavorite",yf);
+	}
+
+	public int favoriteInsert(SqlSessionTemplate sqlSession, YNMFavorite yf) {
+		return sqlSession.insert("member.favoriteInsert",yf);
+	}
+
+	public int favoriteTotal(SqlSessionTemplate sqlSession, int parseInt) {
+		return sqlSession.selectOne("member.favoriteTotal",parseInt);
+	}
+
+	public int memberJjimTotal(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.memberJjimTotal",memberEntireNo);
+	}
+
+	public int reservationTotal(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.reservationTotal",memberEntireNo);
+	}
+
+	public ArrayList<YNMFavorite> favoriteList(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("member.favoriteList",memberEntireNo);
+		return (ArrayList<YNMFavorite>)list;
 	}	
 
 }

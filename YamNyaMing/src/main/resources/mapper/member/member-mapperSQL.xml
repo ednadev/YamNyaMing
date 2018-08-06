@@ -2,195 +2,310 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">
 
-<!-- 사용자 정보 쿼리 -->
+	<!-- 사용자 정보 쿼리 -->
 
 	<insert id="signUpMember" parameterType="members">
-		insert into member_entire_tb values(member_entire_tb_SEQ.nextval,#{memberId},#{memberPw},#{memberName},
-											#{memberNickName},#{memberGender},#{memberBirth},#{memberEmail},#{memberPhone},
-											sysdate,#{memberUploadPhotoNo})
+		insert into
+		member_entire_tb
+		values(member_entire_tb_SEQ.nextval,#{memberId},#{memberPw},#{memberName},
+		#{memberNickName},#{memberGender},#{memberBirth},#{memberEmail},#{memberPhone},
+		sysdate,#{memberUploadPhotoNo})
 	</insert>
-	
+
 	<select id="selectOneMember" resultType="members">
-		select 
-			mb_entire_pk as memberEntireNo,
-			mb_id as memberId,
-			mb_pw as memberPw,
-			mb_name as memberName,
-			mb_nickname as memberNickName,
-			mb_gender as memberGender,
-			mb_birth as memberBirth,
-			mb_email as memberEmail,
-			mb_phone as memberPhone,
-			mb_regdate as memberRegDate,
-			mb_upload_photo_fk as memberUploadPhotoNo
-			from member_entire_tb
-			
-			where mb_id=#{memberId} and mb_pw=#{memberPw}
-			
+		select
+		mb_entire_pk as memberEntireNo,
+		mb_id as memberId,
+		mb_pw as memberPw,
+		mb_name as memberName,
+		mb_nickname as memberNickName,
+		mb_gender as memberGender,
+		mb_birth as memberBirth,
+		mb_email as memberEmail,
+		mb_phone as memberPhone,
+		mb_regdate as memberRegDate,
+		mb_upload_photo_fk as memberUploadPhotoNo
+		from member_entire_tb
+
+		where mb_id=#{memberId} and mb_pw=#{memberPw}
+
 	</select>
-	
-		<select id="selectOneMember2" resultType="members">
-		select 
-			mb_entire_pk as memberEntireNo,
-			mb_id as memberId,
-			mb_pw as memberPw,
-			mb_name as memberName,
-			mb_nickname as memberNickName,
-			mb_gender as memberGender,
-			mb_birth as memberBirth,
-			mb_email as memberEmail,
-			mb_phone as memberPhone,
-			mb_regdate as memberRegDate,
-			mb_upload_photo_fk as memberUploadPhotoNo
-			from member_entire_tb
-			
-			where mb_id=#{memberId}
-			
+
+	<select id="selectOneMember2" resultType="members">
+		select
+		mb_entire_pk as memberEntireNo,
+		mb_id as memberId,
+		mb_pw as memberPw,
+		mb_name as memberName,
+		mb_nickname as memberNickName,
+		mb_gender as memberGender,
+		mb_birth as memberBirth,
+		mb_email as memberEmail,
+		mb_phone as memberPhone,
+		mb_regdate as memberRegDate,
+		mb_upload_photo_fk as memberUploadPhotoNo
+		from member_entire_tb
+
+		where mb_id=#{memberId}
+
 	</select>
-	
+
 	<select id="memberInfo" resultType="memberCheck">
-			select 
-			mb_entire_pk as memberEntireNo,
-			mb_id as memberId,
-			mb_pw as memberPw,
-			mb_name as memberName,
-			mb_nickname as memberNickName,
-			mb_gender as memberGender,
-			mb_birth as memberBirth,
-			mb_email as memberEmail,
-			mb_phone as memberPhone,
-			mb_regdate as memberRegDate,
-			mb_upload_photo_fk as memberUploadPhotoNo,
-			mb_photo_view_route as photoViewRoute
-	
-			from member_upload_photo_tb p, member_entire_tb e
-			where p.mb_upload_photo_pk=e.mb_upload_photo_fk and mb_id=#{memberId} and mb_pw=#{memberPw}
+		select
+		mb_entire_pk as memberEntireNo,
+		mb_id as memberId,
+		mb_pw as memberPw,
+		mb_name as memberName,
+		mb_nickname as memberNickName,
+		mb_gender as memberGender,
+		mb_birth as memberBirth,
+		mb_email as memberEmail,
+		mb_phone as memberPhone,
+		mb_regdate as memberRegDate,
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		mb_photo_view_route as photoViewRoute
+
+		from member_upload_photo_tb p, member_entire_tb e
+		where p.mb_upload_photo_pk=e.mb_upload_photo_fk and mb_id=#{memberId} and
+		mb_pw=#{memberPw}
 	</select>
-	
+
 	<delete id="deleteMember">
-		delete from member_entire_tb where mb_id=#{memberId} and mb_pw=#{memberPw}
+		delete from member_entire_tb where mb_id=#{memberId}
+		and mb_pw=#{memberPw}
 	</delete>
-	
-	<update id="updateMember">
-		update member_entire_tb set mb_nickname=#{memberNickName}, 
-											mb_email=#{memberEmail}
+
+	<update id="updateMemberPhoto">
+		update member_entire_tb set
+		mb_upload_photo_fk=#{memberUploadPhotoNo}
 		where mb_entire_pk=#{memberEntireNo}
-											
+
 	</update>
 
-	
+
 	<select id="idCheck" resultType="members">
-	select 
-			mb_id as memberId
-	from member_entire_tb
-	where mb_id=#{memberId}
-	
+		select
+		mb_id as memberId
+		from member_entire_tb
+		where mb_id=#{memberId}
+
 	</select>
-	
+
 	<select id="nickCheck" resultType="members">
-	select 
-			mb_nickname as memberNickName
-	from member_entire_tb
-	where mb_nickname=#{memberNickName}
-	
+		select
+		mb_nickname as memberNickName
+		from member_entire_tb
+		where mb_nickname=#{memberNickName}
+
 	</select>
-	
+
 	<select id="emailCheck" resultType="members">
-	select 
-			mb_email as memberEmail
-	from member_entire_tb
-	where mb_email=#{memberEmail}
-	
+		select
+		mb_email as memberEmail
+		from member_entire_tb
+		where mb_email=#{memberEmail}
+
 	</select>
-	
+
 	<select id="idSearch" resultType="members">
 		select
-			mb_id as memberId,
-			mb_email as memberEmail,
-			mb_name as memberName
+		mb_id as memberId,
+		mb_email as memberEmail,
+		mb_name as memberName
 		from member_entire_tb
-		where mb_name=#{memberName} and mb_email=#{memberEmail}
+		where mb_name=#{memberName} and
+		mb_email=#{memberEmail}
 	</select>
-	
+
 	<select id="pwSearch" resultType="members">
 		select
-			mb_id as memberId,
-			mb_email as memberEmail,
-			mb_name as memberName
+		mb_id as memberId,
+		mb_email as memberEmail,
+		mb_name as memberName
 		from member_entire_tb
-		where mb_id=#{memberId} and mb_email=#{memberEmail}
+		where mb_id=#{memberId} and
+		mb_email=#{memberEmail}
 	</select>
-	
+
 	<update id="pwUpdateMember">
-		update member_entire_tb set mb_pw=#{memberPw} where mb_id=#{memberId} and mb_email=#{memberEmail} 
+		update member_entire_tb set mb_pw=#{memberPw} where
+		mb_id=#{memberId} and mb_email=#{memberEmail}
 	</update>
-	
-<!-- 	
-	<select id="selectOneStore" resultType="storeInfo">
-		select ow_store_phone as owStoreTel
-		from owner_store_info_tb
-		where ow_store_info_pk=#{ownerStoreEntireNo}
-	</select> -->
-	
-	
+
+	<!-- <select id="selectOneStore" resultType="storeInfo"> select ow_store_phone 
+		as owStoreTel from owner_store_info_tb where ow_store_info_pk=#{ownerStoreEntireNo} 
+		</select> -->
+
+
 	<!-- 사용자 설정 table -->
-	
+
 	<update id="updateSetting">
-		update member_setting_tb set mb_theme_push_update=#{themePushUpdate},mb_alarm_push_review_like=#{alarmPushReviewLike},mb_alarm_push_review_comment=#{alarmPushReviewComment},
-										mb_alarm_push_review_jjim=#{alarmPushReviewJjim},mb_alarm_push_follow=#{alarmPushFollow},mb_myinfo_agree=#{myinfoAgree},mb_alarm_event_email=#{alarmEventEmail},
-										mb_alarm_event_sms=#{alarmEventSms},mb_myinfo_review_open=#{myinfoReviewOpen},mb_myinfo_review_jjim=#{myinfoReviewJjim},mb_myinfo_store_jjim=#{myinfoStoreJjim}
-									where mb_entire_fk=#{memberEntireNo}
+		update member_setting_tb set
+		mb_theme_push_update=#{themePushUpdate},mb_alarm_push_review_like=#{alarmPushReviewLike},mb_alarm_push_review_comment=#{alarmPushReviewComment},
+		mb_alarm_push_review_jjim=#{alarmPushReviewJjim},mb_alarm_push_follow=#{alarmPushFollow},mb_myinfo_agree=#{myinfoAgree},mb_alarm_event_email=#{alarmEventEmail},
+		mb_alarm_event_sms=#{alarmEventSms},mb_myinfo_review_open=#{myinfoReviewOpen},mb_myinfo_review_jjim=#{myinfoReviewJjim},mb_myinfo_store_jjim=#{myinfoStoreJjim}
+		where mb_entire_fk=#{memberEntireNo}
 
 	</update>
-	
-	<select id="settingInfo" resultType="settings"> 
-	select
+
+	<select id="settingInfo" resultType="settings">
+		select
 		mb_theme_push_update as themePushUpdate,
-		mb_alarm_push_review_like as alarmPushReviewLike,
-		mb_alarm_push_review_comment as alarmPushReviewComment,
-		mb_alarm_push_review_jjim as alarmPushReviewJjim,
+		mb_alarm_push_review_like as
+		alarmPushReviewLike,
+		mb_alarm_push_review_comment as
+		alarmPushReviewComment,
+		mb_alarm_push_review_jjim as
+		alarmPushReviewJjim,
 		mb_alarm_push_follow as alarmPushFollow,
 		mb_myinfo_agree as myinfoAgree,
-		mb_alarm_event_email as alarmEventEmail,
+		mb_alarm_event_email as
+		alarmEventEmail,
 		mb_alarm_event_sms as alarmEventSms,
 		mb_myinfo_review_open as myinfoReviewOpen,
-		mb_myinfo_review_jjim as myinfoReviewJjim,
+		mb_myinfo_review_jjim as
+		myinfoReviewJjim,
 		mb_myinfo_store_jjim as myinfoStoreJjim
-		
+
 		from member_setting_tb
 		where mb_entire_fk=#{memberEntireNo}
-		</select>
-	
+	</select>
+
 	<!-- 팔로우 table -->
-	
+
 	<select id="followChk" resultType="int">
 		select
-			count(*)
-		from 
-			member_follow_tb
-		where 
-			mb_follow_user_id_fk=#{followMemberIdNo} and mb_follower_fk=#{followerNo}
+		count(*)
+		from
+		member_follow_tb
+		where
+		mb_follow_user_id_fk=#{followMemberIdNo} and mb_follower_fk=#{followerNo}
 	</select>
-	
-	
+
+
 	<insert id="followInsert">
-		insert into member_follow_tb values(member_follow_tb_seq.nextval,#{followMemberIdNo},#{followerNo})
+		insert into member_follow_tb
+		values(member_follow_tb_seq.nextval,#{followMemberIdNo},#{followerNo})
 	</insert>
-	
+
 	<delete id="deleteFollow">
-		delete from member_follow_tb where mb_follower_fk=#{followerNo}
+		delete from member_follow_tb where
+		mb_follower_fk=#{followerNo} and mb_follow_user_id_fk=#{followMemberIdNo}
 	</delete>
-	
-	
+
+
 	<select id="followTotal" resultType="int">
 		select
-			count(*)
-		from 
-			member_follow_tb
-		where 
-			mb_follow_user_id_fk=#{followMemberIdNo}
+		count(*)
+		from
+		member_follow_tb
+		where
+		mb_follow_user_id_fk=#{memberEntireNo}
+	</select>
+
+	<select id="reviewTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_store_review_tb
+		where
+		mb_entire_fk=#{memberEntireNo}
+	</select>
+
+	<select id="likeTotalMember" resultType="members">
+		select
+		mb_entire_pk as memberEntireNo,
+		mb_id as memberId,
+		mb_pw as memberPw,
+		mb_name as memberName,
+		mb_nickname as memberNickName,
+		mb_gender as memberGender,
+		mb_birth as memberBirth,
+		mb_email as memberEmail,
+		mb_phone as memberPhone,
+		mb_regdate as memberRegDate,
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		rownum
+		from member_entire_tb mb,member_review_like_tb li
+		where mb.mb_entire_pk=li.mb_entire_fk and
+		mb_store_review_fk=#{storeReviewNo} and rownum between 1 and 2
+	</select>
+
+	<select id="likeTotalMemberInfo" resultType="members">
+		select
+		mb_entire_pk as memberEntireNo,
+		mb_id as memberId,
+		mb_pw as memberPw,
+		mb_name as memberName,
+		mb_nickname as memberNickName,
+		mb_gender as memberGender,
+		mb_birth as memberBirth,
+		mb_email as memberEmail,
+		mb_phone as memberPhone,
+		mb_regdate as memberRegDate,
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		mb_photo_view_route as photoViewRoute
+		from member_entire_tb mb,member_review_like_tb li,member_upload_photo_tb
+		ph
+		where mb.mb_entire_pk=li.mb_entire_fk and
+		mb.mb_upload_photo_fk=ph.mb_upload_photo_pk and
+		li.mb_store_review_fk=#{storeReviewNo}
+	</select>
+
+	<select id="favoriteChk" resultType="int">
+		select
+		count(*)
+		from
+		member_favorite_tb
+		where
+		mb_entire_fk=#{memberEntireNo} and ow_store_info_fk=#{owStoreInfoNo}
+	</select>
+
+
+	<insert id="favoriteInsert">
+		insert into member_favorite_tb
+		values(member_favorite_tb_seq.nextval,#{owStoreInfoNo},#{memberEntireNo})
+	</insert>
+
+	<delete id="deletefavorite">
+		delete from member_favorite_tb where
+		mb_entire_fk=#{memberEntireNo} and ow_store_info_fk=#{owStoreInfoNo}
+	</delete>
+
+
+	<select id="favoriteTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_favorite_tb
+		where
+		ow_store_info_fk=#{owStoreInfoNo}
 	</select>
 	
+	<select id="memberJjimTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_favorite_tb
+		where
+		mb_entire_fk=#{memberEntireNo}
+	</select>
 	
+	<select id="reservationTotal" resultType="int">
+		select
+		count(*)
+		from
+		member_book_tb
+		where
+		mb_entire_fk=#{memberEntireNo}
+	</select>
+	
+	<select id="favoriteList" resultType="favorite">
+		select
+			ow_store_info_fk as owStoreInfoNo
+			from member_favorite_tb
+			where mb_entire_fk=#{favoriteNo}
+	</select>
+
 
 </mapper>

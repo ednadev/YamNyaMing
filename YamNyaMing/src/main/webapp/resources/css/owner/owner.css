@@ -154,6 +154,7 @@
 	color:#555;
 	padding:10px;
 	width:50%;
+	margin-bottom:3px;
 }
 .signUp-table>div:nth-child(2)>input[type="time"]{
 	width:15%;
@@ -162,7 +163,6 @@
 	padding:10px;
 	font-size:0.8em;
 	cursor:pointer;
-	padding:13px;
 }
 .wrapper>form>input[type="submit"]{
 	background-color:#fb0;
@@ -387,7 +387,6 @@
 	font-style:normal;
 	margin-top:15px;
 }
-
 
 /* nav */
 #owner-main-nav>ul{

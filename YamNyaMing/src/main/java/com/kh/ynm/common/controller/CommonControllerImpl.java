@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -24,6 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ynm.common.model.service.CommonServiceImpl;
+import com.kh.ynm.common.model.vo.StoreCategoryDetail;
+import com.kh.ynm.common.model.vo.StoreCategoryMain;
+import com.kh.ynm.common.model.vo.YNMTotalRefModel;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 import com.kh.ynm.member.model.vo.YNMMember;
 
@@ -36,6 +41,10 @@ public class CommonControllerImpl implements CommonController {
 	@Autowired
 	@Qualifier(value="ynmMemberService")
 	private YNMMemberServiceImpl ynmMemberServiceImpl;
+	
+	@Autowired
+	@Qualifier(value="commonService")
+	private CommonServiceImpl commonServiceImpl;
 	
 	@Autowired
     private JavaMailSenderImpl javaMailSenderImpl;
@@ -147,6 +156,28 @@ public class CommonControllerImpl implements CommonController {
 
         javaMailSenderImpl.send(simpleMailMessage);
 
-
 	}
+	
+	@RequestMapping("/totalRefLoad.do")
+	public Object totalRefLoad(HttpSession session , HttpServletRequest request)
+	{
+		ModelAndView view = new ModelAndView();
+		HashMap<String, StoreCategoryMain> cateMainMap = commonServiceImpl.storeCategoryLoad();
+		HashMap<String, StoreCategoryDetail> cateDetailMap = commonServiceImpl.storeCateDetailLoad();
+		
+		if(cateMainMap.size()>0 && cateDetailMap.size()>0)
+		{
+			view.addObject("mainCate", cateMainMap);
+			view.addObject("detailCate", cateDetailMap);
+			view.setViewName("redirect:/");
+			YNMTotalRefModel totalRefModel = new YNMTotalRefModel();
+			totalRefModel.setCateMainList( cateMainMap);
+			totalRefModel.setCateDetailList(cateDetailMap);
+			session.setAttribute("totalRefModel", totalRefModel);
+		}
+		view.setViewName("redirect:/");
+		return view; 
+	}
+	
+	
 }

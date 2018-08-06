@@ -6,11 +6,14 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ynm.member.model.vo.YNMBook;
+import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
+import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
@@ -127,8 +130,31 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return sqlSession.delete("owphotos.headPhotoDelete", paramVo);
 	}
 
-	public int storeDetailInfoHeadPhotoUpdate(SqlSessionTemplate sqlSession, OwnerUploadPhoto paramVo) {
-		return sqlSession.update("stores.detailInfoHeadPhotoUpdate", paramVo);
+	@Override
+	public StoreMenuData storeMenuData(SqlSessionTemplate sqlSession, int storeInfoIndex) {
+		return sqlSession.selectOne("stores.storeMenuDataGet", storeInfoIndex);
+	}
+
+	@Override
+	public ArrayList<MenuInfo> storeMenuInfoList(SqlSessionTemplate sqlSession, int storeIndex) {
+		List list = sqlSession.selectList("stores.storeMenuInfoList", storeIndex);
+		return (ArrayList<MenuInfo>)list;
+	}
+
+	@Override
+	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo) {
+		return sqlSession.update("stores.storeTextMenuUpdate", menuInfo);
+	}
+
+	@Override
+	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex) {
+		return sqlSession.delete("stores.menuTextDelete", menuIndex);
+	}
+
+	@Override
+	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch) {
+		List list = sqlSession.selectList("stores.bookListWithStoreIndex", bookSearch);
+		return (ArrayList<YNMBook>)list;
 	}
 
 }

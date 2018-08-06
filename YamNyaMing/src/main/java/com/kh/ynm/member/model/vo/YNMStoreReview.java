@@ -14,16 +14,57 @@ public class YNMStoreReview {
 	private char jjimCheck;
 	private Date reviewDate;
 	private char reviewOpenCheck;
-	private String reviewImgList;
+	private String reviewImgList="";
 	private String[] reviewImgArr;
 	private int likeTotal;
 	private int jjimTotal;
+	private int reviewTotal;
+	private int followTotal;
 	private String memberNickName;
+	private String memberName;
+	private ArrayList<YNMFollow> followList=new ArrayList<YNMFollow>();
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
+	private ArrayList<YNMMember> memberLikeInfo=new ArrayList<YNMMember>();
+	private int myLikeChk = 0;
+	private int myJjimChk = 0;
 	
 	
-	
-	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	public int getReviewTotal() {
+		return reviewTotal;
+	}
+	public void setReviewTotal(int reviewTotal) {
+		this.reviewTotal = reviewTotal;
+	}
+	public int getFollowTotal() {
+		return followTotal;
+	}
+	public void setFollowTotal(int followTotal) {
+		this.followTotal = followTotal;
+	}
+	public int getMyJjimChk() {
+		return myJjimChk;
+	}
+	public void setMyJjimChk(int myJjimChk) {
+		this.myJjimChk = myJjimChk;
+	}
+	public int getMyLikeChk() {
+		return myLikeChk;
+	}
+	public void setMyLikeChk(int myLikeChk) {
+		this.myLikeChk = myLikeChk;
+	}
+	public ArrayList<YNMFollow> getFollowList() {
+		return followList;
+	}
+	public void setFollowList(ArrayList<YNMFollow> followList) {
+		this.followList = followList;
+	}
 	public int getJjimTotal() {
 		return jjimTotal;
 	}
@@ -127,6 +168,15 @@ public class YNMStoreReview {
 	public void setPhotoObjList(YNMMemberUploadPhoto photoObj) {
 		this.photoObjList.add(photoObj);
 	}
+	public ArrayList<YNMMember> getMemberLikeInfo() {
+		return memberLikeInfo;
+	}
+	public void setMemberLikeInfo(ArrayList<YNMMember> memberLikeInfo) {
+		this.memberLikeInfo = memberLikeInfo;
+	}
+	
+	
+	
 	
 	
 	

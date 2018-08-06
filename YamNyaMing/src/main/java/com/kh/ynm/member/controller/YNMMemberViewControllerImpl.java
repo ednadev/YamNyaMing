@@ -30,6 +30,7 @@ public class YNMMemberViewControllerImpl implements YNMMemberViewController{
 		return "ynmMember/pwSearchPage";
 	}
 	
+
 	
 
 }

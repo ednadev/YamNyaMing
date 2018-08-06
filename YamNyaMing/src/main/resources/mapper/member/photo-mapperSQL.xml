@@ -15,11 +15,6 @@
 	
 	</select>
 	
-	<update id="updatePhoto">
-		update member_upload_photo_tb set mb_origin_name=#{OriginName}, mb_remake_name=#{remakeName}, mb_photo_upload_date=sysdate, mb_photo_route=#{photoRoute}, mb_photo_view_route=#{photoViewRoute}
-			where mb_upload_photo_pk=#{uploadPhotoNo}
-	</update>
-	
 	<!-- 사용자 내정보 이미지 가져오기 -->
 	<select id="viewPath" resultType="String">
 		select

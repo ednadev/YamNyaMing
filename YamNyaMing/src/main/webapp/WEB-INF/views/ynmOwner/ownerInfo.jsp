@@ -12,7 +12,7 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owner/ownerInfo.css?ver=2">
+	href="${pageContext.request.contextPath}/resources/css/owner/ownerInfo.css?ver=4">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/prettydropdowns?ver=1">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -38,7 +38,7 @@
 	</header>
 	<nav id="owner-main-nav">
 	<ul>
-		<li><a href="/ownerInfo.do">정보 관리</a></li>
+		<li><a href="/ownerInfo.do" style="border-bottom:3px solid #fb0;">정보 관리</a></li>
 		<li><a href="/storeManage.do">음식점 관리</a></li>
 		<li><a href="/reservationManage.do">예약 관리</a></li>
 		<li><a href="/couponManage.do">쿠폰 관리</a></li>
@@ -47,8 +47,8 @@
 	</ul>
 	</nav>
 	<div class="wrapper">
-		<h2 id="ownerInfoTitle">[${sessionScope.owner.owName}]사장님의 정보관리</h2>
 		<c:if test="${sessionScope.ownerReCheck!=null}">
+			<h2 id="ownerInfoTitleResult">[${sessionScope.owner.owName}]사장님의 정보관리</h2>
 			<form action="/ownerInfoUpdate.do" method="post">
 				<section id="owner-signUp-section">
 				<h3>계정 정보</h3>
@@ -115,36 +115,50 @@
 			</form>
 		</c:if>
 		<c:if test="${sessionScope.ownerReCheck==null}">
+			<h2 id="ownerInfoTitle">[${sessionScope.owner.owName}]사장님의 정보관리</h2>
 			<form action="/ownerIdPassChk.do" method="post">
 				<div id="ownerPassReCheckDiv">
-					<div class="signUp-table">
+					<div class="signUp-table" style="margin-left:0px;padding-bottom:0px;">
 						<div>아이디</div>
 						<div>
 							<input type="text" name="owIdBeforeCheck" placeholder="아이디"
-								value=${sessionScope.owner.owId } readonly>
+								value=${sessionScope.owner.owId } readonly style="width:150px;">
 							<p></p>
 						</div>
 					</div>
-					<div class="signUp-table">
+					<div class="signUp-table" style="margin-left:0px;">
 						<div>비밀번호</div>
 						<div>
-							<input type="password" name="owPwBeforeCheck" placeholder="비밀번호">
-							<p>비밀번호를 한번더 입력해주세요</p>
+							<input type="password" name="owPwBeforeCheck" placeholder="비밀번호" style="width:150px;">
 						</div>
 					</div>
+					<p style="font-size:0.9em;text-align:left;margin-right:80px;">비밀번호를 한번더 입력해주세요</p>
 					<input type="submit" id="infoChangeBeforeCheck" value="정보 수정하러 가기">
 				</div>
 			</form>
 		</c:if>
 	</div>
-	<footer id="owner-main-footer">
-	<h2>YamNyaMing</h2>
-	<p>Immediately Reservation!</p>
-	<address>
-		㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
-		주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing
-		Co. All rights reserved
-	</address>
-	</footer>
+	<c:if test="${sessionScope.ownerReCheck!=null}">
+		<footer id="owner-main-footer">
+			<h2>YamNyaMing</h2>
+			<p>Immediately Reservation!</p>
+			<address>
+				㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
+				주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018
+				YamNyaMing Co. All rights reserved
+			</address>
+		</footer>	
+	</c:if>
+	<c:if test="${sessionScope.ownerReCheck==null}">
+		<footer id="owner-fixed-footer">
+		<h2>YamNyaMing</h2>
+		<p>Immediately Reservation!</p>
+		<address>
+			㈜ 얌냠컴퍼니 대표: 김미경 | 번호: 010-9612-0530 | 이메일: minimelodi@naver.com<br>
+			주소: 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 KH정보교육원 | Copyright ⓒ 2018 YamNyaMing
+			Co. All rights reserved
+		</address>
+		</footer>
+	</c:if>
 </body>
 </html>

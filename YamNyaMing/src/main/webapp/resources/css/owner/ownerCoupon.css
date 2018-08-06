@@ -5,6 +5,10 @@
     padding:10px;
 }
 
+h2{
+	margin-left:48px;
+	margin-top:20px;
+}
 
 /*쿠폰 등록 div*/
 #coupon-enroll{

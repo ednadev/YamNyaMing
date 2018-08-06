@@ -5,15 +5,16 @@ import java.sql.Date;
 public class YNMBook {
 	private int bookNo;
 	private int memberEntireNo;
-	private int ownerEntireNo;
+	private int storeEntireNo;
 	private Date bookDate;
 	private String bookDate2;
 	private int bookOrderCount;
 	private int bookPartyCount;
 	private String bookType;
 	private String bookOption;
-	private char bookState;
+	private String bookState;
 	private int bookDeposit;
+	private String bookName;
 	
 	
 	
@@ -21,23 +22,38 @@ public class YNMBook {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public YNMBook(int bookNo, int memberEntireNo, int ownerEntireNo, Date bookDate, int bookOrderCount, int bookPartyCount,
-			String bookType, String bookOption, char bookState, int bookDeposit) {
+	
+	
+	
+	
+
+
+
+	public YNMBook(int bookNo, int memberEntireNo, int storeEntireNo, Date bookDate, String bookDate2,
+			int bookOrderCount, int bookPartyCount, String bookType, String bookOption, String bookState,
+			int bookDeposit, String bookName) {
 		super();
 		this.bookNo = bookNo;
 		this.memberEntireNo = memberEntireNo;
-		this.ownerEntireNo = ownerEntireNo;
+		this.storeEntireNo = storeEntireNo;
 		this.bookDate = bookDate;
+		this.bookDate2 = bookDate2;
 		this.bookOrderCount = bookOrderCount;
 		this.bookPartyCount = bookPartyCount;
 		this.bookType = bookType;
 		this.bookOption = bookOption;
 		this.bookState = bookState;
 		this.bookDeposit = bookDeposit;
+		this.bookName = bookName;
 	}
-	
-	
-	
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
 	public String getBookDate2() {
 		return bookDate2;
 	}
@@ -50,18 +66,24 @@ public class YNMBook {
 	public void setBookNo(int bookNo) {
 		this.bookNo = bookNo;
 	}
+	
+	public int getStoreEntireNo() {
+		return storeEntireNo;
+	}
+
+
+
+	public void setStoreEntireNo(int storeEntireNo) {
+		this.storeEntireNo = storeEntireNo;
+	}
+
+
+
 	public int getMemberEntireNo() {
 		return memberEntireNo;
 	}
 	public void setMemberEntireNo(int memberEntire) {
 		this.memberEntireNo = memberEntire;
-	}
-	
-	public int getOwnerEntireNo() {
-		return ownerEntireNo;
-	}
-	public void setOwnerEntireNo(int ownerEntireNo) {
-		this.ownerEntireNo = ownerEntireNo;
 	}
 	public Date getBookDate() {
 		return bookDate;
@@ -93,10 +115,10 @@ public class YNMBook {
 	public void setBookOption(String bookOption) {
 		this.bookOption = bookOption;
 	}
-	public char getBookState() {
+	public String getBookState() {
 		return bookState;
 	}
-	public void setBookState(char bookState) {
+	public void setBookState(String bookState) {
 		this.bookState = bookState;
 	}
 	public int getBookDeposit() {

@@ -13,9 +13,13 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMStoreUnderReview" alias="underReviews"/>		
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="reviewLikes"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberSetting" alias="settings"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMFollow" alias="follow"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMFavorite" alias="favorite"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="like"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewJjim" alias="jjim"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearch" alias="search"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
-		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearch" alias="search"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.OwnerUploadPhoto" alias="owUploadPhoto"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.MenuInfo" alias="menuInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
@@ -25,5 +29,9 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.StorePageData" alias="storePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreInfoPageData" alias="storeInfoPageData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.StoreMenuData" alias="storeMenuData"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.BookSearchVo" alias="bookSearchVo"/>
+		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryMain" alias="storeCategoryMain"/>
+		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryDetail" alias="storeCategoryDetail"/>
 	</typeAliases>
 </configuration>

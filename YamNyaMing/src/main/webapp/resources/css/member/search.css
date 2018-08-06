@@ -248,6 +248,14 @@
 	font-size:0.9em;
 	border-radius:4px;
 }
+.star-full{
+	background-image:url('../../image/member/search/star-full.png');
+	background-size:cover;
+	background-position:center;
+	width:20px;
+	height:20px;
+	display:inline-block;
+}
 #member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-text>div:nth-child(2){
 	width:274px;
 	height:40px;
@@ -255,24 +263,58 @@
 	color:#555;
 	margin-top:12px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button,
+#member-search-section>.member-search-wrapper>.search-page>.search-result>form>input[type="button"]{
 	margin-top:4px;
 	cursor:pointer;
+	width:150px;
+	height:40px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(3){
+#member-search-section>.member-search-wrapper>.search-page>.search-result>form{
+	display:inline-block;
+}
+#member-search-section>.member-search-wrapper>.search-page>.search-result>form>input[type="button"]{
 	background-color:#fb0;
 	border:none;
 	color:white;
 	display:inline-block;
-	width:150px;
-	height:40px;
 	margin-left:7px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(4){
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button{
 	background-color:white;
 	border:1px solid #ddd;
-	width:150px;
 	margin-right:7px;
-	height:40px;
 	color:black;
+}
+/* Modal */
+.modal{
+	display:none;
+	position:fixed;
+	z-index:1;
+	padding-top:100px;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	background-color:rgba(0,0,0,0.4);
+}
+.modal-content{
+	background-color:#fefefe;
+	margin:auto;
+	padding:20px;
+	border:1px solid #888;
+	width:80%;
+}
+.close{
+	color:#aaa;
+	float:right;
+	font-size:28px;
+	font-weight:bold;
+}
+.close:hover,
+.close:focus{
+	color:#000;
+	text-decoration:none;
+	cursor:pointer;
 }

@@ -5,9 +5,9 @@
        select
        		ow_store_info_pk as owStoreInfoPk,
 			ow_store_name as owStoreName, 
-		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
+		    substr(ow_store_addr,6,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
-		    ow_photo_route as owPhotoRoute,
+		    ow_photo_route||'\'||ow_remake_name as owPhotoRoute,
 		    store_cate_detail_name as storeCateDetailName,
 		    ow_store_comment as owStoreComment,
 		    ow_store_addr as owStoreAddr,
@@ -21,27 +21,45 @@
 		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
         and ow_store_info_fk between #{start} and #{end}
         and ow_photo_type_fk = 3
-        order by ow_store_info_pk)
+        order by ow_store_info_pk desc)
         <trim prefix="where" prefixOverrides="AND|OR">
 			<if test="food!=null and food!=''">
 				store_cate_main_name = #{food}
 			</if>
-			<if test="storeCateDetailName!=null and storeCateDetailName!=''">
-				store_cate_detail_name in
-				<foreach item="storeCateDetailName" collection="array" open="(" separator="," close=")">
-					 #{storeCateDetailName}
-				</foreach>
-			</if>			
+			<if test="keyword!=null and keyword!=''">
+				and ow_store_name like '%'||#{keyword}||'%'
+				or ow_store_tip like '%'||#{keyword}||'%'
+			</if>		
+			
 		</trim>
 	</select>
 	
 	<select id="searchCount" parameterType="search" resultType="int"> 
-		select count(*) from owner_store_info_tb
+		select count(*)
+		from (
+        select * from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
+				owner_store_detail_tb detail, store_category_main_tb maincate
+		where photo.ow_store_info_fk = info.ow_store_info_pk
+		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
+		and info.ow_store_info_pk = detail.ow_store_index
+		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
+        and ow_store_info_fk between #{start} and #{end}
+        and ow_photo_type_fk = 3
+        order by ow_store_info_pk desc)
+        <trim prefix="where" prefixOverrides="AND|OR">
+			<if test="food!=null and food!=''">
+				store_cate_main_name = #{food}
+			</if>		
+			<if test="keyword!=null and keyword!=''">
+				and ow_store_name like '%'||#{keyword}||'%'
+				or ow_store_tip like '%'||#{keyword}||'%'
+			</if>		
+		</trim>
 	</select>
 	
 	<select id="detailPage" resultType="search">
 		select 
-			ow_store_info_pk as owStoreInfoPk,
+			distinct ow_store_info_pk as owStoreInfoPk,
 		    ow_store_name as owStoreName, 
 		    substr(ow_store_addr,1,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,

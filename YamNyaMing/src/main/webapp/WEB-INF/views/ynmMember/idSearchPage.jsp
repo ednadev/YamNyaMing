@@ -6,11 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/login.css?ver=2">
-<title>Insert title here</title>
+<title>아이디 찾기</title>
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 </head>
 <body>
 
-	<section id="member-login-section">
+	<section id="member-login-section" style="padding-top:4px;">
 		<h2>아이디 찾기</h2>
 		<form action="/memberIdSearch.do" method="post" id="idSearchForm">
 			<p>

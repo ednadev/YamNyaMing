@@ -121,7 +121,6 @@
 	<hr>
 		<form id="fileForm" action="/storeReviewInsert.do" enctype="multipart/form-data" method="post">
 		<input type="text" id="ownerStoreEntireNo" name="ownerStoreEntireNo">
-		<input type="text" id="reviewTitle" name="reviewTitle">
 		<input type="text" id="reviewContent" name="reviewContent">
 		<input type="text" id="reviewStar" name="reviewStar">
 			
@@ -166,6 +165,14 @@
 		<form action="/logins.do">
 		<input type="submit" value="네이버">
 		</form>
+		
+			<form action="/storeUnderReviewInsert.do">
+	<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
+	<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
+	<input type="text" name="underReviewContent">
+	
+	<input type="submit" value="대댓글등록">
+	</form>
 	
 </body>
 </html>

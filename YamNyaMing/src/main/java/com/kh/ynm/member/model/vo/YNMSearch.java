@@ -18,13 +18,20 @@ public class YNMSearch {
 	private String owStoreTableInfo;
 	private String owSubInfo;
 	private String owDrinkListInfo;
+	private int starPoint;
+	private float starAvg;
+	private int favoriteTotal;
+	private int favoriteChk;
+	
+	
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}
 	public YNMSearch(int owStoreInfoPk, String owStoreName, String owStoreAddrFirst, String owStoreAddrFinal,
 			String storeCateDetailName, String owPhotoRoute, String owStoreComment, String owStoreHeadPhoto,
 			String owStoreTel, String owStoreUrl, String owStoreAddr, String owStoreWorkingTime, String owBudget,
-			String storeCateMainName, String owStoreTableInfo, String owSubInfo, String owDrinkListInfo) {
+			String storeCateMainName, String owStoreTableInfo, String owSubInfo, String owDrinkListInfo, int starPoint,
+			float starAvg, int favoriteTotal) {
 		this.owStoreInfoPk = owStoreInfoPk;
 		this.owStoreName = owStoreName;
 		this.owStoreAddrFirst = owStoreAddrFirst;
@@ -42,6 +49,15 @@ public class YNMSearch {
 		this.owStoreTableInfo = owStoreTableInfo;
 		this.owSubInfo = owSubInfo;
 		this.owDrinkListInfo = owDrinkListInfo;
+		this.starPoint = starPoint;
+		this.starAvg = starAvg;
+		this.favoriteTotal = favoriteTotal;
+	}
+	public int getFavoriteChk() {
+		return favoriteChk;
+	}
+	public void setFavoriteChk(int favoriteChk) {
+		this.favoriteChk = favoriteChk;
 	}
 	public int getOwStoreInfoPk() {
 		return owStoreInfoPk;
@@ -77,7 +93,22 @@ public class YNMSearch {
 		return owPhotoRoute;
 	}
 	public void setOwPhotoRoute(String owPhotoRoute) {
-		this.owPhotoRoute = owPhotoRoute;
+		String[] arrTest1 = owPhotoRoute.split("\\\\");
+		StringBuilder sb = new StringBuilder();
+		boolean chk = false;
+		for(int i = 0; i<arrTest1.length;i++)
+		{
+			if(arrTest1[i].equals("resources")) chk = true;
+			if(chk) {
+				if(!arrTest1[i].equals("resources"))sb.append("/"+arrTest1[i]);
+				else sb.append(arrTest1[i]);
+			}
+			
+		}
+		System.out.println(sb.toString());
+		this.owPhotoRoute = sb.toString(); //resources/image/member/main/alcohol-hover.jpg
+		
+		
 	}
 	public String getOwStoreComment() {
 		return owStoreComment;
@@ -145,4 +176,24 @@ public class YNMSearch {
 	public void setOwDrinkListInfo(String owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
 	}
+	public int getStarPoint() {
+		return starPoint;
+	}
+	public void setStarPoint(int starPoint) {
+		this.starPoint = starPoint;
+	}
+	public float getStarAvg() {
+		return starAvg;
+	}
+	public void setStarAvg(float starAvg) {
+		this.starAvg = starAvg;
+	}
+	public int getFavoriteTotal() {
+		return favoriteTotal;
+	}
+	public void setFavoriteTotal(int favoriteTotal) {
+		this.favoriteTotal = favoriteTotal;
+	}
+
+
 }

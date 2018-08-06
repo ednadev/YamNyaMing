@@ -7,11 +7,14 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=5">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/datePickerCss.css?ver=3">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCheckPrice.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/datePickerbasic.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/odatePickerUi.js?ver=1"></script>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 </head>
@@ -87,7 +90,7 @@
 				<div class="signUp-table">
 					<div>웹사이트</div>
 					<div>
-						<input type="url" name="owStoreUrl" placeholder="웹사이트">
+						<input type="url" name="owStoreUrl" placeholder="http://">
 						<p>웹사이트를 입력해주세요.</p>
 					</div>
 				</div>
@@ -117,7 +120,8 @@
 							<option value="토">토요일</option>
 							<option value="일">일요일</option>
 						</select>
-						<input type="time" name="owStoreWorkingTimeStart">
+						
+						<input type="time" name="owStoreWorkingTimeStart" >
 						<span> - </span>
 						<input type="time" name="owStoreWorkingTimeEnd">
 						<input type="text" name="extWorkingOption" placeholder="예) 화요일 휴무">
@@ -128,7 +132,7 @@
 				<div class="signUp-table">
 					<div>가게 한줄평</div>
 					<div>
-						<input type="text" name="owStoreLineComment" class="keywordStyle">
+						<input type="text" name="owStoreLineComment" class="keywordStyle" style="width:50%;">
 						<p id="tipResult">(가게를 소개할 한줄 코멘트를 적어주세요.)</p>
 					</div>
 				</div>	
@@ -190,8 +194,7 @@
 							</select>
 							<br>
 							<input type="text" name="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
-							<input type="text" name="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
-							<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
+							<input type="text" name="owRecommandMenuPrice" placeholder="예) 30000" class="priceStyle"><span> 원</span>
 							<label><input type="checkbox"> 추천메뉴</label>
 							<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
 							<textarea id="menuDesc" name="owMenuExplain" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
@@ -208,25 +211,25 @@
 				<div class="signUp-table">
 					<div>테이블 정보</div>
 					<div>
-						<input type="text" name="owStoreTableInfo" placeholder="테이블 정보 입력 (최대 인원)">
+						<input type="text" name="owStoreTableInfo" placeholder="테이블 정보 입력 (ex. 홀테이블, 바테이블, 룸테이블, 좌식테이블)">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>예산 정보</div>
 					<div>
-						<input type="text" name="owBudget" placeholder="예산 정보 입력">
+						<input type="text" name="owBudget" placeholder="예산 정보 입력 (2인 기준)">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>부가 정보</div>
 					<div>
-						<input type="text" name="owSubInfo" placeholder="부가 정보 입력 (ex. 아이동반 가능여부, 연장영업, 기타 정보사항 )">
+						<input type="text" name="owSubInfo" placeholder="부가 정보 입력 (ex. 주차 가능, 아이동반 가능, 단체석 예약 가능, 24시간 영업 )">
 					</div>
 				</div>	
 				<div class="signUp-table">
 					<div>주류 정보</div>
 					<div>
-						<input type="text" name="owDrinkListInfo" placeholder="주류 정보 입력">
+						<input type="text" name="owDrinkListInfo" placeholder="주류 정보 입력 (ex. 소주, 맥주, 사케, 양주, 와인, 칵테일)">
 					</div>
 				</div>																																																										
 			</section>
@@ -261,7 +264,7 @@
 			//menuSelectMain.add(option);
 			for(var i = 0; i<menuSelect.length;i++){
 				var option = document.createElement("option");
-				option.selected = true;
+				if(i==0||i==menuSelect.length-1)option.selected = true;
 				option.value =  $('input[name=owMenuType]').val();
 				option.text = $('input[name=owMenuType]').val();
 				menuSelect[i].add(option);

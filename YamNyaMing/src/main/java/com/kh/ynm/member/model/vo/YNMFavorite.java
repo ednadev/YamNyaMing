@@ -3,19 +3,7 @@ package com.kh.ynm.member.model.vo;
 public class YNMFavorite {
 	private int favoriteNo;
 	private int memberEntireNo;
-	private int ownerEntireNo;
-	
-	
-	
-	public YNMFavorite() {
-		super();
-	}
-	public YNMFavorite(int favoriteNo, int memberEntireNo, int ownerEntireNo) {
-		super();
-		this.favoriteNo = favoriteNo;
-		this.memberEntireNo = memberEntireNo;
-		this.ownerEntireNo = ownerEntireNo;
-	}
+	private int owStoreInfoNo;
 	public int getFavoriteNo() {
 		return favoriteNo;
 	}
@@ -28,12 +16,14 @@ public class YNMFavorite {
 	public void setMemberEntireNo(int memberEntireNo) {
 		this.memberEntireNo = memberEntireNo;
 	}
-	public int getOwnerEntireNo() {
-		return ownerEntireNo;
+	public int getOwStoreInfoNo() {
+		return owStoreInfoNo;
 	}
-	public void setOwnerEntireNo(int ownerEntireNo) {
-		this.ownerEntireNo = ownerEntireNo;
+	public void setOwStoreInfoNo(int owStoreInfoNo) {
+		this.owStoreInfoNo = owStoreInfoNo;
 	}
+	
+	
 	
 	
 }

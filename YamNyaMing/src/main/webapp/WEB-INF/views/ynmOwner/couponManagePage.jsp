@@ -12,7 +12,7 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=2">
+	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=3">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -20,6 +20,51 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=1"></script>
+	
+<!-- DatePicker -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script>
+ $(document).ready(function () {
+	$.datepicker.regional['ko'] = {
+	        closeText: '닫기',
+	        prevText: '이전달',
+	        nextText: '다음달',
+	        currentText: '오늘',
+	        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+	        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+	        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+	        '7월','8월','9월','10월','11월','12월'],
+	        dayNames: ['일','월','화','수','목','금','토'],
+	        dayNamesShort: ['일','월','화','수','목','금','토'],
+	        dayNamesMin: ['일','월','화','수','목','금','토'],
+	        weekHeader: 'Wk',
+	        dateFormat: 'yy-mm-dd',
+	        firstDay: 0,
+	        isRTL: false,
+	        showMonthAfterYear: true,
+	        yearSuffix: '',
+	        changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: true,
+	        yearRange: 'c-99:c+99',
+	    };
+	    $.datepicker.setDefaults($.datepicker.regional['ko']);
+	 
+	    $('#sdate').datepicker();
+	    $('#sdate').datepicker("option", "maxDate", $("#edate").val());
+	    $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
+	        $("#edate").datepicker( "option", "minDate", selectedDate );
+	    });
+	 
+	    $('#edate').datepicker();
+	    $('#edate').datepicker("option", "minDate", $("#sdate").val());
+	    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
+	        $("#sdate").datepicker( "option", "maxDate", selectedDate );
+	    });
+	 });
+</script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -39,7 +84,7 @@
 		<li><a href="/ownerInfo.do">정보 관리</a></li>
 		<li><a href="/storeManage.do">음식점 관리</a></li>
 		<li><a href="/reservationManage.do">예약 관리</a></li>
-		<li><a href="/couponManage.do">쿠폰 관리</a></li>
+		<li><a href="/couponManage.do" style="border-bottom:3px solid #fb0;">쿠폰 관리</a></li>
 		<li><a href="/boardOwner.do">게시판 관리</a></li>
 		<li><a href="/analysisOwner.do">통계 관리</a></li>
 	</ul>
@@ -70,10 +115,9 @@
 				<div class="signUp-table">
 					<div>쿠폰 유효기간</div>
 					<div>
-						<input type="date" name="couponStartDate" onkeydown="dateCheck();"
-							onchange="dateCheck();"> <span> - </span> <input
-							type="date" name="couponExpireDate" onkeydown="dateCheck();"
-							onchange="dateCheck();">
+						<input type="text" name="couponStartDate" placeholder="시작날짜" id="sdate" onkeydown="dateCheck();" onchange="dateCheck();" style="width:23.5%;">
+							 <span> - </span>
+						<input	type="text" name="couponExpireDate" placeholder="종료날짜" id="edate" onkeydown="dateCheck();"  onchange="dateCheck();" style="width:23.5%;">
 						<p id="dateResultCheck">쿠폰 유효기간을 입력해주세요</p>
 					</div>
 				</div>

@@ -7,20 +7,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
+	<script>
+		window.onload = fucntion()
+		{
+			firstLoadAlert();
+		}
+		function firstLoadAlert()
+		{
+			if(typeof Android !=="undefined" && Android !== null){
+				Android.firstLoadTest();
+			}else{
+				alert("Not viewing in webView!!");
+			}
+			 
+		}
+	</script>
 </head>
 <body>
+	
 	<header id="member-main-header">
 		<h1>
 			<a href="/index.jsp">YamNyaMing</a>
 		</h1>
-		<a href="/ynmMemberTest.do">맴버test</a>
 
 		<ul>
-		
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
 			<c:if test="${sessionScope.naver!=null}" var="result">
 				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
 				<li><a href="/memberInfo.do">마이페이지</a></li>
@@ -34,8 +50,8 @@
 			</c:if>
 
 			<c:if test="${sessionScope.owner!=null}" var="result">
-				<li>${sessionScope.owner.owName}사장님 환영합니다.</li>
-				<li><a href="/ownerMyPage.do">마이페이지</a></li>
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
 				<li><a href="/ownerLogout.do">로그아웃</a></li>
 			</c:if>
 			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
@@ -64,24 +80,24 @@
 		</article>
 		<article>
 			<div>
-				<a href="/search.do?food=한식">한식</a>
+				<a href="/search.do?place=홍대&food=한식">한식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=양식">양식</a>
+				<a href="/search.do?place=홍대&food=양식">양식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=일식">일식</a>
+				<a href="/search.do?place=홍대&food=일식">일식</a>
 			</div>
 			<div>
-				<a href="/search.do?food=중식">중식</a>
+				<a href="/search.do?place=홍대&food=중식">중식</a>
 			</div>
 		</article>
 		<article>
 			<div>
-				<a href="/search.do?food=디저트">디저트</a>
+				<a href="/search.do?place=홍대&food=디저트">디저트</a>
 			</div>
 			<div>
-				<a href="/search.do?food=술집">술집</a>
+				<a href="/search.do?place=홍대&food=술집">술집</a>
 			</div>
 		</article>
 	</section>

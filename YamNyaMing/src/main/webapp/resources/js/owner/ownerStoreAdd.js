@@ -181,6 +181,7 @@ $(document).ready(function(){
 
 function reviewFilesUpload(){
 	$("#mainImage").trigger('click');
+	$("#menuImage").trigger('click');
 }
 
 function reviewPhotoSelect(e){
@@ -279,3 +280,5 @@ function menuTypeChange(menuType)
 		}
 	}
 }
+
+

@@ -14,11 +14,49 @@ public class YNMMember {
 	private String memberPhone;
 	private Date memberRegDate;
 	private int memberUploadPhotoNo;
-
-
+	private int followTotal;
+	private int reviewTotal;
+	private String photoViewRoute;
+	private int jjimTotal;
+	private int reservationTotal;
+	private int memberPoint;
 	
-
-
+	public int getReservationTotal() {
+		return reservationTotal;
+	}
+	public void setReservationTotal(int reservationTotal) {
+		this.reservationTotal = reservationTotal;
+	}
+	public int getMemberPoint() {
+		return memberPoint;
+	}
+	public void setMemberPoint(int memberPoint) {
+		this.memberPoint = memberPoint;
+	}
+	public int getJjimTotal() {
+		return jjimTotal;
+	}
+	public void setJjimTotal(int jjimTotal) {
+		this.jjimTotal = jjimTotal;
+	}
+	public String getPhotoViewRoute() {
+		return photoViewRoute;
+	}
+	public void setPhotoViewRoute(String photoViewRoute) {
+		this.photoViewRoute = photoViewRoute;
+	}
+	public int getFollowTotal() {
+		return followTotal;
+	}
+	public void setFollowTotal(int followTotal) {
+		this.followTotal = followTotal;
+	}
+	public int getReviewTotal() {
+		return reviewTotal;
+	}
+	public void setReviewTotal(int reviewTotal) {
+		this.reviewTotal = reviewTotal;
+	}
 	public int getMemberUploadPhotoNo() {
 		return memberUploadPhotoNo;
 	}

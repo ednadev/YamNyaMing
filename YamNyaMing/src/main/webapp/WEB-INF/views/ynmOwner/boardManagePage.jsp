@@ -13,7 +13,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/owner/owner.js"></script>
 </head>
 <body>
-		<header id="owner-main-header">
+	<header id="owner-main-header">
 		<h1>
 			<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 		</h1>
