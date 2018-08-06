@@ -55,9 +55,9 @@
 						
 						<center>
 						<div class="jumbotron">
-						<h1 class="display-1">에러
+						<h1 class="display-1">Error
 						<i class="fa  fa-spin fa-cog fa-3x"></i></h1>
-						<h1 class="display-3">Login Error</h1>
+						<h1 class="display-3">에러에러열매</h1>
 						<p class="lower-case"><a href="/adminLogin.do">돌아가기</a>
 						</center>
 						</div>

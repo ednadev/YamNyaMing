@@ -12,9 +12,10 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+
 </head>
 <style>
 .paging-num {
@@ -116,13 +117,13 @@
 		</ul>
 	</nav>
 
-
 	    <c:forEach var="storeInfo" items="${storeList}">
 	    <div class="col-lg-4 col-md-4 col-sm-6">
            <div class="thumbnail img-thumb-bg">
+           
                <div class="overlay"></div>
                <div class="caption">
-               	  
+               ${storeInfo.owStoreInfoPk}
                    <div class="tag">${storeInfo.owStoreName}
                    <c:choose>
                    <c:when test="${storeInfo.owBigTypeFk==1}">(한식)</c:when>
@@ -147,16 +148,16 @@
                    <div>${storeInfo.storeTableInfo}</div>
                    <div>
                     <c:choose>
-      				<c:when test="${storeInfo.store_enroll_rq_state eq '2'}">
-    			    <form action="/upGrade.do">
+      				<c:when test="${storeInfo.store_enroll_rq_state eq '1'}">
+    			    <form action="/storeYes.do">
      			    <input type="hidden" id="owStoreInfoPk" name="owStoreInfoPk" class="owStoreInfoPk" value="${storeInfo.owStoreInfoPk}"/>
-      				<input type="submit" style="background-color:white;font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="수락"/>
+      				<input type="submit" class="btn2" value="수락"/>
       				</form>
       				</c:when>
       				<c:otherwise>
-     				<form action="/downGrade.do">
+     				<form action="/storeNo.do">
       				<input type="hidden" id="owStoreInfoPk" name="owStoreInfoPk" class="owStoreInfoPk" value="${storeInfo.owStoreInfoPk}"/>
-      				<input type="submit" style="background-color:white; font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="강등"/>
+      				<input type="submit" class="btn2" value="정지"/>
       				</form>
       				</c:otherwise>
       				</c:choose>
@@ -166,18 +167,8 @@
         </div>
 	</div>
 </c:forEach> 
-
-
-   
   <!-- 게시물 리스트 보여주기 -->
-
-  
-       
-      
-   
-
-	
-     <!-- 페이지 -->
+  <!-- 페이지 -->
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
