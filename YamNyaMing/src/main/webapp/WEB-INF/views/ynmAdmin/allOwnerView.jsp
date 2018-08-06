@@ -12,24 +12,22 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=2">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
 <style>
 .btn {
-	width: 100px;
 	display: inline-block;
-	color: #ecf0f1;
+	color: white;
 	text-decoration: none;
 	border-radius: 5px;
 	border: solid 1px #FFBB00;
 	background: #FFBB00;
-	padding: 16px 18px 14px;
-	font-size: 10px;
+	padding: 10px 15px;
+	font-size: 0.9em;
 	-webkit-transition: all 0.1s;
 	-moz-transition: all 0.1s;
 	transition: all 0.1s;
@@ -59,7 +57,7 @@
 		<ul>
 			<li><a href="/adminInfo.do">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
-			<li><a href="/allOwnerView.do">점장 관리</a></li>
+			<li><a href="/allOwnerView.do" style="border-bottom:3px solid #fb0;">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
@@ -69,7 +67,7 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-3">
-            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span>점장관리 </h2>
+            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"><img src="${pageContext.request.contextPath}/resources/image/member/search/check-form.png" style="width:20px;margin-right:20px;"></span>점장관리 </h2>
           </div>
           <div class="col-xs-9 col-sm-9 col-md-9">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -98,7 +96,7 @@
         </div>
       </div>
 <center>
-<div class="panel-body table-responsive">
+<div class="panel-body table-responsive" style="border:none;">
         <table class="table table-hover">
 				<thead>
 				<tr>

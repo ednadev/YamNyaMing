@@ -18,6 +18,7 @@
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewLike" alias="like"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMReviewJjim" alias="jjim"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearch" alias="search"/>
+		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearchPaging" alias="searchPaging"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMOwner" alias="owner"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreInfo" alias="storeInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.OwnerUploadPhoto" alias="owUploadPhoto"/>

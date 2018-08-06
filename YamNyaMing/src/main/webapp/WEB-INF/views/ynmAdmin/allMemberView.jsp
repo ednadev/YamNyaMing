@@ -11,8 +11,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -30,7 +29,7 @@
 	<nav id="admin-main-nav">
 		<ul>
 			<li><a href="/adminInfo.do">관리자 정보</a></li>
-			<li><a href="/allMemberView.do">회원 관리</a></li>
+			<li><a href="/allMemberView.do" style="border-bottom:3px solid #fb0;">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
 			<li><a href="/statAdmin.do">통계</a></li>
@@ -41,7 +40,7 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-3">
-            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"> </span>회원관리 </h2>
+            <h2 class="text-center pull-left" style="padding-left: 30px;"> <span class="glyphicon glyphicon-list-alt"><img src="${pageContext.request.contextPath}/resources/image/member/search/check-form.png" style="width:20px;margin-right:20px;"></span>회원관리 </h2>
           </div>
           <div>
             <div>
@@ -70,7 +69,7 @@
         </div>
       </div>
 <center>
-<div class="panel-body table-responsive">
+<div class="panel-body table-responsive" style="border:none;">
         <table class="table table-hover">
 				<thead>
 				<tr>

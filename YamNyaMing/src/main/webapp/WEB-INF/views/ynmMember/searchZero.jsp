@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=5">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=6">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 </head>
@@ -160,9 +160,19 @@
 	var map = new daum.maps.Map(mapContainer, mapOption); 
 	</script>
 	
+	<script>
+	function searchDetail(){
+		var x = document.getElementById("searchDetail");
+		if(x.style.display === "none"){
+			x.style.display = "block";
+		}else{
+			x.style.display = "none";
+		}
+	}
+	</script>
 	<div class="member-search-wrapper">
-	<h2>자세히 검색</h2>
-	<form action="/search.do" method="get">
+	<h2 onclick="searchDetail();">자세히 검색</h2>
+	<form action="/search.do" method="get" id="searchDetail">
 	<c:choose>
 		<c:when test="${food eq '한식' }">
 		<input type="hidden" name="place" value="홍대">
@@ -272,20 +282,16 @@
 				<c:otherwise>
 					<input type="checkbox" id="stew" name="storeCateDetailName" value="찌개,전골"><label for="stew">찌개,전골</label>
 				</c:otherwise>
-			</c:choose>								
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>	
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '추어탕' || storeCateDetailName[1] eq '추어탕' || storeCateDetailName[2] eq '추어탕' 
 								|| storeCateDetailName[3] eq '추어탕' || storeCateDetailName[4] eq '추어탕' || storeCateDetailName[5] eq '추어탕'
 								|| storeCateDetailName[6] eq '추어탕' || storeCateDetailName[7] eq '추어탕' || storeCateDetailName[8] eq '추어탕'
 								|| storeCateDetailName[9] eq '추어탕' || storeCateDetailName[10] eq '추어탕' || storeCateDetailName[11] eq '추어탕'}">
-					<input type="checkbox" id="chuatang" name="storeCateDetailName" value="추어탕" checked><label for="chuatang" style="margin-left:119px;">추어탕</label>
+					<input type="checkbox" id="chuatang" name="storeCateDetailName" value="추어탕" checked><label for="chuatang">추어탕</label>
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="chuatang" name="storeCateDetailName" value="추어탕"><label for="chuatang" style="margin-left:119px;">추어탕</label>
+					<input type="checkbox" id="chuatang" name="storeCateDetailName" value="추어탕"><label for="chuatang">추어탕</label>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
@@ -390,11 +396,7 @@
 				<c:otherwise>
 					<input type="checkbox" id="stirFry" name="storeCateDetailName" value="볶음요리"><label for="stirFry">볶음요리</label>
 				</c:otherwise>
-			</c:choose>					
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>		
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '해산물요리' || storeCateDetailName[1] eq '해산물요리' || storeCateDetailName[2] eq '해산물요리' 
 								|| storeCateDetailName[3] eq '해산물요리' || storeCateDetailName[4] eq '해산물요리' || storeCateDetailName[5] eq '해산물요리'
@@ -403,10 +405,10 @@
 								|| storeCateDetailName[12] eq '해산물요리' || storeCateDetailName[13] eq '해산물요리' || storeCateDetailName[14] eq '해산물요리'
 								|| storeCateDetailName[15] eq '해산물요리' || storeCateDetailName[16] eq '해산물요리' || storeCateDetailName[17] eq '해산물요리'
 								|| storeCateDetailName[18] eq '해산물요리' || storeCateDetailName[19] eq '해산물요리' || storeCateDetailName[20] eq '해산물요리'}">
-					<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" value="해산물요리" checked><label for="koreanSeafood" style="margin-left:119px;">해산물요리</label>
+					<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" value="해산물요리" checked><label for="koreanSeafood">해산물요리</label>
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" value="해산물요리"><label for="koreanSeafood" style="margin-left:119px;">해산물요리</label>
+					<input type="checkbox" id="koreanSeafood" name="storeCateDetailName" value="해산물요리"><label for="koreanSeafood">해산물요리</label>
 				</c:otherwise>
 			</c:choose>		
 			<c:choose>
@@ -501,9 +503,11 @@
 				<c:otherwise>
 					<input type="checkbox" id="snackBar" name="storeCateDetailName" value="분식"><label for="snackBar">분식</label>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>							
+									
+										
 		</div>
-	</div>	
+	</div>
 
 		</c:when>
 		<c:when test="${food eq '중식'}">
@@ -610,19 +614,15 @@
 				<c:otherwise>
 					<input type="checkbox" id="japaneseFry" name="storeCateDetailName" value="일식튀김,꼬치"><label for="japaneseFry">일식튀김,꼬치</label>
 				</c:otherwise>
-			</c:choose>							
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>	
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '초밥,롤' || storeCateDetailName[1] eq '초밥,롤' || storeCateDetailName[2] eq '초밥,롤'
 								|| storeCateDetailName[3] eq '초밥,롤' || storeCateDetailName[4] eq '초밥,롤' || storeCateDetailName[5] eq '초밥,롤'
 								|| storeCateDEtailName[6] eq '초밥,롤' || storeCateDetailName[7] eq '초밥,롤' || storeCateDetailName[8] eq '초밥,롤'}">
-					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤" checked><label for="sushi" style="margin-left:119px;">초밥,롤</label>		
+					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤" checked><label for="sushi">초밥,롤</label>		
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤"><label for="sushi" style="margin-left:119px;">초밥,롤</label>		
+					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤"><label for="sushi">초밥,롤</label>		
 				</c:otherwise>
 			</c:choose>	
 			<c:choose>
@@ -635,9 +635,10 @@
 				<c:otherwise>
 					<input type="checkbox" id="riceBowl" name="storeCateDetailName" value="덮밥"><label for="riceBowl">덮밥</label>
 				</c:otherwise>
-			</c:choose>						
+			</c:choose>											
 		</div>
-	</div>			
+	</div>
+		
 		
 		</c:when>
 		<c:when test="${food eq '양식'}">
@@ -717,20 +718,15 @@
 				<c:otherwise>
 					<input type="checkbox" id="franceFood" name="storeCateDetailName" value="프랑스음식"><label for="franceFood">프랑스음식</label>
 				</c:otherwise>
-			</c:choose>				
-		</div>
-	</div>
-	
-	<div class="detailSearch">
-		<div>
+			</c:choose>		
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '이탈리아음식' || storeCateDetailName[1] eq '이탈리아음식' || storeCateDetailName[2] eq '이탈리아음식'
 								|| storeCateDetailName[3] eq '이탈리아음식' || storeCateDetailName[4] eq '이탈리아음식' || storeCateDetailName[5] eq '이탈리아음식'
 								|| storeCateDetailName[6] eq '이탈리아음식' || storeCateDetailName[7] eq '이탈리아음식' || storeCateDetailName[8] eq '이탈리아음식'}">
-					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식" checked><label for="italyFood" style="margin-left:119px;">이탈리아음식</label>
+					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식" checked><label for="italyFood">이탈리아음식</label>
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식"><label for="italyFood" style="margin-left:119px;">이탈리아음식</label>
+					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식"><label for="italyFood">이탈리아음식</label>
 				</c:otherwise>
 			</c:choose>		
 			<c:choose>
@@ -801,9 +797,10 @@
 				<c:otherwise>
 					<input type="checkbox" id="germanyFood" name="storeCateDetailName" value="독일음식"><label for="germanyFood">독일음식</label>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>									
 		</div>
-	</div>				
+	</div>
+			
 			
 		</c:when>
 

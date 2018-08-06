@@ -31,7 +31,6 @@
 	<header id="member-main-header">
 		<h1>
 			<a href="/index.jsp">YamNyaMing</a>
-			<a href="/test.do?memberEntireNo=4">다른</a>
 		</h1>
 
 		<ul>
