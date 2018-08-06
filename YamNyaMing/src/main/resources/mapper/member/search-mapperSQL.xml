@@ -2,123 +2,100 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="search">
 	<select id="searchList" parameterType="searchPaging" resultType="search">
-       select
-       		ow_store_info_pk as owStoreInfoPk,
+        select
+       		distinct ow_store_info_pk as owStoreInfoPk,
 			ow_store_name as owStoreName, 
 		    substr(ow_store_addr,6,2) as owStoreAddrFirst,
 		    substr(ow_store_addr,instr(ow_store_addr,' ')+1,instr(ow_store_addr,'구')-instr(ow_store_addr,' ')) as owStoreAddrFinal,
-		    ow_photo_route||'\'||ow_remake_name as owPhotoRoute,
-		    store_cate_detail_name as storeCateDetailName,
 		    ow_store_comment as owStoreComment,
 		    ow_store_addr as owStoreAddr,
-            store_cate_main_name as storeCateMainName
-        from (
-        select * from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
-				owner_store_detail_tb detail, store_category_main_tb maincate
-		where photo.ow_store_info_fk = info.ow_store_info_pk
-		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
-		and info.ow_store_info_pk = detail.ow_store_index
-		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
-        and ow_store_info_fk between #{start} and #{end}
-        and ow_photo_type_fk = 3
-        order by ow_store_info_pk desc)
-        <trim prefix="where" prefixOverrides="AND|OR">
+            (select store_cate_main_name from store_category_main_tb 
+            where store_cate_main_pk = st.ow_store_big_type_fk)  as storeCateMainName,
+            (select store_cate_detail_name from store_category_detail_tb 
+            where store_cate_detail_pk = st.ow_store_detail_type_fk)  as storeCateDetailName,
+            (select ow_photo_route||'\'||ow_remake_name
+            from owner_store_photo_tb
+            where  ow_store_photo_pk = (select min(ow_store_photo_pk)  from owner_store_photo_tb
+            where ow_store_info_fk = ow_store_info_pk and ow_photo_type_fk = 3)) as owPhotoRoute
+        from owner_store_info_tb st, owner_store_detail_tb dt,
+        (select row_number() over(order by ow_store_info_pk desc) as num from owner_store_info_tb)
+        where ow_store_index = ow_store_info_pk
+       	and num between #{start} and #{end}
+        <!-- <trim prefix="" prefixOverrides="AND|OR"> -->
 			<if test="food!=null and food!=''">
-				store_cate_main_name = #{food}
+			  	and store_cate_main_name = #{food}
 			</if>
 			<if test="keyword!=null and keyword!=''">
 				and ow_store_name like '%'||#{keyword}||'%'
 				or ow_store_tip like '%'||#{keyword}||'%'
 				or store_cate_detail_name like '%'||#{keyword}||'%'
 			</if>
-		        <if test="storeCateDetailName!=null and storeCateDetailName!=''">
-		             and store_cate_detail_name in 
-	             	 <foreach collection="list" item="detailNames">
-			             <foreach item="detailName" collection="detailNames.storeCateDetailName" open="(" separator="," close=")">
-			                #{detailName}
-			             </foreach>
-		             </foreach>
-		        </if>
-				<if test="owBudget!=null and owBudget!=''">
-					 and ow_budget in 
-					  <foreach collection="list" item="owBudgets">
-						 <foreach item="owBudget" collection="owBudgets.owBudget" open="(" separator="," close=")">
-						 	#{owBudget}
-						 </foreach>
-					 </foreach>
-				</if>
-				<if test="owSubInfo!=null and owSubInfo!=''">
-					 and ow_sub_info in 
-					  <foreach collection="list" item="owSubInfos">
-						 <foreach item="subInfo" collection="owSubInfos.owSubInfo" open="(" separator="," close=")">
-						 	#{subInfo}
-						 </foreach>
-					 </foreach>
-				</if>
-				<if test="owDrinkListInfo!=null and owDrinkListInfo!=''">
-					 and ow_drink_list_info in 
-					 <foreach collection="list" item="owDrinkListInfos">
-						 <foreach item="drinkInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
-						 	#{drinkInfo}
-						 </foreach>
-					 </foreach>
-				</if>
-		</trim>
+	        <if test="storeCateDetailName!=null and storeCateDetailName.size>0">
+	             and store_cate_detail_name in 
+	             <foreach item="detailName" collection="storeCateDetailName" open="(" separator="," close=")">
+	                #{detailName}
+	             </foreach>
+	        </if>	
+	        <if test="owBudget!=null and owBudget.size>0">
+				 and ow_budget in 
+				 <foreach item="item" collection="owBudget" open="(" separator="," close=")">
+				 	#{item}
+				 </foreach>
+			</if>
+			<if test="owSubInfo!=null and owSubInfo.size>0">
+				 and ow_sub_info in 
+				 <foreach item="owSubInfo" collection="owSubInfo" open="(" separator="," close=")">
+				 	#{owSubInfo}
+				 </foreach>
+			</if>
+			<if test="owDrinkListInfo!=null and owDrinkListInfo.size>0">
+				 and ow_drink_list_info in 
+				 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
+				 	#{owDrinkListInfo}
+				 </foreach>
+			</if>
+		<!-- </trim> -->
 	</select>
 	
 	<select id="searchCount" parameterType="searchPaging" resultType="int"> 
 		select count(*)
-		from (
-        select * from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
-				owner_store_detail_tb detail, store_category_main_tb maincate
-		where photo.ow_store_info_fk = info.ow_store_info_pk
-		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
-		and info.ow_store_info_pk = detail.ow_store_index
-		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
-        and ow_photo_type_fk = 3
-        order by ow_store_info_pk desc)
-        <trim prefix="where" prefixOverrides="AND|OR">
+		from owner_store_info_tb st, owner_store_detail_tb dt
+		 where ow_store_index = ow_store_info_pk
+       <!--  <trim prefix="where" prefixOverrides="AND|OR"> -->
 			<if test="food!=null and food!=''">
-				store_cate_main_name = #{food}
+				and store_cate_main_name = #{food}
 			</if>
 			<if test="keyword!=null and keyword!=''">
 				and ow_store_name like '%'||#{keyword}||'%'
 				or ow_store_tip like '%'||#{keyword}||'%'
 				or store_cate_detail_name like '%'||#{keyword}||'%'
 			</if>		
-		    <if test="storeCateDetailName!=null and storeCateDetailName!=''">
+		    <if test="storeCateDetailName!=null and storeCateDetailName.size>0">
 	             and store_cate_detail_name in 
-             	 <foreach collection="list" item="detailNames">
-		             <foreach item="detailName" collection="detailNames.storeCateDetailName" open="(" separator="," close=")">
-		                #{detailName}
-		             </foreach>
+	             <foreach item="detailName" collection="storeCateDetailName" open="(" separator="," close=")">
+	                '#{detailName}'
 	             </foreach>
-	        </if>	
-			<if test="owBudget!=null and owBudget!=''">
+	        </if>		
+	      	<if test="owBudget!=null and owBudget.size>0">
 				 and ow_budget in 
-				  <foreach collection="list" item="owBudgets">
-					 <foreach item="owBudget" collection="owBudgets.owBudget" open="(" separator="," close=")">
-					 	#{owBudget}
-					 </foreach>
+				 <foreach item="owBudget" collection="owBudget" open="(" separator="," close=")">
+				 	'${owBudget}'
 				 </foreach>
 			</if>
-			<if test="owSubInfo!=null and owSubInfo!=''">
+		
+			<if test="owSubInfo!=null and owSubInfo.size>0">
 				 and ow_sub_info in 
-				 <foreach collection="list" item="owSubInfos">
-					 <foreach item="owSubInfo" collection="owSubInfos.owSubInfo" open="(" separator="," close=")">
-					 	#{owSubInfo}
-					 </foreach>
+				 <foreach item="owSubInfo" collection="owSubInfo" open="(" separator="," close=")">
+				 	'${owSubInfo}'
 				 </foreach>
 			</if>
-			<if test="owDrinkListInfo!=null and owDrinkListInfo!=''">
+			<if test="owDrinkListInfo!=null and owDrinkListInfo.size>0">
 				 and ow_drink_list_info in 
-			 	 <foreach collection="list" item="owDrinkListInfos">
-					 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
-					 	#{owDrinkListInfo}
-					 </foreach>
+				 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
+				 	'${owDrinkListInfo}'
 				 </foreach>
-			</if>	
-		</trim>
+			</if> 
+		<!-- </trim> -->
 	</select>
 	
 	<select id="detailPage" resultType="search">

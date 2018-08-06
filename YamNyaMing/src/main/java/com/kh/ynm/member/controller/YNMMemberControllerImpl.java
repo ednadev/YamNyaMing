@@ -991,15 +991,22 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			for (int i = 0; i<owBudget.length;i++ ) {
 				owBudgetList.add(owBudget[i]);
 			}
-			System.out.println("예산 " + owBudgetList.size());
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
-			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
+			ArrayList<String> owSubInfoList = new ArrayList<>();
+			for(int i = 0; i<owSubInfo.length;i++)
+			{
+				owSubInfoList.add(owSubInfo[i]);
+			}
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
-			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
+			ArrayList<String> owDrinkListInfoList = new ArrayList<>();
+			for(int i = 0; i<owDrinkListInfo.length;i++)
+			{
+				owDrinkListInfoList.add(owDrinkListInfo[i]);
+			}
 			check.setOwDrinkListInfo(owDrinkListInfoList);
 		}
 		

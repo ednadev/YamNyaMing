@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.vo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class YNMSearchPaging {
@@ -11,6 +12,8 @@ public class YNMSearchPaging {
 	ArrayList<String> owBudget;
 	ArrayList<String> owSubInfo;
 	ArrayList<String> owDrinkListInfo;
+	
+	HashMap<String, ArrayList<String>> searchMap = new HashMap<String, ArrayList<String>>();
 
 	private int start;
 	private int end;
@@ -48,6 +51,16 @@ public class YNMSearchPaging {
 		this.recordTotalCount = recordTotalCount;
 	}
 	
+	
+	
+	public HashMap<String, ArrayList<String>> getSearchMap() {
+		return searchMap;
+	}
+
+	public void setSearchMap(String key,  ArrayList<String> value) {
+		this.searchMap.put(key, value);
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -71,24 +84,28 @@ public class YNMSearchPaging {
 	}
 	public void setStoreCateDetailName(ArrayList<String> storeCateDetailNameList) {
 		this.storeCateDetailName = storeCateDetailNameList;
+		setSearchMap("detailName", this.storeCateDetailName );
 	}
 	public ArrayList<String> getOwBudget() {
 		return owBudget;
 	}
 	public void setOwBudget(ArrayList<String> owBudget) {
 		this.owBudget = owBudget;
+		setSearchMap("budget", this.owBudget );
 	}
 	public ArrayList<String> getOwSubInfo() {
 		return owSubInfo;
 	}
 	public void setOwSubInfo(ArrayList<String> owSubInfo) {
 		this.owSubInfo = owSubInfo;
+		setSearchMap("subInfo", this.owSubInfo );
 	}
 	public ArrayList<String> getOwDrinkListInfo() {
 		return owDrinkListInfo;
 	}
 	public void setOwDrinkListInfo(ArrayList<String> owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
+		setSearchMap("drinkList", this.owDrinkListInfo );
 	}
 	public int getStart() {
 		return start;

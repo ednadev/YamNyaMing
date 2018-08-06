@@ -13,7 +13,7 @@
 	<script>
 		window.onload = fucntion()
 		{
-			/* firstLoadAlert(); */
+			firstLoadAlert();
 		}
 		function firstLoadAlert()
 		{
@@ -34,9 +34,9 @@
 		</h1>
 
 		<ul>
-			<c:if test="${sessionScope.totalRefModel==null}">
+			<%-- <c:if test="${sessionScope.totalRefModel==null}">
 				<script>location.href="/totalRefLoad.do"</script>
-			</c:if>
+			</c:if> --%>
 			<c:if test="${sessionScope.naver!=null}" var="result">
 				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
 				<li><a href="/memberInfo.do">마이페이지</a></li>

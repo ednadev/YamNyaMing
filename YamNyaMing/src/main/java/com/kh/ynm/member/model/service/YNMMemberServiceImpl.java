@@ -243,9 +243,6 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int end = currentPage*recordCountPerPage;
 		check.setStart(start);
 		check.setEnd(end);
-		
-		System.out.println("서비스에서 " + start + " " + end);
-		
 		ArrayList<YNMSearch> searchList = memberDAO.getCurrentPage(sqlSession, check);
 		return searchList;
 	}
