@@ -112,10 +112,11 @@
 				</tr>
 			</thead>
 			
-			   <c:forEach items="${list}" var="o">
+			  
 			   <thead>
 				<tbody class="points_table_scrollbar">
-				 <form action="/ownerStoreList.do">
+				 <c:forEach items="${list}" var="o">
+				 <form action="/ownerStoreList.do" method="post">
 				  <tr class="edit" id="detail">
 					<td>${o.owId}</td>
 					<td>${o.owName} </td>
@@ -123,7 +124,7 @@
 					<td>${o.phone}</td>
 					<td>${o.owBankAccount} </td>
 					<td>
-					<input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk" class="btn"/>
+					<input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/>
 					<input type="submit" value="점주 가게 현황" class="btn"/></td>
 				</tr>
 				</form>

@@ -486,29 +486,31 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			public ModelAndView ownerStoreList(HttpSession session ,HttpServletRequest request,StoreInfoPageData vo)
 			{
 				
-				String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
-				int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
+			
 				ModelAndView view = new ModelAndView();
-				if(adminId!=null)
+				if(session.getAttribute("admin")!=null) 
 				{
+					int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
+					vo.setOwEntireFk(owEntirePk);
 					int currentPage = 1;
 					if(request.getParameter("currentPage")==null) currentPage=1;
 					else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-					int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+					int recordCountPerPage = 3; //1. 1페이지에10개씩보이게
 					int naviCountPerPage = 5; //2.
-				ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.ownerStoreList(owEntirePk,currentPage,recordCountPerPage);
-				CouponPageData pageNavi = ynmAdminServiceImpl.ownerPageNavi(currentPage,recordCountPerPage,naviCountPerPage);
-				System.out.println(list.get(0).getOwStoreName());
-				view.addObject("storeList",list);
-				view.addObject("pageNaviData", pageNavi);
-				view.setViewName("ynmAdmin/owStoreList");
-				return view;
+					ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.storeListPaging(currentPage,recordCountPerPage,vo);
+					CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage);		
+					view.addObject("storeList", list);
+					view.addObject("pageNaviData", pageNavi);
+					view.setViewName("ynmAdmin/owStoreList");
+					return view;
 				}
 				else
 				{
 					view.setViewName("ynmAdmin/adminError/error");
 					return view;
 				}
+				
+			  }
 				
 			}
 			
@@ -523,4 +525,3 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	
 
 
-}

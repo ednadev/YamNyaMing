@@ -94,16 +94,28 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	}
 
 
-	//페이징 
+	//공지사항 페이징 
 	@Override
 	public ArrayList<Notice> noticeListPaging(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
 		List list= sqlSession.selectList("admin.noticeList", noticePageData);
 		return (ArrayList<Notice>)list;
 	}
-	//페이징
+	
+	//점주  가게신청정보 페이징
+	public ArrayList<StoreInfoPageData> storeListPaging(SqlSessionTemplate sqlSession,BoardPaging storePageData) {
+		List list= sqlSession.selectList("admin.ownerStoreList",storePageData);
+		return (ArrayList<StoreInfoPageData>)list;
+	}
+	
+	//공지사항 페이징(토탈)
 	@Override
 	public int noticeGetTotal(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
 		return sqlSession.selectOne("admin.noticeTotal", noticePageData);
+	}
+	
+	//가게신청 페이징(토탈)
+	public int storeGetTotal(SqlSessionTemplate sqlSession, BoardPaging storePageData) {
+		return sqlSession.selectOne("admin.storeTotal", storePageData);
 	}
 	//글보기
 	public Notice noticeView(SqlSessionTemplate sqlSession, int noticeNo) {
@@ -127,17 +139,14 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 		return sqlSession.insert("admin.adminNoticeWrite", vo);
 	}
 	
+
+
 	
-	//점주  가게정보
-	public ArrayList<StoreInfoPageData> ownerStoreList(SqlSessionTemplate sqlSession, BoardPaging storePageData2) {
-		List list= sqlSession.selectList("admin.ownerStoreList", storePageData2);
-		return (ArrayList<StoreInfoPageData>)list;
-	}
+
 	
-	//점주 페이징 토탈
-	public int ownerGetTotal(SqlSessionTemplate sqlSession, BoardPaging storePageData) {
-		return sqlSession.selectOne("admin.ownerGetTotal", storePageData);
-	}
+	
+
+	
 
 	
 

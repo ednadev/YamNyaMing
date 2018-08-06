@@ -14,7 +14,6 @@ public class StoreInfoPageData {
 	private String owStoreUrl;
 	private String owStoreAddr;
 	private String owStoreWorkingTime;
-	
 	private int owStoreDetailPk;
 	private String owStoreLineComment;
 	private String recommandMenu;
@@ -24,6 +23,7 @@ public class StoreInfoPageData {
 	private String owDrinkListInfo;
 	private String owStoreHeadPhoto;
 	private String[] storeHeadPhotoArr;// 대표 이미지 배열로 파싱
+	private int store_enroll_rq_state;
 
 	
 	public StoreInfoPageData() {}
@@ -208,5 +208,16 @@ public class StoreInfoPageData {
 	public void setStoreHeadPhotoArr(String storeHeadPhotoArr) {
 		this.storeHeadPhotoArr = storeHeadPhotoArr.split(",");
 	}
+
+
+	public int getStore_enroll_rq_state() {
+		return store_enroll_rq_state;
+	}
+
+
+	public void setStore_enroll_rq_state(int store_enroll_rq_state) {
+		this.store_enroll_rq_state = store_enroll_rq_state;
+	}
+	
 	
 }
