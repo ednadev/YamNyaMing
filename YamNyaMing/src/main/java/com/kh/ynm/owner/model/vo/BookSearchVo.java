@@ -4,6 +4,7 @@ public class BookSearchVo {
 	private int storeIndex;
 	private int bookYear;
 	private int bookMonth;
+	private char bookType;
 	
 	public BookSearchVo() {}
 
@@ -30,6 +31,16 @@ public class BookSearchVo {
 	public void setBookMonth(int bookMonth) {
 		this.bookMonth = bookMonth;
 	}
+
+	public char getBookType() {
+		return bookType;
+	}
+
+	public void setBookType(char bookType) {
+		this.bookType = bookType;
+	}
+
+	
 	
 	
 }

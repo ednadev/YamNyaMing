@@ -12,10 +12,11 @@ public class YNMBook {
 	private int bookPartyCount;
 	private String bookType;
 	private String bookOption;
-	private String bookState;
+	private char bookState;
 	private int bookDeposit;
 	private String bookName;
-	
+	private Date bookDateAndTime;
+	private String bookDateAndTime2;
 	
 	
 	public YNMBook() {
@@ -23,15 +24,10 @@ public class YNMBook {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	
-
-
 
 	public YNMBook(int bookNo, int memberEntireNo, int storeEntireNo, Date bookDate, String bookDate2,
-			int bookOrderCount, int bookPartyCount, String bookType, String bookOption, String bookState,
-			int bookDeposit, String bookName) {
+			int bookOrderCount, int bookPartyCount, String bookType, String bookOption, char bookState,
+			int bookDeposit, String bookName, Date bookDateAndTime, String bookDateAndTime2) {
 		super();
 		this.bookNo = bookNo;
 		this.memberEntireNo = memberEntireNo;
@@ -45,7 +41,34 @@ public class YNMBook {
 		this.bookState = bookState;
 		this.bookDeposit = bookDeposit;
 		this.bookName = bookName;
+		this.bookDateAndTime = bookDateAndTime;
+		this.bookDateAndTime2 = bookDateAndTime2;
 	}
+
+	
+
+	public String getBookDateAndTime2() {
+		return bookDateAndTime2;
+	}
+
+
+	public void setBookDateAndTime2(String bookDateAndTime2) {
+		this.bookDateAndTime2 = bookDateAndTime2;
+	}
+
+
+	public Date getBookDateAndTime() {
+		return bookDateAndTime;
+	}
+
+
+
+	public void setBookDateAndTime(Date bookDateAndTime) {
+		this.bookDateAndTime= bookDateAndTime;
+	}
+
+
+
 	public String getBookName() {
 		return bookName;
 	}
@@ -115,10 +138,10 @@ public class YNMBook {
 	public void setBookOption(String bookOption) {
 		this.bookOption = bookOption;
 	}
-	public String getBookState() {
+	public char getBookState() {
 		return bookState;
 	}
-	public void setBookState(String bookState) {
+	public void setBookState(char bookState) {
 		this.bookState = bookState;
 	}
 	public int getBookDeposit() {

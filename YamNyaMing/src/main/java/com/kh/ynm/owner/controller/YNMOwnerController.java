@@ -77,5 +77,11 @@ public interface YNMOwnerController {
 
 	// 새로운 텍스트 메뉴 추가하기
 	public JSONObject menuTextNewAdd(HttpSession session, HttpServletRequest request);
+
+	// 게시글 페이지 뷰
+	public ModelAndView boardMngPage(HttpSession session, HttpServletRequest request);
+
+	// 게시글  한개 보기
+	public ModelAndView boardSelect(HttpSession session, HttpServletRequest request);
 	
 }

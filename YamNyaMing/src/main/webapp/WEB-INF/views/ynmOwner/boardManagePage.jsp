@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍-게시판 관리</title>
@@ -10,7 +12,20 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/owner.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBoard.js?ver=4"></script>
+
+<!-- include jquery -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- include libraries BS3 -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<!-- include summernote -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/summernote/summernote.css?ver=1">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/owner/summernote/summernote.js?ver=1"></script>
+
 </head>
 <body>
 	<header id="owner-main-header">
@@ -35,6 +50,69 @@
 		</ul>
 	</nav>
 	
+	<c:if test="${currentBoardTap==0}">
+		<div class="board-area">
+				<c:if test="${boardListData!=null}">
+					<c:forEach var="board" items="${boardListData}">
+						<form action="/boardSelect.do" method="post">
+							<input type="hidden" name="boardIndex" value="${board.owBoarInfoPk}">
+							번호 : ${board.owBoarInfoPk} <br>
+							제목 : ${board.owBoardTitle} <br>
+							일시 : ${board.owEnrollDate} <br>
+							<input type="submit" value="공지 확인"/>
+						</form>
+					</c:forEach>
+				</c:if>
+				<c:if test="${pageNaviData!=null}">
+					<div id="pagingNumber">
+						<c:if test="${pageNaviData.startNavi!=1}">
+							<form action="/boardOwner.do" method="post">
+								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+								<input type="submit" class="paging-num" value="<">
+							</form>
+						</c:if>
+						<c:forEach var="i" begin="${pageNaviData.startNavi}"
+							end="${pageNaviData.endNavi}">
+							<c:if test="${pageNaviData.currentPage==i}">
+								<form action="/boardOwner.do" method="post">
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num-select" value="${i}">
+								</form>
+							</c:if>
+							<c:if test="${pageNaviData.currentPage!=i}">
+								<form action="/boardOwner.do" method="post">
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+						</c:forEach>
+						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+							<form action="/boardOwner.do" method="post">
+								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+								<input type="submit"  class="paging-num"  value=">">
+							</form>
+						</c:if>
+					</div>
+				</c:if>
+				<button onclick="boardWrite();">글작성하기</button>
+		</div>
+	</c:if>
+	<c:if test="${currentBoardTap==1}">
+		<div class="board-area">
+			번호 : ${storeBoardData.owBoarInfoPk}<br>
+			작성일 : ${storeBoardData.owEnrollDate}<br>
+			제목 : ${storeBoardData.owBoardTitle}<br>
+			내용 : ${storeBoardData.owBoardContent}<br>
+		</div>
+	</c:if>
+	<div class="board-area">
+		<div id="toolbar"></div>
+		<form id="summernote-form" action="/boardAdd.do" method="post" enctype="multipart/form-data">
+			제목 : <input type="text" name="owBoardTitle" placeholder="공지사항 제목 입력">
+			<textarea name="boardInfo" class="summernote" placeholder="공지글을 입력해주세요." value=""></textarea>
+			<input type="submit" value="공지글 제출"/>
+		</form>
+	</div>
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

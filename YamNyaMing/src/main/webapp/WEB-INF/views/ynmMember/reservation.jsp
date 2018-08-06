@@ -25,16 +25,16 @@
 			<%-- <input type="text" name="storeEntireNo" value="${reservation.owStoreAddrFirst}"> --%>
 			<input type="hidden" name="storeEntireNo" value="${reservation.owStoreInfoPk}">
 			<div class="check">
-				<input type="radio" name="bookType" value="s" id="personal"><label for="personal">일반</label>
+				<input type="radio" name="bookType" value="s" id="personal" checked><label for="personal">일반</label>
 				<input type="radio" name="bookType" value="g" id="group"><label for="group">단체</label>
 			</div>
 			<div class="date-time">
 				<label for="datePicker">날짜</label>
-				<input type="date" max="2018-08-16" min="2018-08-09" id="datePicker">
+				<input type="date" name="bookDateAndTime1" id="datePicker">
 			</div>
 			<div class="date-time">
 				<label for="timePicker">시간</label>
-				<input type='time' value='now'>
+				<input type='time' name="bookDateAndTime2" value='now'>
 			</div>	
 			<div class="quantity">
 				<label for="personPicker">인원</label>

@@ -33,5 +33,6 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.BookSearchVo" alias="bookSearchVo"/>
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryMain" alias="storeCategoryMain"/>
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryDetail" alias="storeCategoryDetail"/>
+		<typeAlias type="com.kh.ynm.owner.model.vo.StoreBoardData" alias="storeBoardData"/>
 	</typeAliases>
 </configuration>

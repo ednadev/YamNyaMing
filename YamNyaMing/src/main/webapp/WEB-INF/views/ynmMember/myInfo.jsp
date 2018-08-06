@@ -10,11 +10,26 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=7">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=8">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=6"></script>
 </head>
+<script>
 
+$(document).ready(function(){
+	'${setting.themePushUpdate}'=='y' ? document.getElementsByName('push')[0].checked=true :document.getElementsByName('push')[1].checked=true;
+	'${setting.alarmPushReviewLike}'=='y' ? document.getElementsByName('like')[0].checked=true :document.getElementsByName('like')[1].checked=true;
+	'${setting.alarmPushReviewComment}'=='y' ? document.getElementsByName('comment')[0].checked=true :document.getElementsByName('comment')[1].checked=true;
+	'${setting.alarmPushReviewJjim}'=='y' ? document.getElementsByName('jjim')[0].checked=true :document.getElementsByName('jjim')[1].checked=true;
+	'${setting.alarmPushFollow}'=='y' ? document.getElementsByName('follow')[0].checked=true :document.getElementsByName('follow')[1].checked=true;
+	'${setting.myinfoAgree}'=='y' ? document.getElementsByName('agree')[0].checked=true :document.getElementsByName('agree')[1].checked=true;
+	'${setting.alarmEventEmail}'=='y' ? document.getElementsByName('sms')[0].checked=true :document.getElementsByName('sms')[1].checked=true;
+	'${setting.alarmEventSms}'=='y' ? document.getElementsByName('email')[0].checked=true :document.getElementsByName('email')[1].checked=true;
+	'${setting.myinfoReviewOpen}'=='y' ? document.getElementsByName('reviewOpen')[0].checked=true :document.getElementsByName('reviewOpen')[1].checked=true;
+	'${setting.myinfoReviewJjim}'=='y' ? document.getElementsByName('ReviewJjim')[0].checked=true :document.getElementsByName('ReviewJjim')[1].checked=true;
+	'${setting.myinfoStoreJjim}'=='y' ? document.getElementsByName('StoreJjim')[0].checked=true :document.getElementsByName('StoreJjim')[1].checked=true;
+});
+</script>
 <body>
 <header id="member-search-header">
 	<h1><a href="/index.jsp">YamNyaMing</a></h1>
@@ -148,14 +163,19 @@
     </ul>
 
 </header>
+
 <section id="member-myinfo-section">
 	<div id="main"></div>
 	<div>
 		<div class="member-myinfo-wrapper">
 			<form action="/updateMemberPhoto.do" method="post" enctype="multipart/form-data">
-			<label id="profile-img" for="input_avatarPhoto">
+			<label id="profile-img" for="input_avatarPhoto" onclick="deleteImageAction();">
+			<c:if test="${info.memberUploadPhotoNo!=1 }">
 			<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/${img}'>
-			
+			</c:if>
+			<c:if test="${info.memberUploadPhotoNo==1}">
+			<img id="img" name=img src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+			</c:if>
 			</label>
 			
 			<input type="file" id="input_avatarPhoto" name="avatarPhoto" value="C:/Users/user1/git/YamNyaMing/YamNyaMing/src/main/webapp/resources/image/member/profile.png">
@@ -163,7 +183,7 @@
 			</form>
 			<div>
 				<h2>${info.memberName}</h2>
-				<p>LV.1 맛있는 즐거움, 얌냐밍에 오신 것을 환영합니다</p>
+				<p>LV.${info.memberPoint} 맛있는 즐거움, 얌냐밍에 오신 것을 환영합니다</p>
 				<p>
 						<c:choose>
 							<c:when test="${info.memberPoint>=1 }">
@@ -255,7 +275,7 @@
 						</c:choose>
 			
 						<c:choose>
-							<c:when test="${info.memberPoint>2 }">
+							<c:when test="${info.memberPoint>12 }">
 								<span class="nemo-box-white final"></span>
 							</c:when>
 							<c:otherwise>
@@ -276,18 +296,44 @@
 		   					 <button class="tablink" onclick="openModal(event,'Following')">팔로잉</button>
 					    </div>
 					    <div id="Follower" class="tabInfo">
+					    	<c:forEach items="${followerYm}" var="fry">
 					    	<div id="profile-follow">
-					    		<div id="profile-follow-image"></div>
+					    		<div id="profile-follow-image">
+					    		<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fry.photoViewRoute}'>
+					    		</div>
 					    		<div>
-					    			<p>닉네임</p>
-					    			<p>88 리뷰, 1079 팔로워</p>
-					    			<button>팔로우</button>
+					    			<p>${fry.memberNickName}</p>
+					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" id="${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
+					<c:if test="${fry.followChk==0}">
+						<button id="${fry.memberNickName}" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fry.memberNickName }','${fry.memberId}');">팔로우</button>
+					</c:if>
+					<c:if test="${fry.followChk==1}">
+						<button  style="background-color:#fb0; color:white;" id="${fry.memberNickName }" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fry.memberNickName }','${fry.memberId}');">팔로우</button>
+					</c:if>
+					    	
+								
+					    		</div>
+					    	</div>	
+					    	</c:forEach>				    	
+					    	
+					    	<div id="profile-follow">
+					    		
+					    	</div>
+					    </div>
+					    
+					    <div id="Following" class="tabInfo" style="display:none;">
+					    	<c:forEach items="${followingYm}" var="fy">
+					    	<div id="profile-follow">
+					    		<div id="profile-follow-image">
+					    			<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fy.photoViewRoute}'>
+					    		</div>
+					    		<div>
+					    			<p>${fy.memberNickName}</p>
+					    			<p>${fy.reviewTotal} 리뷰, <label style="color:black;" id="${fy.memberEntireNo}">${fy.followTotal}</label> 팔로워</p>
+					    			<button id="${fy.memberEmail}" style="background-color:#fb0; color:white;" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fy.memberEmail}','${fy.memberEntireNo }');">팔로우</button>
 					    		</div>
 					    	</div>
-					    	<div id="profile-follow"></div>
-					    </div>
-					    <div id="Following" class="tabInfo" style="display:none;">
-					    
+					    	</c:forEach>					    	
 					    </div>
 					  </div>
 					</div>
@@ -315,8 +361,171 @@
 			<h3>이미 사용한 티켓</h3>	
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">	
-			<h3>내가 쓴 리뷰</h3>
-			<h3>찜한 리뷰</h3>	
+	
+			<c:forEach items="${review}" var="r">
+			<c:if test="${r.memberEntireNo eq sessionScope.member.memberEntireNo}">
+			<div>
+				<div>
+					<div id="profile-image">
+						<c:if test="${r.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}">
+						</c:if>
+					</div>
+					<div>
+						<p>${r.memberNickName}</p>
+						<p>리뷰${r.reviewTotal},팔로워<label name="${r.memberEntireNo + 0.1}" style="color:black;">${r.followTotal}</label></p>				
+					</div>
+					<c:if test="${r.myfollowChk==0}">
+						<button name="${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
+					</c:if>
+					<c:if test="${r.myfollowChk==1}">
+					<button name="${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','${r.memberEntireNo}','${r.memberEntireNo + 0.1}');">팔로우</button>
+					</c:if>
+					
+				
+					
+					<c:if test="${sessionScope.member.memberEntireNo==null}">
+					<button onclick="nomember();">팔로우</button>
+					</c:if>
+					
+				</div>
+				<div>
+					<p>
+						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
+						<span class="star-full"></span>
+						</c:forEach>
+						<c:forEach var="i" begin="1" end="${5- r.reviewStar}" step="1">
+						<span class="star-yellow2"></span>
+						</c:forEach>
+						
+						${r.reviewStar} / 
+						<c:choose>
+							<c:when test="${r.reviewStar ==1}">
+								실망이에요. 집에서 먹는게 나을 뻔 했어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==2}">
+								평균이하! 이정도 레스토랑은 어디에나 있죠.
+							</c:when>
+							<c:when test="${r.reviewStar ==3}">
+								보통이에요. 이정도면 괜찮네요.
+							</c:when>
+							<c:when test="${r.reviewStar ==4}">
+								인상적이네요.꼭 추천하고 싶어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==5}">
+								완벽 그 자체!! 환상적이에요.
+							</c:when>
+						</c:choose>
+					</p>
+					<p>${r.reviewContent}</p>
+					<div>
+					<c:forEach items="${r.photoObjList}" var="photo">
+						<div>
+	
+							<img id="img" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
+						</div>
+						</c:forEach>
+					</div>
+					
+					
+					
+					<p onclick="openmodal('${r.storeReviewNo}');" style="cursor:pointer;">
+					<c:if test="${r.memberLikeInfo!=null}">
+						<c:forEach items='${r.memberLikeInfo}' var="li" >
+						<label>${li.memberName}</label>
+						</c:forEach>
+						<c:if test="${r.likeTotal >=3}">
+						님 외 ${r.likeTotal - 2}명이 좋아합니다.
+						</c:if>
+						<c:if test="${r.likeTotal <= 2}">
+						님이 좋아합니다.
+						</c:if>
+						
+					</c:if>
+					
+					<c:if test="${r.memberLikeInfo==null}">
+						<label>0</label>명이 좋아합니다.
+					</c:if>
+					</p>
+					<p>
+				<%-- 		
+						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>좋아요</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>	 
+						 && sessionScope.member.memberEntireNo != r.memberEntireNo 
+						--%>	
+					<c:if test="${sessionScope.member!=null}">
+
+							
+				 			<c:if test="${r.myLikeChk==0}">
+				 				<button name="${r}" onmouseover="likeover(${r});" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+				 				<div name="${r}"></div>
+				 				<p name="${r}">좋아요</p>
+				 				<p name="${r}" id="${r}">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 			<c:if test="${r.myLikeChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
+					 				<p name="${r}" style="color:white;">좋아요</p>
+					 				<p name="${r}" id="${r}" style="color:white;">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 		<button onclick="nomember();"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>				
+					</c:if>
+					
+	<%-- 					<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>찜하기</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>		
+					 --%>
+					
+							<c:if test="${sessionScope.member!=null}">
+				 			<c:if test="${r.myJjimChk==0}">
+				 				<button name="${r}" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+								<div name="${r}"></div>
+								<p name="${r}">찜하기</p>
+								<p name="${r}" id="${r}${r}">${r.jjimTotal}</p>
+								</button>
+				 			</c:if>
+				 			<c:if test="${r.myJjimChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
+					 				<p name="${r}" style="color:white;">찜하기</p>
+					 				<p name="${r}" id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 	<button onclick="nomember();"><div></div>
+					<p>찜하기</p>
+					<p id="${r}${r}">${r.jjimTotal}</p>
+					</button>				
+					</c:if>
+
+  				</div>
+
+			</div>
+			</c:if>
+			</c:forEach>
+			
+			
 		</div>
 		<div id="Like" class="tabInfo" style="display:none;">
 		<script>
@@ -415,11 +624,13 @@
 				<th>비밀번호</th>
 				<td>
 					<p>**********<button onclick="pwChange();" id="pwName">변경하기</button></p>
-					<form style="display:none;" id="pwChange">
-						<p><label>현재 비밀번호</label><input type="password"></p>
-						<p><label>새 비밀번호</label><input type="password"></p>
-						<p><label>새 비밀번호 확인</label><input type="password"></p>
-						<input type="submit" value="비밀번호 변경">
+					<form style="display:none;" id="pwChange" action="/pwChange.do">
+						
+						<p><label>현재 비밀번호</label><input type="password" onChange="nowPwCheck('${sessionScope.member.memberId}');" id="nowPw"></p>
+							
+						<p><label>새 비밀번호</label><input type="password" name="memberPw" id="memberPw" onChange="pwCheck('${sessionScope.member.memberId}');"></p>
+						<p><label>새 비밀번호 확인</label><input type="password" id="memberPw2" onChange="pwreCheck();"><br><label id="pw_check"></label></p>
+						<input id="newPwChange" type="submit" value="비밀번호 변경">
 					</form>
 				</td>
 			</tr>
@@ -431,8 +642,8 @@
 				<th>닉네임</th>
 				<td>
 					<p>${info.memberNickName}<button onclick="nickChange();" id="nickName">변경하기</button></p>
-					<form style="display:none;" id="nickChange">
-						<p><input type="text"><input type="submit" value="변경"></p>
+					<form style="display:none;" id="nickChange" action="/nickNameChange.do">
+						<p><input type="text" name="memberNickName" id="memberNickName" onchange="nickCheck();"><input type="submit" id="newNick" value="변경"><br><label id="nick_check"></label></p>
 					</form>
 				</td>
 			</tr>
@@ -448,29 +659,29 @@
 			</table>
 			<form>
 			<h3>알림 / 프라이버시</h3>
-			<input type="submit" value="변경하기">
+			<input type="button" value="변경하기" onclick="setting();">
 			<table border="1">
 			<tbody>
 			<tr>
 				<th rowspan="2">알림 설정</th>
 				<td>
 					<p>푸시 수신동의 
-						<input type="radio" name="push" id="pushFalse" value="n" checked><label for="pushFalse">동의안함</label>
+						<input type="radio" name="push" id="pushFalse" value="n"><label for="pushFalse">동의안함</label>
 						<input type="radio" name="push" id="pushTrue" value="y"><label for="pushTrue">동의함</label>
 					</p>
 					예약/거래정보와 관련된 내용은 수신동의 여부와 관계없이 발송됩니다.
 					<div>
 						<p>
 							<span>내 리뷰-좋아요</span><input type="radio" name="like" id="likeTrue" value="y"><label for="likeTrue">ON</label>
-							<input type="radio" name="like" id="likeFalse" value="n" checked><label for="likeFalse" style="margin-right:120px;">OFF</label> 
+							<input type="radio" name="like" id="likeFalse" value="n"><label for="likeFalse" style="margin-right:120px;">OFF</label> 
 							<span>내 리뷰-코멘트</span><input type="radio" name="comment" id="commentTrue" value="y"><label for="commentTrue">ON</label>
 							<input type="radio" name="comment" id="commentFalse" value="n" checked><label for="commentFalse">OFF</label> 
 						</p>
 						<p>
 							<span>내 리뷰-찜하기</span><input type="radio" name="jjim" id="jjimTrue" value="y"><label for="jjimTrue">ON</label>
-							<input type="radio" name="jjim" id="jjimFalse" value="n" checked><label for="jjimFalse" style="margin-right:120px;">OFF</label> 
+							<input type="radio" name="jjim" id="jjimFalse" value="n"><label for="jjimFalse" style="margin-right:120px;">OFF</label> 
 							<span>나를 팔로우했을때</span><input type="radio" name="follow" id="followTrue" value="y"><label for="followTrue">ON</label>
-							<input type="radio" name="follow" id="followFalse" value="n" checked><label for="followFalse">OFF</label> 
+							<input type="radio" name="follow" id="followFalse" value="n"><label for="followFalse">OFF</label> 
 						</p>
 					</div>
 				</td>
@@ -478,7 +689,7 @@
 			<tr>
 				<td>
 					<p style="margin-bottom:15px;">제 3자 마케팅 활용 동의 
-						<input type="radio" name="agree" id="agreeFalse" value="n" checked><label for="agreeFalse">동의안함</label>
+						<input type="radio" name="agree" id="agreeFalse" value="n"><label for="agreeFalse">동의안함</label>
 						<input type="radio" name="agree" id="agreeTrue" value="y"><label for="agreeTrue">동의함</label>						
 					</p>
 					<p>이벤트 알림 서비스</p>
@@ -486,9 +697,9 @@
 					<div>
 						<p>
 							<span>SMS 수신동의</span><input type="radio" name="sms" id="smsTrue" value="y"><label for="smsTrue">동의함</label>
-							<input type="radio" name="sms" id="smsFalse" value="n" checked><label for="smsFalse" style="margin-right:74px;">동의안함</label> 
+							<input type="radio" name="sms" id="smsFalse" value="n"><label for="smsFalse" style="margin-right:74px;">동의안함</label> 
 							<span>이메일 수신동의</span><input type="radio" name="email" id="emailTrue" value="y"><label for="emailTrue">동의함</label>
-							<input type="radio" name="email" id="emailFalse" value="n" checked><label for="emailFalse">동의안함</label> 
+							<input type="radio" name="email" id="emailFalse" value="n"><label for="emailFalse">동의안함</label> 
 						</p>
 					</div>
 				</td>
@@ -499,13 +710,13 @@
 					<div>
 						<p>
 							<span>내 리뷰</span><input type="radio" name="reviewOpen" id="reviewOpenAll" value="y"><label for="reviewOpenAll">전체공개</label>
-							<input type="radio" name="reviewOpen" id="reviewOpenPerson" value="n" checked><label for="reviewOpenPerson" style="margin-right:103px;">나만보기</label> 
+							<input type="radio" name="reviewOpen" id="reviewOpenPerson" value="n"><label for="reviewOpenPerson" style="margin-right:103px;">나만보기</label> 
 							<span>찜한 리뷰</span><input type="radio" name="ReviewJjim" id="ReviewJjimAll" value="y"><label for="ReviewJjimAll">전체공개</label>
-							<input type="radio" name="ReviewJjim" id="ReviewJjimPerson" value="n" checked><label for="ReviewJjimPerson">나만보기</label> 
+							<input type="radio" name="ReviewJjim" id="ReviewJjimPerson" value="n"><label for="ReviewJjimPerson">나만보기</label> 
 						</p>
 						<p>
 							<span>찜한 매장</span><input type="radio" name="StoreJjim" id="StoreJjimAll" value="y"><label for="StoreJjimAll">전체공개</label>
-							<input type="radio" name="StoreJjim" id="StoreJjimPerson" value="n" checked><label for="StoreJjimPerson">나만보기</label>
+							<input type="radio" name="StoreJjim" id="StoreJjimPerson" value="n"><label for="StoreJjimPerson">나만보기</label>
 						</p>
 					</div>
 					예약 내역은 나와 해당 예약 참석자만 볼 수 있어요!			
@@ -515,7 +726,7 @@
 			</table>
 			</form>
 			<form>
-				<input type="submit" value="회원 탈퇴">
+				<input type="button" style="float:right;" onclick="deleteMember();" value="회원 탈퇴">
 			</form>
 		</div>
 	
@@ -532,4 +743,5 @@
 	<a href="/enrollOwner.do">점장 가입하기</a>
 </footer>
 </body>
+
 </html>

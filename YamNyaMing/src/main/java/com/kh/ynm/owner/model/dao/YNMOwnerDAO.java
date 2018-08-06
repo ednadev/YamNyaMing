@@ -10,6 +10,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreBoardData;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
@@ -44,4 +45,10 @@ public interface YNMOwnerDAO {
 	public int textMenuUpdate(SqlSessionTemplate sqlSession, MenuInfo menuInfo);
 	public int menuTextDelete(SqlSessionTemplate sqlSession, int menuIndex);
 	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch);
+	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, int ownerIndex);
+	public int cancelBookAsOwner(SqlSessionTemplate sqlSession, YNMBook bookVo);
+	public int ownerBoardAdd(SqlSessionTemplate sqlSession, StoreBoardData storeBoardData);
+	public ArrayList<StoreBoardData> storeBoardList(SqlSessionTemplate sqlSession, StorePageData storePageData);
+	public int storeBoardNavi(SqlSessionTemplate sqlSession, CouponPageData couponPageData);
+	public StoreBoardData boardSelect(SqlSessionTemplate sqlSession, int storeIndex);
 }

@@ -179,5 +179,14 @@ public class CommonControllerImpl implements CommonController {
 		return view; 
 	}
 	
+	public String bookState(String bookState)
+	{
+		switch(bookState)
+		{
+			
+		}
+		return "";
+	}
+	
 	
 }
