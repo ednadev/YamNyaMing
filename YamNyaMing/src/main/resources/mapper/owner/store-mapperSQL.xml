@@ -230,4 +230,37 @@
 		where MB_BOOK_PK = #{bookNo} 
 	</update>
 	
+	<insert id="ownerBoardAdd" parameterType="storeBoardData">
+		insert into owner_board_info_tb values(OWNER_BOARD_INFO_TB_SEQ.nextval, #{owBoardTitle}, #{owBoardContent}, sysdate, #{owStoreInfoFk})
+	</insert>
+	
+	<select id="storeBoardList" parameterType="storePageData" resultType="storeBoardData">
+		select 
+			OW_BOARD_INFO_PK as owBoarInfoPk,
+			OW_BOARD_TITLE as owBoardTitle,
+			OW_BOARD_CONTENT as owBoardContent, 
+			OW_ENROOL_DATE as owEnrollDate, 
+			OW_STORE_INFO_FK as owStoreInfoFk 
+		from  (select owner_board_info_tb.*,row_number() over(order by OW_BOARD_INFO_PK desc) as num 
+ 		from owner_board_info_tb where OW_STORE_INFO_FK=#{storeIndex})
+		where num between #{startPage} and #{endPage}
+	</select>
+	
+	<select  id="boardCountTotal" parameterType="couponPageData" resultType="int">
+		select count(*)
+		from owner_board_info_tb
+		where OW_STORE_INFO_FK=#{storeEntireFk} 
+	</select>
+	
+	<select id="boardSelect" resultType="storeBoardData">
+		select
+			OW_BOARD_INFO_PK as owBoarInfoPk,
+			OW_BOARD_TITLE as owBoardTitle, 
+			OW_BOARD_CONTENT as owBoardContent, 
+			OW_ENROOL_DATE as owEnrollDate, 
+			OW_STORE_INFO_FK as owStoreInfoFk 
+		from owner_board_info_tb
+		where OW_BOARD_INFO_PK = #{owBoarInfoPk}
+	</select>
+	
 </mapper>

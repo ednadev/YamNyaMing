@@ -7,6 +7,7 @@ import com.kh.ynm.owner.model.vo.BookSearchVo;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreBoardData;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
@@ -99,5 +100,18 @@ public interface YNMOwnerService {
 
 	// 점주가 취소한 예약, 혹은 자동 취소.
 	public int cancelBookAsOwner(YNMBook bookVo);
+	
+	// 게시글 사진 올리기
+	public OwnerUploadPhoto selectOwnerPhoto(OwnerUploadPhoto uploadPhoto);
+
+	// 가게 공지글 올리기
+	public int ownerBoardAdd(StoreBoardData storeBoardData);
+
+	// 가게 페이징 뷰
+	public ArrayList<StoreBoardData> storeBoardList(int currentPage, int recordCountPerPage, int storeIndex);
+
+	// 가게 선택했을때 정보 가져오기
+	public StoreBoardData boardSelect(int boardIndex);
+
 	
 }

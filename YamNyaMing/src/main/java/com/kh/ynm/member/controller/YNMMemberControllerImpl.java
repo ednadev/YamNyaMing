@@ -1089,6 +1089,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reservation.do")
 	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
 		YNMSearch vo = new YNMSearch();
+		System.out.println(request.getParameter("owStoreInfoPk"));
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch reservation = ynmMemberServiceImpl.detailPage(vo);
 

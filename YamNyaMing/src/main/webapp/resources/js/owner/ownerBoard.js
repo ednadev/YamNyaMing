@@ -1,8 +1,13 @@
 /**
  * 
  */
+
+var boardTap;
 $(document).ready(function() {
-	console.log("시작");
+	boardTap = document.getElementsByClassName("board-area");
+	console.log(boardTap);
+	boardTap[0].style.display = "block";
+	boardTap[1].style.display = "none";
 	$(function() {
 		$('.summernote').summernote({
 			height: 200,
@@ -30,8 +35,11 @@ $(document).ready(function() {
 				type: "POST",
 				contentType: false,
 				processData: false,
-				success: function(url) {
-					$('.summernote').summernote('insertImage', "https://pbs.twimg.com/media/DYG7gLDVoAAAig8.jpg");
+				success: function(callBack) {
+					console.log(callBack.result);
+					if(callBack.result=="successPhoto"){
+						$('.summernote').summernote('insertImage', callBack.src);//"https://pbs.twimg.com/media/DYG7gLDVoAAAig8.jpg");
+					}
 				},error:function(){
 					console.log("실패");
 				}
@@ -41,3 +49,9 @@ $(document).ready(function() {
 
 	});
 });
+
+function boardWrite()
+{
+	boardTap[0].style.display = "none";
+	boardTap[1].style.display = "block";
+}

@@ -29,7 +29,7 @@ public interface YNMOwnerViewController {
 //	public String couponMngPage();
 	
 	// 마이페이지 - 게시판 관리
-	public String boardMngPage();
+//	public String boardMngPage();
 	
 	// 마이페이지 - 통계분석관리
 	public String analysisMngPage();

@@ -45,6 +45,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreBoardData;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
@@ -949,7 +950,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/uploadBoardPhoto.do", method=RequestMethod.POST, produces="text/plain")
+//	@RequestMapping(value="/uploadBoardPhoto.do", method=RequestMethod.POST, produces="text/plain")
 	public JSONObject uploadBoardPhoto(HttpSession session, MultipartFile m_request)
 	{
 		JSONObject json = new JSONObject();
@@ -1010,10 +1011,142 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return json;
 	}
 
+	@ResponseBody 
+	@RequestMapping(value = "/uploadBoardPhoto.do", method = RequestMethod.POST)
+	public JSONObject uploadFile(HttpSession session, MultipartHttpServletRequest request) 
+	{ 
+		JSONObject json = new JSONObject();
+		
+		if(session.getAttribute("owner")!=null) {
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\boardP_");
+			String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
+			
+			Iterator<String> itr = request.getFileNames(); 
+			if(itr.hasNext()) { 
+				MultipartFile mpf = request.getFile(itr.next()); 
+				String originName= mpf.getOriginalFilename();//"test0101";//m_request.getOriginalFilename();
+				String remakeName=  System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
+	//			System.out.println(mpf.getOriginalFilename() +" uploaded!"); 
+				//just temporary save file info into ufile 
+//					System.out.println("file length : " + mpf.getBytes().length); 
+//					System.out.println("file name : " + mpf.getOriginalFilename()); 
+				File f=new File(photoRoute+remakeName);
+				//해당 디렉토리의 존재여부를 확인
+				if(!f.exists()){
+					//없다면 생성
+					f.mkdirs(); 
+				}
+				try {
+					mpf.transferTo(f);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				byte[] data;
+				try {
+					data = mpf.getBytes();
+					FileOutputStream fos = new FileOutputStream(photoRoute);// + remakeName);
+					fos.write(data);
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// DB에 추가
+				OwnerUploadPhoto uploadPhoto = new OwnerUploadPhoto();
+				uploadPhoto.setOwPhotoTypeFk(5);
+				uploadPhoto.setStoreInfoFk(currentSelectStoreIndex(session));
+				uploadPhoto.setOriginName(originName);
+				uploadPhoto.setRemakeName("boardP_" +remakeName);
+				uploadPhoto.setPhotoRoute(photoSaveRoute);
+
+				int photoUpload=ynmOwnerServiceImpl.ownerPhotoUpload(uploadPhoto);
+				if(photoUpload>0) {
+					OwnerUploadPhoto owPhotoR = ynmOwnerServiceImpl.selectOwnerPhoto(uploadPhoto);
+					json.put("src", owPhotoR.getOwPhotoViewRoute());
+					json.put("result", "successPhoto");
+				}else {
+					json.put("result", "failPhotoUpload");
+				}
+				
+				return json; 
+			}
+		} else {
+			return json;
+		} 
+		return json;
+	}
+
+	
+
 	@RequestMapping("/boardAdd.do")
 	public String ownerBoardAdd(HttpSession session,  HttpServletRequest request)
 	{
-		return null;
+		if(session.getAttribute("owner")!=null)
+		{
+			YNMOwner owner = new YNMOwner();
+//			int ownerIndex = owner.getOwEntirePk();
+			int storeIndex = currentSelectStoreIndex(session);
+			String boardTitle = request.getParameter("owBoardTitle");
+			String boardContent = request.getParameter("boardInfo");
+			
+			StoreBoardData storeBoardData = new StoreBoardData();
+			storeBoardData.setOwStoreInfoFk(storeIndex);
+			storeBoardData.setOwBoardTitle(boardTitle);
+			storeBoardData.setOwBoardContent(boardContent);
+			
+			int result  = ynmOwnerServiceImpl.ownerBoardAdd(storeBoardData);
+		}
+		return "ynmOwner/boardManagePage";
+	}
+	
+	// 점장 게시판 관리 페이지
+	@Override
+	@RequestMapping(value="/boardOwner.do")
+	public ModelAndView boardMngPage(HttpSession session,  HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) 
+		{
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			
+			int storeIndex = currentSelectStoreIndex(session);
+			
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<StoreBoardData> boardList = ynmOwnerServiceImpl.storeBoardList(currentPage,recordCountPerPage,storeIndex);
+			CouponPageData pageNavi = ynmOwnerServiceImpl.storeBoardNavi(currentPage,recordCountPerPage,naviCountPerPage,storeIndex);
+			
+			view.addObject("boardListData", boardList);
+			view.addObject("pageNaviData", pageNavi);
+			view.addObject("currentBoardTap", 0);
+			view.setViewName( "ynmOwner/boardManagePage");
+		}
+		return view;
+	}
+	
+	// 점장 게시판 관리 페이지
+	@Override
+	@RequestMapping(value="/boardSelect.do")
+	public ModelAndView boardSelect(HttpSession session,  HttpServletRequest request)
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null)
+		{
+			int boardIndex = Integer.parseInt(request.getParameter("boardIndex"));
+			
+			StoreBoardData storeBoardData = ynmOwnerServiceImpl.boardSelect(boardIndex);
+			view.addObject("storeBoardData", storeBoardData);
+			view.addObject("currentBoardTap", 1);// 한개만  보이는거 
+			view.setViewName("ynmOwner/boardManagePage");
+		}
+		return view;
 	}
 	
 }

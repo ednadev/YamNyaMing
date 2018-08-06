@@ -12,11 +12,13 @@ public class StorePageData {
 	private int pageTotalCount;
 	private int recordTotalCount;
 	private int owEntirePk;
+	private int storeIndex;
 	
 	public StorePageData() {}
 
+
 	public StorePageData(int startPage, int endPage, String pageNavi, int startNavi, int endNavi, int currentPage,
-			int pageTotalCount, int recordTotalCount, int owEntirePk) {
+			int pageTotalCount, int recordTotalCount, int owEntirePk, int storeIndex) {
 		super();
 		this.startPage = startPage;
 		this.endPage = endPage;
@@ -27,7 +29,20 @@ public class StorePageData {
 		this.pageTotalCount = pageTotalCount;
 		this.recordTotalCount = recordTotalCount;
 		this.owEntirePk = owEntirePk;
+		this.storeIndex = storeIndex;
 	}
+
+	
+
+	public int getStoreIndex() {
+		return storeIndex;
+	}
+
+
+	public void setStoreIndex(int storeIndex) {
+		this.storeIndex = storeIndex;
+	}
+
 
 	public int getStartPage() {
 		return startPage;

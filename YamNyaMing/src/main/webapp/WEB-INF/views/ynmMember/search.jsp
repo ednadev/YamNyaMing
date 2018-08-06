@@ -1265,10 +1265,11 @@
 				   var windowH = 560;
 				   var left = Math.ceil((window.screen.width - windowW) / 2);
 				   var top = Math.ceil((window.screen.height - windowH) / 2);
+				   console.log(value);
 	               pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
-	               reserve.target="popup";
+	               /* reserve.target="popup";
 	               reserve.method="get";
-	               reserve.submit();
+	               reserve.submit(); */
 	            }
 	            </script>  	            
 	                
