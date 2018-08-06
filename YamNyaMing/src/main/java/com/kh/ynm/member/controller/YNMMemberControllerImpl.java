@@ -830,6 +830,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 }
 	
 	//리뷰 대댓글 작성
+	@ResponseBody
 	@Override
 	@RequestMapping(value="/storeUnderReviewInsert.do")
 	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {

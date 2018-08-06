@@ -1228,7 +1228,7 @@
 								</c:if>
 								</c:if>
 								<c:if test="${sessionScope.member==null}">
-									<div onclick="nomember();">
+									<div class="heart" onclick="nomember();">
 										<img style="width: 100%; height: 100%; cursor: pointer;"
 											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 									</div>

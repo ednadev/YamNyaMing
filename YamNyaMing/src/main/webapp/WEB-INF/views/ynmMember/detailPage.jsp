@@ -89,6 +89,22 @@ function openImagemodal(storeReviewNo){
 	});	
 	
 }
+
+function insertUnderReview(storeReviewNo,memberEntireNo){
+		var underReviewContent=$("#"+storeReviewNo).val();
+		var divId=parseInt(storeReviewNo)+0.1;
+		console.log(divId);
+	 		$.ajax({
+				url : "/storeUnderReviewInsert.do",
+				data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
+				success : function(data){
+					
+					if(data==1){
+					
+					}
+				}
+			}); 
+		}
 </script>
 <body>
 <header id="member-search-header">
@@ -458,6 +474,7 @@ function showSlides(n) {
 			<div>
 				<div>
 					<div id="profile-image">
+					
 						<c:if test="${r.memberUploadPhotoNo eq 1}">
 						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
 						</c:if>
@@ -483,7 +500,7 @@ function showSlides(n) {
 					<button onclick="nomember();">팔로우</button>
 					</c:if>
 				</div>
-				<div>
+				<div id="${r.storeReviewNo + 0.1 }">
 					<p>
 						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
 						<span class="star-full"></span>
@@ -611,20 +628,7 @@ function showSlides(n) {
 					</c:if>
 
   				</div>
-  				
-  				<script>
-  						function insertUnderReview(storeReviewNo,memberEntireNo){
-  						var underReviewContent=$("#underReviewContent").val();
-  						
-  					 		$.ajax({
-  								url : "/storeUnderReviewInsert.do",
-  								data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
-  								success : function(data){
-									location.reload();
-  								}
-  							});
-  						}
-  				</script>
+
   				<c:forEach items="${r.ysurList}" var="under">
   				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
   				<div>
@@ -660,7 +664,7 @@ function showSlides(n) {
   				
   					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
 					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
-  					<input type="text" id="underReviewContent" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<input type="text" id="${r.storeReviewNo}" name="underReviewContent" placeholder="댓글을 입력해주세요">
   					<c:if test="${sessionScope.member!=null }">
   					<input type="button" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
   					</c:if>
