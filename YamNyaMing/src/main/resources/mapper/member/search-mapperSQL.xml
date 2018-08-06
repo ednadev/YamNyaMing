@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="search">
-	<select id="searchList" parameterType="search" resultType="search">
+	<select id="searchList" parameterType="searchPaging" resultType="search">
        select
        		ow_store_info_pk as owStoreInfoPk,
 			ow_store_name as owStoreName, 
@@ -58,7 +58,7 @@
 		</trim>
 	</select>
 	
-	<select id="searchCount" parameterType="search" resultType="int"> 
+	<select id="searchCount" parameterType="searchPaging" resultType="int"> 
 		select count(*)
 		from (
         select * from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 

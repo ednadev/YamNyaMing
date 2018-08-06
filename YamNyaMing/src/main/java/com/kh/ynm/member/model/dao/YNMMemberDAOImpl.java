@@ -188,7 +188,10 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		check.setStart(start);
 		check.setEnd(end);
 		
-		List list=sqlSession.selectList("search.searchList",check);
+		if(check.getStoreCateDetailName()!=null) {
+			System.out.println("DAO에서 확인" +  check.getStoreCateDetailName().size());
+		}
+		List list=sqlSession.selectList("search.searchList", check);
 
 		return (ArrayList<YNMSearch>)list;
 	}

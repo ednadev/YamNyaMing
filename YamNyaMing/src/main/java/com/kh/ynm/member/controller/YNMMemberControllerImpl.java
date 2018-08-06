@@ -947,6 +947,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
+
 		
 		YNMSearchPaging check = new YNMSearchPaging();
 
@@ -954,22 +955,42 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setFood(food);
 		check.setPlace(place);
 		
+		System.out.println("Controller" + storeCateDetailName!=null);
+		
 		if(storeCateDetailName!=null) {
-			ArrayList<String> StoreCateDetailNameList = new ArrayList<>(Arrays.asList(storeCateDetailName));
-			check.setStoreCateDetailName(StoreCateDetailNameList);
+			ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
+			for(int i = 0; i<storeCateDetailName.length;i++)
+			{
+				storeCateDetailNameList.add(storeCateDetailName[i]);
+			}
+			check.setStoreCateDetailName(storeCateDetailNameList);
+			System.out.println("Controller" + storeCateDetailName.length);
 		}
 		if(owBudget!=null) {
 			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
+			for(int i = 0; i<owBudget.length;i++)
+			{
+				owBudgetList.add(owBudget[i]);
+			}
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
 			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
+			for(int i = 0; i<owSubInfo.length;i++)
+			{
+				owSubInfoList.add(owSubInfo[i]);
+			}
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
 			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
+			for(int i = 0; i<owDrinkListInfo.length;i++)
+			{
+				owDrinkListInfoList.add(owDrinkListInfo[i]);
+			}
 			check.setOwDrinkListInfo(owDrinkListInfoList);
 		}
+		
 		
 
 		int currentPage;

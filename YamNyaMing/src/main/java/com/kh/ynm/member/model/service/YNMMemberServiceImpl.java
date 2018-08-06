@@ -240,6 +240,9 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int recordCountPerPage=9;
 		int naviCountPerPage=5;
 
+		if(check.getStoreCateDetailName()!=null) {
+			System.out.println("Service에서  " + check.getStoreCateDetailName().size());
+		}
 		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage,check);
 		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage,check);
 
