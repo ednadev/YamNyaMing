@@ -37,8 +37,8 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("member.selectOneMember",vo);
 	}
 	
-	public YNMMember selectOneMember2(SqlSessionTemplate sqlSession, YNMMember vo) {
-		return sqlSession.selectOne("member.selectOneMember2",vo);
+	public YNMMember selectOneMember2(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		return sqlSession.selectOne("member.selectOneMember2",memberEntireNo);
 	}
 
 	public int signOutMember(SqlSessionTemplate sqlSession, YNMMember ym) {
@@ -237,6 +237,11 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		List list = sqlSession.selectList("search.detailPageImg",vo);
 		return (ArrayList<YNMSearch>)list;
 	}
+	
+	public ArrayList<YNMSearch> detailPageMenu(SqlSessionTemplate sqlSession, YNMSearch vo) {
+		List list = sqlSession.selectList("search.detailPageMenu",vo);
+		return (ArrayList<YNMSearch>)list;
+	}	
 
 	public int jjimTotal(SqlSessionTemplate sqlSession, int storeReviewNo) {
 		return sqlSession.selectOne("review.jjimTotal",storeReviewNo);
@@ -307,6 +312,29 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMFavorite> favoriteList(SqlSessionTemplate sqlSession, int memberEntireNo) {
 		List list=sqlSession.selectList("member.favoriteList",memberEntireNo);
 		return (ArrayList<YNMFavorite>)list;
+	}
+
+	public YNMMember memberFollowing(SqlSessionTemplate sqlSession, int followMemberIdNo) {
+		YNMMember list=sqlSession.selectOne("member.selectOneMember2",followMemberIdNo);
+		return list;
+	}
+
+	public ArrayList<YNMFollow> followerInfo(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("member.followerInfo",memberEntireNo);
+		return (ArrayList<YNMFollow>)list;
+	}
+
+	public ArrayList<YNMStoreReview> myInfoReviewCheck(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("review.myInfoReviewCheck",memberEntireNo);
+		return (ArrayList<YNMStoreReview>)list;
+	}
+
+	public int nickNameUpdateMember(SqlSessionTemplate sqlSession, YNMMember ym) {
+		return sqlSession.update("member.nickNameUpdateMember",ym);
+	}
+
+	public YNMStoreReview reviewDetail(SqlSessionTemplate sqlSession, String parameter) {
+		return sqlSession.selectOne("review.reviewDetail",parameter);
 	}	
 
 }

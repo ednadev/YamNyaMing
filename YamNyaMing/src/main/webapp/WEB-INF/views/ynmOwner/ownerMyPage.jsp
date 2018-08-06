@@ -11,7 +11,7 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/owner.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -35,162 +35,82 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
-	<section id="owner-main-section">
+	<section id="store-select-detail">
 		<div>
-		<div id="main-section-store">
-			<h4>음식점 상태 정보</h4>
-			<table border="1">
-			<thead>
-			<tr>
-				<th>상호명</th><th>대분류</th><th>소분류</th><th>주소</th><th>전화번호</th><th>진행 상태</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>빠넬로</td><td>양식</td><td>이탈리아음식</td><td>서울특별시 마포구 어울마당로5길 29 건우상가주택</td><td>02-322-0920</td><td>입점</td>
-			</tr>
-			<tr>
-				<td>침사추이누들</td><td>한식</td><td>국수</td><td>서울특별시 마포구 어울마당로5길 31 지층</td><td>02-336-1804</td><td>신청중</td>
-			</tr>			
-			</tbody>
-			</table>
-		</div>
-		<div id="main-section-board">
-			<h4>문의/답변관리</h4>
-			<table>
-			<tr>
-				<th>후기</th><td>0건</td>
-			</tr>
-			<tr>
-				<th>고객문의</th><td>0건</td>
-			</tr>			
-			</table>
-		</div>		
-		</div>
-		
-		<div>
-		<div id="main-section-reservation">
-			<h4>예약 현황 - 빠넬로 (페이징 처리)</h4>
-			<table border="1">
-			<thead>
-			<tr>
-				<th>대기번호</th><th>예약자</th><th>아이디</th><th>연락처</th><th>예약시간</th><th>쿠폰 사용 여부</th><th>예약 상태</th><th>예약 취소</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>1</td><td>곽영훈</td><td>coconut510</td><td>010-8478-4171</td><td>10:30</td><td></td><td>입장가능</td><td>예약 취소</td>
-			</tr>
-			<tr>
-				<td>2</td><td>임시번호1</td><td></td><td>010-0000-0000</td><td>10:35</td><td></td><td>입장가능</td><td>예약 취소</td>
-			</tr>			
-			<tr>
-				<td>3</td><td>김지섭</td><td>kimjiseop2</td><td>010-8478-4171</td><td>10:40</td><td>30% 할인 쿠폰</td><td>대기중</td><td>예약 취소</td>
-			</tr>
-			<tr>
-				<td>4</td><td>임시번호2</td><td></td><td>010-0000-0000</td><td>10:45</td><td></td><td>대기중</td><td>예약 취소</td>
-			</tr>
-			<tr>
-				<td>5</td><td>김미경</td><td>minimelody</td><td>010-9612-0530</td><td>10:50</td><td>생일 쿠폰</td><td>예약 취소</td><td>예약 취소</td>
-			</tr>			
-			<tr>
-				<td>6</td><td>고민호</td><td>zxcv7541</td><td>010-5024-3705</td><td>10:55</td><td></td><td>대기중</td><td>예약 취소</td>
-			</tr>												
-			</tbody>
-			</table>
-		</div>	
-		<div id="main-section-coupon">
-			<h4>등록된 쿠폰</h4>
-			<table border="1">
-			<thead>
-			<tr>
-				<th>쿠폰명</th><th>쿠폰 정보</th><th>쿠폰 발급</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>첫 방문 쿠폰</td><td>총 금액의 10% 할인</td><td>발급하기</td>
-			</tr>					
-			<tr>
-				<td>30% 할인 쿠폰</td><td>이벤트 메뉴 30% 할인</td><td>발급하기</td>
-			</tr>
-			<tr>
-				<td>생일 쿠폰</td><td>총 금액의 40% 할인</td><td>발급하기</td>
-			</tr>		
-			<tr>
-				<td>빼빼로데이 쿠폰</td><td>총 금액의 11,000원 할인</td><td>발급하기</td>
-			</tr>	
-			<tr>
-				<td>리뷰 이벤트 쿠폰</td><td>총 금액의 20% 할인</td><td>발급하기</td>
-			</tr>																				
-			</tbody>
-			</table>
-		</div>		
-		</div>
-		
-		<div>		
-			<div id="main-section-stat">
-				<h4>통계</h4>
-				<div>
-					<canvas id="gender-chart"></canvas>
-					<canvas id="year-chart"></canvas>
-					<canvas id="time-chart"></canvas>
+			<c:if test="${storeTitleInfo!=null}">
+				<c:forEach var="storeList" items="${storeTitleInfo}">
+					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
+					<form action="/storeInfoPage.do" method="post">
+						<jsp:include page="storeTitleInfo.jsp">
+							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
+						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
+						  	<jsp:param name="storeTip" value="${storeList.owStoreTip}"/>
+						  	<jsp:param name="storeAbsRoute" value="${storeList.owPhotoRoute}"/>
+						  	<jsp:param name="storePhoto" value="${storeList.owPhotoViewRoute}"/>
+						  	<jsp:param name="storeStarPoint" value="${storeList.storeStarPoint}"/>
+						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
+						</jsp:include>
+						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
+						<input type="submit" value="가게 정보 확인하기">
+					</form>
+				</c:forEach>
+			</c:if>
+			<!-- 없을 때 -->
+			<c:if test="${storeTitleInfo==null}">
+				등록된 가게가 없습니다.
+			</c:if>
+			<hr style="clear:both;">
+			페이징
+			<c:if test="${pageNaviData!=null}">
+				<div id="pagingNumber">
+					<c:if test="${pageNaviData.startNavi!=1}">
+						<form action="/couponManage.do" method="post">
+							<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+							<input type="submit" class="paging-num" value="<">
+						</form>
+					</c:if>
+					<c:forEach var="i" begin="${pageNaviData.startNavi}"
+						end="${pageNaviData.endNavi}">
+						<c:if test="${pageNaviData.currentPage==i}">
+							<form action="/couponManage.do" method="post">
+								<input type="hidden" name="currentPage" value="${i}"> 
+								<input type="submit" class="paging-num-select" value="${i}">
+							</form>
+						</c:if>
+						<c:if test="${pageNaviData.currentPage!=i}">
+							<form action="/couponManage.do" method="post">
+								<input type="hidden" name="currentPage" value="${i}"> 
+								<input type="submit" class="paging-num" value="${i}">
+							</form>
+						</c:if>
+					</c:forEach>
+					<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+						<form action="/couponManage.do" method="post">
+							<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+							<input type="submit"  class="paging-num"  value=">">
+						</form>
+					</c:if>
 				</div>
-				<script>
-				new Chart(document.getElementById("gender-chart"), {
-				    type: 'pie',
-				    data: {
-				      labels: ["남자", "여자"],
-				      datasets: [{
-				    	label: "성별",
-				        backgroundColor: ["#64B5F6", "#E57373"],
-				        data: [2005,3006]
-				      }]
-				    },options: {
-				      title: {
-				        display: true,
-				        text: '성별'
-				      }
-				    }
-				});	
-				new Chart(document.getElementById("year-chart"), {
-				    type: 'pie',
-				    data: {
-				      labels: ["10대","20대","30대","40대","50대","60대 이상"],
-				      datasets: [{
-				        label: "연령대별",
-				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [2005,3006,1200,4003,2000,1342]
-				      }]
-				    },
-				    options: {
-				      title: {
-				        display: false,
-				        text: '연령별'
-				      }
-				    }
-				});		
-				new Chart(document.getElementById("time-chart"), {
-				    type: 'bar',
-				    data: {
-				      labels: ["3-7시","7-11시","11-15시","15-19시","19-23시","23-3시"],
-				      datasets: [{
-				        label: "시간대별",
-				        backgroundColor: ["#F48FB1", "#B39DDB","#A5D6A7","#FFF59D","#FFCC80","#B0BEC5"],
-				        data: [2005,3006,1200,4003,2000,1342]
-				      }]
-				    },
-				    options: {
-				      title: {
-				        display: false,
-				        text: '시간대별'
-				      }
-				    }
-				});					
-				</script>
-			</div>	
-			</div>			
+			</c:if>
+		</div>
 	</section>
+	<script>
+		window.onload=function(){
+			var storeDivArr = document.getElementsByClassName("store-info-div");
+		/* 	var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
+			console.log(data.result); */
+			for(var i = 0; i<storeDivArr.length;i++)
+			{
+				if(i==${storeTapType}){
+					storeDivArr[i].style.display = "block";
+				}
+				else storeDivArr[i].style.display="none";
+			}
+			menuChangeMode("menu_title_${firstMenutitle}");
+		}
+		
+		
+	</script>	
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

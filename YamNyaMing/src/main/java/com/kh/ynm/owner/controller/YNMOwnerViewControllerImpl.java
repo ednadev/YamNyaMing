@@ -51,12 +51,7 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 		return "ynmOwner/bookManagePage";
 	}
 
-	// 점장 게시판 관리 페이지
-	@Override
-	@RequestMapping(value="/boardOwner.do")
-	public String boardMngPage() {
-		return "ynmOwner/boardManagePage";
-	}
+
 
 	// 점장 통계 분석 관리 페이지
 	@Override

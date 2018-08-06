@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+.search-result>.search-result-img>div{
+	background-size:cover;
+	background-position:center;
+	width:304px;
+	height:304px;
+}
+</style>
 <div class="search-result">
 	<div class="search-result-img">
-		<div>
-			<center><h2>${param.storeName}</h2></center>
-	 		<img src="${param.storePhoto}" >
-	 		<center><h2>${param.storeTip}</h2></center>
+		<div style="background-image:url('${pageContext.request.contextPath}${param.storePhoto}');">
 		</div>
 	</div>
 	<div class="search-result-text">

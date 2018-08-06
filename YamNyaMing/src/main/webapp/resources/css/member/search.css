@@ -263,24 +263,20 @@
 	color:#555;
 	margin-top:12px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button,
-#member-search-section>.member-search-wrapper>.search-page>.search-result>form>input[type="button"]{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button{
 	margin-top:4px;
 	cursor:pointer;
 	width:150px;
 	height:40px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>form{
-	display:inline-block;
-}
-#member-search-section>.member-search-wrapper>.search-page>.search-result>form>input[type="button"]{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(4){
 	background-color:#fb0;
 	border:none;
 	color:white;
 	display:inline-block;
 	margin-left:7px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button{
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(5){
 	background-color:white;
 	border:1px solid #ddd;
 	margin-right:7px;
@@ -316,5 +312,23 @@
 .close:focus{
 	color:#000;
 	text-decoration:none;
+	cursor:pointer;
+}
+
+/* 페이징처리 */
+#pagingNumber{
+	clear:both;
+}
+#pagingNumber>form{
+	display:flex;
+	justify-content:center;
+	padding-top:20px;
+	padding-bottom:30px;
+}
+#pagingNumber>form>input{
+	border:none;
+	background-color:#555;
+	color:white;
+	padding:10px;
 	cursor:pointer;
 }

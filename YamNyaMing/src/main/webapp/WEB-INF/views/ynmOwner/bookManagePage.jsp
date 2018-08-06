@@ -6,17 +6,32 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍-예약관리</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
-<link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.css?ver=2" />
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/bookManagePage.css?ver=3">
+<link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.min.css?ver=3" />
+<link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.print.min.css?ver=3" media='print' />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=2"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=3"></script>
 
-<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/jquery.js"></script>
-<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/jquery-ui-custom.js"></script>
-<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/owner/fullcalendar.min.js"></script>
+<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/moment.min.js"></script>
+<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/jquery.min.js?ver=1"></script>
+<script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/owner/fullcalendar.min.js?ver=1"></script>
+
+<style>
+	.fc-event, .fc-event-dot {
+	    background-color: #fb0;
+	}
+	.fc-event, .fc-event-dot *{
+		color:white;
+	}
+</style>
+<script>
+
+</script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -40,8 +55,13 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
- 	<div id='calendar'></div> 
 	
+	<!-- 일반 손님 웨이팅 -->
+	<button onclick="watingListLoad();">새로고침(1분마다 새로고침 됩니다.)</button>
+ 	<div id="waitingList">
+           
+ 	</div>
+ 	<div id='calendar'></div> 
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

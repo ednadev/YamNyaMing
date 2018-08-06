@@ -12,6 +12,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreBoardData;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
@@ -73,7 +74,6 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	
 	@Override
 	public int couponEnroll(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll) {
-		System.out.println(couponEnroll.getOwCouponName());
 		return sqlSession.insert("stores.couponEnroll", couponEnroll);
 	}
 	
@@ -155,6 +155,42 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(SqlSessionTemplate sqlSession, BookSearchVo bookSearch) {
 		List list = sqlSession.selectList("stores.bookListWithStoreIndex", bookSearch);
 		return (ArrayList<YNMBook>)list;
+	}
+
+	@Override
+	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, int ownerIndex) {
+		return sqlSession.selectOne("stores.storeIndexWithOwIndex", ownerIndex);
+	}
+
+	@Override
+	public int cancelBookAsOwner(SqlSessionTemplate sqlSession,YNMBook bookVo) {
+		return sqlSession.update("stores.changeBookState", bookVo);
+	}
+
+	public OwnerUploadPhoto selectOwnerPhoto(SqlSessionTemplate sqlSession, OwnerUploadPhoto uploadPhoto) {
+		return sqlSession.selectOne("owphotos.selectOwnerPhoto", uploadPhoto);
+	}
+
+	@Override
+	public int ownerBoardAdd(SqlSessionTemplate sqlSession, StoreBoardData storeBoardData) {
+		return sqlSession.insert("stores.ownerBoardAdd", storeBoardData);
+	}
+
+	@Override
+	public ArrayList<StoreBoardData> storeBoardList(SqlSessionTemplate sqlSession, StorePageData storePageData) {
+		List list= sqlSession.selectList("stores.storeBoardList", storePageData);
+		return (ArrayList<StoreBoardData>)list;
+	}
+
+	@Override
+	public int storeBoardNavi(SqlSessionTemplate sqlSession, CouponPageData couponPageData) {
+		return sqlSession.selectOne("stores.boardCountTotal", couponPageData);
+	}
+	
+	@Override
+	public StoreBoardData boardSelect(SqlSessionTemplate sqlSession,int boardIndex)
+	{
+		return sqlSession.selectOne("stores.boardSelect", boardIndex);
 	}
 
 }

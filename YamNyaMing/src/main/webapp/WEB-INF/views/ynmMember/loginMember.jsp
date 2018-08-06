@@ -12,13 +12,12 @@
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css?ver=2">
-<script src="${pageContext.request.contextPath}/resources/js/member/memberSignUp.js?ver=1"></script>
 <!-- 파이어베이스 로그인 -->
 <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/login.css?ver=2">
 <script
-	src="${pageContext.request.contextPath}/resources/js/member/memberSignUp.js?ver=2"></script>
+	src="${pageContext.request.contextPath}/resources/js/member/memberLogin.js?ver=2"></script>
 </head>
 <script>
 	function setCookie(cookieName, value, exdays) {
@@ -67,7 +66,6 @@
 		});
 
 		$("input[name='memberId']").keyup(function() {
-			console.log("ㅎㅇ2");
 			if ($("#idCheck").is(":checked")) {
 				var memberId = $("input[name='memberId']").val();
 				setCookie("memberId", memberId, 7);

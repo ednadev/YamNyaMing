@@ -46,28 +46,7 @@
 		mb_upload_photo_fk as memberUploadPhotoNo
 		from member_entire_tb
 
-		where mb_id=#{memberId}
-
-	</select>
-
-	<select id="memberInfo" resultType="memberCheck">
-		select
-		mb_entire_pk as memberEntireNo,
-		mb_id as memberId,
-		mb_pw as memberPw,
-		mb_name as memberName,
-		mb_nickname as memberNickName,
-		mb_gender as memberGender,
-		mb_birth as memberBirth,
-		mb_email as memberEmail,
-		mb_phone as memberPhone,
-		mb_regdate as memberRegDate,
-		mb_upload_photo_fk as memberUploadPhotoNo,
-		mb_photo_view_route as photoViewRoute
-
-		from member_upload_photo_tb p, member_entire_tb e
-		where p.mb_upload_photo_pk=e.mb_upload_photo_fk and mb_id=#{memberId} and
-		mb_pw=#{memberPw}
+		where mb_entire_pk=#{memberEntireNo}
 	</select>
 
 	<delete id="deleteMember">
@@ -81,7 +60,6 @@
 		where mb_entire_pk=#{memberEntireNo}
 
 	</update>
-
 
 	<select id="idCheck" resultType="members">
 		select
@@ -129,6 +107,11 @@
 
 	<update id="pwUpdateMember">
 		update member_entire_tb set mb_pw=#{memberPw} where
+		mb_id=#{memberId} and mb_email=#{memberEmail}
+	</update>
+	
+	<update id="nickNameUpdateMember">
+		update member_entire_tb set mb_nickName=#{memberNickName} where
 		mb_id=#{memberId} and mb_email=#{memberEmail}
 	</update>
 
@@ -305,6 +288,14 @@
 			ow_store_info_fk as owStoreInfoNo
 			from member_favorite_tb
 			where mb_entire_fk=#{favoriteNo}
+	</select>
+	
+	<select id="followerInfo" resultType="follow">
+		select
+		mb_follow_pk as followNo,
+		mb_follower_fk as followerNo
+		from member_follow_tb
+		where mb_follow_user_id_fk=#{memberEntireNo}
 	</select>
 
 

@@ -15,6 +15,7 @@ import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.MenuInfo;
 import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
+import com.kh.ynm.owner.model.vo.StoreBoardData;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StoreMenuData;
 import com.kh.ynm.owner.model.vo.StorePageData;
@@ -277,6 +278,84 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 	public ArrayList<YNMBook> bookListLoadWidthStoreIndex(BookSearchVo bookSearch) {
 		ArrayList<YNMBook> list  = ynmOwnerDAO.bookListLoadWidthStoreIndex(sqlSession, bookSearch);
 		return list;
+	}
+
+	@Override
+	public int selectStoreIndex(int ownerIndex) {
+		return ynmOwnerDAO.ynmSelectStoreIndex(sqlSession, ownerIndex);
+	}
+	
+	@Override
+	public int cancelBookAsOwner(YNMBook bookVo) {
+		return ynmOwnerDAO.cancelBookAsOwner(sqlSession, bookVo);
+	}
+
+	
+	@Override
+	public OwnerUploadPhoto selectOwnerPhoto(OwnerUploadPhoto uploadPhoto) {
+		return ynmOwnerDAO.selectOwnerPhoto(sqlSession, uploadPhoto);
+	}
+
+	@Override
+	public int ownerBoardAdd(StoreBoardData storeBoardData) {
+		return ynmOwnerDAO.ownerBoardAdd(sqlSession, storeBoardData);
+	}
+
+	@Override
+	public ArrayList<StoreBoardData> storeBoardList(int currentPage, int recordCountPerPage, int storeIndex) {
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		StorePageData storePageData = new StorePageData();
+		storePageData.setStartPage(start);
+		storePageData.setEndPage(end);
+		storePageData.setStoreIndex(storeIndex);
+		return ynmOwnerDAO.storeBoardList(sqlSession,storePageData);
+	}
+
+	public CouponPageData storeBoardNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, int storeIndex) {
+		CouponPageData couponPageData = new CouponPageData();
+		couponPageData.setStoreEntireFk(storeIndex);
+		
+		int recordTotalCount = ynmOwnerDAO.storeBoardNavi(sqlSession, couponPageData);
+		
+		int pageTotalCount = 0;
+
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData couponPageDataResult = new CouponPageData();
+		couponPageDataResult.setCurrentPage(currentPage);
+		couponPageDataResult.setStartNavi(startNavi);
+		couponPageDataResult.setEndNavi(endNavi);
+		couponPageDataResult.setPageTotalCount(pageTotalCount);
+		couponPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return couponPageDataResult;
+	}
+
+	@Override
+	public StoreBoardData boardSelect(int boardIndex) {
+		return ynmOwnerDAO.boardSelect(sqlSession, boardIndex);
 	}
 
 

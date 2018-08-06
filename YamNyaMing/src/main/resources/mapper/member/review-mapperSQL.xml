@@ -28,6 +28,77 @@
 		where re.mb_entire_fk=en.mb_entire_pk and
 		en.mb_upload_photo_fk=ph.mb_upload_photo_pk and
 		ow_store_info_fk=#{ownerStoreEntireNo}
+		order by mb_store_review_pk desc
+	</select>
+	
+	<select id="storeReviewLikeOrder" resultType="reviews">
+		select
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		mb_store_review_pk as storeReviewNo,
+		mb_photo_view_route as photoViewRoute,
+		ow_store_info_fk as ownerStoreEntireNo,
+		mb_entire_fk as memberEntireNo,
+		ow_store_review_content as reviewContent,
+		ow_store_review_star as reviewStar,
+		ow_store_jjim_check as jjimCheck,
+		ow_store_review_date as reviewDate,
+		ow_store_review_open_check as reviewOpenCheck,
+		ow_store_review_img_list as reviewImgList,
+		mb_nickname as memberNickName,
+		mb_name as memberName,
+        likenum
+		from member_store_review_tb re,member_entire_tb en,member_upload_photo_tb
+		ph,( select mb_store_review_fk,count(*) as likenum
+        from member_review_like_tb
+        group by mb_store_review_fk) li
+		where re.mb_entire_fk=en.mb_entire_pk and
+		en.mb_upload_photo_fk=ph.mb_upload_photo_pk and
+        re.mb_store_review_pk=li.mb_store_review_fk and
+		ow_store_info_fk=#{ownerStoreEntireNo}
+	</select>
+	
+	<select id="reviewDetail" resultType="reviews">
+		select
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		mb_store_review_pk as storeReviewNo,
+		mb_photo_view_route as photoViewRoute,
+		ow_store_info_fk as ownerStoreEntireNo,
+		mb_entire_fk as memberEntireNo,
+		ow_store_review_content as reviewContent,
+		ow_store_review_star as reviewStar,
+		ow_store_jjim_check as jjimCheck,
+		ow_store_review_date as reviewDate,
+		ow_store_review_open_check as reviewOpenCheck,
+		ow_store_review_img_list as reviewImgList,
+		mb_nickname as memberNickName,
+		mb_name as memberName
+		from member_store_review_tb re,member_entire_tb en,member_upload_photo_tb
+		ph
+		where re.mb_entire_fk=en.mb_entire_pk and
+		en.mb_upload_photo_fk=ph.mb_upload_photo_pk and
+		mb_store_review_pk=#{parameter}
+	</select>
+	
+	<select id="myInfoReviewCheck" resultType="reviews">
+		select
+		mb_upload_photo_fk as memberUploadPhotoNo,
+		mb_store_review_pk as storeReviewNo,
+		mb_photo_view_route as photoViewRoute,
+		ow_store_info_fk as ownerStoreEntireNo,
+		mb_entire_fk as memberEntireNo,
+		ow_store_review_content as reviewContent,
+		ow_store_review_star as reviewStar,
+		ow_store_jjim_check as jjimCheck,
+		ow_store_review_date as reviewDate,
+		ow_store_review_open_check as reviewOpenCheck,
+		ow_store_review_img_list as reviewImgList,
+		mb_nickname as memberNickName,
+		mb_name as memberName
+		from member_store_review_tb re,member_entire_tb en,member_upload_photo_tb
+		ph
+		where re.mb_entire_fk=en.mb_entire_pk and
+		en.mb_upload_photo_fk=ph.mb_upload_photo_pk and
+		mb_entire_fk=#{memberEntireNo}
 	</select>
 
 	<!-- 좋아요 table -->

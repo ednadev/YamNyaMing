@@ -9,6 +9,15 @@ public class YNMTotalRefModel {
 	
 	public YNMTotalRefModel() {}
 
+	
+	public static String bookState(char bookState) {
+		if(bookState=='w') return "대기상태";
+		if(bookState=='r') return "입장가능";
+		if(bookState=='f') return "예약취소";
+		if(bookState=='g') return "단쳬예약";
+		return null;
+	}
+	
 	public static HashMap<String, StoreCategoryMain> getCateMainList() {
 		return cateMainList;
 	}

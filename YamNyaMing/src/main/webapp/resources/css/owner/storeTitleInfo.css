@@ -17,9 +17,120 @@ img{
 	height:100%;
 	object-fit:cover;
 	position:relative;
+	margin-left:15px;
 }
 
 /*아래쪽 페이징*/
 #pagingNumber{
 	clear:both;
+}
+
+
+/* 카드 형식으로 디자인 */
+#store-select-detail>div>.main-card{
+	position:relative;
+	overflow:hidden;
+	display:inline;
+}
+#store-select-detail>div>.main-card>input[type="submit"]{
+	position:absolute;
+	z-index:1;
+	width:304px;
+	height:304px;
+	top:13px;
+	left:7px;
+	border:none;
+	background-color:rgba(0,0,0,0.3);
+	color:white;
+	font-size:1.2em;
+	font-weight:bold;
+	cursor:pointer;
+}
+#store-select-detail>div>.main-card>.search-result>.search-result-text>div>p{
+	text-align:center;
+	margin:10px;
+	font-weight:bold;
+	font-size:0.9em;
+}
+#store-select-detail>div>h2{
+	clear:both;
+	padding:20px 10px 0px;
+}
+#store-select-detail>div>div>.store-form>input[type="submit"]{
+	background-color:white;
+	border:none;
+	font-size:1em;
+	font-weight:bold;
+	cursor:pointer;
+	margin:10px;
+}
+#store-select-detail>div>div>.store-form>input[type="submit"]:hover{
+	color:#fb0;
+}
+#store-select-detail>div>.store-info-div>form{
+	line-height:2;
+	margin-left:15px;
+}
+#store-select-detail>div>.store-info-div>form>span{
+	font-weight:bold;
+}
+#store-select-detail>div>.store-info-div>form>button{
+	background-color:#fb0;
+	border:none;
+	padding:5px 10px;
+	border-radius:7px;
+	font-weight:bold;
+	cursor:pointer;
+}
+#store-select-detail>div>.store-info-div>form>input[type="text"]{
+	font-size:0.9em;
+	padding:5px;
+	border-radius:3px;
+	border:1px solid #999;
+	width:300px;
+}
+#store-select-detail>div>.store-info-div>form>#owStoreTypeEditSelect>select{
+	padding:5px;
+}
+#store-select-detail>div>.store-info-div>form>input[type="submit"]{
+	padding:10px 20px;
+	border:none;
+	margin-top:20px;
+	margin-bottom:20px;
+	background-color:#555;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+	border-radius:5px;
+}
+#store-select-detail>div>.store-info-div>h3{
+	font-size:0.9em;
+	margin:15px;
+}
+#mainImage+label{
+	background-color:#555;
+	border-radius:5px;
+	font-weight:bold;
+	padding:5px 20px;
+	font-size:0.9em;
+	margin-bottom:20px;
+}
+#menuImage+label{
+	background-color:#555;
+	border-radius:5px;
+	font-weight:bold;
+	padding:10px 20px;
+	font-size:0.9em;
+	margin-bottom:20px;
+	margin-left:15px;
+}
+#store-select-detail>div>.store-info-div>.menuInfo>form>div>input[type="submit"]{
+	border:none;
+	background-color:black;
+	color:white;
+	padding:10px 20px;
+	font-weight:bold;
+	margin-left:15px;
+	margin-bottom:20px;
+	border-radius:5px;
 }

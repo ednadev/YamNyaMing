@@ -16,16 +16,17 @@ public class YNMStoreInfo {
 	private String owStoreMapInfo;
 	private String owStoreWorkingTime;
 	private YNMStoreDetailInfo detailInfo;
+	private int storeEnrollRqState;
 	
 	
 	
 	public YNMStoreInfo() {
 		super();
 	}
-	
+
 	public YNMStoreInfo(int owStoreInfoPk, int owEntireFk, String owStoreBizNum, String owStoreName, String owStoreTel,
 			int owBigTypeFk, int owSmallTypeFk, String owStoreUrl, String owStoreAddr, Date owStoreRegDate,
-			String owStoreMapInfo, String owStoreWorkingTime, YNMStoreDetailInfo detailInfo) {
+			String owStoreMapInfo, String owStoreWorkingTime, YNMStoreDetailInfo detailInfo, int storeEnrollRqState) {
 		super();
 		this.owStoreInfoPk = owStoreInfoPk;
 		this.owEntireFk = owEntireFk;
@@ -40,9 +41,33 @@ public class YNMStoreInfo {
 		this.owStoreMapInfo = owStoreMapInfo;
 		this.owStoreWorkingTime = owStoreWorkingTime;
 		this.detailInfo = detailInfo;
+		this.storeEnrollRqState = storeEnrollRqState;
 	}
-	
-	
+
+	public YNMStoreDetailInfo getDetailInfo() {
+		return detailInfo;
+	}
+
+	public void setDetailInfo(YNMStoreDetailInfo detailInfo) {
+		this.detailInfo = detailInfo;
+	}
+
+	public int getStoreEnrollRqState() {
+		return storeEnrollRqState;
+	}
+
+
+
+
+
+
+	public void setStoreEnrollRqState(int storeEnrollRqState) {
+		this.storeEnrollRqState = storeEnrollRqState;
+	}
+
+
+
+
 
 
 	@Override

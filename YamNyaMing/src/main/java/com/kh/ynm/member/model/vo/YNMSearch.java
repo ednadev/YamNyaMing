@@ -105,10 +105,7 @@ public class YNMSearch {
 			}
 			
 		}
-		System.out.println(sb.toString());
-		this.owPhotoRoute = sb.toString(); //resources/image/member/main/alcohol-hover.jpg
-		
-		
+		this.owPhotoRoute = sb.toString();
 	}
 	public String getOwStoreComment() {
 		return owStoreComment;

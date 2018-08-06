@@ -48,8 +48,8 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 
 	}
 	//내정보 확인
-	public YNMMember selectOneMember2(YNMMember vo) {
-		YNMMember ym=memberDAO.selectOneMember2(sqlSession,vo);
+	public YNMMember selectOneMember2(int memberEntireNo) {
+		YNMMember ym=memberDAO.selectOneMember2(sqlSession,memberEntireNo);
 		return ym;
 
 	}
@@ -271,6 +271,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMSearch> storeImg = memberDAO.detailPageImg(sqlSession, vo);
 		return storeImg;
 	}
+	public ArrayList<YNMSearch> detailPageMenu(YNMSearch vo) {
+		ArrayList<YNMSearch> menuImg = memberDAO.detailPageMenu(sqlSession,vo);
+		return menuImg;
+	}	
+	
 	//팔로우 목록 확인
 	public ArrayList<YNMFollow> followInfo(int memberNo) {
 		ArrayList<YNMFollow> fList=memberDAO.followInfo(sqlSession,memberNo);
@@ -340,10 +345,40 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		int result=memberDAO.reservationTotal(sqlSession,memberEntireNo);
 		return result;
 	}
+	//찜 목록
 	public ArrayList<YNMFavorite> favoriteList(int memberEntireNo) {
 		ArrayList<YNMFavorite> list=memberDAO.favoriteList(sqlSession,memberEntireNo);
 		return list;
 	}
+	//사용자 팔로잉 목록
+	public YNMMember memberFollowing(int followMemberIdNo) {
+		YNMMember list=memberDAO.memberFollowing(sqlSession,followMemberIdNo);
+		return list;
+	}
+	//사용자 팔로워 확인
+	public ArrayList<YNMFollow> followerInfo(int memberEntireNo) {
+		ArrayList<YNMFollow> fList=memberDAO.followerInfo(sqlSession,memberEntireNo);
+		return fList;
+	}
+	//내가 쓴 리뷰 목록
+	public ArrayList<YNMStoreReview> myInfoReviewCheck(int memberEntireNo) {
+		ArrayList<YNMStoreReview> ysrList=memberDAO.myInfoReviewCheck(sqlSession,memberEntireNo);
+		return ysrList;
+	}
+	
+	//닉네임 변경
+	public int nickNameUpdateMember(YNMMember ym) {
+		int result=memberDAO.nickNameUpdateMember(sqlSession,ym);
+		return result;
+	}
+	
+	//리뷰 상세히 보기
+	public YNMStoreReview reviewDetail(String parameter) {
+		YNMStoreReview ysr=memberDAO.reviewDetail(sqlSession,parameter);
+		return ysr;
+	}
+
+
 
 
 }

@@ -32,4 +32,11 @@
   		delete from owner_store_photo_tb
   		where OW_STORE_PHOTO_PK = #{owStorePhotoPk}
   	</delete>
+  	
+ 	<select id="selectOwnerPhoto"  parameterType="owUploadPhoto" resultType="owUploadPhoto">
+  		select 
+        OW_PHOTO_ROUTE||'\'||OW_REMAKE_NAME	as owPhotoViewRoute
+	    from owner_store_photo_tb
+		where OW_REMAKE_NAME = #{remakeName}
+  	</select>
 </mapper>
