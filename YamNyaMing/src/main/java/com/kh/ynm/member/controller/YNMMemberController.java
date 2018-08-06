@@ -50,8 +50,7 @@ public interface YNMMemberController {
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
 	public String reviewDetail(HttpServletRequest request, HttpSession session);
 	//대댓글 table
-	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			YNMStoreUnderReview ysur);
+	public 	String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//좋아요 table
 	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//찜하기 table
@@ -60,6 +59,7 @@ public interface YNMMemberController {
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//즐겨찾기 table
 	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
 
 
 

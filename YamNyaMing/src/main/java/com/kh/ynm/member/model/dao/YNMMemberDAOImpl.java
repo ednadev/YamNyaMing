@@ -283,9 +283,8 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMMember>)list;
 	}
 
-	public ArrayList<YNMSearch> starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
-		List list=sqlSession.selectList("review.starAvg",owStoreInfoPk);
-		return (ArrayList<YNMSearch>)list;
+	public YNMSearch starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
+		return sqlSession.selectOne("review.starAvg",owStoreInfoPk);
 	}
 
 	public int favoriteChk(SqlSessionTemplate sqlSession, YNMFavorite yf) {
@@ -338,6 +337,11 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public YNMStoreReview reviewDetail(SqlSessionTemplate sqlSession, String parameter) {
 		return sqlSession.selectOne("review.reviewDetail",parameter);
+	}
+
+	public ArrayList<YNMStoreUnderReview> underReview(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		List list=sqlSession.selectList("underReview.underReviewAll",storeReviewNo);
+		return (ArrayList<YNMStoreUnderReview>)list;
 	}	
 
 }

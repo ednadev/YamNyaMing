@@ -353,14 +353,41 @@ $(document).ready(function(){
 		    <button class="tablink" onclick="openTab(event,'Setting')">설정</button>
 		</div>
 		<div id="Reservation" class="tabInfo">	
-			<h3>방문 예정 예약</h3>
-			<h3>지나간 예약</h3>	
+			<div class="tab-reservation">
+				<button class="tablink-reservation click" onclick="openReservationTab(event,'visitedReservation')">방문 예정 예약</button>
+				<button class="tablink-reservation" onclick="openReservationTab(event,'goneReservation')">지나간 예약</button>
+			</div>
+			<div id="visitedReservation" class="tabInfo-reservation">
+				방문 예정 예약
+			</div>
+			<div id="goneReservation" class="tabInfo-reservation">
+				지나간 예약
+			</div>
 		</div>
 		<div id="Coupon" class="tabInfo" style="display:none;">			
-			<h3>사용 예정 티켓</h3>
-			<h3>이미 사용한 티켓</h3>	
+			<div class="tab-coupon">
+				<button class="tablink-coupon click" onclick="openCouponTab(event,'usedCoupon')">사용 예정 쿠폰</button>
+				<button class="tablink-coupon" onclick="openCouponTab(event,'goneCoupon')">이미 사용한 쿠폰</button>
+			</div>
+			<div id="usedCoupon" class="tabInfo-coupon">
+				사용 예정 쿠폰
+			</div>
+			<div id="goneCoupon" class="tabInfo-coupon">
+				이미 사용한 쿠폰
+			</div>
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">	
+		
+			<div class="tab-review">
+				<button class="tablink-review click" onclick="openReviewTab(event,'writeReview')">내가 쓴 리뷰</button>
+				<button class="tablink-review" onclick="openReviewTab(event,'jjimReview')">찜한 리뷰</button>
+			</div>
+			<div id="writeReview" class="tabInfo-review">
+				내가 쓴 리뷰
+			</div>
+			<div id="jjimReview" class="tabInfo-review">
+				찜한 리뷰
+			</div>			
 	
 			<c:forEach items="${review}" var="r">
 			<c:if test="${r.memberEntireNo eq sessionScope.member.memberEntireNo}">

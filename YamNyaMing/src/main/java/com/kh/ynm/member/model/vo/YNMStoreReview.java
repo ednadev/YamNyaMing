@@ -25,11 +25,19 @@ public class YNMStoreReview {
 	private ArrayList<YNMFollow> followList=new ArrayList<YNMFollow>();
 	private ArrayList<YNMMemberUploadPhoto> photoObjList = new ArrayList<YNMMemberUploadPhoto>();
 	private ArrayList<YNMMember> memberLikeInfo=new ArrayList<YNMMember>();
+	private ArrayList<YNMStoreUnderReview> ysurList=new ArrayList<YNMStoreUnderReview>();
 	private int myLikeChk = 0;
 	private int myJjimChk = 0;
 	private int myfollowChk = 0;
 	
 	
+
+	public ArrayList<YNMStoreUnderReview> getYsurList() {
+		return ysurList;
+	}
+	public void setYsurList(ArrayList<YNMStoreUnderReview> ysurList) {
+		this.ysurList = ysurList;
+	}
 	public int getMyfollowChk() {
 		return myfollowChk;
 	}

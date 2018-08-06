@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.common.controller.CommonControllerImpl;
+import com.kh.ynm.common.model.vo.YNMTotalRefModel;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 
@@ -645,6 +647,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ArrayList<YNMStoreReview> ysrList=new ArrayList<YNMStoreReview>();
 		YNMStoreReview ysr=new YNMStoreReview();
 		YNMFollow yf=new YNMFollow();
+
 		if(request.getParameter("owStoreInfoPk")!=null) {
 		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("owStoreInfoPk"));
 		ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
@@ -764,7 +767,13 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				}
 			}
 		}
-
+		
+		if(ysrList.size()>0) {
+		for(int i=0; i<ysrList.size();i++) {
+			ArrayList<YNMStoreUnderReview> ysurList=ynmMemberServiceImpl.underReview(ysrList.get(i).getStoreReviewNo());
+				ysrList.get(i).setYsurList(ysurList);
+		}	
+		}
 
 		ModelAndView view=new ModelAndView();
 		if(!ysrList.isEmpty()) {
@@ -785,9 +794,21 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	//리뷰 대댓글 작성
 	@Override
 	@RequestMapping(value="/storeUnderReviewInsert.do")
-	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
+		int memberEntireNo=Integer.parseInt(request.getParameter("memberEntireNo"));
+		String underReviewContent=request.getParameter("underReviewContent");
+		
+		YNMStoreUnderReview ysur=new YNMStoreUnderReview();
+		
 		int result=ynmMemberServiceImpl.storeUnderReviewInsert(ysur);
-		return null;
+		if(result>0) {
+			String chk="1";
+			return chk;
+		}else {
+			String chk="0";
+			return chk;
+		}
 	}
 	//좋아요 
 	@Override
@@ -947,7 +968,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		String [] owBudget = request.getParameterValues("owBudget");
 		String [] owSubInfo = request.getParameterValues("owSubInfo");
 		String [] owDrinkListInfo = request.getParameterValues("owDrinkListInfo");
-
 		
 		YNMSearchPaging check = new YNMSearchPaging();
 
@@ -955,42 +975,27 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setFood(food);
 		check.setPlace(place);
 		
-		System.out.println("Controller" + storeCateDetailName!=null);
-		
 		if(storeCateDetailName!=null) {
+			List<String> list = Arrays.asList(storeCateDetailName);
+					
 			ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
-			for(int i = 0; i<storeCateDetailName.length;i++)
-			{
-				storeCateDetailNameList.add(storeCateDetailName[i]);
+			for (String data : list) {
+				storeCateDetailNameList.add(data);
 			}
 			check.setStoreCateDetailName(storeCateDetailNameList);
-			System.out.println("Controller" + storeCateDetailName.length);
 		}
 		if(owBudget!=null) {
 			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
-			for(int i = 0; i<owBudget.length;i++)
-			{
-				owBudgetList.add(owBudget[i]);
-			}
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
 			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
-			for(int i = 0; i<owSubInfo.length;i++)
-			{
-				owSubInfoList.add(owSubInfo[i]);
-			}
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
 			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
-			for(int i = 0; i<owDrinkListInfo.length;i++)
-			{
-				owDrinkListInfoList.add(owDrinkListInfo[i]);
-			}
 			check.setOwDrinkListInfo(owDrinkListInfoList);
 		}
-		
 		
 
 		int currentPage;
@@ -1005,20 +1010,16 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-		int starNum=0;
-		float starAvg=0;
+
 		if(qpd!=null) {
 			if(qpd.getNoticelist().size()>0) {
 				for(int i=0; i<qpd.getNoticelist().size(); i++){
-					ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-					for(int j=0; j<ys.size(); j++) {
-					starNum+=ys.get(j).getStarPoint();
-					starAvg=(float)starNum/ys.size();
+					YNMSearch ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
+					if(ys!=null) {
+						qpd.getNoticelist().get(i).setStarAvg(ys.getStarAvg());
 					}
-					qpd.getNoticelist().get(0).setStarAvg(starAvg);
 				}
 			}
-		
 		//search page 가게 찜여부 확인
 		for(int i=0; i<qpd.getNoticelist().size(); i++) {
 		int memberEntireNo=0;
@@ -1110,7 +1111,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reservation.do")
 	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
 		YNMSearch vo = new YNMSearch();
-		System.out.println(request.getParameter("owStoreInfoPk"));
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch reservation = ynmMemberServiceImpl.detailPage(vo);
 
@@ -1124,9 +1124,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}   
 	//좋아요한 사람들 
 	@ResponseBody
-
 	@RequestMapping(value="/likeTotalMemberInfo.do")
-	public String likeTotalMemberInfo(HttpServletRequest request, HttpServletResponse response) {
+	public JSONArray likeTotalMemberInfo(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session=request.getSession(false);
 		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
 		ArrayList<YNMMember> likeMemberList=ynmMemberServiceImpl.likeTotalMemberInfo(storeReviewNo);
@@ -1150,20 +1149,34 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					}
 				}
 		}
+		JSONArray objArr = new JSONArray();
+		for(int i = 0; i<likeMemberList.size();i++) {
+			YNMMember ym = likeMemberList.get(i);
+			JSONObject obj = new JSONObject();
 			
-			String str = "";
-
-	        ObjectMapper mapper = new ObjectMapper();
-	        try {
-	            str = mapper.writeValueAsString(likeMemberList);
-	        } catch (Exception e) {
-	            System.out.println("first() mapper   ::    " + e.getMessage());
-	        }
-		if(!likeMemberList.isEmpty()) {
-				
-			return str;
+			obj.put("memberEntireNo", ym.getMemberEntireNo());
+			obj.put("memberNickName", ym.getMemberNickName());
+			obj.put("followTotal", ym.getFollowTotal());
+			obj.put("reviewTotal",ym.getReviewTotal());
+			obj.put("photoViewRoute",ym.getPhotoViewRoute());
+			obj.put("followChk", ym.getFollowChk());
+			obj.put("memberUploadPhotoNo",ym.getMemberUploadPhotoNo());
+			objArr.add(obj);
 		}
-		return str;
+//		
+//			String str = "";
+//
+//	        ObjectMapper mapper = new ObjectMapper();
+//	        try {
+//	            str = mapper.writeValueAsString(likeMemberList);
+//	        } catch (Exception e) {
+//	            System.out.println("first() mapper   ::    " + e.getMessage());
+//	        }
+//		if(!likeMemberList.isEmpty()) {
+//				
+//			return str;
+//		}
+		return objArr;
 	}  
 	
 	//예약하기 삽입

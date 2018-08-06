@@ -9,9 +9,28 @@ public class YNMStoreUnderReview {
 	private String underReviewContent;
 	private Date underReviewDate;
 	private char reviewState;
-	
-	
-	
+	private String memberUploadPhotoNo;
+	private String photoViewRoute;
+	private String memberNickName;
+
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
+	}
+	public String getMemberUploadPhotoNo() {
+		return memberUploadPhotoNo;
+	}
+	public void setMemberUploadPhotoNo(String memberUploadPhotoNo) {
+		this.memberUploadPhotoNo = memberUploadPhotoNo;
+	}
+	public String getPhotoViewRoute() {
+		return photoViewRoute;
+	}
+	public void setPhotoViewRoute(String photoViewRoute) {
+		this.photoViewRoute = photoViewRoute;
+	}
 	public YNMStoreUnderReview() {
 		super();
 	}
