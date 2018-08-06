@@ -743,4 +743,5 @@ $(document).ready(function(){
 	<a href="/enrollOwner.do">점장 가입하기</a>
 </footer>
 </body>
+
 </html>

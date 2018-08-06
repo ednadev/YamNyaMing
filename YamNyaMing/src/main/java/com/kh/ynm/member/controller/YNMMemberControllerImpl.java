@@ -1,6 +1,7 @@
 package com.kh.ynm.member.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.HashMap;
@@ -952,11 +953,24 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setKeyword(keyword);
 		check.setFood(food);
 		check.setPlace(place);
-		check.setStoreCateDetailName(storeCateDetailName);
-		check.setOwBudget(owBudget);
-		check.setOwSubInfo(owSubInfo);
-		check.setOwDrinkListInfo(owDrinkListInfo);
-
+		
+		if(storeCateDetailName!=null) {
+			ArrayList<String> StoreCateDetailNameList = new ArrayList<>(Arrays.asList(storeCateDetailName));
+			check.setStoreCateDetailName(StoreCateDetailNameList);
+		}
+		if(owBudget!=null) {
+			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
+			check.setOwBudget(owBudgetList);
+		}
+		if(owSubInfo!=null) {
+			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
+			check.setOwSubInfo(owSubInfoList);
+		}
+		if(owDrinkListInfo!=null) {
+			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
+			check.setOwDrinkListInfo(owDrinkListInfoList);
+		}
+		
 
 		int currentPage;
 
@@ -1014,13 +1028,19 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			resultMap.put(index, result);
 			index++;
 		}
-		
+			view.addObject("storeCateDetailName",storeCateDetailName);
+			view.addObject("owBudget",owBudget);
+			view.addObject("owSubInfo",owSubInfo);
+			view.addObject("owDrinkListInfo",owDrinkListInfo);
 			view.addObject("resultMap",resultMap);
 			view.addObject("search",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}else {
 			view.addObject("storeCateDetailName",storeCateDetailName);
+			view.addObject("owBudget",owBudget);
+			view.addObject("owSubInfo",owSubInfo);
+			view.addObject("owDrinkListInfo",owDrinkListInfo);
 			view.setViewName("ynmMember/searchZero");
 			return view;
 		}
@@ -1033,7 +1053,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
+		ArrayList<YNMSearch> menuImg = ynmMemberServiceImpl.detailPageMenu(vo);
 		int size=storeImg.size();
+		int menuSize = menuImg.size();
 		int memberEntireNo=0;
 		//로그인한 사용자 찜 여부 확인
 		HttpSession session=request.getSession(false);
@@ -1054,6 +1076,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			view.addObject("store", store);
 			view.addObject("size", size);
 			view.addObject("storeImg", storeImg);
+			view.addObject("menuImg",menuImg);
+			view.addObject("menuSize",menuSize);
 			view.setViewName("ynmMember/detailPage");
 			return view;
 		}else {

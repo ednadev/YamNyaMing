@@ -88,7 +88,11 @@ public class StoreTitleData {
 		for(int i = 0; i<arrTest1.length;i++)
 		{
 			if(arrTest1[i].equals("resources")) chk = true;
-			if(chk) sb.append("\\"+arrTest1[i]);  
+			if(chk) {
+				if(!arrTest1[i].equals("resources"))sb.append("/"+arrTest1[i]);
+				else sb.append(arrTest1[i]);
+			}
+			
 		}
 		this.owPhotoViewRoute = sb.toString();
 	}

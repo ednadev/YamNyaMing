@@ -8,7 +8,7 @@
 <title>얌냐밍-가게 관리</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
@@ -45,7 +45,8 @@
 			<c:if test="${storeTitleInfo!=null}">
 				<c:forEach var="storeList" items="${storeTitleInfo}">
 					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
-					<form action="/storeInfoPage.do" method="post">
+					<form action="/storeInfoPage.do" method="post" class="main-card">
+						<input type="submit" value="${storeList.owStoreName}">
 						<jsp:include page="storeTitleInfo.jsp">
 							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
 						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
@@ -56,7 +57,7 @@
 						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
 						</jsp:include>
 						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
-						<input type="submit" value="가게 정보 확인하기">
+						
 					</form>
 				</c:forEach>
 			</c:if>
@@ -64,44 +65,11 @@
 			<c:if test="${storeTitleInfo==null}">
 				등록된 가게가 없습니다.
 			</c:if>
-			<hr style="clear:both;">
-			페이징
-			<c:if test="${pageNaviData!=null}">
-				<div id="pagingNumber">
-					<c:if test="${pageNaviData.startNavi!=1}">
-						<form action="/couponManage.do" method="post">
-							<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
-							<input type="submit" class="paging-num" value="<">
-						</form>
-					</c:if>
-					<c:forEach var="i" begin="${pageNaviData.startNavi}"
-						end="${pageNaviData.endNavi}">
-						<c:if test="${pageNaviData.currentPage==i}">
-							<form action="/couponManage.do" method="post">
-								<input type="hidden" name="currentPage" value="${i}"> 
-								<input type="submit" class="paging-num-select" value="${i}">
-							</form>
-						</c:if>
-						<c:if test="${pageNaviData.currentPage!=i}">
-							<form action="/couponManage.do" method="post">
-								<input type="hidden" name="currentPage" value="${i}"> 
-								<input type="submit" class="paging-num" value="${i}">
-							</form>
-						</c:if>
-					</c:forEach>
-					<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-						<form action="/couponManage.do" method="post">
-							<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
-							<input type="submit"  class="paging-num"  value=">">
-						</form>
-					</c:if>
-				</div>
-			</c:if>
-		</div>
-		<hr style="clear:both;">
-		가게 정보 타입
+
+
+		<h2>가게 정보</h2>
 		<div>
-			 <form action="/storePageTypeLoad.do" method="post">
+			 <form action="/storePageTypeLoad.do" method="post" class="store-form">
 				<!-- 현재 선택된  -->
 				<input type="submit" name="storeTapType" value="정보">
 				<input type="submit" name="storeTapType" value="포토">
@@ -111,61 +79,59 @@
 			</form>
 		</div>
 		
-		<hr style="clear:both;">
-		가게 상세 정보
+		<hr style="clear:both;margin-bottom:10px;">
+
 		
 		<div class="store-info-div" style="display:block;">
 			<form action="/storeInfoEdit.do" method="post">
-			
-				<h3>위에 정보</h3>
 				
 				<!-- name은 바꾸면 안됨 -->
 				
-				가게 이름 :<p id="owStorePId" style="display:inline;"> ${storeInfoPageData.owStoreName}</p>
+				<span>가게 이름 :</span><p id="owStorePId" style="display:inline;"> ${storeInfoPageData.owStoreName}</p>
 				<input type="text" style="display:none;" id="owStoreNameEditBtn" name="owStoreName" value="${storeInfoPageData.owStoreName}">
-				<button type="button" onclick="editShow(owStorePId,owStoreNameEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStorePId,owStoreNameEditBtn);">수정</button>
 				<br>
 				
-				별점 : ${storeInfoPageData.storeStarPoint} <br>
+				<span>별점 : </span>${storeInfoPageData.storeStarPoint} <br>
 				
-				전화번호 :  <p id="owStoreTelPId" style="display:inline;">${storeInfoPageData.owStoreTel}</p>
+				<span>전화번호 :</span>  <p id="owStoreTelPId" style="display:inline;">${storeInfoPageData.owStoreTel}</p>
 				<input type="text" style="display:none;" id="owStoreTelEditBtn" name="owStoreTel" value="${storeInfoPageData.owStoreTel}">
-				<button type="button" onclick="editShow(owStoreTelPId,owStoreTelEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreTelPId,owStoreTelEditBtn);">수정</button>
 				<br>
 				
-				주소 :  <p id="owStoreAddrPId" style="display:inline;">${storeInfoPageData.owStoreAddr}</p> 
+				<span>주소 :</span>  <p id="owStoreAddrPId" style="display:inline;">${storeInfoPageData.owStoreAddr}</p> 
 				<input type="text" style="display:none;" id="owStoreAddrEditBtn" name="owStoreAddr" value="${storeInfoPageData.owStoreAddr}">
-				<button type="button" onclick="editShow(owStoreAddrPId,owStoreAddrEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreAddrPId,owStoreAddrEditBtn);">수정</button>
 				<br>
 				
-				사이트 주소 : <p id="owStoreUrlPId" style="display:inline;">${storeInfoPageData.owStoreUrl}</p> 
+				<span>웹사이트 : </span><p id="owStoreUrlPId" style="display:inline;">${storeInfoPageData.owStoreUrl}</p> 
 				<input type="text" style="display:none;" id="owStoreUrlEditBtn" name="owStoreUrl" value="${storeInfoPageData.owStoreUrl}">
-				<button type="button" onclick="editShow(owStoreUrlPId,owStoreUrlEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreUrlPId,owStoreUrlEditBtn);">수정</button>
 				<br>
 				
-				영업시간 :  <p id="owStoreWorkingPId" style="display:inline;">${storeInfoPageData.owStoreWorkingTime}</p>
+				<span>영업시간 :</span>  <p id="owStoreWorkingPId" style="display:inline;">${storeInfoPageData.owStoreWorkingTime}</p>
 				<input type="text" style="display:none;" id="owStoreWorkingEditBtn" name="owStoreWorkingTime" value="${storeInfoPageData.owStoreWorkingTime}">
-				<button type="button" onclick="editShow(owStoreWorkingPId,owStoreWorkingEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreWorkingPId,owStoreWorkingEditBtn);">수정</button>
 				<br>
 				
-				예산 :   <p id="owStoreBudgetPId" style="display:inline;">${storeInfoPageData.budgetInfo}</p>
+				<span>예산 :</span>   <p id="owStoreBudgetPId" style="display:inline;">${storeInfoPageData.budgetInfo}</p>
 				<input type="text" style="display:none;" id="owStoreBudgetEditBtn" name="budgetInfo" value="${storeInfoPageData.budgetInfo}">
-				<button type="button" onclick="editShow(owStoreBudgetPId,owStoreBudgetEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreBudgetPId,owStoreBudgetEditBtn);">수정</button>
 				<br>
 				
-				<h3>아래쪽 탭 정보</h3>
+				<br>
 				
-				한줄설명 : <p id="owStoreCommentPId" style="display:inline;">${storeInfoPageData.owStoreLineComment}</p>
+				<span>한줄설명 : </span><p id="owStoreCommentPId" style="display:inline;">${storeInfoPageData.owStoreLineComment}</p>
 				<input type="text" style="display:none;" id="owStoreCommentEditBtn" name="owStoreLineComment" value="${storeInfoPageData.owStoreLineComment}">
-				<button type="button" onclick="editShow(owStoreCommentPId,owStoreCommentEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreCommentPId,owStoreCommentEditBtn);">수정</button>
 				<br>
 				
-				팁 :  <p id="owStoreTipPId" style="display:inline;">${storeInfoPageData.owStoreTip}</p>
+				<span>팁 : </span> <p id="owStoreTipPId" style="display:inline;">${storeInfoPageData.owStoreTip}</p>
 				<input type="text" style="display:none;" id="owStoreTipEditBtn" name="owStoreTip" value="${storeInfoPageData.owStoreTip}">
-				<button type="button" onclick="editShow(owStoreTipPId,owStoreTipEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreTipPId,owStoreTipEditBtn);">수정</button>
 				<br>
 				
-				음식 종류 : <p id="owStoreTypePId" style="display:inline;">${storeInfoPageData.owBigTypeFk}/${storeInfoPageData.owSmallTypeFk}</p>
+				<span>음식 종류 : </span><p id="owStoreTypePId" style="display:inline;">${storeInfoPageData.owBigTypeFk}/${storeInfoPageData.owSmallTypeFk}</p>
 					<div id="owStoreTypeEditSelect" style="display:none;">
 						<select name="owBigTypeFk" id="firstSelect" onchange="changeSelect()">
 							<option>대분류</option>
@@ -174,29 +140,29 @@
 							<option>소분류</option>
 						</select>
 					</div>
-				<button type="button" onclick="editShow(owStoreTypePId,owStoreTypeEditSelect);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreTypePId,owStoreTypeEditSelect);">수정</button>
 				<br>
 				
-				추천메뉴 : <p id="owStoreRecommandPId" style="display:inline;">${storeInfoPageData.recommandMenu}</p>
+				<span>추천메뉴 :</span> <p id="owStoreRecommandPId" style="display:inline;">${storeInfoPageData.recommandMenu}</p>
 				<input type="text" style="display:none;" id="owStoreRecommandEditBtn" name="recommandMenu" value="${storeInfoPageData.recommandMenu}">
-				<button type="button" onclick="editShow(owStoreRecommandPId,owStoreRecommandEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreRecommandPId,owStoreRecommandEditBtn);">수정</button>
 				<br>
 				
-				테이블 : <p id="owStoreTablePId" style="display:inline;">${storeInfoPageData.storeTableInfo}</p>
+				<span>테이블 : </span><p id="owStoreTablePId" style="display:inline;">${storeInfoPageData.storeTableInfo}</p>
 				<input type="text" style="display:none;" id="owStoreTableEditBtn" name="storeTableInfo" value="${storeInfoPageData.owStoreLineComment}">
-				<button type="button" onclick="editShow(owStoreTablePId,owStoreTableEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreTablePId,owStoreTableEditBtn);">수정</button>
 				<br>
 				
-				부가정보 : <p id="owStoreSubInfoPId" style="display:inline;">${storeInfoPageData.owSubInfo}</p>
+				<span>부가정보 :</span> <p id="owStoreSubInfoPId" style="display:inline;">${storeInfoPageData.owSubInfo}</p>
 				<input type="text" style="display:none;" id="owStoreSubInfoEditBtn" name="owSubInfo" value="${storeInfoPageData.owStoreLineComment}">
-				<button type="button" onclick="editShow(owStoreSubInfoPId,owStoreSubInfoEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreSubInfoPId,owStoreSubInfoEditBtn);">수정</button>
 				<br>
 				
-				판매주류 : <p id="owStoreDrinkInfoPId" style="display:inline;">${storeInfoPageData.owDrinkListInfo}</p>
+				<span>판매주류 :</span> <p id="owStoreDrinkInfoPId" style="display:inline;">${storeInfoPageData.owDrinkListInfo}</p>
 				<input type="text" style="display:none;" id="owStoreDrinkInfoEditBtn" name="owDrinkListInfo" value="${storeInfoPageData.owStoreLineComment}">
-				<button type="button" onclick="editShow(owStoreDrinkInfoPId,owStoreDrinkInfoEditBtn);">수정버튼</button>
+				<button type="button" onclick="editShow(owStoreDrinkInfoPId,owStoreDrinkInfoEditBtn);">수정</button>
 				<br>
-				최근 예약 히스토리 : <br>		
+				<span>최근 예약 히스토리 : </span><br>		
 				<input type="submit" value="가게 정보 업데이트">
 			</form>
 		</div>
@@ -211,7 +177,7 @@
 					<input type="hidden" id="${headPhoto.owStorePhotoPk}_headList" value="${headPhoto.headStoreList}">
 					<img src="${headPhoto.owPhotoViewRoute}" id="${headPhoto.owStorePhotoPk}"
 					onclick='deleteHeadPhoto(${headPhoto.owStorePhotoPk});' 
-					style="width:200px; height:200px;" />
+					style="width:200px; height:200px;margin-left:15px;" />
 				</c:forEach>
 			</c:if>
 			<c:if test="${headPhotoList==null}">
@@ -228,7 +194,7 @@
 						</div>
 					</div>
 					<img id="output"/>
-					<p>업체를 대표하는 이미지를 추가해주세요.</p>
+					<p style="font-size:0.9em;font-weight:bold;">업체를 대표하는 이미지를 추가해주세요.</p>
 				</div>
 				<input type="submit" value="대표사진 등록">
 			</form>

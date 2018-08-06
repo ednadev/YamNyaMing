@@ -6,6 +6,7 @@
 	background-color:rgba(0,0,0,0.8);
 	padding:20px;
 	overflow:hidden;
+	clear:both;
 }
 #member-main-footer>div{
 	float:left;
@@ -173,8 +174,15 @@
 	margin-top:15px;
 	
 }
+#member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail>img{
+	width:350px;
+	height:273px;
+	margin:24px;
+	float:right;
+}
 #member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail>table{
 	margin-top:10px;
+	float:left;
 }
 #member-detail-section>div:nth-child(2)>.member-detail-wrapper>.main-detail>table>tbody>tr>th{
 	color:white;
@@ -334,36 +342,37 @@
 
 /* 포토 */
 .member-detail-page-wrapper>#Photo>.container{
-	position:relative;
+	margin-top:20px;
 }
-.member-detail-page-wrapper>#Photo>.container>.prev{
-	position:relative;
-	top:220px;
-	left:33px;
-	font-size:1.5em;
-	color:#555;
-	cursor:pointer;
-}
-.member-detail-page-wrapper>#Photo>.container>.mySlidesPhoto>img{
-	width:800px;
-	height:450px;
-	margin:0 auto;
-}
+.member-detail-page-wrapper>#Photo>.container>.prev,
 .member-detail-page-wrapper>#Photo>.container>.next{
-	position:relative;
+	float:left;
+	margin:20px;
+	line-height:680px;
 	font-size:1.5em;
+	font-weight:bold;
 	color:#555;
-	bottom:262px;
-	left:909px;
 	cursor:pointer;
+}
+.member-detail-page-wrapper>#Photo>.container>.mySlidesPhoto{
+	width:854px;
+	height:680px;
+	background-size:cover;
+	background-poisition:center;
+	float:left;
 }
 .member-detail-page-wrapper>#Photo>.container>.row{
+	clear:both;
+	margin-bottom:30px;
 	overflow:hidden;
 }
-.member-detail-page-wrapper>#Photo>.container>.row>.column>img{
-	width:150px;
-	height:110px;
+.member-detail-page-wrapper>#Photo>.container>.row>.demo{
 	float:left;
+	width:238px;
+	height:120px;
+	background-size:cover;
+	background-position:center;
+	margin:1px;
 }
 
 /* 리뷰 */
@@ -423,6 +432,7 @@
 	font-size:1em;
 	font-weight:bold;
 	cursor:pointer;
+	margin-bottom:20px;
 }
 .member-detail-page-wrapper>#Review>h4:nth-child(2){
 	margin:20px 20px 10px 0px;
@@ -565,9 +575,7 @@
 	background-image:url('../../image/member/search/sharing-white.png');
 }
 .member-detail-page-wrapper>#Review>div>div:nth-child(3){
-	padding-top:20px;
-	position:relative;
-	padding-left:20px;
+	overflow:hidden;
 }
 .member-detail-page-wrapper>#Review>div>div:nth-child(3)>div{
 	width:50px;
@@ -575,16 +583,42 @@
 	background-color:gray;
 	border-radius:50%;
 	display:inline-block;
+	float:left;
+	margin-top:20px;
 }
-.member-detail-page-wrapper>#Review>div>div:nth-child(3)>input{
-	position:relative;
-	bottom:20px;
-	left:5px;
+.member-detail-page-wrapper>#Review>div>div:nth-child(3)>form{
+	float:left;
+}
+.member-detail-page-wrapper>#Review>div>div:nth-child(3)>form>input[type="text"]{
 	padding:10px;
-	width:795px;
+	width:785px;
 	border-radius:7px;
 	border:1px solid #ddd;
 	color:black;
+	margin-left:10px;
+	margin-top:27px;
+}
+.member-detail-page-wrapper>#Review>div>div:nth-child(3)>form>input[type="submit"]{
+	padding:10px;
+	border-radius:7px;
+	border:none;
+	color:white;
+	background-color:#555;
+	cursor:pointer;
+}
+
+
+/* 메뉴 */
+.member-detail-page-wrapper>#Menu{
+	margin:20px;
+	overflow:hidden;
+}
+.member-detail-page-wrapper>#Menu>.menu-photo{
+	float:left;
+	width:300px;
+	height:340px;
+	background-size:cover;
+	background-position:center;
 }
 
 /* 지도  */

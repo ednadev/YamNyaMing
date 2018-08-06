@@ -6,6 +6,7 @@
 	background-color:rgba(0,0,0,0.8);
 	padding:20px;
 	overflow:hidden;
+	clear:both;
 }
 #member-main-footer>div{
 	float:left;
@@ -115,6 +116,9 @@
 	display:flex;
 	justify:center;
 }
+#member-myinfo-section>div:nth-child(2)>.member-myinfo-wrapper>form>label{
+	display:block;
+}
 #member-myinfo-section>div:nth-child(2)>.member-myinfo-wrapper>form>label>#img{
 	width:180px;
 	height:180px;
@@ -123,6 +127,15 @@
 }
 #member-myinfo-section>div:nth-child(2)>.member-myinfo-wrapper>form>input[type="file"]{
 	display:none;
+}
+#member-myinfo-section>div:nth-child(2)>.member-myinfo-wrapper>form>input[type="submit"]{
+	margin-left:55px;
+	border:1px solid #eee;
+	background-color:rgba(0,0,0,0);
+	color:white;
+	margin-top:8px;
+	padding:5px 20px;
+	cursor:pointer;
 }
 #member-myinfo-section>div:nth-child(2)>.member-myinfo-wrapper>div{
 	display:flex;
@@ -358,6 +371,72 @@
 	float:right;
 	margin-top:10px;
 	margin-bottom:20px;
+}
+
+/* 예약 : 방문 예정 예약, 지나간 예약 */
+.member-myinfo-page-wrapper>#Reservation>.tab-reservation{
+	float:right;
+	margin-top:20px;
+	overflow:hidden;
+}
+.member-myinfo-page-wrapper>#Reservation>.tab-reservation>button{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-weight:bold;
+	font-size:1em;
+	cursor:pointer;
+}
+.member-myinfo-page-wrapper>#Reservation>.tab-reservation>.click{
+	color:#fb0;
+	
+}
+.member-myinfo-page-wrapper>#Reservation>.tabInfo-reservation{
+	clear:both;
+}
+
+/* 쿠폰 */
+.member-myinfo-page-wrapper>#Coupon>.tab-coupon{
+	float:right;
+	margin-top:20px;
+	overflow:hidden;
+}
+.member-myinfo-page-wrapper>#Coupon>.tab-coupon>button{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-weight:bold;
+	font-size:1em;
+	cursor:pointer;
+}
+.member-myinfo-page-wrapper>#Coupon>.tab-coupon>.click{
+	color:#fb0;
+	
+}
+.member-myinfo-page-wrapper>#Coupon>.tabInfo-coupon{
+	clear:both;
+}
+
+/* 리뷰  */
+.member-myinfo-page-wrapper>#Review>.tab-review{
+	float:right;
+	margin-top:20px;
+	overflow:hidden;
+}
+.member-myinfo-page-wrapper>#Review>.tab-review>button{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-weight:bold;
+	font-size:1em;
+	cursor:pointer;
+}
+.member-myinfo-page-wrapper>#Review>.tab-review>.click{
+	color:#fb0;
+	
+}
+.member-myinfo-page-wrapper>#Review>.tabInfo-review{
+	clear:both;
 }
 
 /* 찜한 매장 */

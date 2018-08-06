@@ -15,7 +15,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=6"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=6"></script>
 </head>
 <script>
 function openmodal(storeReviewNo){
@@ -224,7 +224,7 @@ function openImagemodal(storeReviewNo){
 
 </header>
 <section id="member-detail-section">
-	<div id="main" style="background-image:url(${pageContext.request.contextPath}/resources/${store.owStoreHeadPhoto});"></div>
+	<div id="main" style="background-image:url('${pageContext.request.contextPath}/${store.owPhotoRoute}')"></div>
 	<div>
 		<div class="member-detail-wrapper">
 			<h3>${store.owStoreName}</h3>
@@ -297,30 +297,7 @@ function openImagemodal(storeReviewNo){
 					</tr>																													
 					</tbody>
 				</table>
-				<button onclick="plusDivs(-1)">&lt;</button>
-				<div>
-				<c:forEach items="${storeImg}" var="storeImg">
-					<img class="mySlides" src="${pageContext.request.contextPath}/resources/${storeImg.owPhotoRoute}">
-				</c:forEach>
-				</div>
-				<button onclick="plusDivs(1)">&gt;</button>
-				<script>
-					var slideIndex = 1;
-					showDivs(slideIndex);
-					function plusDivs(n){
-						showDivs(slideIndex += n);
-					}
-					function showDivs(n){
-						var i;
-						var x = document.getElementsByClassName("mySlides");
-						if(n>x.length){slideIndex = 1}
-						if(n<1){slideIndex = x.length}
-						for(i=0;i<x.length;i++){
-							x[i].style.display = "none";
-						}
-						x[slideIndex-1].style.display = "block";
-					}
-				</script>
+				<img src="${pageContext.request.contextPath}/${store.owPhotoRoute}">
 			</div>
 		</div>
 	</div>
@@ -362,32 +339,59 @@ function openImagemodal(storeReviewNo){
 			<div>
 				<h4>최근 예약 히스토리</h4>
 				<p>9612님이 2018.7.30 오후 12:30, 1명 예약하셨습니다.</p>
-			</div>
-			<div>
-				<a href="#">정보를 수정해주세요</a>
-			</div>								
+			</div>							
 		</div>
 		<div id="Photo" class="tabInfo" style="display:none;">	
-
 			<div class="container">
-				<a class="prev" onclick="plusSlides(-1)">❮</a>
+			  <a class="prev" onclick="plusSlides(-1)">❮</a>
 			<c:forEach items="${storeImg}" var="storeImg">
-				<div class="mySlidesPhoto">
-				<img src="${pageContext.request.contextPath}/resources/${storeImg.owPhotoRoute}">
+				<div class="mySlidesPhoto" style="background-image:url('${pageContext.request.contextPath}/${storeImg.owPhotoRoute}');">
 				</div>
 			</c:forEach>				
 			  <a class="next" onclick="plusSlides(1)">❯</a>
 
-			  <a class="row-prev" onclick="plusSlidesPhoto(-1)">❮</a>
+
 			  <div class="row">		  
 			  <c:forEach items="${storeImg}" var="storeImg" begin="0" varStatus="status" end="${size}">
-			    <div class="column">
-			      <img class="demo cursor" src="${pageContext.request.contextPath}/resources/${storeImg.owPhotoRoute}" onclick="currentSlide(${status.index+1})">
+			    <div class="demo" onclick="currentSlide(${status.index+1})" style="background-image:url('${pageContext.request.contextPath}/${storeImg.owPhotoRoute}');">
 			    </div>
 			  </c:forEach>
 			  </div>
-			  <a class="row-next" onclick="plusSlidesPhoto(1)">❯</a>
+
 			</div>
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlidesPhoto");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "flex";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>			
+			
+
 		
 		</div>
 		<div id="Review" class="tabInfo" style="display:none;">
@@ -435,12 +439,13 @@ function openImagemodal(storeReviewNo){
 			<button id="reviewInsert">리뷰 올리기</button>
 			</c:if>
 			<c:if test="${sessionScope.member == null }">
-			<input type="button" value="리뷰 올리기"  style="background-color: #fb0; border: none; color: white;width: 100%;height: 40px; margin-top: 20px;font-size: 1em; font-weight: bold; cursor: pointer;"onclick="nomember();">
+			<input type="button" value="리뷰 올리기"  style="background-color: #fb0; border: none; color: white;width: 100%;height: 40px; margin-top: 20px;font-size: 1em; font-weight: bold; cursor: pointer;margin-bottom:20px;"onclick="nomember();">
 			</c:if>
 			</form>
-			<h4>리뷰</h4>
-			<p><span>최신순</span> | <span>인기순</span></p>
-			
+			<c:if test="${review!=null}">
+				<h4>리뷰</h4>
+				<p><span>최신순</span> | <span>인기순</span></p>				
+			</c:if>
 
 				<c:forEach items="${review}" var="r">
 			<div>
@@ -624,12 +629,16 @@ function openImagemodal(storeReviewNo){
 			</c:forEach>
 		</div>
 		<div id="Menu" class="tabInfo" style="display:none;">
-			메뉴
+			  <c:forEach items="${menuImg}" var="menuImg" begin="0" varStatus="status" end="${menuSize}">
+			    <div class="menu-photo" style="background-image:url('${pageContext.request.contextPath}/${menuImg.owPhotoRoute}');">
+			    </div>
+			  </c:forEach>	  
 		</div>
 		<div id="Map" class="tabInfo" style="display:none;">
 			<div id="map-info"></div>
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 			<script>
-/* 			//지도
+			//지도
 			var mapContainer = document.getElementById('map-info'), // 지도를 표시할 div 
 			mapOption = {
 			    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -638,6 +647,9 @@ function openImagemodal(storeReviewNo){
 
 			//지도를 생성합니다    
 			var map = new daum.maps.Map(mapContainer, mapOption); 
+			
+			
+/* 			
 
 			//주소-좌표 변환 객체를 생성합니다
 			var geocoder = new daum.maps.services.Geocoder();

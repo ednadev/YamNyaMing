@@ -14,6 +14,50 @@ function openTab(event, tabName){
 	event.currentTarget.className += " click";
 }
 
+//Reservation Tab
+function openReservationTab(event, tabName){
+	var i, x, tablinks;
+	x = document.getElementsByClassName("tabInfo-reservation");
+	for (i=0; i<x.length; i++){
+		x[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablink-reservation");
+	for(i=0; i<x.length; i++){
+		tablinks[i].className = tablinks[i].className.replace(" click", "");
+	}
+	document.getElementById(tabName).style.display="block";
+	event.currentTarget.className += " click";
+}
+
+//Coupon Tab
+function openCouponTab(event, tabName){
+	var i, x, tablinks;
+	x = document.getElementsByClassName("tabInfo-coupon");
+	for (i=0; i<x.length; i++){
+		x[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablink-coupon");
+	for(i=0; i<x.length; i++){
+		tablinks[i].className = tablinks[i].className.replace(" click", "");
+	}
+	document.getElementById(tabName).style.display="block";
+	event.currentTarget.className += " click";
+}
+
+//Review Tab
+function openReviewTab(event, tabName){
+	var i, x, tablinks;
+	x = document.getElementsByClassName("tabInfo-review");
+	for (i=0; i<x.length; i++){
+		x[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablink-review");
+	for(i=0; i<x.length; i++){
+		tablinks[i].className = tablinks[i].className.replace(" click", "");
+	}
+	document.getElementById(tabName).style.display="block";
+	event.currentTarget.className += " click";
+}
 
 //기본정보 변경
 function pwChange(){
