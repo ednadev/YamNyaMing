@@ -13,7 +13,7 @@
 	<script>
 		window.onload = fucntion()
 		{
-			firstLoadAlert();
+			/* firstLoadAlert(); */
 		}
 		function firstLoadAlert()
 		{
