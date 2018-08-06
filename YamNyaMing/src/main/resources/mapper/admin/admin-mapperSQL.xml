@@ -323,28 +323,6 @@ ADMIN_ACCESS_GRADE_FK 	= #{ad_grade}
 insert into NOTICE_ADMIN_TB values(notice_admin_tb_SEQ.nextval,#{subject},#{contents},#{userId},#{userNickname},sysdate)
 </insert>
 
-<<<<<<< HEAD
-=======
-<!-- 점주 가게목록 -->
-<select id="ownerStoreList" resultType="storePageData" >
-select 
-OW_STORE_INFO_PK as owStoreInfoPk,
-OW_ENTIRE_FK as owEntireFk,
-OW_STORE_NAME as owStoreName,
-OW_STORE_TEL as owStoreTel,
-OW_STORE_BIG_TYPE_FK as owBigTypeFk,
-OW_STORE_DETAIL_TYPE_FK as owSmallTypeFk,
-OW_STORE_URL as owStoreUrl,
-OW_STORE_ADDR as owStoreAddr,
-OW_STORE_WORKING_TIME as owStoreWorkingTime
-from (select owner_store_info_tb.*,row_number() over(order by OW_STORE_INFO_PK desc) as num from owner_store_info_tb)
-where ow_entire_fk = #{owEntirePk} and
-num between #{startPage} and #{endPage} 
->>>>>>> 59639fc947f5c81f12db2460fe4286aa9e5598e1
-
-
-
-
 
 
 </mapper>
