@@ -957,6 +957,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	// 사용자 검색
 	@RequestMapping(value="/search.do")
 	public ModelAndView search(HttpSession session, HttpServletRequest request) {
+		
 		ModelAndView view=new ModelAndView();
 		String keyword = request.getParameter("keyword");
 		String food = request.getParameter("food");
@@ -982,10 +983,15 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			for (String data : list) {
 				storeCateDetailNameList.add(data);
 			}
+			
 			check.setStoreCateDetailName(storeCateDetailNameList);
 		}
 		if(owBudget!=null) {
-			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
+			ArrayList<String> owBudgetList = new ArrayList<>();
+			for (int i = 0; i<owBudget.length;i++ ) {
+				owBudgetList.add(owBudget[i]);
+			}
+			System.out.println("예산 " + owBudgetList.size());
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
@@ -1008,54 +1014,47 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		{
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
-
-		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-
-		if(qpd!=null) {
-			if(qpd.getNoticelist().size()>0) {
-				for(int i=0; i<qpd.getNoticelist().size(); i++){
-					YNMSearch ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
+		int recordCountPerPage = 2; //1. 1페이지에10개씩보이게
+		int naviCountPerPage = 5; //2.
+		
+		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
+		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, check);
+	
+		System.out.println("검색 결과 " + searchList.size());
+		System.out.println("네비 정보 " + qpd.getStartNavi() + " " + qpd.getEndNavi());
+		
+		if(searchList.size()>0) 
+		{
+			if(searchList.size()>0) {
+				for(int i=0; i<searchList.size(); i++){
+					YNMSearch ys=ynmMemberServiceImpl.starAvg(searchList.get(i).getOwStoreInfoPk());
 					if(ys!=null) {
-						qpd.getNoticelist().get(i).setStarAvg(ys.getStarAvg());
+						searchList.get(i).setStarAvg(ys.getStarAvg());
 					}
 				}
 			}
-		//search page 가게 찜여부 확인
-		for(int i=0; i<qpd.getNoticelist().size(); i++) {
-		int memberEntireNo=0;
-		//로그인한 사용자 찜 여부 확인
-		session=request.getSession(false);
-		if(((YNMMember)session.getAttribute("member"))!=null) {
-		memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
-		}
-		YNMFavorite yf=new YNMFavorite();
-		yf.setMemberEntireNo(memberEntireNo);
-		yf.setOwStoreInfoNo(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-		int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
-		int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-		qpd.getNoticelist().get(i).setFavoriteChk(favoriteChk);
-		qpd.getNoticelist().get(i).setFavoriteTotal(favoriteTotal);
-		}
-		
-		
-		JSONObject resultMap=new JSONObject();
-		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
-		int index = 0;
-		while(index<(qpd.getNoticelist()).size()) {
-			YNMSearch search = qpd.getNoticelist().get(index);
-			JSONObject result = new JSONObject();
-			result.put("owStoreInfoPk", search.getOwStoreInfoPk());
-			result.put("owStoreName", search.getOwStoreName());
-			result.put("owStoreAddr", search.getOwStoreAddr());
-			resultMap.put(index, result);
-			index++;
-		}
+			//search page 가게 찜여부 확인
+			for(int i=0; i<searchList.size(); i++) {
+				int memberEntireNo=0;
+				//로그인한 사용자 찜 여부 확인
+				session=request.getSession(false);
+				if(((YNMMember)session.getAttribute("member"))!=null) {
+					memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
+				}
+				YNMFavorite yf = new YNMFavorite();
+				yf.setMemberEntireNo(memberEntireNo);
+				yf.setOwStoreInfoNo(searchList.get(i).getOwStoreInfoPk());
+				int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+				int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(searchList.get(i).getOwStoreInfoPk());
+				searchList.get(i).setFavoriteChk(favoriteChk);
+				searchList.get(i).setFavoriteTotal(favoriteTotal);
+			}
 			view.addObject("storeCateDetailName",storeCateDetailName);
 			view.addObject("owBudget",owBudget);
 			view.addObject("owSubInfo",owSubInfo);
 			view.addObject("owDrinkListInfo",owDrinkListInfo);
-			view.addObject("resultMap",resultMap);
-			view.addObject("search",qpd);
+			view.addObject("searchList", searchList);
+			view.addObject("pageNaviData",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}else {

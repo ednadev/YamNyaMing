@@ -30,8 +30,40 @@
 				and ow_store_name like '%'||#{keyword}||'%'
 				or ow_store_tip like '%'||#{keyword}||'%'
 				or store_cate_detail_name like '%'||#{keyword}||'%'
-			</if>		
-			</trim>
+			</if>
+		        <if test="storeCateDetailName!=null and storeCateDetailName!=''">
+		             and store_cate_detail_name in 
+	             	 <foreach collection="list" item="detailNames">
+			             <foreach item="detailName" collection="detailNames.storeCateDetailName" open="(" separator="," close=")">
+			                #{detailName}
+			             </foreach>
+		             </foreach>
+		        </if>
+				<if test="owBudget!=null and owBudget!=''">
+					 and ow_budget in 
+					  <foreach collection="list" item="owBudgets">
+						 <foreach item="owBudget" collection="owBudgets.owBudget" open="(" separator="," close=")">
+						 	#{owBudget}
+						 </foreach>
+					 </foreach>
+				</if>
+				<if test="owSubInfo!=null and owSubInfo!=''">
+					 and ow_sub_info in 
+					  <foreach collection="list" item="owSubInfos">
+						 <foreach item="subInfo" collection="owSubInfos.owSubInfo" open="(" separator="," close=")">
+						 	#{subInfo}
+						 </foreach>
+					 </foreach>
+				</if>
+				<if test="owDrinkListInfo!=null and owDrinkListInfo!=''">
+					 and ow_drink_list_info in 
+					 <foreach collection="list" item="owDrinkListInfos">
+						 <foreach item="drinkInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
+						 	#{drinkInfo}
+						 </foreach>
+					 </foreach>
+				</if>
+		</trim>
 	</select>
 	
 	<select id="searchCount" parameterType="searchPaging" resultType="int"> 
@@ -43,7 +75,6 @@
 		and info.ow_store_detail_type_fk = cate.store_cate_detail_pk
 		and info.ow_store_info_pk = detail.ow_store_index
 		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
-        and ow_store_info_fk between #{start} and #{end}
         and ow_photo_type_fk = 3
         order by ow_store_info_pk desc)
         <trim prefix="where" prefixOverrides="AND|OR">
@@ -55,25 +86,38 @@
 				or ow_store_tip like '%'||#{keyword}||'%'
 				or store_cate_detail_name like '%'||#{keyword}||'%'
 			</if>		
-			
+		    <if test="storeCateDetailName!=null and storeCateDetailName!=''">
+	             and store_cate_detail_name in 
+             	 <foreach collection="list" item="detailNames">
+		             <foreach item="detailName" collection="detailNames.storeCateDetailName" open="(" separator="," close=")">
+		                #{detailName}
+		             </foreach>
+	             </foreach>
+	        </if>	
 			<if test="owBudget!=null and owBudget!=''">
 				 and ow_budget in 
-				 <foreach item="owBudget" collection="array" open="(" separator="," close=")">
-				 	#{owBudget}
+				  <foreach collection="list" item="owBudgets">
+					 <foreach item="owBudget" collection="owBudgets.owBudget" open="(" separator="," close=")">
+					 	#{owBudget}
+					 </foreach>
 				 </foreach>
 			</if>
 			<if test="owSubInfo!=null and owSubInfo!=''">
 				 and ow_sub_info in 
-				 <foreach item="owSubInfo" collection="array" open="(" separator="," close=")">
-				 	#{owSubInfo}
+				 <foreach collection="list" item="owSubInfos">
+					 <foreach item="owSubInfo" collection="owSubInfos.owSubInfo" open="(" separator="," close=")">
+					 	#{owSubInfo}
+					 </foreach>
 				 </foreach>
 			</if>
 			<if test="owDrinkListInfo!=null and owDrinkListInfo!=''">
 				 and ow_drink_list_info in 
-				 <foreach item="owDrinkListInfo" collection="array" open="(" separator="," close=")">
-				 	#{owDrinkListInfo}
+			 	 <foreach collection="list" item="owDrinkListInfos">
+					 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
+					 	#{owDrinkListInfo}
+					 </foreach>
 				 </foreach>
-			</if>			
+			</if>	
 		</trim>
 	</select>
 	

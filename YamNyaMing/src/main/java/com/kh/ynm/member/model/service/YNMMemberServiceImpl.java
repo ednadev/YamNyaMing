@@ -25,6 +25,7 @@ import com.kh.ynm.member.model.vo.YNMSearchPaging;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.owner.model.vo.CouponPageData;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Service("ynmMemberService")
@@ -236,36 +237,56 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	}
 
 	// 사용자 검색
-	public YNMSearchPaging search(int currentPage, YNMSearchPaging check) {
-		int recordCountPerPage=9;
-		int naviCountPerPage=5;
-
-		if(check.getStoreCateDetailName()!=null) {
-			System.out.println("Service에서  " + check.getStoreCateDetailName().size());
-		}
-		ArrayList<YNMSearch> list=memberDAO.getCurrentPage(sqlSession,currentPage,recordCountPerPage,check);
-		YNMSearchPaging qpd=memberDAO.getPageNavi(sqlSession,currentPage,recordCountPerPage,naviCountPerPage,check);
-
-		int resultcurrentPage=qpd.getCurrentPage();
-		int endNavi=qpd.getEndNavi();
-		int startNavi=qpd.getStartNavi();
-		int pageTotalCount=qpd.getPageTotalCount();
-		int recordTotalCount=qpd.getRecordTotalCount();
-
-		YNMSearchPaging qpd2=null;
-
-		if(!list.isEmpty()) {
-			qpd2=new YNMSearchPaging();
-			qpd2.setNoticelist(list);
-			qpd2.setCurrentPage(resultcurrentPage);
-			qpd2.setEndNavi(endNavi);
-			qpd2.setStartNavi(startNavi);
-			qpd2.setPageTotalCount(pageTotalCount);
-			qpd2.setRecordTotalCount(recordTotalCount);
-
-		}
-		return qpd2;
+	public ArrayList<YNMSearch> getSearchList(int currentPage, int recordCountPerPage, YNMSearchPaging check) {
+		//시작 페이지 계산
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		check.setStart(start);
+		check.setEnd(end);
+		
+		System.out.println("서비스에서 " + start + " " + end);
+		
+		ArrayList<YNMSearch> searchList = memberDAO.getCurrentPage(sqlSession, check);
+		return searchList;
 	}
+	public YNMSearchPaging searchPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, YNMSearchPaging check) {
+		int recordTotalCount =memberDAO.getPageNavi(sqlSession, check);
+			
+		int pageTotalCount = 0;
+
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		
+		check.setCurrentPage(currentPage);
+		check.setStartNavi(startNavi);
+		check.setEndNavi(endNavi);
+		check.setPageTotalCount(pageTotalCount);
+		check.setRecordTotalCount(recordTotalCount);
+		return check;
+	}
+	
+
+	
 	public YNMSearch detailPage(YNMSearch vo) {
 		YNMSearch store = memberDAO.detailPage(sqlSession, vo);
 		return store;

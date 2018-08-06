@@ -12,8 +12,8 @@ public class YNMSearchPaging {
 	ArrayList<String> owSubInfo;
 	ArrayList<String> owDrinkListInfo;
 
-	int start;
-	int end;
+	private int start;
+	private int end;
 	private ArrayList<YNMSearch> noticelist = new ArrayList<YNMSearch>();
 	private String pageNavi;
 	private int startNavi;
@@ -24,9 +24,12 @@ public class YNMSearchPaging {
 	public YNMSearchPaging() {
 		// TODO Auto-generated constructor stub
 	}
-	public YNMSearchPaging(String keyword, String food, String place, ArrayList<String> storeCateDetailName, ArrayList<String> owBudget,
-			ArrayList<String> owSubInfo, ArrayList<String> owDrinkListInfo, int start, int end, ArrayList<YNMSearch> noticelist,
-			String pageNavi, int startNavi, int endNavi, int currentPage, int pageTotalCount, int recordTotalCount) {
+	
+	public YNMSearchPaging(String keyword, String food, String place, ArrayList<String> storeCateDetailName,
+			ArrayList<String> owBudget, ArrayList<String> owSubInfo, ArrayList<String> owDrinkListInfo, int start,
+			int end, ArrayList<YNMSearch> noticelist, String pageNavi, int startNavi, int endNavi, int currentPage,
+			int pageTotalCount, int recordTotalCount) {
+		super();
 		this.keyword = keyword;
 		this.food = food;
 		this.place = place;
@@ -44,6 +47,7 @@ public class YNMSearchPaging {
 		this.pageTotalCount = pageTotalCount;
 		this.recordTotalCount = recordTotalCount;
 	}
+	
 	public String getKeyword() {
 		return keyword;
 	}

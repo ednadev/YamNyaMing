@@ -1202,7 +1202,7 @@
 	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
 	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
 	<div class="search-page">
-		<c:forEach items="${search.noticelist}" var="search">
+		<c:forEach items="${searchList}" var="search">
 			<div class="search-result">
 				<div class="search-result-img" style="background-image:url('${pageContext.request.contextPath}/${search.owPhotoRoute}');">
 					<form action="/detailPage.do" method="get">
@@ -1257,21 +1257,7 @@
 					</div>
 					<div>${search.owStoreComment}</div>
 				</div>
-				<script>
-				 function popupPost(value){
-	               var reserve = document.reserve;
-	               var pop = window.open;
-				   var windowW = 560;
-				   var windowH = 560;
-				   var left = Math.ceil((window.screen.width - windowW) / 2);
-				   var top = Math.ceil((window.screen.height - windowH) / 2);
-				   console.log(value);
-	               pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
-	               /* reserve.target="popup";
-	               reserve.method="get";
-	               reserve.submit(); */
-	            }
-	            </script>  	            
+		            
 	                
 	           	<form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
@@ -1280,37 +1266,53 @@
 				<button>리뷰쓰기</button>
 			</div>
 		</c:forEach>
-				<c:if test="${search!=null}">
-					<div id="pagingNumber">
-						<c:if test="${search.startNavi!=1}">
-							<form action="/search.do" method="post">
-								<input type="hidden"  name="currentPage" value="${search.startNavi-1}"> 
-								<input type="submit" class="paging-num" value="<">
-							</form>
-						</c:if>
-						<c:forEach var="i" begin="${search.startNavi}"
-							end="${search.endNavi}">
-							<c:if test="${search.currentPage==i}">
-								<form action="/search.do" method="post">
-									<input type="hidden" name="currentPage" value="${i}"> 
-									<input type="submit" class="paging-num-select" value="${i}">
-								</form>
-							</c:if>
-							<c:if test="${search.currentPage!=i}">
-								<form action="/search.do" method="post">
-									<input type="hidden" name="currentPage" value="${i}"> 
-									<input type="submit" class="paging-num" value="${i}">
-								</form>
-							</c:if>
-						</c:forEach>
-						<c:if test="${search.endNavi!=search.pageTotalCount}">
-							<form action="/search.do" method="post">
-								<input type="hidden" name="currentPage"	value="${search.endNavi+1}"> 
-								<input type="submit"  class="paging-num"  value=">">
-							</form>
-						</c:if>
-					</div>
+		<script>
+			 function popupPost(value){
+	              var reserve = document.reserve;
+	              var pop = window.open;
+			   var windowW = 560;
+			   var windowH = 560;
+			   var left = Math.ceil((window.screen.width - windowW) / 2);
+			   var top = Math.ceil((window.screen.height - windowH) / 2);
+			   console.log(value);
+	              pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
+	              /* reserve.target="popup";
+	              reserve.method="get";
+	              reserve.submit(); */
+	           }
+        </script>  	
+        ${pageNaviData.startNavi}  그리고 ${pageNaviData.endNavi}
+		<c:if test="${pageNaviData!=null}">
+			<div id="pagingNumber">
+				<c:if test="${pageNaviData.startNavi!=1}">
+					<form action="/search.do" method="post">
+						<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+						<input type="submit" class="paging-num" value="<">
+					</form>
 				</c:if>
+				<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+					<c:if test="${pageNaviData.currentPage==i}">
+						<form action="/search.do" method="post">
+							<input type="hidden" name="currentPage" value="${i}"> 
+							<input type="submit" class="paging-num-select" value="${i}">
+						</form>
+					</c:if>
+					<c:if test="${pageNaviData.currentPage!=i}">
+						<form action="/search.do" method="post">
+							<input type="hidden" name="currentPage" value="${i}"> 
+							<input type="submit" class="paging-num" value="${i}">
+						</form>
+					</c:if>
+				    
+				</c:forEach>
+				<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+					<form action="/search.do" method="post">
+						<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+						<input type="submit" class="paging-num"  value=">">
+					</form>
+				</c:if>
+			</div>
+		</c:if>
 	</div>
 	</div>
 	

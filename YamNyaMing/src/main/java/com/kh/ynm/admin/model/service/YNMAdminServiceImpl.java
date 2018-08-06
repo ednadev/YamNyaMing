@@ -237,17 +237,6 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		
 		return storePageDataResult;
 	}
-
-
-	public String viewStorePhoto(int owEntireFk) {
-		String viewpic=adminDAO.viewPath(sqlSession,owEntireFk);
-		return viewpic;
-	}
-
-	
-
-
-
 	
 
 }
