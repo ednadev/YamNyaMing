@@ -67,6 +67,10 @@
 			</c:if>
 
 
+
+		</div>
+		
+		<div id="storeInfo">
 		<h2>가게 정보</h2>
 		<div>
 			 <form action="/storePageTypeLoad.do" method="post" class="store-form">
@@ -291,7 +295,8 @@
 		</div>
 		<div class="store-info-div" style="display:none;">
 			맵
-		</div>
+		</div>	
+		</div>	
 	</section>
 	<script>
 		window.onload=function(){
