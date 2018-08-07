@@ -134,3 +134,76 @@ img{
 	margin-bottom:20px;
 	border-radius:5px;
 }
+
+/* 점장 페이지 - 카드 디자인 메인 */
+#store-select-detail>div:nth-child(1){
+	display:flex;
+	justify-content:center;
+}
+#store-select-detail>div>.design-card{
+	position:relative;
+	overflow:hidden;
+	display:inline;
+	margin-top:55px;
+}
+#store-select-detail>div>.design-card>input[type="submit"]{
+	position:absolute;
+	z-index:1;
+	width:304px;
+	height:304px;
+	top:13px;
+	right:7px;
+	border:none;
+	background-color:rgba(0,0,0,0.3);
+	color:white;
+	font-size:1.2em;
+	font-weight:bold;
+	cursor:pointer;
+}
+#store-select-detail>div>.design-card>.search-result>.search-result-text>div>p{
+	text-align:center;
+	margin:10px;
+	font-weight:bold;
+	font-size:0.9em;
+}
+
+/* 페이징 처리 디자인 */
+#pagingNumber{
+	margin-top:5px;
+	margin-bottom:10px;
+}
+#pagingNumber>form{
+	text-align:center;
+}
+#pagingNumber>form>input{
+	background-color:#555;
+	border:none;
+	color:white;
+	padding:5px;
+}
+
+/* footer 고정 시 */
+#owner-fixed-footer{
+	position:fixed;
+	bottom:0;
+	width:100%;
+	background-color:rgba(0,0,0,0.8);
+	padding:10px;
+}
+#owner-fixed-footer>h2,
+#owner-fixed-footer>p{
+	color:white;
+}
+#owner-fixed-footer>address{
+	color:white;
+	font-size:0.7em;
+	font-style:normal;
+	margin-top:15px;
+}
+
+
+/* 가게 관리 */
+#store-select-detail>#storeInfo{
+	width:960px;
+	margin:0 auto;
+}
