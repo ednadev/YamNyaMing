@@ -12,40 +12,14 @@
 <title>얌냐밍</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-<style>
-.paging-num {
-	font-family: 'Sunflower';
-	float:center;
-	width: 80px;
-	display: inline-block;
-	color: #ecf0f1;
-	text-decoration: none;
-	border-radius: 5px;
-	border: solid 1px #FFBB00;
-	background: #FFBB00;
-	padding: 16px 18px 14px;
-	font-size: 20px;
-	-webkit-transition: all 0.1s;
-	-moz-transition: all 0.1s;
-	transition: all 0.1s;
-	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
-	-moz-box-shadow: 0px 6px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-}
-.paging-num:active {
-	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
-	-moz-box-shadow: 0px 2px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-	position: relative;
-	top: -1px;
-}
-</style>
+
 </head>
 <body>
 	<header id="admin-login-header">

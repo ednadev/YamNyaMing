@@ -11,40 +11,26 @@
 <title>얌냐밍</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/admin/adminBoard.js"></script>
+<!-- include jquery -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- include libraries BS3 -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<!-- include summernote -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/summernote/summernote.css?ver=1">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/owner/summernote/summernote.js?ver=1"></script>
+
 </head>
-<style>
-.btn {
-	font-family: 'Sunflower';
-	position: static;
-	width: 80px;
-	display: inline-block;
-	color: #ecf0f1;
-	text-decoration: none;
-	border-radius: 5px;
-	border: solid 1px #333333;
-	background: #333333;
-	padding: 16px 18px 14px;
-	font-size: 20px;
-	-webkit-transition: all 0.1s;
-	-moz-transition: all 0.1s;
-	transition: all 0.1s;
-	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
-	-moz-box-shadow: 0px 6px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-}
-.btn:active {
-	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
-	-moz-box-shadow: 0px 2px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-	position: relative;
-	top: -1px;
-}
-</style>
+
 <body>
 	<header id="admin-login-header">
 		<h1>
@@ -64,31 +50,20 @@
 		</ul>
 	</nav>
 <!-- 내용 시작 -->
-<center>
 
-<h1>[${notice.noticeNo} 번글]   ${notice.subject}</h1><br>
+<h4>[${notice.noticeNo} 번글] ${notice.subject}</h4>
+<h4>글쓴이:${notice.userNickname}(${notice.userId})</h4>
+<h4>쓴날:${notice.regDate}</h4>
 
-<h1>글쓴이:${notice.userNickname}(${notice.userId})</h1><br>
-<h1>쓴날:${notice.regDate}</h1><br>
-
-
-
-
-
-<form action="/adminBoardFix2.do">
+<form id="summernote-form" action="/adminBoardFix2.do" method="post" enctype="multipart/form-data">
 <input type="hidden" value="${notice.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
 <input type="hidden" value="${notice.userId}" id="userId" name="userId" class="userId"/>
-<input type="text" style="width:420px; height: 45px; margin:10px; color:black;" placeholder="제목을 입력하세요" id="subject" name="subject" class="subject" required/><br>
-<textarea  cols="60" rows="10" placeholder="수정할 내용을 입력하세요" id="contents" name="contents" class="contents" required>
-</textarea>
-
-<center>
-<input type="submit" value="수정" class="btn">
-<input type="button" value="취소" class="btn" onclick="history.back(-1);">
-</center>
+<center><input type="text" name="boardInfo" placeholder="제목 입력" style="width:100%; height:70px; float:center;"required></center>
+<textarea name="owBoardTitle" class="summernote" placeholder="내용을 입력해주세요." value="" required></textarea>
+<input type="submit" value="수정" class="fix">
+<input type="button" value="취소" class="fix" onclick="history.back(-1);">
 </form>
 
-</center>
 <!-- 내용 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>

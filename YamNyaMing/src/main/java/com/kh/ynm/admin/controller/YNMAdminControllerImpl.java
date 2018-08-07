@@ -289,8 +289,8 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	{
 		ModelAndView view = new ModelAndView();
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		String contents = request.getParameter("contents");
-		String subject = request.getParameter("subject");
+		String contents = request.getParameter("owBoardTitle");
+		String subject = request.getParameter("boardInfo");
 		vo.setContents(contents);
 		vo.setSubject(subject);
 		vo.setNoticeNo(noticeNo);
@@ -359,8 +359,8 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		String writeId = request.getParameter("ad_id");
 		if(adminId.equals("admin")||adminId.equals(writeId))
 		{
-			String subject = request.getParameter("subject");
-			String contents = request.getParameter("contents");
+			String subject = request.getParameter("owBoardTitle");
+			String contents = request.getParameter("boardInfo");
 			String ad_nickname = request.getParameter("ad_nickname");
 			vo.setSubject(subject);
 			vo.setContents(contents);
@@ -384,7 +384,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		int currentPage = 1;
 		if(request.getParameter("currentPage")==null) currentPage=1;
 		else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-		int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+		int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 		int naviCountPerPage = 5; //2.
 		ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminListPaging(currentPage,recordCountPerPage);
 		CouponPageData pageNavi = ynmAdminServiceImpl.adminGetTotal(currentPage,recordCountPerPage,naviCountPerPage);

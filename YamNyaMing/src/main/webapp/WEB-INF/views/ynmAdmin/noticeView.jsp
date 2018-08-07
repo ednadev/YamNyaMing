@@ -9,42 +9,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 </head>
-<style>
-.btn {
-	font-family: 'Sunflower';
-	position: static;
-	width: 80px;
-	display: inline-block;
-	color: #ecf0f1;
-	text-decoration: none;
-	border-radius: 5px;
-	border: solid 1px #333333;
-	background: #333333;
-	padding: 16px 18px 14px;
-	font-size: 20px;
-	-webkit-transition: all 0.1s;
-	-moz-transition: all 0.1s;
-	transition: all 0.1s;
-	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
-	-moz-box-shadow: 0px 6px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-}
-.btn:active {
-	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
-	-moz-box-shadow: 0px 2px 0px rebeccapurple;
-	box-shadow: 0px 0px 0px rebeccapurple;
-	position: relative;
-	top: -1px;
-}
-</style>
 <body>
 	<header id="admin-login-header">
 		<h1>
@@ -65,13 +36,11 @@
 	</nav>
 <!-- 내용 시작 -->
 
-<center>
-<h1>[${notice.noticeNo} 번글]   ${notice.subject}</h1>
+<h4>[${notice.noticeNo} 번글]   ${notice.subject}</h4>
 
-<h1>글쓴이:${notice.userNickname}(${notice.userId}) </h1><h1>쓴날:${notice.regDate}</h1>
-<h1>내용:${notice.contents}</h1>
-<h1></h1>
-</center>
+<h4>글쓴이:${notice.userNickname}(${notice.userId}) </h4><h4>쓴날:${notice.regDate}</h4>
+<h4>내용:${notice.contents}</h4>
+
 
 <form action="/adminBoardFix.do">
 <input type="hidden" value="${notice.noticeNo}" id="noticeNo" name="noticeNo" class="noticeNo"/>
@@ -87,25 +56,11 @@
 <input type="hidden" value="${notice.userId}" id="userId" name="userId" class="userId"/>
 <input type="button" onclick="removeCheck()" value="삭제" class="btn">
 </form>
-
-
 <script>
-JavaScript
-
-function removeCheck() {
-
- if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-
-     document.removefrm.submit();
-
- }else{   //취소
-
-     return false;
-
- }
-}
+function removeCheck(){
+if(confirm("정말 삭제하시겠습니까??") == true)
+{document.removefrm.submit();}else{return false;}}
 </script>
-</center>
 <!-- 내용 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
