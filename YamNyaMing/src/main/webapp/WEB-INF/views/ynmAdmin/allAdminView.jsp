@@ -18,6 +18,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+<style>
+.paging-num {
+font-family: 'Sunflower';
+	float:center;
+	width: 80px;
+	display: inline-block;
+	color: #ecf0f1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: solid 1px #FFBB00;
+	background: #FFBB00;
+	padding: 16px 18px 14px;
+	font-size: 20px;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
+	-moz-box-shadow: 0px 6px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+}
+.paging-num:active {
+	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
+	-moz-box-shadow: 0px 2px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+	position: relative;
+	top: -1px;
+}
+</style>
 </head>
 <body>
 	<header id="admin-login-header">
@@ -69,13 +97,13 @@
       <c:when test="${m.ad_grade eq '2'}">
       <form action="/upGrade.do">
       <input type="hidden" id="ad_id" name="ad_id" class="ad_id" value="${m.ad_id}"/>
-      <input type="submit" style="background-color:white;font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="수락"/>
+      <input type="submit" class="paging-num" value="수락"/>
       </form>
       </c:when>
       <c:otherwise>
       <form action="/downGrade.do">
       <input type="hidden" id="ad_id" name="ad_id" class="ad_id" value="${m.ad_id}"/>
-      <input type="submit" style="background-color:white; font-size:20px; font-family: 'Sunflower'; border:0px solid maroon"value="강등"/>
+      <input type="submit" class="paging-num" value="강등"/>
       </form>
       </c:otherwise>
       </c:choose>
@@ -84,7 +112,48 @@
 	</c:forEach>
   </tbody>
 </table>
+<!-- 내용끝 -->
+ <!-- 페이지 -->
+    <c:if test="${pageNaviData!=null}">
+    	
+					<div id="pagingNumber">
+						<c:if test="${pageNaviData.startNavi!=1}">
+							<form action="/adminList.do" method="post" class="btn">
+								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+								<input type="submit" class="paging-num" value="<">
+							</form>
+						</c:if>
+						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+							<c:if test="${pageNaviData.currentPage==i}">
+								<form action="/adminList.do" method="post">
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+							<c:if test="${pageNaviData.currentPage!=i}">
+								<form action="/adminList.do" method="post">
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+						</c:forEach>
+						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+							<form action="/adminList.do" method="post">	
+								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+								<input type="submit"  class="paging-num"  value=">">
+							</form>
+						</c:if>
+					</div>
+			
+				</c:if>
+		
 
+<script>
+function goPage(pages, lines) {
+    location.href = '?' + "pages=" + pages;
+}
+</script>
+<!-- 페이징 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

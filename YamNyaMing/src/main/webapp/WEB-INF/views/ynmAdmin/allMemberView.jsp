@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -17,6 +18,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+<style>
+.paging-num {
+	font-family: 'Sunflower';
+	float:center;
+	width: 80px;
+	display: inline-block;
+	color: #ecf0f1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: solid 1px #FFBB00;
+	background: #FFBB00;
+	padding: 16px 18px 14px;
+	font-size: 20px;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-box-shadow: 0px 6px 0px rebeccapurple;
+	-moz-box-shadow: 0px 6px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+}
+.paging-num:active {
+	-webkit-box-shadow: 0px 1px 0px rebeccapurple;
+	-moz-box-shadow: 0px 2px 0px rebeccapurple;
+	box-shadow: 0px 0px 0px rebeccapurple;
+	position: relative;
+	top: -1px;
+}
+</style>
 </head>
 <body>
 	<header id="admin-login-header">
@@ -115,6 +144,49 @@
 		</table>
 	</div>
 </div>
+<!-- 내용끝 -->
+ <!-- 페이지 -->
+    <c:if test="${pageNaviData!=null}">
+    	
+					<div id="pagingNumber">
+						<c:if test="${pageNaviData.startNavi!=1}">
+							<form action="/allMemberView.do" method="post">
+								<!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+								<input type="submit" class="paging-num" value="<">
+							</form>
+						</c:if>
+						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+							<c:if test="${pageNaviData.currentPage==i}">
+								<form action="/allMemberView.do" method="post">
+								   <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+							<c:if test="${pageNaviData.currentPage!=i}">
+								<form action="/allMemberView.do" method="post">
+								    <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+						</c:forEach>
+						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+							<form action="/allMemberView.do" method="post">	
+							  <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> --> 
+								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+								<input type="submit"  class="paging-num"  value=">">
+							</form>
+						</c:if>
+					</div>
+				</c:if>
+<script>
+function goPage(pages, lines) {
+    location.href = '?' + "pages=" + pages;
+}
+</script>
+<!-- 페이징 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -19,6 +20,7 @@
 </head>
 <style>
 .paging-num {
+	font-family: 'Sunflower';
 	float:center;
 	width: 80px;
 	display: inline-block;

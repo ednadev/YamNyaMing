@@ -12,13 +12,13 @@
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
-
 </head>
 <style>
 .paging-num {
+	font-family: 'Sunflower';
 	float:center;
 	width: 80px;
 	display: inline-block;
@@ -168,36 +168,35 @@
 	</div>
 </c:forEach> 
   <!-- 게시물 리스트 보여주기 -->
-  <!-- 페이지 -->
+     <!-- 페이지 -->
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
 						<c:if test="${pageNaviData.startNavi!=1}">
-							<form action="/ownerStoreList.do" method="post">
-								<!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+							<form action="/allOwnerView.do" method="post">
 								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
 								<input type="submit" class="paging-num" value="<">
 							</form>
 						</c:if>
-						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+			
+						<c:forEach var="i" begin="${pageNaviData.startNavi}"
+							end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/ownerStoreList.do" method="post">
-								   <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+								<form action="/allOwnerView.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/ownerStoreList.do" method="post">
-								    <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+								<form action="/allOwnerView.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
 								</form>
 							</c:if>
 						</c:forEach>
+	
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/ownerStoreList.do" method="post">	
-							  <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> --> 
+							<form action="/allOwnerView.do" method="post">
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
 							</form>

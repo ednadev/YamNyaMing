@@ -70,20 +70,6 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			return "ynmAdmin/adminError/error";	
 		}
 	}
-	//일반회원 전체보기
-	@RequestMapping(value="/allMemberView.do")
-	public Object allMemberView(HttpSession session) 
-	{
-		if(session.getAttribute("admin")!=null) {
-			ArrayList<YNMMember> list = ynmAdminServiceImpl.allMemberView();
-			ModelAndView view = new ModelAndView();
-			view.addObject("list",list);
-			view.setViewName("ynmAdmin/allMemberView");
-			return view;
-		}else {
-			return "ynmAdmin/adminError/error";
-		}
-	}
 	//회원가입 아이디 체크
 	@ResponseBody
 	@RequestMapping(value="/adminIdCheck.do")
@@ -101,30 +87,6 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			String data="0";
 			return data;   
 		}        
-	}
-	//점주 전체보기
-	@RequestMapping(value="/allOwnerView.do")
-	public Object allOwnerView(HttpSession session, HttpServletRequest request) 
-	{
-		if(session.getAttribute("admin")!=null) {
-	
-			ModelAndView view = new ModelAndView();
-			int currentPage = 1;
-			if(request.getParameter("currentPage")==null) currentPage=1;
-			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
-			int naviCountPerPage = 5; //2.
-			ArrayList<YNMOwner> list = ynmAdminServiceImpl.allOwnerView(currentPage,recordCountPerPage);
-			CouponPageData pageNavi = ynmAdminServiceImpl.ownerGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
-			view.addObject("list",list);
-			view.addObject("pageNaviData", pageNavi);
-			view.setViewName("ynmAdmin/allOwnerView");
-			return view;
-		}
-		else 
-		{
-			return "ynmAdmin/adminError/error";
-		}
 	}
 	//점주 검색
 	@RequestMapping(value="/OwnerSearch.do")
@@ -197,31 +159,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			return "ynmAdmin/adminError/loginError";
 		}
 	}
-	//공지사항  
-	@RequestMapping(value="/boardAdmin.do")
-	public ModelAndView boardAdmin(HttpSession session,HttpServletRequest request) throws Exception{
-		ModelAndView view = new ModelAndView();
-		if(session.getAttribute("admin")!=null) 
-		{
-			YNMAdmin admin = (YNMAdmin)session.getAttribute("admin");
-			int currentPage = 1;
-			if(request.getParameter("currentPage")==null) currentPage=1;
-			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
-			int naviCountPerPage = 5; //2.
-			ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage);
-			CouponPageData pageNavi = ynmAdminServiceImpl.noticeGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
-			view.addObject("noticeListData", noticeList);
-			view.addObject("pageNaviData", pageNavi);
-			view.setViewName("ynmAdmin/boardAdmin");
-			return view;
-		}
-		else
-		{
-			view.setViewName("ynmAdmin/adminError/error");
-			return view;
-		}
-	}
+
 	//통계
 	@RequestMapping(value="/statAdmin.do")
 	public Object statAdmin(HttpSession session,AdminStatistics vo) 
@@ -291,16 +229,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			return "ynmAdmin/adminError/error";
 		}
 	}
-	//관리자 리스트(수락/강등 목록)
-	@RequestMapping(value="/adminList.do")
-	public Object adminList(HttpSession session)
-	{
-		ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminList();
-		ModelAndView view = new ModelAndView();
-		view.addObject("list",list);
-		view.setViewName("ynmAdmin/allAdminView");
-		return view;
-	}
+
 	//관리자(강등)
 	@RequestMapping(value="/downGrade.do")
 	public Object dounGrade(HttpSession session,HttpServletRequest request)
@@ -445,6 +374,102 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			return "ynmAdmin/adminError/error";
 		}
 	}
+	//관리자 전체보기
+	@RequestMapping(value="/adminList.do")
+	public Object adminList(HttpSession session,HttpServletRequest request)
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("admin")!=null) 
+		{
+		int currentPage = 1;
+		if(request.getParameter("currentPage")==null) currentPage=1;
+		else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+		int naviCountPerPage = 5; //2.
+		ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminListPaging(currentPage,recordCountPerPage);
+		CouponPageData pageNavi = ynmAdminServiceImpl.adminGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+		view.addObject("list",list);
+		view.addObject("pageNaviData", pageNavi);
+		view.setViewName("ynmAdmin/allAdminView");
+		return view;
+		}
+		else
+		{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//공지사항  
+	@RequestMapping(value="/boardAdmin.do")
+	public Object boardAdmin(HttpSession session,HttpServletRequest request) throws Exception
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("admin")!=null) 
+		{
+			YNMAdmin admin = (YNMAdmin)session.getAttribute("admin");
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage);
+			CouponPageData pageNavi = ynmAdminServiceImpl.noticeGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+			view.addObject("noticeListData", noticeList);
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/boardAdmin");
+			return view;
+		}
+		else
+		{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//일반회원 전체보기
+		@RequestMapping(value="/allMemberView.do")
+		public Object allMemberView(HttpSession session,HttpServletRequest request) 
+		{
+			ModelAndView view = new ModelAndView();
+			if(session.getAttribute("admin")!=null) {
+				int currentPage = 1;
+				if(request.getParameter("currentPage")==null) currentPage=1;
+				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+				int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+				int naviCountPerPage = 5; //2.
+				ArrayList<YNMMember> list = ynmAdminServiceImpl.memberListPaging(currentPage,recordCountPerPage);
+				CouponPageData pageNavi = ynmAdminServiceImpl.memberGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+				view.addObject("list",list);
+				view.addObject("pageNaviData", pageNavi);
+				view.setViewName("ynmAdmin/allMemberView");
+				return view;
+			}
+			else 
+			{
+				return "ynmAdmin/adminError/error";
+			}
+		}
+	//점주 전체보기
+		@RequestMapping(value="/allOwnerView.do")
+		public Object allOwnerView(HttpSession session, HttpServletRequest request) 
+		{
+			ModelAndView view = new ModelAndView();
+			if(session.getAttribute("admin")!=null) 
+			{
+				int currentPage = 1;
+				if(request.getParameter("currentPage")==null) currentPage=1;
+				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+				int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+				int naviCountPerPage = 5; //2.
+				ArrayList<YNMOwner> list = ynmAdminServiceImpl.ownerListPaging(currentPage,recordCountPerPage);
+				CouponPageData pageNavi = ynmAdminServiceImpl.ownerGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+				view.addObject("list",list);
+				view.addObject("pageNaviData", pageNavi);
+				view.setViewName("ynmAdmin/allOwnerView");
+				return view;
+			}
+			else 
+			{
+				return "ynmAdmin/adminError/error";
+			}
+		}	
 	//점주 가게현황 
 	@RequestMapping(value="/ownerStoreList.do")
 	public ModelAndView ownerStoreList(HttpSession session ,HttpServletRequest request,StoreInfoPageData vo)
@@ -452,8 +477,10 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("admin")!=null) 
 		{
+			//
 			int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
 			vo.setOwEntireFk(owEntirePk);
+			//페이징 
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));

@@ -5,6 +5,7 @@
 	    <typeAlias type="com.kh.ynm.admin.model.vo.YNMAdmin" alias="admins"/>
 	    <typeAlias type="com.kh.ynm.admin.model.vo.AdminStatistics" alias="statistics"/>
 		<typeAlias type="com.kh.ynm.admin.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.kh.ynm.admin.model.vo.BoardPaging" alias="PageData"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMember" alias="members"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMMemberCheck" alias="memberCheck"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMBook" alias="books"/>
@@ -24,7 +25,6 @@
 		<typeAlias type="com.kh.ynm.owner.model.vo.MenuInfo" alias="menuInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.YNMStoreDetailInfo" alias="storeDetailInfo"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponEnroll" alias="couponEnrollData"/>
-		<typeAlias type="com.kh.ynm.admin.model.vo.BoardPaging" alias="noticePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.CouponPageData" alias="couponPageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StorePageData" alias="storePageData"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreTitleData" alias="storeTitleData"/>
@@ -34,5 +34,7 @@
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryMain" alias="storeCategoryMain"/>
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryDetail" alias="storeCategoryDetail"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreBoardData" alias="storeBoardData"/>
+		
+		
 	</typeAliases>
 </configuration>

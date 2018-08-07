@@ -17,20 +17,7 @@ WHERE ADMIN_ID = #{ad_id}
 </select>
 
 
-<!-- 사용자 전체보기 -->
-<select id="allMemberView" parameterType="members" resultType="members">
-SELECT 
-mb_id as memberId,
-mb_name as memberName,
-mb_nickname as memberNickName,
-mb_gender as memberGender,
-mb_birth as memberBirth,
-mb_email as memberEmail,
-mb_phone as memberPhone,
-mb_regDate as memberRegDate,
-MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
-from member_entire_tb
-</select>
+
 
 
 <!-- 점주 검색 -->
@@ -194,16 +181,7 @@ from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk = b.
 </select>
 
 
-<!-- 관리자 수락/강등에서 관리자리스트 -->
-<select id="adminList" resultType="admins">
-select 
-ADMIN_ID as ad_id,
-ADMIN_PASSWORD as ad_password,
-ADMIN_NICKNAME as ad_nickname,
-ADMIN_ACCESS_GRADE_FK as ad_grade
-from admin_info_tb
-where ADMIN_ID not in ('admin')
-</select>
+
 
 
 <!-- 관리자 강등 -->
@@ -231,8 +209,39 @@ where ow_store_info_fk=#{storeUploadPhotoNo}
 </select>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
+
+<!-- 관리자 수락/강등에서 관리자리스트 페이징 -->
+<select id="adminList" parameterType="PageData" resultType="admins">
+select
+ADMIN_INFO_PK as admin_info_pk, 
+ADMIN_ID as ad_id,
+ADMIN_PASSWORD as ad_password,
+ADMIN_NICKNAME as ad_nickname,
+ADMIN_ACCESS_GRADE_FK as ad_grade
+from (select admin_info_tb.*,row_number() over(order by ADMIN_INFO_PK desc) as num from admin_info_tb)
+where ADMIN_ID not in ('admin') and
+num between #{startPage} and #{endPage}
+</select>
+
+<!-- 사용자 전체보기 페이징 -->
+<select id="memberList" parameterType="PageData" resultType="members">
+SELECT
+MB_ENTIRE_PK as memberEntireNo, 
+mb_id as memberId,
+mb_name as memberName,
+mb_nickname as memberNickName,
+mb_gender as memberGender,
+mb_birth as memberBirth,
+mb_email as memberEmail,
+mb_phone as memberPhone,
+mb_regDate as memberRegDate,
+MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
+from (select member_entire_tb.*,row_number() over(order by MB_ENTIRE_PK desc) as num from member_entire_tb)
+where num between #{startPage} and #{endPage}
+</select>
+
 <!--공지사항 페이징-->
-<select id="noticeList" resultType="notice" parameterType="noticePageData">
+<select id="noticeList" parameterType="PageData" resultType="notice">
 select
 NOTICE_NO_PK as noticeNo,
 NOTICE_SUBJECT as subject,
@@ -245,7 +254,7 @@ where num between #{startPage} and #{endPage}
 </select>
 
 <!-- 점주 전체보기 페이징 -->
-<select id="allOwnerView" resultType="owner" parameterType="ownerPageData">
+<select id="ownerList" parameterType="PageData" resultType="owner">
 SELECT 
 ow_entire_pk as owEntirePk, 
 OW_ID as owId, 
@@ -259,7 +268,7 @@ where num between #{startPage} and #{endPage}
 </select>
 
 <!--가게 신청 페이징-->
-<select id="ownerStoreList" resultType="storeInfoPageData" parameterType="storePageData">
+<select id="ownerStoreList" parameterType="PageData" resultType="storeInfoPageData">
 SELECT 
 OW_STORE_INFO_PK as owStoreInfoPk,
 OW_ENTIRE_FK as owEntireFk,
@@ -277,22 +286,33 @@ num between #{startPage} and #{endPage}
 </select>
 
 <!--공지사항 페이지 넘버링 -->
-<select id="noticeTotal" parameterType="noticePageData" resultType="int">
+
+<select id="noticeTotal" parameterType="PageData" resultType="int">
 select count(*) from NOTICE_ADMIN_TB
 </select>
 
+<!-- 멤버목록 페이징 넘버링 -->
+
+<select id="memberTotal" parameterType="PageData" resultType="int">
+select count(*) from MEMBER_ENTIRE_TB
+</select>
 
 <!--가게 신청목록 페이지 넘버링 -->
-<select id="storeTotal" parameterType="storePageData" resultType="int">
+
+<select id="storeTotal" parameterType="PageData" resultType="int">
 select count(*) from OWNER_STORE_INFO_TB
 </select>
 
 <!-- 점주목록 페이징 넘버링 -->
-<select id="ownerTotal" parameterType="ownerPageData" resultType="int">
+
+<select id="ownerTotal" parameterType="PageData" resultType="int">
 select count(*) from OWNER_ENTIRE_TB
 </select>
 
-
+<!-- 관리자 목록 페이징 넘버림 -->
+<select id="adminTotal" parameterType="PageData" resultType="int">
+select count(*) from ADMIN_INFO_TB
+</select>
 <!-- 공지사항 보기 -->
 <select id="noticeView" parameterType="int" resultType="notice">
 select

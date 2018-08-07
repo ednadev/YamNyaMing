@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -18,6 +19,7 @@
 </head>
 <style>
 .btn {
+	font-family: 'Sunflower';
 	position: static;
 	width: 80px;
 	display: inline-block;
