@@ -81,3 +81,60 @@ function couponEnroll()
 		});
 	}
 }
+
+function couponChange(openId, closeId)
+{
+	var openArr  = document.getElementsByClassName(openId);
+	var closeArr = document.getElementsByClassName(closeId);
+	
+	for(var i = 0;i< closeArr.length;i++)
+	{
+		closeArr[i].style.display = "inline-block";
+	}
+	
+	for(var i = 0;i< openArr.length;i++)
+	{
+		openArr[i].style.display = "none";
+	}
+}
+
+function couponUpdate()
+{
+	var couponIndex = $('#couponIndexVal').val();
+	var couponName = $('#owCouponNameUpdate').val();
+	var couponCount =  $('#couponCountUpdate').val();
+	var couponStartData =  $('#sdateN').val();
+	var couponExpireDate =  $('#edateN').val();
+	var couponExplain = $('#couponDetailUpdate').val();
+	
+	console.log(couponStartData);
+	$.ajax({
+		url:"/couponUpdate.do",
+		data : {
+			couponIndex : couponIndex,
+			couponName : couponName,
+			couponCount: couponCount,
+			couponStartData: couponStartData,
+			couponExpireDate: couponExpireDate,
+			couponExplain : couponExplain
+	   },
+		type : "post",
+		success : function(data){	
+			if(data==1)
+			{
+				alert("쿠폰등록 성공");
+				var couponSpanArr = document.getElementsByClassName('coupon_'+couponIndex);
+				couponSpanArr[0].innerHTML = couponName;
+				couponSpanArr[1].innerHTML = couponCount;
+				couponSpanArr[2].innerHTML = couponStartData + couponExpireDate;
+				couponSpanArr[3].innerHTML = couponExplain;
+				couponChange('coupon_edit_'+couponIndex, 'coupon_'+couponIndex);
+			}else{
+				alert("쿠폰 등록 실패");
+			}
+		},
+		error : function(){
+			console.log("실패");	
+		}
+	});
+}

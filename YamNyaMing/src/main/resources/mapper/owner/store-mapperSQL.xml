@@ -48,18 +48,31 @@
 		#{owCouponName}, #{owCouponCount}, #{owCouponStartDate},#{owCouponExpireDate},
 		#{owCouponDetail} )
 	</insert>
-
+	
+	<!-- 쿠폰 업데이트 -->
+	<update id="couponUpdate" parameterType="couponEnrollData">
+		update owner_coupon_info_tb
+		set 
+			ow_coupon_name = #{owCouponName},
+			OW_COUPON_COUNT = #{owCouponCount},
+			OW_COUPON_START_DATE = #{owCouponStartDate},
+			OW_COUPON_EXPIRE_DATE = #{owCouponExpireDate},
+			OW_COUPON_DETAIL = #{owCouponDetail}
+		where
+		OW_COUPON_INFO_PK = #{owCouponInfoPk}
+	</update>
 	<!--쿠폰의 페이징 -->
 	<select id="couponList" resultType="couponEnrollData"
 		parameterType="couponPageData">
-		select
-		ow_coupon_info_pk as owCouponInfoPk,
-		ow_entire_fk as owEntireFk,
-		ow_store_info_fk as owStoreInfoFk,
-		ow_coupon_name as owCouponName,
-		ow_coupon_count as owCouponCount,
-		ow_coupon_start_date as owCouponStartDate,
-		ow_coupon_expire_date as owCouponExpireDate,
+	    select   
+        ow_coupon_info_pk as owCouponInfoPk,   
+        ow_entire_fk as owEntireFk,   
+        ow_store_info_fk as owStoreInfoFk,  
+        ow_coupon_name as owCouponName,   
+        ow_coupon_count as owCouponCount,   
+        ow_coupon_start_date as owCouponStartDate,  
+        ow_coupon_expire_date as owCouponExpireDate,   
+        to_char(ow_coupon_start_date, 'YYYY-MM-DD')||' ~ '||to_char(ow_coupon_expire_date, 'YYYY-MM-DD') as owCouponDuringDate,
 		ow_coupon_detail as owCouponDetail
 		from ( select owner_coupon_info_tb.*,row_number() over(order by
 		OW_COUPON_INFO_PK desc) as num

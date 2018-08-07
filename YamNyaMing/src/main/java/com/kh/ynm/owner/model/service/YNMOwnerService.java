@@ -113,5 +113,8 @@ public interface YNMOwnerService {
 	// 가게 선택했을때 정보 가져오기
 	public StoreBoardData boardSelect(int boardIndex);
 
+	// 쿠폰 업데이트
+	public int couponUpdate(CouponEnroll couponEnroll);
+
 	
 }

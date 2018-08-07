@@ -11,11 +11,13 @@ public class CouponEnroll {
 	private Date owCouponStartDate;
 	private Date owCouponExpireDate;
 	private String owCouponDetail;
+	private String owCouponDuringDate;
 	
 	public CouponEnroll() {}
 
+
 	public CouponEnroll(int owCouponInfoPk, int owEntireFk, int owStoreInfoFk, String owCouponName, int owCouponCount,
-			Date owCouponStartDate, Date owCouponExpireDate, String owCouponDetail) {
+			Date owCouponStartDate, Date owCouponExpireDate, String owCouponDetail, String owCouponDuringDate) {
 		super();
 		this.owCouponInfoPk = owCouponInfoPk;
 		this.owEntireFk = owEntireFk;
@@ -25,7 +27,9 @@ public class CouponEnroll {
 		this.owCouponStartDate = owCouponStartDate;
 		this.owCouponExpireDate = owCouponExpireDate;
 		this.owCouponDetail = owCouponDetail;
+		this.owCouponDuringDate = owCouponDuringDate;
 	}
+
 
 	public int getOwCouponInfoPk() {
 		return owCouponInfoPk;
@@ -89,6 +93,16 @@ public class CouponEnroll {
 
 	public void setOwCouponDetail(String owCouponDetail) {
 		this.owCouponDetail = owCouponDetail;
+	}
+
+
+	public String getOwCouponDuringDate() {
+		return owCouponDuringDate;
+	}
+
+
+	public void setOwCouponDuringDate(String owCouponDuringDate) {
+		this.owCouponDuringDate = owCouponDuringDate;
 	}
 	
 	

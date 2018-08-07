@@ -51,4 +51,5 @@ public interface YNMOwnerDAO {
 	public ArrayList<StoreBoardData> storeBoardList(SqlSessionTemplate sqlSession, StorePageData storePageData);
 	public int storeBoardNavi(SqlSessionTemplate sqlSession, CouponPageData couponPageData);
 	public StoreBoardData boardSelect(SqlSessionTemplate sqlSession, int storeIndex);
+	public int couponUpdate(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll);
 }

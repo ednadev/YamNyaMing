@@ -358,6 +358,11 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return ynmOwnerDAO.boardSelect(sqlSession, boardIndex);
 	}
 
+	@Override
+	public int couponUpdate(CouponEnroll couponEnroll) {
+		return ynmOwnerDAO.couponUpdate(sqlSession , couponEnroll);
+	}
+
 
 	
 }

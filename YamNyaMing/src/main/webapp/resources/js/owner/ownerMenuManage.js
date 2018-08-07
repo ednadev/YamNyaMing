@@ -155,9 +155,25 @@
 		}
 	}
 	
-	function menuChangeMode(menuTapId)
+	function menuChangeMode( menuTapId, selectBtn)
 	{
 		var menuTapArr = document.getElementsByClassName("menuTapClass");
+		var menuBtnArr = document.getElementsByClassName("menuTitleBtn-none");
+		var menuBtnSelArr = document.getElementsByClassName("menuTitleBtn");
+		var beforeSelecBtn;
+		for(var i =0; i<menuBtnArr.length;i++)
+		{
+			menuBtnArr[i].className = 'menuTitleBtn-none';
+		}
+		for(var i = 0; i<menuBtnSelArr.length;i++)
+		{
+			beforeSelecBtn = menuBtnSelArr[i];
+		}
+		
+		if(selectBtn!=null){
+			beforeSelecBtn.className = "menuTitleBtn-none"
+			selectBtn.className ="menuTitleBtn";
+		}
 		for(var i = 0; i<menuTapArr.length;i++)
 		{
 			if(menuTapArr[i].id==menuTapId)
@@ -216,21 +232,18 @@
 	
 	function menuEditMode(openGroup, closeGroup)
 	{
-		var openArr = document.getElementsByClassName(openGroup);
-		var closeArr =document.getElementsByClassName(closeGroup);
-		console.log(openArr.length + " " + closeArr.length);
-		$('#'+openGroup).css('display','block');
-		for(var i = 0; openArr.length;i++)
+		var openArr  = document.getElementsByClassName(openGroup);
+		var closeArr = document.getElementsByClassName(closeGroup);
+		
+		for(var i = 0;i< closeArr.length;i++)
 		{
-			
-			//openArr[i].setAttribute("display","block");
-			//openArr[i].style.display = "block";
-		}
-		for(var i = 0; closeArr.length;i++)
-		{
-			closeArr[i].style.display = "none";
+			closeArr[i].style.display = "inline-block";
 		}
 		
+		for(var i = 0;i< openArr.length;i++)
+		{
+			openArr[i].style.display = "none";
+		}
 	}
 	
 	function textMenuUpdate(menuIndex, updateInputClass)
@@ -253,6 +266,11 @@
 				if(data==1)
 				{
 					alert("메뉴 업데이트 성공");
+					var menuArr = document.getElementsByClassName('menu_'+menuIndex);
+					menuArr[0].innerHTML =menuSubTitle;
+					menuArr[1].innerHTML =menuExplain;
+					menuArr[2].innerHTML =menuCost;
+					menuEditMode('menu_edit_'+menuIndex, 'menu_'+menuIndex);
 				}else{
 					alert("메뉴 업데이트 실패");
 				}

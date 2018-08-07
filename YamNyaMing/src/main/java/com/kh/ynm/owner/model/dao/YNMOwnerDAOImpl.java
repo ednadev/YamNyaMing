@@ -193,4 +193,9 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 		return sqlSession.selectOne("stores.boardSelect", boardIndex);
 	}
 
+	@Override
+	public int couponUpdate(SqlSessionTemplate sqlSession, CouponEnroll couponEnroll) {
+		return sqlSession.update("stores.couponUpdate", couponEnroll);
+	}
+
 }

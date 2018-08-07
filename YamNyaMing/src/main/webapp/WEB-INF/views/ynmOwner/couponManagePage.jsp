@@ -12,14 +12,14 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=3">
+	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=1"></script>
+	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=3"></script>
 	
 <!-- DatePicker -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -62,6 +62,18 @@
 	    $('#edate').datepicker("option", "minDate", $("#sdate").val());
 	    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
 	        $("#sdate").datepicker( "option", "maxDate", selectedDate );
+	    });
+	    
+	    $('#sdateN').datepicker();
+	    $('#sdateN').datepicker("option", "maxDate", $("#edateN").val());
+	    $('#sdateN').datepicker("option", "onClose", function ( selectedDate ) {
+	        $("#edateN").datepicker( "option", "minDate", selectedDate );
+	    });
+	 
+	    $('#edateN').datepicker();
+	    $('#edateN').datepicker("option", "minDate", $("#sdateN").val());
+	    $('#edateN').datepicker("option", "onClose", function ( selectedDate ) {
+	        $("#sdateN").datepicker( "option", "maxDate", selectedDate );
 	    });
 	 });
 </script>
@@ -156,13 +168,40 @@
 						<c:if test="${couponListData!=null}">
 							<c:forEach var="coupon" items="${couponListData}">
 								<tr>
-									<td class="lalign">${coupon.owCouponInfoPk}</td>
-									<td>${coupon.owCouponName}</td>
-									<td>${coupon.owCouponCount}</td>
-									<td>${coupon.owCouponStartDate}-
-										${coupon.owCouponExpireDate}</td>
-									<td>${coupon.owCouponDetail}</td>
-									<td><button id="couponDelBtn" onclick="couponDel();">삭제</button></td>
+									<td class="lalign">${coupon.owCouponInfoPk}
+									<input type="hidden" id="couponIndexVal" name="couponIndex" value="${coupon.owCouponInfoPk}" >
+									</td>
+									<td>
+										<span class="coupon_${coupon.owCouponInfoPk}">${coupon.owCouponName}</span>
+										<input type="text" id="owCouponNameUpdate" class="coupon_edit_${coupon.owCouponInfoPk}" name="owCouponName" value="${coupon.owCouponName}" style="display:none;">
+									</td>
+									<td>
+										<span class="coupon_${coupon.owCouponInfoPk}">
+											<c:if test="${coupon.owCouponCount>=0}">
+												${coupon.owCouponCount}
+											</c:if>
+											<c:if test="${coupon.owCouponCount==-1}">
+												제한없음
+											</c:if>
+										</span>
+										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" id="couponCountUpdate" name="couponCount" value="${coupon.owCouponCount}" style="display:none; height:35px;">
+									</td>
+									<td>
+										<span class="coupon_${coupon.owCouponInfoPk}"> ${coupon.owCouponDuringDate} </span>
+										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" name="couponStartDate" value="${coupon.owCouponStartDate}" placeholder="${coupon.owCouponStartDate}" id="sdateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
+				
+										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" name="couponExpireDate" value="${coupon.owCouponExpireDate}" placeholder="${coupon.owCouponExpireDate}" id="edateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
+									</td>
+									<td>
+										<span class="coupon_${coupon.owCouponInfoPk}">${coupon.owCouponDetail}</span>
+										<input type="text" id="couponDetailUpdate" class="coupon_edit_${coupon.owCouponInfoPk}" name="menuCost" value="${coupon.owCouponDetail}" style="display:none; height:35px;">
+									</td>
+									<td>
+										<button id="couponDelBtn" class="coupon_${coupon.owCouponInfoPk}" onclick="couponChange('coupon_${coupon.owCouponInfoPk}','coupon_edit_${coupon.owCouponInfoPk}');">수정</button>
+										<button id="couponDelBtn" class="coupon_${coupon.owCouponInfoPk}" onclick="couponDel();">삭제</button>
+										<button id="couponDelBtn" class="coupon_edit_${coupon.owCouponInfoPk}" onclick="couponUpdate();" style="display:none;">변경</button>
+										<button id="couponDelBtn" class="coupon_edit_${coupon.owCouponInfoPk}" onclick="couponChange('coupon_edit_${coupon.owCouponInfoPk}','coupon_${coupon.owCouponInfoPk}');" style="display:none; ">취소</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</c:if>

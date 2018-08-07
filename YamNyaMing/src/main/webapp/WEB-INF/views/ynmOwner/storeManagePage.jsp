@@ -9,13 +9,14 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeManage.css?ver=4">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerCategory.js?ver=1"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerStoreAdd.js?ver=1"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerMenuManage.js?ver=3"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerMenuManage.js?ver=6"></script>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -57,7 +58,6 @@
 						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
 						</jsp:include>
 						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
-						
 					</form>
 				</c:forEach>
 			</c:if>
@@ -209,24 +209,32 @@
 		<div class="store-info-div" style="display:none;">
 			<div id="enrollMenuList">
 				<c:if test="${menuInfoList!=null}">
-					<c:forEach var="menuTitle" items="${menuTitleGroup}">
-						<button class="menuTitleBtn" onclick="menuChangeMode('menu_title_${menuTitle}');"> ${menuTitle} </button>
+					<c:forEach var="menuTitle" items="${menuTitleGroup}" varStatus="status">
+						<c:choose>
+							<c:when test="${status.index eq 0}">
+								<div class="menuTitleBtn" onclick="menuChangeMode('menu_title_${menuTitle}', this);"> ${menuTitle} </div>
+							</c:when>
+							<c:otherwise>
+								<div class="menuTitleBtn-none" onclick="menuChangeMode('menu_title_${menuTitle}', this);"> ${menuTitle} </div>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					<c:forEach var="menu" items="${menuInfoList}">
-						<div class="menuTapClass" id="menu_title_${menu.menuTitle}" name="menu_title_${menu.owMenuInfoPk}" style="border:1px solid lightgray;">
+						<div class="menuTapClass" id="menu_title_${menu.menuTitle}" name=menu_title_${menu.owMenuInfoPk}">
 							<input type="hidden" name="menuIndex" value="${menu.owMenuInfoPk}">
-							메뉴 이름 :<%--  <span id="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span> --%>
-							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuTitle" value="${menu.subTitle}" > <br>
+							메뉴 이름 :<span class="menu_${menu.owMenuInfoPk}"> ${menu.subTitle} </span>
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuTitle" value="${menu.subTitle}" style="display:none;"> <br>
 							
-							메뉴 설명 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> --%> 
-							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuExplain" value="${menu.explain}" > <br>
+							메뉴 설명 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.explain}  </span> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuExplain" value="${menu.explain}" style="display:none;"> <br>
 							
-							메뉴 가격 : <%-- <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> --%> 
-							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuCost" value="${menu.menuCost}" "><br>
+							메뉴 가격 : <span class="menu_${menu.owMenuInfoPk}" > ${menu.menuCost} </span> 
+							<input type="text" class="menu_edit_${menu.owMenuInfoPk}" name="menuCost" value="${menu.menuCost}" style="display:none;"><br>
 							
-							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}')">메뉴 수정</button>
-							<button type="button" id="menu_${menu.owMenuInfoPk}" onclick="menuTextDelete('menu_title_${menu.owMenuInfoPk}', '${menu.owMenuInfoPk}')">메뉴 삭제</button>
-							<button type="button" id="menu_edit_${menu.owMenuInfoPk}" onclick="textMenuUpdate('${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}');" >수정 완료</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" class="menu_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}')" >메뉴 수정</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" class="menu_${menu.owMenuInfoPk}" onclick="menuTextDelete('menu_title_${menu.owMenuInfoPk}', '${menu.owMenuInfoPk}')">메뉴 삭제</button>
+							<button type="button" id="menu_edit_${menu.owMenuInfoPk}" class="menu_edit_${menu.owMenuInfoPk}" onclick="textMenuUpdate('${menu.owMenuInfoPk}','menu_edit_${menu.owMenuInfoPk}');" style="display:none;">수정 완료</button>
+							<button type="button" id="menu_${menu.owMenuInfoPk}" class="menu_edit_${menu.owMenuInfoPk}" onclick="menuEditMode('menu_edit_${menu.owMenuInfoPk}','menu_${menu.owMenuInfoPk}')" style="display:none;">취소</button>
 						</div>
 					</c:forEach>
 				</c:if>
@@ -282,10 +290,9 @@
 						<br>
 						<input type="text" id="owRecommandMenu" placeholder="예) 꽃등심" class="menuStyle">
 						<input type="text" id="owRecommandMenuPrice" placeholder="예) 30,000" class="priceStyle"><span> 원</span>
-						<label class="checkStyle"><input type="checkbox" id="checkPrice"> 변동가격</label>
-						<label><input type="checkbox"> 추천메뉴</label>
 						<label for="menuDesc" class="detailStyle">메뉴 상세 설명 (최대 100자)</label>
 						<textarea id="menuDesc" placeholder="예) 고유의 숙성방식으로 육즙과 풍미를 이끌어낸 등심과 안심"></textarea>
+						<br>
 						<button id="storeIndex" onclick="newMenuAdd(${sessonScope.currentStoreIndex});">메뉴 추가</button>
 					</div>
 				</div>

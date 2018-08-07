@@ -188,8 +188,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				
 				detailInfo.setOwStoreTip(tip);
 				detailInfo.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
-				detailInfo.setStoreBigType(1);
-				detailInfo.setStoreSmallType(1);
+				detailInfo.setStoreBigType(YNMTotalRefModel.getCateMainIndex(request.getParameter("owStoreBigType")));
+				detailInfo.setStoreSmallType(YNMTotalRefModel.getCateDetailIndex(request.getParameter("owStoreSmallType")));
 				detailInfo.setRecommandMenu(request.getParameter("owStoreRecommandMenuList"));
 				detailInfo.setStoreTableInfo(request.getParameter("owStoreTableInfo"));
 				detailInfo.setBudgetInfo(request.getParameter("owBudget"));
@@ -352,7 +352,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 			CouponEnroll couponEnroll = new CouponEnroll();
 			couponEnroll.setOwEntireFk(owner.getOwEntirePk());
-			couponEnroll.setOwStoreInfoFk(1);
+			couponEnroll.setOwStoreInfoFk(currentSelectStoreIndex(session));
 			couponEnroll.setOwCouponName(request.getParameter("owCouponName"));
 			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
 			Date startDate= new Date();
@@ -407,6 +407,39 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return view;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/couponUpdate.do")
+	public String couponUpdate(HttpSession session, HttpServletRequest request)
+	{
+		if(session.getAttribute("owner")!=null)
+		{
+			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			CouponEnroll couponEnroll = new CouponEnroll();
+			couponEnroll.setOwCouponInfoPk(Integer.parseInt(request.getParameter("couponIndex")));
+			couponEnroll.setOwEntireFk(owner.getOwEntirePk());
+			couponEnroll.setOwStoreInfoFk(currentSelectStoreIndex(session));
+			couponEnroll.setOwCouponName(request.getParameter("couponName"));
+			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
+			Date startDate= new Date();
+			Date expireDate= new Date();
+			try {
+				startDate = sdf.parse(request.getParameter("couponStartData"));
+				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			couponEnroll.setOwCouponStartDate(startDate);
+			couponEnroll.setOwCouponExpireDate(expireDate);
+			couponEnroll.setOwCouponDetail(request.getParameter("couponExplain"));
+			
+			int result = ynmOwnerServiceImpl.couponUpdate(couponEnroll);
+			return result+"";
+		}
+		return "0";
+	}
+	
 //	@Override
 //	public Strin
 	
@@ -421,7 +454,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		owner.setOwId(owId);
 		owner.setOwPw(owPw);
 		YNMOwner resultOwner = ynmOwnerServiceImpl.selectOneOwner(owner);
-		System.out.println("비밀번호 확인 체크" + resultOwner!=null);
 		if(resultOwner!=null)
 		{
 			session.setAttribute("ownerReCheck", resultOwner);
@@ -535,7 +567,9 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			view = storeList(session, request);
-			int storeIndex = currentSelectStoreIndex(session);
+			int storeIndex = (request.getParameter("storeIndex")!=null)?
+							 Integer.parseInt(request.getParameter("storeIndex")):
+								 currentSelectStoreIndex(session);
 			session.setAttribute("currentStoreIndex", storeIndex);
 			StoreInfoPageData storeInfoPD = ynmOwnerServiceImpl.storeInfoPageDataGet(storeIndex);
 			view.addObject("storeInfoPageData", storeInfoPD);
@@ -565,11 +599,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			storeInfoPD.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
 			storeInfoPD.setOwStoreTip(request.getParameter("owStoreTip"));
 			storeInfoPD.setRecommandMenu(request.getParameter("recommandMenu"));
-			storeInfoPD.setOwBigTypeFk(1);//Integer.parseInt(request.getParameter("owBigTypeFk")));
-			storeInfoPD.setOwSmallTypeFk(1);//Integer.getParameter);
+			storeInfoPD.setOwBigTypeFk(YNMTotalRefModel.getCateMainIndex(request.getParameter("owBigTypeFk")));
+			storeInfoPD.setOwSmallTypeFk(YNMTotalRefModel.getCateDetailIndex(request.getParameter("owSmallTypeFk")));//Integer.getParameter);
 			storeInfoPD.setStoreTableInfo(request.getParameter("storeTableInfo"));
 			storeInfoPD.setOwSubInfo(request.getParameter("owSubInfo"));
 			storeInfoPD.setOwDrinkListInfo(request.getParameter("owDrinkListInfo"));
+			
 			
 			int result = ynmOwnerServiceImpl.storeInfoEdit(storeInfoPD);
 			if(result>0)
@@ -594,7 +629,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
-			String storeTapType = request.getParameter("storeTapType");
+			String storeTapType = request.getParameter("storeTapType")!=null?request.getParameter("storeTapType"):"정보";
 			int storeIndex = currentSelectStoreIndex(session);//request.getParameter("storeIndex"));
 			int tapOrder = 0;
 			
@@ -983,7 +1018,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		int bookIndex = Integer.parseInt(request.getParameter("bookIndex"));
 		String bookReason = request.getParameter("bookOption");
 		String bookState = request.getParameter("bookState");
-		System.out.println(bookState);
 		YNMBook bookVo = new YNMBook();
 		bookVo.setBookNo(bookIndex);
 		bookVo.setBookOption(bookReason);
@@ -1002,7 +1036,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
 			String photoRoute= servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\boardP_");
 			String photoSaveRoute = servletContext.getRealPath("\\resources\\image\\owner\\"+owner.getOwId()+"\\storeMenuPhoto\\");
-			System.out.println(m_request);
 			String originName= "test0101";//m_request.getOriginalFilename();
 			String remakeName=  System.currentTimeMillis()+"_"+owner.getOwId()+"_" + originName;
 			
