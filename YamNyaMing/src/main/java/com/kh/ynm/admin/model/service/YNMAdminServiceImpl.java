@@ -237,6 +237,5 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		
 		return storePageDataResult;
 	}
-	
 
 }

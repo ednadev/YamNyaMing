@@ -402,6 +402,10 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMStoreUnderReview> ysurList=memberDAO.underReview(sqlSession,storeReviewNo);
 		return ysurList;
 	}
+	public ArrayList<YNMStoreReview> jjimMyInfoReviewCheck(int memberEntireNo) {
+		ArrayList<YNMStoreReview> list=memberDAO.jjimMyInfoReviewCheck(sqlSession,memberEntireNo);
+		return list;
+	}
 
 
 

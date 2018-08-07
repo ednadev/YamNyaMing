@@ -138,7 +138,6 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public int adminNoticeWrite(SqlSessionTemplate sqlSession, Notice vo) {
 		return sqlSession.insert("admin.adminNoticeWrite", vo);
 	}
-	
 
 
 	

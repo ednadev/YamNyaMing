@@ -15,7 +15,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=6"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=7"></script>
 </head>
 <script>
 function openmodal(storeReviewNo){
@@ -89,6 +89,22 @@ function openImagemodal(storeReviewNo){
 	});	
 	
 }
+
+function insertUnderReview(storeReviewNo,memberEntireNo){
+		var underReviewContent=$("#"+storeReviewNo).val();
+		var divId=parseInt(storeReviewNo)+0.1;
+		console.log(divId);
+	 		$.ajax({
+				url : "/storeUnderReviewInsert.do",
+				data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
+				success : function(data){
+					
+					if(data==1){
+					
+					}
+				}
+			}); 
+		}
 </script>
 <body>
 <header id="member-search-header">
@@ -229,7 +245,8 @@ function openImagemodal(storeReviewNo){
 		<div class="member-detail-wrapper">
 			<h3>${store.owStoreName}</h3>
 			<p>${store.owStoreAddrFirst} > ${store.owStoreAddrFinal} ㆍ ${store.storeCateDetailName}</p>
-			<p>대기인원 0 추천 ${store.favoriteTotal}</p>
+			<p>대기인원 0 추천<label style="color:white;" id="stroeFavoriteNum"> ${store.favoriteTotal}</label> </p>
+			<c:if test="${sessionScope.member!=null}">
 			<c:if test="${favoriteChk==1}">
 			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">
 				<img style=width:100%;height:100%;cursor:pointer; src='${pageContext.request.contextPath}/resources/image/member/search/heart-click.png'>
@@ -240,7 +257,13 @@ function openImagemodal(storeReviewNo){
 				<img style=width:100%;height:100%;cursor:pointer; src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 			</div>
 			</c:if>
+			</c:if>
 			
+			<c:if test="${sessionScope.member==null }">
+				<div class="heart" onclick="nomember();">
+				<img style=width:100%;height:100%;cursor:pointer; src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+			</div>
+			</c:if>
 			<p>추천</p>
 			<hr>
 			<div class="main-detail">
@@ -451,6 +474,7 @@ function showSlides(n) {
 			<div>
 				<div>
 					<div id="profile-image">
+					
 						<c:if test="${r.memberUploadPhotoNo eq 1}">
 						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
 						</c:if>
@@ -476,7 +500,7 @@ function showSlides(n) {
 					<button onclick="nomember();">팔로우</button>
 					</c:if>
 				</div>
-				<div>
+				<div id="${r.storeReviewNo + 0.1 }">
 					<p>
 						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
 						<span class="star-full"></span>
@@ -604,20 +628,7 @@ function showSlides(n) {
 					</c:if>
 
   				</div>
-  				
-  				<script>
-  						function insertUnderReview(storeReviewNo,memberEntireNo){
-  						var underReviewContent=$("#underReviewContent").val();
-  						
-  					 		$.ajax({
-  								url : "/storeUnderReviewInsert.do",
-  								data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
-  								success : function(data){
-									location.reload();
-  								}
-  							});
-  						}
-  				</script>
+
   				<c:forEach items="${r.ysurList}" var="under">
   				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
   				<div>
@@ -625,7 +636,7 @@ function showSlides(n) {
 						<c:if test="${under.memberUploadPhotoNo eq 1}">
 						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
 						</c:if>
-						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<c:if test="${under.memberUploadPhotoNo ne 1}">	
 						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
 						</c:if>
   					</div>
@@ -653,9 +664,13 @@ function showSlides(n) {
   				
   					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
 					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
-  					<input type="text" id="underReviewContent" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<input type="text" id="${r.storeReviewNo}" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<c:if test="${sessionScope.member!=null }">
   					<input type="button" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
-  				
+  					</c:if>
+  					<c:if test="${sessionScope.member==null }">
+  					<input type="button" onclick="nomember();" value="등록">
+  					</c:if>
 
   				</div>
   				
