@@ -36,5 +36,6 @@
 		<typeAlias type="com.kh.ynm.common.model.vo.StoreCategoryDetail" alias="storeCategoryDetail"/>
 		<typeAlias type="com.kh.ynm.owner.model.vo.StoreBoardData" alias="storeBoardData"/>
 		<typeAlias type="com.kh.ynm.member.model.vo.YNMSearchPaging" alias="searchPaging"/>
+		<typeAlias type="com.kh.ynm.admin.model.vo.BoardPaging" alias="ownerPageData"/>
 	</typeAliases>
 </configuration>
