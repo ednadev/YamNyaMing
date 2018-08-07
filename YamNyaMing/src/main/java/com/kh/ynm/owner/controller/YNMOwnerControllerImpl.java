@@ -288,7 +288,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			
 			return "redirect:/";
 		}
-		return null;
+		return "ynmOwner/notLogin";
 	}
 
 
@@ -296,7 +296,27 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping(value="/ownerSignUp.do")
 	public String ynmOwnerSignUp(HttpSession session, YNMOwner owner) {
 		int result = ynmOwnerServiceImpl.ynmOwnerSignUp(owner);
-		return "redirect:/";
+		if(result>0)
+		{
+			YNMOwner resultOwner = ynmOwnerServiceImpl.selectOneOwner(owner);
+			if(resultOwner!=null)
+			{
+				session.setAttribute("owner", resultOwner);
+				if(session.getAttribute("member")!=null)
+				{
+					session.removeAttribute("member");
+				}
+				return "redirect:/";
+			}
+			else
+			{// 로그인 실패.
+				return "ynmOwner/ynmOwnerError/ownerLoginFail";
+			}
+		}
+		else
+		{
+			return "ynmOwner/signUpFail";
+		}
 	}
 	
 	
@@ -429,6 +449,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(session.getAttribute("owner")!=null) {
 			view = storeManageEnrollList(session, request);
 			view.setViewName("ynmOwner/ownerMyPage");
+		}else {
+			view.setViewName("ynmOwner/notLogin");
 		}
 		return view;
 	}
@@ -449,6 +471,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			StorePageData spd = ynmOwnerServiceImpl.ynmStoreNavi(currentPage,recordCountPerPage,naviCountPerPage,ownerIndex);
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
+		}else {
+			view.setViewName("ynmOwner/");
 		}
 		return view;
 	}
@@ -528,34 +552,39 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping("/storeInfoEdit.do")
 	public ModelAndView storeInfoEdit(HttpSession session, HttpServletRequest request)
 	{
-		StoreInfoPageData storeInfoPD = new StoreInfoPageData();
-		storeInfoPD.setOwStoreInfoPk(currentSelectStoreIndex(session));
-		storeInfoPD.setOwStoreName(request.getParameter("owStoreName"));
-		storeInfoPD.setOwStoreTel(request.getParameter("owStoreTel"));
-		storeInfoPD.setOwStoreAddr(request.getParameter("owStoreAddr"));
-		storeInfoPD.setOwStoreUrl(request.getParameter("owStoreUrl"));
-		storeInfoPD.setOwStoreWorkingTime(request.getParameter("owStoreWorkingTime"));
-		storeInfoPD.setBudgetInfo(request.getParameter("budgetInfo"));
-		storeInfoPD.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
-		storeInfoPD.setOwStoreTip(request.getParameter("owStoreTip"));
-		storeInfoPD.setRecommandMenu(request.getParameter("recommandMenu"));
-		storeInfoPD.setOwBigTypeFk(1);//Integer.parseInt(request.getParameter("owBigTypeFk")));
-		storeInfoPD.setOwSmallTypeFk(1);//Integer.getParameter);
-		storeInfoPD.setStoreTableInfo(request.getParameter("storeTableInfo"));
-		storeInfoPD.setOwSubInfo(request.getParameter("owSubInfo"));
-		storeInfoPD.setOwDrinkListInfo(request.getParameter("owDrinkListInfo"));
 		ModelAndView view = new ModelAndView();
-		int result = ynmOwnerServiceImpl.storeInfoEdit(storeInfoPD);
-		if(result>0)
-		{
-			int resultDetail = ynmOwnerServiceImpl.storeInfoDetailEdit(storeInfoPD);
-			if(resultDetail>0)
+		if(session.getAttribute("owner")!=null) {
+			StoreInfoPageData storeInfoPD = new StoreInfoPageData();
+			storeInfoPD.setOwStoreInfoPk(currentSelectStoreIndex(session));
+			storeInfoPD.setOwStoreName(request.getParameter("owStoreName"));
+			storeInfoPD.setOwStoreTel(request.getParameter("owStoreTel"));
+			storeInfoPD.setOwStoreAddr(request.getParameter("owStoreAddr"));
+			storeInfoPD.setOwStoreUrl(request.getParameter("owStoreUrl"));
+			storeInfoPD.setOwStoreWorkingTime(request.getParameter("owStoreWorkingTime"));
+			storeInfoPD.setBudgetInfo(request.getParameter("budgetInfo"));
+			storeInfoPD.setOwStoreLineComment(request.getParameter("owStoreLineComment"));
+			storeInfoPD.setOwStoreTip(request.getParameter("owStoreTip"));
+			storeInfoPD.setRecommandMenu(request.getParameter("recommandMenu"));
+			storeInfoPD.setOwBigTypeFk(1);//Integer.parseInt(request.getParameter("owBigTypeFk")));
+			storeInfoPD.setOwSmallTypeFk(1);//Integer.getParameter);
+			storeInfoPD.setStoreTableInfo(request.getParameter("storeTableInfo"));
+			storeInfoPD.setOwSubInfo(request.getParameter("owSubInfo"));
+			storeInfoPD.setOwDrinkListInfo(request.getParameter("owDrinkListInfo"));
+			
+			int result = ynmOwnerServiceImpl.storeInfoEdit(storeInfoPD);
+			if(result>0)
 			{
-				view = storeDetailInfo(session, request);
+				int resultDetail = ynmOwnerServiceImpl.storeInfoDetailEdit(storeInfoPD);
+				if(resultDetail>0)
+				{
+					view = storeDetailInfo(session, request);
+				}
+				else System.out.println("상세정보 업데이트 실패");
 			}
-			else System.out.println("상세정보 업데이트 실패");
+			else System.out.println("일반정보 업데이트 실패");
+		}else {
+			view.setViewName("ynmOwner/");
 		}
-		else System.out.println("일반정보 업데이트 실패");
 		return view;
 	}
 	
@@ -713,6 +742,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 					view.addObject("storeTapType", tapOrder);
 				}
 			}
+		}else {
+			view.setViewName("ynmOwner/notLoginError");
 		}
 		return view;
 	}
@@ -820,7 +851,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 	@RequestMapping("/storeMenuPhotoUpload.do")
 	public ModelAndView storeMenuPhotoUpload(MultipartHttpServletRequest menuImageFile, HttpSession session,  HttpServletRequest request)
 	{
-		
 		List<MultipartFile> files = menuImageFile.getFiles("menuImageFile");
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
@@ -871,6 +901,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view.addObject("storeTapType", tapOrder);
 				view.setViewName("ynmOwner/storeManagePage");
 			}
+		}else {
+			view.setViewName("ynmOwner/notLoginError");
 		}
 		return view;
 	}
