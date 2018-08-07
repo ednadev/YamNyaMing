@@ -368,10 +368,4 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		int result = adminDAO.storeNo(sqlSession,owStoreInfoPk);
 		return result;
 	}
-
-	
-
-
-
-
 }

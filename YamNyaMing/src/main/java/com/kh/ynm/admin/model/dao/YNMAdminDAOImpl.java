@@ -61,11 +61,13 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 		List list = sqlSession.selectList("admin.storeList");
 		return (ArrayList<YNMStoreInfo>) list;
 	}
-	//강등
+	
+	//관리자 강등
 	public int dounGrade(SqlSessionTemplate sqlSession, String ad_id) {
 		int list = sqlSession.update("admin.dounGrade",ad_id);
 		return list;
 	}
+	
 	//가입 수락
 	public int upGrade(SqlSessionTemplate sqlSession, String ad_id) {
 		int list = sqlSession.update("admin.upGrade",ad_id);
@@ -137,6 +139,10 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	
 	//글쓰기
 	public int adminNoticeWrite(SqlSessionTemplate sqlSession, Notice vo) {
+		System.out.println(vo.getSubject());
+		System.out.println(vo.getContents());
+		System.out.println(vo.getUserId());
+		System.out.println(vo.getUserNickname());
 		return sqlSession.insert("admin.adminNoticeWrite", vo);
 	}
 	//가게 승인

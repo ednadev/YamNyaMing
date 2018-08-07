@@ -280,7 +280,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		}
 		else
 		{
-			return "ynmAdmin/adminError/error";
+			return "ynmAdmin/adminError/fixError";
 		}
 	}
 	//공지사항 글수정
@@ -357,22 +357,15 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	{
 		String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
 		String writeId = request.getParameter("ad_id");
-		if(adminId.equals("admin")||adminId.equals(writeId))
-		{
-			String subject = request.getParameter("owBoardTitle");
-			String contents = request.getParameter("boardInfo");
-			String ad_nickname = request.getParameter("ad_nickname");
-			vo.setSubject(subject);
-			vo.setContents(contents);
-			vo.setUserId(writeId);
-			vo.setUserNickname(ad_nickname);
-			int write = ynmAdminServiceImpl.adminNoticeWrite(vo);
-			return "ynmAdmin/adminSuccess/boardInsertSuccess";
-		}
-		else
-		{
-			return "ynmAdmin/adminError/error";
-		}
+		String subject = request.getParameter("owBoardTitle");
+		String contents = request.getParameter("boardInfo");
+		String ad_nickname = request.getParameter("ad_nickname");
+		vo.setSubject(subject);
+		vo.setContents(contents);
+		vo.setUserId(writeId);
+		vo.setUserNickname(ad_nickname);
+		int write = ynmAdminServiceImpl.adminNoticeWrite(vo);
+		return "ynmAdmin/adminSuccess/boardInsertSuccess";
 	}
 	//관리자 전체보기
 	@RequestMapping(value="/adminList.do")
@@ -514,6 +507,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		String owStoreInfoPk = request.getParameter("owStoreInfoPk");
 		int result = ynmAdminServiceImpl.storeYes(owStoreInfoPk);
 		return "ynmAdmin/adminSuccess/storeYesNo";
-	}		
+	}
+	
 
 }

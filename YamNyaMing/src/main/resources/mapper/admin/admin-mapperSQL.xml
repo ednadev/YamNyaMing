@@ -360,7 +360,9 @@ ADMIN_ACCESS_GRADE_FK 	= #{ad_grade}
 
 <!-- 글쓰기 -->
 <insert id="adminNoticeWrite" parameterType="notice">
-insert into NOTICE_ADMIN_TB values(notice_admin_tb_SEQ.nextval,#{subject},#{contents},#{userId},#{userNickname},sysdate)
+insert into 
+NOTICE_ADMIN_TB 
+values(notice_admin_tb_SEQ.nextval,#{subject},#{contents},#{userId},#{userNickname},SYSDATE)
 </insert>
 
 

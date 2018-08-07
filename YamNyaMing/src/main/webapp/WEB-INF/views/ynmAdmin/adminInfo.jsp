@@ -88,7 +88,7 @@
             </div>
 
 </form>
-
+<a href="/adminChat.do" >실험</a>
 <!-- 내용끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>

@@ -9,26 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/admin/adminBoard.js"></script>
-
-<!-- include jquery -->
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- include libraries BS3 -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-<!-- include summernote -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/summernote/summernote.css?ver=1">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/owner/summernote/summernote.js?ver=1"></script>
-
 </head>
 <body>
 	<header id="admin-login-header">
@@ -49,20 +35,6 @@
 		</ul>
 	</nav>
 <!-- 내용 시작 -->
-<div class="board-area">
-
-<form id="summernote-form" action="/adminNoticeWrite.do" method="post" enctype="multipart/form-data">
-<center><input type="text" name="owBoardTitle" placeholder="제목 입력" style="width:100%; height:70px; float:center;"required></center>
-<textarea name="boardInfo" class="summernote" placeholder="내용을 입력해주세요." value="" required></textarea>
-<input type="hidden" value="${sessionScope.admin.ad_id}" id="ad_id" name="ad_id"/>
-<input type="hidden" value="${sessionScope.admin.ad_nickname}" id="ad_nickname" name="ad_nickname"/>
-
-<input type="submit" value="글쓰기" class="btn">
-<input type="button" value="취소" class="btn" onclick="history.back(-1);">
-
-</form>
-
-</div>
 
 
 <!-- 내용 끝 -->
