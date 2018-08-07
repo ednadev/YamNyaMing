@@ -406,6 +406,11 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMStoreReview> list=memberDAO.jjimMyInfoReviewCheck(sqlSession,memberEntireNo);
 		return list;
 	}
+	//사용자가 찜한 가게 목록
+	public ArrayList<YNMSearch> storeAllList(int memberEntireNo) {
+		ArrayList<YNMSearch> list=memberDAO.storeAllList(sqlSession,memberEntireNo);
+		return list;
+	}
 
 
 

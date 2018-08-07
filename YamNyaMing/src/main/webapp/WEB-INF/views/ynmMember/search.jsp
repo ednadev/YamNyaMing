@@ -1195,7 +1195,7 @@
 	</div>
 	<input type="submit" value="상세정보 검색하기">
 	</form>
-	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
+	<h4>총 <span>${pageNaviData.recordTotalCount }</span>개가 검색되었습니다</h4>
 	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
 	<div class="search-page">
 		<c:forEach items="${searchList}" var="search">
@@ -1267,8 +1267,8 @@
 	           	<form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
 	            </form> -->
-	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}','${search.owStoreAddrFinal}','${search.storeCateMainName }');">예약하기</button>
-				<button>리뷰쓰기</button>
+	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}','${search.owStoreAddrFinal}','${search.storeCateMainName }','${search.owStoreInfoPk}');">예약하기</button>
+				<button>리뷰쓰기 </button>
 			</div>
 		</c:forEach>
 		<script>
@@ -1286,7 +1286,6 @@
 	              reserve.submit(); */
 	           }
         </script>  	
-        ${pageNaviData.startNavi}  그리고 ${pageNaviData.endNavi}
 		<c:if test="${pageNaviData!=null}">
 			<div id="pagingNumber">
 				<c:if test="${pageNaviData.startNavi!=1}">
@@ -1328,11 +1327,11 @@
   <div class="modal-content">
     <span class="close">&times;</span>
 	<c:if test="${reservationResult==null}">    
-    <div id="title"></div>
+    
 		<form action="/bookInsert.do" method="post">
+		<div id="title"></div>
 			<input type="hidden" name="bookOrderCount" value="1">
 			<%-- <input type="text" name="storeEntireNo" value="${reservation.owStoreAddrFirst}"> --%>
-			<input type="hidden" name="storeEntireNo" value="${reservation.owStoreInfoPk}">
 			<div class="check">
 				<input type="radio" name="bookType" value="s" id="personal" checked><label for="personal">일반</label>
 				<input type="radio" name="bookType" value="g" id="group"><label for="group">단체</label>
@@ -1483,11 +1482,13 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
-function modalPopup(storeName,storeAddrFirst,storeAddrFinal,storeCateMainName) {
+function modalPopup(storeName,storeAddrFirst,storeAddrFinal,storeCateMainName,owStoreInfoPk) {
+	console.log(owStoreInfoPk);
     modal.style.display = "block";
     $('#title').html(
     		"<h1>" + storeName + "</h1>"
     		+"<p>" + storeAddrFirst + " > " + storeAddrFinal + " ㆍ " + storeCateMainName + "</p>"
+    		+"<input type='hidden' name='storeEntireNo' value='"+owStoreInfoPk+"'>"
     );
 }
 
