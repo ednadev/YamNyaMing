@@ -21,9 +21,7 @@
 		<input type="text" name="ad_id" placeholder="아이디">
 		<input type="password" name="ad_pw" placeholder="비밀번호">
 		<input type="submit" value="로그인">
-		
 	</form>
-
 </section>
 
 <footer id="admin-login-footer">

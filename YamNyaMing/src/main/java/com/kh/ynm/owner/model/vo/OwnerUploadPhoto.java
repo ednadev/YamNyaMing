@@ -100,6 +100,7 @@ public class OwnerUploadPhoto {
 	public String getOwPhotoViewRoute() {
 		return owPhotoViewRoute;
 	}
+	
 
 
 	public void setOwPhotoViewRoute(String owPhotoViewRoute) {

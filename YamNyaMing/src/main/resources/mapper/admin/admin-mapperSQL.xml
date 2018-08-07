@@ -2,16 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
 
+
 <!-- 관리자 가입 -->
 <insert id="insertAdmin" parameterType="admins">
 insert into ADMIN_INFO_TB values (admin_info_tb_SEQ.NEXTVAL,#{ad_id},#{ad_password},#{ad_nickname},#{ad_grade}) 
 </insert>
+
+
 <!-- 관리자 아이디체크 -->
 <select id="adminIdCheck" parameterType="admins" resultType="admins">
 SELECT ADMIN_NICKNAME as ad_nickname 
 FROM admin_info_tb 
 WHERE ADMIN_ID = #{ad_id}
 </select>
+
 
 <!-- 사용자 전체보기 -->
 <select id="allMemberView" parameterType="members" resultType="members">
@@ -28,18 +32,6 @@ MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
 from member_entire_tb
 </select>
 
-<!-- 점주 전체보기 -->
-<select id="allOwnerView" parameterType="owner" resultType="owner">
-SELECT 
-ow_entire_pk as owEntirePk, 
-OW_ID as owId, 
-OW_NAME as owName,
-OW_EMAIL as owEmail,
-OW_PHONE as phone,
-OW_REGDATE as owRegDate, 
-OW_BANK_ACCOUNT as owBankAccount 
-from OWNER_ENTIRE_TB
-</select>
 
 <!-- 점주 검색 -->
 <select id="ownerSearch" parameterType="map" resultType="owner">
@@ -61,6 +53,7 @@ OW_ID LIKE '%'|| #{keyword} ||'%'
 </choose>
 </where>
 </select>
+
 
 <!-- 사용자 검색 -->
 <select id="memberSearch" parameterType="map" resultType="members">
@@ -100,6 +93,7 @@ ADMIN_NICKNAME as ad_nickname,
 ADMIN_ACCESS_GRADE_FK as ad_grade 
 from admin_info_tb where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
 </select>
+
 
 <!-- 통계 -->
 <select id="statAdmin" resultType="statistics">
@@ -186,17 +180,19 @@ SELECT
 FROM DUAL
 </select>
 
+
 <!-- 통계에서 가게순위 리스트  -->
 <select id="storeList" resultType="com.kh.ynm.admin.model.vo.YNMStoreInfo">
 select 
 distinct 
 ow_store_name as name,
-(select count(ow_store_info_pk) from member_book_tb where ow_entire_fk = ow_store_info_pk) as book,
+(select count(ow_store_info_pk) from member_book_tb where STORE_ENTIRE_FK = ow_store_info_pk) as book,
 (select avg(ow_store_review_star) from member_store_review_tb where ow_store_info_fk = ow_store_info_pk)as grade,
 (select count(mb_favorite_pk) from member_favorite_tb where ow_store_info_fk = ow_store_info_pk)as favorite,
 (select count(ow_store_jjim_check)from member_store_review_tb where ow_store_info_pk = ow_store_info_fk and ow_store_jjim_check='j')as jjim
-from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk = b.ow_entire_fk order by book desc
+from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk = b.STORE_ENTIRE_FK order by book desc
 </select>
+
 
 <!-- 관리자 수락/강등에서 관리자리스트 -->
 <select id="adminList" resultType="admins">
@@ -216,12 +212,15 @@ UPDATE admin_info_tb
 SET ADMIN_ACCESS_GRADE_FK = 2 
 WHERE ADMIN_ID = #{ad_id}
 </update>
+
+
 <!-- 관리자 승급 -->
 <update id="upGrade">
 UPDATE admin_info_tb
 SET ADMIN_ACCESS_GRADE_FK = 1
 WHERE ADMIN_ID = #{ad_id}
 </update>
+
 
 <!-- 가게정보 사진 -->
 <select id="viewStorePhoto" resultType="String">
@@ -230,9 +229,9 @@ ow_photo_route as photoViewRoute
 from owner_store_photo_tb
 where ow_store_info_fk=#{storeUploadPhotoNo}
 </select>
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
-
-<!--게시판 페이징-->
+<!--공지사항 페이징-->
 <select id="noticeList" resultType="notice" parameterType="noticePageData">
 select
 NOTICE_NO_PK as noticeNo,
@@ -242,6 +241,20 @@ NOTICE_USERID as userId,
 NOTICE_NICKNAME as userNickname,
 NOTICE_REGDATE as regDate
 from (select NOTICE_ADMIN_TB.*,row_number() over(order by NOTICE_NO_PK desc) as num from NOTICE_ADMIN_TB)
+where num between #{startPage} and #{endPage}
+</select>
+
+<!-- 점주 전체보기 페이징 -->
+<select id="allOwnerView" resultType="owner" parameterType="ownerPageData">
+SELECT 
+ow_entire_pk as owEntirePk, 
+OW_ID as owId, 
+OW_NAME as owName,
+OW_EMAIL as owEmail,
+OW_PHONE as phone,
+OW_REGDATE as owRegDate, 
+OW_BANK_ACCOUNT as owBankAccount 
+from (select OWNER_ENTIRE_TB.*,row_number() over(order by ow_entire_pk desc) as num from OWNER_ENTIRE_TB)
 where num between #{startPage} and #{endPage}
 </select>
 
@@ -263,15 +276,20 @@ where OW_ENTIRE_FK = #{owEntirePk} AND
 num between #{startPage} and #{endPage}
 </select>
 
-
-<!--게시판 페이지 넘버링 -->
+<!--공지사항 페이지 넘버링 -->
 <select id="noticeTotal" parameterType="noticePageData" resultType="int">
 select count(*) from NOTICE_ADMIN_TB
 </select>
 
+
 <!--가게 신청목록 페이지 넘버링 -->
 <select id="storeTotal" parameterType="storePageData" resultType="int">
 select count(*) from OWNER_STORE_INFO_TB
+</select>
+
+<!-- 점주목록 페이징 넘버링 -->
+<select id="ownerTotal" parameterType="ownerPageData" resultType="int">
+select count(*) from OWNER_ENTIRE_TB
 </select>
 
 
@@ -297,8 +315,9 @@ where NOTICE_NO_PK = #{noticeNo}
  where NOTICE_NO_PK = #{noticeNo}
 
 
-
 </update>
+
+
 <!-- 글 삭제 -->
 <delete id="adminBoardDelete" parameterType="notice">
 delete from NOTICE_ADMIN_TB where NOTICE_NO_PK = #{noticeNo}
@@ -324,7 +343,29 @@ insert into NOTICE_ADMIN_TB values(notice_admin_tb_SEQ.nextval,#{subject},#{cont
 </insert>
 
 
+<!-- 가게 정지 -->
+<update id="storeNo">
+UPDATE owner_store_info_tb 
+SET store_enroll_rq_state = 1 
+WHERE OW_STORE_INFO_PK = #{owStoreInfoPk}
+</update>
+
+
+<!-- 가게 승인 -->
+<update id="storeYes">
+UPDATE owner_store_info_tb
+SET store_enroll_rq_state = 2
+WHERE OW_STORE_INFO_PK = #{owStoreInfoPk}
+</update>
+
+<!-- 가게 사진
+<select id="adStorePic" parameterType="storeInfoPageData" resultType="int">
+select 
+ow_photo_route as owStoreHeadPhoto 
+from owner_store_photo_tb
+where ow_store_info_fk = #{num}
+</select>-->
+<!-- 끝  -->
+
 
 </mapper>
-
-

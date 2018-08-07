@@ -131,6 +131,52 @@
 		</table>
 	</div>
 </div>
+<!-- 내용끝 -->
+ <!-- 페이지 -->
+    <c:if test="${pageNaviData!=null}">
+    	
+					<div id="pagingNumber">
+						<c:if test="${pageNaviData.startNavi!=1}">
+							<form action="/allOwnerView.do" method="post">
+								<!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+								<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+								<input type="submit" class="paging-num" value="<">
+							</form>
+						</c:if>
+						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+							<c:if test="${pageNaviData.currentPage==i}">
+								<form action="/allOwnerView.do" method="post">
+								   <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+							<c:if test="${pageNaviData.currentPage!=i}">
+								<form action="/allOwnerView.do" method="post">
+								    <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
+									<input type="hidden" name="currentPage" value="${i}"> 
+									<input type="submit" class="paging-num" value="${i}">
+								</form>
+							</c:if>
+						</c:forEach>
+						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+							<form action="/allOwnerView.do" method="post">	
+							  <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> --> 
+								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+								<input type="submit"  class="paging-num"  value=">">
+							</form>
+						</c:if>
+					</div>
+			
+				</c:if>
+		
+
+<script>
+function goPage(pages, lines) {
+    location.href = '?' + "pages=" + pages;
+}
+</script>
+<!-- 페이징 끝 -->
 	<footer id="admin-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

@@ -15,6 +15,7 @@ import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
@@ -37,11 +38,7 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 		return (ArrayList<YNMMember>) list;
 		
 	}	
-    //점주 전체보기
-    public ArrayList<YNMOwner> allOwnerView(SqlSessionTemplate sqlSession) {
-    	List list = sqlSession.selectList("admin.allOwnerView");
-		return (ArrayList<YNMOwner>) list;
-	}
+
     //점주 검색
 	public ArrayList<YNMOwner> OwnerSearch(SqlSessionTemplate sqlSession,String combo,String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -62,12 +59,6 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public YNMAdmin adminLogin(SqlSessionTemplate sqlSession, YNMAdmin vo) {
 		return sqlSession.selectOne("admin.adminLogin",vo);
 	}
-	//오너 블랙(예정)
-	public int ownerBlock(YNMOwner vo, SqlSessionTemplate sqlSession) {
-		System.out.println(vo.getOwId());
-		return sqlSession.update("admin.ownerBlock",vo);
-	}
-	
 	//통계에서 그래프와 회원수
 	public AdminStatistics statAdmin(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("admin.statAdmin");
@@ -91,31 +82,35 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public int upGrade(SqlSessionTemplate sqlSession, String ad_id) {
 		int list = sqlSession.update("admin.upGrade",ad_id);
 		return list;
-	}
-
-
+	}	
 	//공지사항 페이징 
 	@Override
 	public ArrayList<Notice> noticeListPaging(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
 		List list= sqlSession.selectList("admin.noticeList", noticePageData);
 		return (ArrayList<Notice>)list;
 	}
-	
-	//점주  가게신청정보 페이징
+    //점주 전체보기 페이징
+    public ArrayList<YNMOwner> allOwnerView(SqlSessionTemplate sqlSession, BoardPaging ownerPageData) {
+    	List list = sqlSession.selectList("admin.allOwnerView",ownerPageData);
+		return (ArrayList<YNMOwner>) list;
+	}
+	//점주  가게신청정보  페이징
 	public ArrayList<StoreInfoPageData> storeListPaging(SqlSessionTemplate sqlSession,BoardPaging storePageData) {
 		List list= sqlSession.selectList("admin.ownerStoreList",storePageData);
 		return (ArrayList<StoreInfoPageData>)list;
 	}
-	
 	//공지사항 페이징(토탈)
 	@Override
 	public int noticeGetTotal(SqlSessionTemplate sqlSession, BoardPaging noticePageData) {
 		return sqlSession.selectOne("admin.noticeTotal", noticePageData);
 	}
-	
 	//가게신청 페이징(토탈)
 	public int storeGetTotal(SqlSessionTemplate sqlSession, BoardPaging storePageData) {
 		return sqlSession.selectOne("admin.storeTotal", storePageData);
+	}
+	//점주 페이징(토탈)
+	public int ownerGetTotal(SqlSessionTemplate sqlSession, BoardPaging ownerPageData) {
+		return sqlSession.selectOne("admin.ownerTotal", ownerPageData);
 	}
 	//글보기
 	public Notice noticeView(SqlSessionTemplate sqlSession, int noticeNo) {
@@ -138,25 +133,17 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public int adminNoticeWrite(SqlSessionTemplate sqlSession, Notice vo) {
 		return sqlSession.insert("admin.adminNoticeWrite", vo);
 	}
-
-
+	//가게 승인
+	public int storeYes(SqlSessionTemplate sqlSession, String owStoreInfoPk) {
+		int list = sqlSession.update("admin.storeYes",owStoreInfoPk);
+		return list;
+	}
+	//가게 정지
+	public int storeNo(SqlSessionTemplate sqlSession, String owStoreInfoPk) {
+		int list = sqlSession.update("admin.storeNo",owStoreInfoPk);
+		return list;
+	}
 	
 
-	
-	
 
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-	
 }

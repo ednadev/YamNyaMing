@@ -26,6 +26,7 @@ import com.kh.ynm.admin.model.vo.YNMAdmin;
 import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.owner.model.vo.CouponEnroll;
 import com.kh.ynm.owner.model.vo.CouponPageData;
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.StoreInfoPageData;
 import com.kh.ynm.owner.model.vo.StorePageData;
 import com.kh.ynm.owner.model.vo.StoreTitleData;
@@ -40,16 +41,12 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	@Autowired
 	@Qualifier(value="YNMAdminService")
 	private YNMAdminServiceImpl ynmAdminServiceImpl;
-	
-
 	//관리자 페이지로 
 	@RequestMapping(value="/enrollAdmin.do")
 	public String insertAdmin(HttpSession session,YNMAdmin vo) 
 	{
 		return "ynmAdmin/enrollAdmin";	
 	}
-	
-	
 	//관리자 가입
 	@RequestMapping(value="/enrollAdmin2.do")
 	public String insertMember(HttpServletRequest request, HttpSession session,YNMAdmin vo) 
@@ -63,73 +60,77 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		System.out.println(vo.getAd_nickname());
 		System.out.println(vo.getAd_password());
 		System.out.println(vo.getAd_grade());
-			int result = ynmAdminServiceImpl.enrollAdmin(vo);
-			if(result>0)
-			{
-				
-				return "ynmAdmin/ynmAdmin";	
-			}else {
-				return "ynmAdmin/adminError/error";	
-			}
+		int result = ynmAdminServiceImpl.enrollAdmin(vo);
+		if(result>0)
+		{
+			return "ynmAdmin/ynmAdmin";	
+		}
+		else 
+		{
+			return "ynmAdmin/adminError/error";	
+		}
 	}
-	
-	
-		//일반회원 전체보기
-		@RequestMapping(value="/allMemberView.do")
-		public Object allMemberView(HttpSession session) 
-		{
-			 if(session.getAttribute("admin")!=null) {
-			 ArrayList<YNMMember> list = ynmAdminServiceImpl.allMemberView();
-			 ModelAndView view = new ModelAndView();
-			 view.addObject("list",list);
-			 view.setViewName("ynmAdmin/allMemberView");
-			 return view;
-			 }else {
-				 return "ynmAdmin/adminError/error";
-			 }
+	//일반회원 전체보기
+	@RequestMapping(value="/allMemberView.do")
+	public Object allMemberView(HttpSession session) 
+	{
+		if(session.getAttribute("admin")!=null) {
+			ArrayList<YNMMember> list = ynmAdminServiceImpl.allMemberView();
+			ModelAndView view = new ModelAndView();
+			view.addObject("list",list);
+			view.setViewName("ynmAdmin/allMemberView");
+			return view;
+		}else {
+			return "ynmAdmin/adminError/error";
 		}
-
-
-	    //회원가입 아이디 체크
-	    @ResponseBody
-	    @RequestMapping(value="/adminIdCheck.do")
-	    public String adminIdCheck(HttpServletRequest request, HttpServletResponse response,YNMAdmin vo) {
-	        String ad_id = request.getParameter("ad_id");
-	        vo.setAd_id(ad_id); 
-	        YNMAdmin yd = ynmAdminServiceImpl.adminIdCheck(vo);
-	        if(yd!=null)
-	        {
-	        	String data="1";
-	            return data; 
-	        }
-	        else 
-	        {
-	            String data="0";
-	            return data;   
-	        }        
-	    }
-	    
-	    //점주 전체보기
-		@RequestMapping(value="/allOwnerView.do")
-		public Object allOwnerView(HttpSession session) 
+	}
+	//회원가입 아이디 체크
+	@ResponseBody
+	@RequestMapping(value="/adminIdCheck.do")
+	public String adminIdCheck(HttpServletRequest request, HttpServletResponse response,YNMAdmin vo) {
+		String ad_id = request.getParameter("ad_id");
+		vo.setAd_id(ad_id); 
+		YNMAdmin yd = ynmAdminServiceImpl.adminIdCheck(vo);
+		if(yd!=null)
 		{
-			 if(session.getAttribute("admin")!=null) {
-			 ArrayList<YNMOwner> list = ynmAdminServiceImpl.allOwnerView();
-			 ModelAndView view = new ModelAndView();
-		
-					view.addObject("list",list);
-					view.setViewName("ynmAdmin/allOwnerView");
-					return view;
-			 }else {
-				 return "ynmAdmin/adminError/error";
-			 }
+			String data="1";
+			return data; 
 		}
-		
-		//점주 검색
-		@RequestMapping(value="/OwnerSearch.do")
-		public Object OwnerSearch(HttpServletRequest request, HttpSession session) 
+		else 
 		{
-			if(session.getAttribute("admin")!=null) {
+			String data="0";
+			return data;   
+		}        
+	}
+	//점주 전체보기
+	@RequestMapping(value="/allOwnerView.do")
+	public Object allOwnerView(HttpSession session, HttpServletRequest request) 
+	{
+		if(session.getAttribute("admin")!=null) {
+	
+			ModelAndView view = new ModelAndView();
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<YNMOwner> list = ynmAdminServiceImpl.allOwnerView(currentPage,recordCountPerPage);
+			CouponPageData pageNavi = ynmAdminServiceImpl.ownerGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+			view.addObject("list",list);
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/allOwnerView");
+			return view;
+		}
+		else 
+		{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//점주 검색
+	@RequestMapping(value="/OwnerSearch.do")
+	public Object OwnerSearch(HttpServletRequest request, HttpSession session) 
+	{
+		if(session.getAttribute("admin")!=null) {
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
 			ModelAndView view = new ModelAndView();
@@ -137,17 +138,17 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			view.addObject("list",list);
 			view.setViewName("ynmAdmin/allOwnerView");
 			return view;
-			 }else {
-				 return "ynmAdmin/adminError/error";
-			 }
-			
 		}
-		
-		// 멤버 검색
-		@RequestMapping(value="/MemberSearch.do")
-		public Object MemberSearch(HttpServletRequest request, HttpSession session) 
+		else
 		{
-			if(session.getAttribute("admin")!=null) {
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	// 멤버 검색
+	@RequestMapping(value="/MemberSearch.do")
+	public Object MemberSearch(HttpServletRequest request, HttpSession session) 
+	{
+		if(session.getAttribute("admin")!=null) {
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
 			ModelAndView view = new ModelAndView();
@@ -155,83 +156,78 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			view.addObject("list",list);
 			view.setViewName("ynmAdmin/allMemberView");
 			return view;
-			}else {
-				return "ynmAdmin/adminError/error";
-			}
-			 
 		}
-		
-		
-		//로그인 페이지로 이동
-		@RequestMapping(value="/adminLogin.do")
-		public String adminLogin(HttpSession session,YNMAdmin vo) 
+		else 
 		{
-			return "ynmAdmin/ynmAdmin";	
+			return "ynmAdmin/adminError/error";
 		}
-		
-		//로그인
-		@RequestMapping(value="/adminLogin2.do")
-		public String adminLogin2(HttpServletRequest request,HttpSession session,YNMAdmin vo,
-									   @RequestParam String ad_id,@RequestParam String ad_pw) 
+
+	}
+	//로그인 페이지로 이동
+	@RequestMapping(value="/adminLogin.do")
+	public String adminLogin(HttpSession session,YNMAdmin vo) 
+	{
+		return "ynmAdmin/ynmAdmin";	
+	}
+	//로그인
+	@RequestMapping(value="/adminLogin2.do")
+	public String adminLogin2(HttpServletRequest request,HttpSession session,YNMAdmin vo,
+			@RequestParam String ad_id,@RequestParam String ad_pw) 
+	{
+		vo.setAd_id(ad_id);
+		vo.setAd_password(ad_pw);
+		session = request.getSession();
+		YNMAdmin admin = ynmAdminServiceImpl.adminLogin(vo);
+		session.setAttribute("admin", admin);
+		if(session.getAttribute("admin")!=null) 
 		{
-				vo.setAd_id(ad_id);
-				vo.setAd_password(ad_pw);
-				session = request.getSession();
-				YNMAdmin admin = ynmAdminServiceImpl.adminLogin(vo);
-				session.setAttribute("admin", admin);
-				if(session.getAttribute("admin")!=null) 
-				{
-					String grade = admin.getAd_grade();
-					if(grade.equals("1"))	//관리자 등급이 승인상태일때
-					{
-						return "ynmAdmin/adminInfo";	
-					}
-					else					//승인 대기중일때
-					{
-						session.invalidate();
-						return "ynmAdmin/adminError/loginfailed";
-					}
-				}
-				else						//아이디나 비밀번호가 틀렸을때
-				{
-					return "ynmAdmin/adminError/loginError";
-				}
+			String grade = admin.getAd_grade();
+			if(grade.equals("1"))	//관리자 등급이 승인상태일때
+			{
+				return "ynmAdmin/adminInfo";	
+			}
+			else					//승인 대기중일때
+			{
+				session.invalidate();
+				return "ynmAdmin/adminError/loginfailed";
+			}
 		}
-		
-		//공지사항 게시판 
-		@RequestMapping(value="/boardAdmin.do")
-		  public ModelAndView boardAdmin(HttpSession session,HttpServletRequest request) throws Exception{
-			ModelAndView view = new ModelAndView();
-			if(session.getAttribute("admin")!=null) 
-			{
-				
-				YNMAdmin admin = (YNMAdmin)session.getAttribute("admin");
-				int currentPage = 1;
-				if(request.getParameter("currentPage")==null) currentPage=1;
-				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-				int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
-				int naviCountPerPage = 5; //2.
-				ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage);
-				CouponPageData pageNavi = ynmAdminServiceImpl.noticePageNavi(currentPage,recordCountPerPage,naviCountPerPage);
-				view.addObject("noticeListData", noticeList);
-				view.addObject("pageNaviData", pageNavi);
-				view.setViewName("ynmAdmin/boardAdmin");
-				return view;
-			}
-			else
-			{
-				view.setViewName("ynmAdmin/adminError/error");
-				return view;
-			}
-			
-		  }
-	
-		//통계
-		@RequestMapping(value="/statAdmin.do")
-		public Object statAdmin(HttpSession session,AdminStatistics vo) 
+		else						//아이디나 비밀번호가 틀렸을때
 		{
-			if(session.getAttribute("admin")!=null) 
-			{
+			return "ynmAdmin/adminError/loginError";
+		}
+	}
+	//공지사항  
+	@RequestMapping(value="/boardAdmin.do")
+	public ModelAndView boardAdmin(HttpSession session,HttpServletRequest request) throws Exception{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("admin")!=null) 
+		{
+			YNMAdmin admin = (YNMAdmin)session.getAttribute("admin");
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage);
+			CouponPageData pageNavi = ynmAdminServiceImpl.noticeGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
+			view.addObject("noticeListData", noticeList);
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/boardAdmin");
+			return view;
+		}
+		else
+		{
+			view.setViewName("ynmAdmin/adminError/error");
+			return view;
+		}
+	}
+	//통계
+	@RequestMapping(value="/statAdmin.do")
+	public Object statAdmin(HttpSession session,AdminStatistics vo) 
+	{
+		if(session.getAttribute("admin")!=null) 
+		{
 			vo =  ynmAdminServiceImpl.statAdmin();
 			ArrayList<YNMStoreInfo> list = ynmAdminServiceImpl.storeList();
 			ModelAndView view = new ModelAndView();
@@ -278,192 +274,162 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			view.addObject("list2",list);
 			view.setViewName("ynmAdmin/mainAdmin");
 			return view;
-			}else {
-				return "ynmAdmin/adminError/error";
-			}
 		}
-		
-		//관리자 정보
-		@RequestMapping(value="/adminInfo.do")
-		public String adminInfo(HttpSession session,YNMAdmin vo) 
+		else 
 		{
-			if(session.getAttribute("admin")!=null) 
-			{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//관리자 정보
+	@RequestMapping(value="/adminInfo.do")
+	public String adminInfo(HttpSession session,YNMAdmin vo) 
+	{
+		if(session.getAttribute("admin")!=null) 
+		{
 			return "ynmAdmin/adminInfo";	
-			}else {
-				return "ynmAdmin/adminError/error";
-			}
+		}else {
+			return "ynmAdmin/adminError/error";
 		}
+	}
+	//관리자 리스트(수락/강등 목록)
+	@RequestMapping(value="/adminList.do")
+	public Object adminList(HttpSession session)
+	{
+		ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminList();
+		ModelAndView view = new ModelAndView();
+		view.addObject("list",list);
+		view.setViewName("ynmAdmin/allAdminView");
+		return view;
+	}
+	//관리자(강등)
+	@RequestMapping(value="/downGrade.do")
+	public Object dounGrade(HttpSession session,HttpServletRequest request)
+	{
+		String ad_id = request.getParameter("ad_id");
+		int list = ynmAdminServiceImpl.dounGrade(ad_id);
+		return "ynmAdmin/adminSuccess/fixsuccess";
+	}
+	//관리자(수락)
+	@RequestMapping(value="/upGrade.do")
+	public Object upGrade(HttpSession session ,HttpServletRequest request)
+	{
+		String ad_id = request.getParameter("ad_id");
+		int list = ynmAdminServiceImpl.upGrade(ad_id);
+		return "ynmAdmin/adminSuccess/fixsuccess";
+	}
+	//관리자 로그아웃
+	@RequestMapping(value="/logoutAdmin.do")
+	public Object logoutAdmin(HttpSession session ,HttpServletRequest request)
+	{
+		session.invalidate();
+		return "ynmAdmin/adminSuccess/logoutSuccess";	
+	}
+	//공지사항 글보기
+	@RequestMapping(value="/noticeView.do")
+	public Object noticeView(HttpSession session ,HttpServletRequest request,Notice vo)
+	{
+		ModelAndView view = new ModelAndView();
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		vo = ynmAdminServiceImpl.noticeView(noticeNo);
+		view.addObject("notice",vo);
+		view.setViewName("ynmAdmin/noticeView");
+		return view;
+	}
+	//공지사항 글수정 페이지로 이동
+	@RequestMapping(value="/adminBoardFix.do")
+	public Object adminBoardFix(HttpSession session ,HttpServletRequest request,Notice vo)
+	{
 
-		
-		
-		//점주 블랙
-		@RequestMapping(value="/ownerBlock.do")
-		public String ownerBlock(HttpSession session,YNMOwner vo)
+		String writeId = request.getParameter("userId");
+		String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
+		if(adminId.equals("admin")||adminId.equals(writeId))
 		{
-			if(session.getAttribute("admin")!=null) 
-			{
-			int result = ynmAdminServiceImpl.ownerBlock(vo);
-					if(result>0)
-					{
-						return "ynmAdmin/allOwnerView";	
-					}
-					else
-					{
-						return "ynmAdmin/adminError/enrollFailed";	
-					}
-			}
-			else 
-			{
-				return "ynmAdmin/adminError/error";
-			}
-		}
-		//관리자 리스트(수락/강등 목록)
-		@RequestMapping(value="/adminList.do")
-		public Object adminList(HttpSession session)
-		{
-			ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminList();
-			ModelAndView view = new ModelAndView();
-			view.addObject("list",list);
-			view.setViewName("ynmAdmin/allAdminView");
-			return view;
-		}
-		
-		
-		//(강등)
-		@RequestMapping(value="/downGrade.do")
-		public Object dounGrade(HttpSession session,HttpServletRequest request)
-		{
-			String ad_id = request.getParameter("ad_id");
-			int list = ynmAdminServiceImpl.dounGrade(ad_id);
-			return "ynmAdmin/adminSuccess/fixsuccess";
-		}
-		
-		//(수락)
-		@RequestMapping(value="/upGrade.do")
-		public Object upGrade(HttpSession session ,HttpServletRequest request)
-		{
-			String ad_id = request.getParameter("ad_id");
-			int list = ynmAdminServiceImpl.upGrade(ad_id);
-			return "ynmAdmin/adminSuccess/fixsuccess";
-		}
-		
-		
-		//관리자 로그아웃
-		@RequestMapping(value="/logoutAdmin.do")
-		public Object logoutAdmin(HttpSession session ,HttpServletRequest request)
-		{
-			session.invalidate();
-			return "ynmAdmin/adminSuccess/logoutSuccess";	
-		}
-		
-		//공지사항 글보기
-		@RequestMapping(value="/noticeView.do")
-		public Object noticeView(HttpSession session ,HttpServletRequest request,Notice vo)
-		{
-			
-			ModelAndView view = new ModelAndView();
-			int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-			vo = ynmAdminServiceImpl.noticeView(noticeNo);
-			view.addObject("notice",vo);
-			view.setViewName("ynmAdmin/noticeView");
-			return view;
-		}
-		
-		//공지사항 글수정 페이지로 이동
-		@RequestMapping(value="/adminBoardFix.do")
-		public Object adminBoardFix(HttpSession session ,HttpServletRequest request,Notice vo)
-		{
-			
-			String writeId = request.getParameter("userId");
-			String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
-			if(adminId.equals("admin")||adminId.equals(writeId))
-			{
 			ModelAndView view = new ModelAndView();
 			view.addObject("notice",vo);
 			view.setViewName("ynmAdmin/boardFixPage");
 			return view;	
-			}
-			else{return "ynmAdmin/adminError/error";}
 		}
-		
-		
-		//공지사항 글수정
-		@RequestMapping(value="/adminBoardFix2.do")
-		public Object adminBoardFix2(HttpSession session ,HttpServletRequest request,Notice vo)
+		else
+		{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//공지사항 글수정
+	@RequestMapping(value="/adminBoardFix2.do")
+	public Object adminBoardFix2(HttpSession session ,HttpServletRequest request,Notice vo)
+	{
+		ModelAndView view = new ModelAndView();
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		String contents = request.getParameter("contents");
+		String subject = request.getParameter("subject");
+		vo.setContents(contents);
+		vo.setSubject(subject);
+		vo.setNoticeNo(noticeNo);
+		int result = ynmAdminServiceImpl.adminBoardFix(vo);
+		view.addObject("notice",vo);
+		view.setViewName("ynmAdmin/adminSuccess/boardfixSuccess");
+		return view;
+	}
+	//공지사항 글삭제
+	@RequestMapping(value="/adminBoardDelete.do")
+	public Object adminBoardDelete(HttpSession session ,HttpServletRequest request,Notice vo)
+	{
+		String writeId = request.getParameter("userId");
+		String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
+		if(adminId.equals("admin")||adminId.equals(writeId))
 		{
 			ModelAndView view = new ModelAndView();
 			int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-			String contents = request.getParameter("contents");
-			String subject = request.getParameter("subject");
-			vo.setContents(contents);
-			vo.setSubject(subject);
 			vo.setNoticeNo(noticeNo);
-			int result = ynmAdminServiceImpl.adminBoardFix(vo);
+			System.out.println(vo.getNoticeNo());
+			int result = ynmAdminServiceImpl.adminBoardDelete(vo);
 			view.addObject("notice",vo);
-			view.setViewName("ynmAdmin/adminSuccess/boardfixSuccess");
+			view.setViewName("ynmAdmin/adminSuccess/boardDeleteSuccess");
 			return view;
 		}
-		
-		//공지사항 글삭제
-		@RequestMapping(value="/adminBoardDelete.do")
-		public Object adminBoardDelete(HttpSession session ,HttpServletRequest request,Notice vo)
+		else
 		{
-			
-			String writeId = request.getParameter("userId");
-			String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
-			if(adminId.equals("admin")||adminId.equals(writeId))
-			{
-				ModelAndView view = new ModelAndView();
-				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-				vo.setNoticeNo(noticeNo);
-				System.out.println(vo.getNoticeNo());
-				int result = ynmAdminServiceImpl.adminBoardDelete(vo);
-				view.addObject("notice",vo);
-				view.setViewName("ynmAdmin/adminSuccess/boardDeleteSuccess");
-				return view;
-			}else{return "ynmAdmin/adminError/BoardDeleteFailed";}
+			return "ynmAdmin/adminError/BoardDeleteFailed";
 		}
-		
-		//공지사항 글쓰기권한 확인
-		@RequestMapping(value="/noticeWrite.do")
-		public Object noticeWrite(HttpSession session ,HttpServletRequest request,YNMAdmin vo)
+	}
+	//공지사항 글쓰기권한 확인
+	@RequestMapping(value="/noticeWrite.do")
+	public Object noticeWrite(HttpSession session ,HttpServletRequest request,YNMAdmin vo)
+	{
+		int admin_info_pk = Integer.parseInt(request.getParameter("admin_info_pk"));
+		String ad_id = request.getParameter("ad_id");
+		String ad_password = request.getParameter("ad_password");
+		String ad_nickname = request.getParameter("ad_nickname");
+		String ad_grade = request.getParameter("ad_grade");
+		vo.setAdmin_info_pk(admin_info_pk);
+		vo.setAd_id(ad_id);
+		vo.setAd_password(ad_password);
+		vo.setAd_nickname(ad_nickname);
+		vo.setAd_grade(ad_grade);
+		System.out.println(admin_info_pk);
+		System.out.println(ad_id);
+		System.out.println(ad_password);
+		System.out.println(ad_nickname);
+		System.out.println(ad_grade);
+		int result = ynmAdminServiceImpl.noticeWriteIdCheck(vo); // 관리자인지 체크 
+		System.out.println(result);
+		if(result>0)
 		{
-			int admin_info_pk = Integer.parseInt(request.getParameter("admin_info_pk"));
-			String ad_id = request.getParameter("ad_id");
-			String ad_password = request.getParameter("ad_password");
-			String ad_nickname = request.getParameter("ad_nickname");
-			String ad_grade = request.getParameter("ad_grade");
-			vo.setAdmin_info_pk(admin_info_pk);
-			vo.setAd_id(ad_id);
-			vo.setAd_password(ad_password);
-			vo.setAd_nickname(ad_nickname);
-			vo.setAd_grade(ad_grade);
-			System.out.println(admin_info_pk);
-			System.out.println(ad_id);
-			System.out.println(ad_password);
-			System.out.println(ad_nickname);
-			System.out.println(ad_grade);
-			int result = ynmAdminServiceImpl.noticeWriteIdCheck(vo); // 관리자인지 체크 
-			System.out.println(result);
-			if(result>0)
-			{
-				return "ynmAdmin/boardWrite";
-			}
-			else
-			{
-				return "ynmAdmin/adminError/boardWriteError";
-			}
+			return "ynmAdmin/boardWrite";
 		}
-		
-		//공지사항 쓰기 
-		@RequestMapping(value="/adminNoticeWrite.do")
-		public Object adminNoticeWrite(HttpSession session ,HttpServletRequest request,Notice vo)
+		else
 		{
-			String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
-			String writeId = request.getParameter("ad_id");
-			if(adminId.equals("admin")||adminId.equals(writeId))
-			{
+			return "ynmAdmin/adminError/boardWriteError";
+		}
+	}
+	//공지사항 쓰기 
+	@RequestMapping(value="/adminNoticeWrite.do")
+	public Object adminNoticeWrite(HttpSession session ,HttpServletRequest request,Notice vo)
+	{
+		String adminId =  ((YNMAdmin)session.getAttribute("admin")).getAd_id();
+		String writeId = request.getParameter("ad_id");
+		if(adminId.equals("admin")||adminId.equals(writeId))
+		{
 			String subject = request.getParameter("subject");
 			String contents = request.getParameter("contents");
 			String ad_nickname = request.getParameter("ad_nickname");
@@ -473,55 +439,54 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			vo.setUserNickname(ad_nickname);
 			int write = ynmAdminServiceImpl.adminNoticeWrite(vo);
 			return "ynmAdmin/adminSuccess/boardInsertSuccess";
-			}else
-			{
-				return "ynmAdmin/adminError/error";
-			}
-			
 		}
-		
-		
-			//점주 가게현황 
-			@RequestMapping(value="/ownerStoreList.do")
-			public ModelAndView ownerStoreList(HttpSession session ,HttpServletRequest request,StoreInfoPageData vo)
-			{
-				
-			
-				ModelAndView view = new ModelAndView();
-				if(session.getAttribute("admin")!=null) 
-				{
-					int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
-					vo.setOwEntireFk(owEntirePk);
-					int currentPage = 1;
-					if(request.getParameter("currentPage")==null) currentPage=1;
-					else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-					int recordCountPerPage = 3; //1. 1페이지에10개씩보이게
-					int naviCountPerPage = 5; //2.
-					ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.storeListPaging(currentPage,recordCountPerPage,vo);
-					CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage);		
-					view.addObject("storeList", list);
-					view.addObject("pageNaviData", pageNavi);
-					view.setViewName("ynmAdmin/owStoreList");
-					return view;
-				}
-				else
-				{
-					view.setViewName("ynmAdmin/adminError/error");
-					return view;
-				}
-				
-			  }
-				
-			}
-			
-		
-					
-	
-		
-				
-				
-			
-		
-	
+		else
+		{
+			return "ynmAdmin/adminError/error";
+		}
+	}
+	//점주 가게현황 
+	@RequestMapping(value="/ownerStoreList.do")
+	public ModelAndView ownerStoreList(HttpSession session ,HttpServletRequest request,StoreInfoPageData vo)
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("admin")!=null) 
+		{
+			int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
+			vo.setOwEntireFk(owEntirePk);
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 3; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.storeListPaging(currentPage,recordCountPerPage,vo);
+			CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage);		
+			view.addObject("storeList", list);
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/owStoreList");
+			return view;
+		}
+		else
+		{
+			view.setViewName("ynmAdmin/adminError/error");
+			return view;
+		}			
+	}
+	//가게 (강등)
+	@RequestMapping(value="/storeNo.do")
+	public Object storeNo(HttpSession session,HttpServletRequest request)
+	{
+		String owStoreInfoPk = request.getParameter("owStoreInfoPk");
+		int list = ynmAdminServiceImpl.storeNo(owStoreInfoPk);
+		return "ynmAdmin/adminSuccess/storeYesNo";
+	}
+	//가게 (수락)
+	@RequestMapping(value="/storeYes.do")
+	public Object storeYes(HttpSession session ,HttpServletRequest request)
+	{
+		String owStoreInfoPk = request.getParameter("owStoreInfoPk");
+		int result = ynmAdminServiceImpl.storeYes(owStoreInfoPk);
+		return "ynmAdmin/adminSuccess/storeYesNo";
+	}		
 
-
+}
