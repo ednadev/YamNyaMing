@@ -11,10 +11,6 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 	<script>
-		window.onload = fucntion()
-		{
-			firstLoadAlert();
-		}
 		function firstLoadAlert()
 		{
 			if(typeof Android !=="undefined" && Android !== null){
@@ -30,6 +26,7 @@
 	
 	<header id="member-main-header">
 		<h1>
+		
 			<a href="/index.jsp">YamNyaMing</a>
 		</h1>
 

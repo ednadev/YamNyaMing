@@ -26,7 +26,7 @@
        	and num between #{start} and #{end})
         <trim prefix="where" prefixOverrides="AND|OR">
 			<if test="food!=null and food!=''">
-			  	and store_cate_main_name = #{food}
+			  	and storeCateMainName = #{food}
 			</if>
 			<if test="keyword!=null and keyword!=''">
 				and (owStoreName like '%'||#{keyword}||'%'
