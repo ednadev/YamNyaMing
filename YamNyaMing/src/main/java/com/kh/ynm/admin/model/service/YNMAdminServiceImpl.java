@@ -57,14 +57,10 @@ public class YNMAdminServiceImpl implements YNMAdminService{
         return yd;
     }
 
-    //일반 사용자 전체보기
-	public ArrayList<YNMMember> allMemberView() {
-		ArrayList<YNMMember> list = adminDAO.allMemberView(sqlSession);
-		return list;
-	}
+   
 	//게시판 목록
-	public ArrayList<Notice> noticeListPaging(int currentPage,int recordCountPerPage) {
-		//시작 페이지 계산
+	public ArrayList<Notice> noticeListPaging(int currentPage,int recordCountPerPage)
+	{
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
 		BoardPaging noticePageData = new BoardPaging();
@@ -72,20 +68,29 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		noticePageData.setEndPage(end);
 		return adminDAO.noticeListPaging(sqlSession,noticePageData);
 	}
+	//일반 사용자 전체보기
+	public ArrayList<YNMMember> memberListPaging(int currentPage, int recordCountPerPage) 
+	{
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		BoardPaging memberPageData = new BoardPaging();
+		memberPageData.setStartPage(start);
+		memberPageData.setEndPage(end);
+		return adminDAO.memberListPaging(sqlSession,memberPageData);
+	}
 	//점주 전체보기
-	public ArrayList<YNMOwner> allOwnerView(int currentPage, int recordCountPerPage) {
-		//시작 페이지 계산
+	public ArrayList<YNMOwner> ownerListPaging(int currentPage, int recordCountPerPage)
+	{
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
 		BoardPaging ownerPageData = new BoardPaging();
 		ownerPageData.setStartPage(start);
 		ownerPageData.setEndPage(end);
-		ArrayList<YNMOwner> list = adminDAO.allOwnerView(sqlSession,ownerPageData);
-		return list;
+		return adminDAO.ownerListPaging(sqlSession,ownerPageData);		
 	}
 	//가게리스트
-	public ArrayList<StoreInfoPageData> storeListPaging(int currentPage, int recordCountPerPage, StoreInfoPageData vo) {
-		//시작 페이지 계산
+	public ArrayList<StoreInfoPageData> storeListPaging(int currentPage, int recordCountPerPage, StoreInfoPageData vo)
+	{
 		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentPage*recordCountPerPage;
 		BoardPaging storePageData = new BoardPaging();
@@ -93,6 +98,15 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		storePageData.setStartPage(start);
 		storePageData.setEndPage(end);
 		return adminDAO.storeListPaging(sqlSession,storePageData);
+	}
+	//관리자 리스트
+	public ArrayList<YNMAdmin> adminListPaging(int currentPage, int recordCountPerPage) {
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		BoardPaging adminPageData = new BoardPaging();
+		adminPageData.setStartPage(start);
+		adminPageData.setEndPage(end);
+		return adminDAO.adminListPaging(sqlSession,adminPageData);
 	}
 	//점주목록 페이징
 	public CouponPageData ownerGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage) {
@@ -172,6 +186,43 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		
 		return couponPageDataResult;
 	}
+	//멤버목록 페이징
+	public CouponPageData memberGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging memberPageData = new BoardPaging();
+		int recordTotalCount = adminDAO.memberGetTotal(sqlSession, memberPageData);
+		int pageTotalCount = 0;
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData memberPageDataResult = new CouponPageData();
+		memberPageDataResult.setCurrentPage(currentPage);
+		memberPageDataResult.setStartNavi(startNavi);
+		memberPageDataResult.setEndNavi(endNavi);
+		memberPageDataResult.setPageTotalCount(pageTotalCount);
+		memberPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return memberPageDataResult;
+	}
 
 	//가게리스트 페이징
 	public CouponPageData storePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
@@ -210,7 +261,43 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		
 		return storePageDataResult;
 	}
-	
+	//관리자목록 페이징
+	public CouponPageData adminGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging adminPageData = new BoardPaging();
+		int recordTotalCount = adminDAO.adminGetTotal(sqlSession, adminPageData);
+		int pageTotalCount = 0;
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData adminPageDataResult = new CouponPageData();
+		adminPageDataResult.setCurrentPage(currentPage);
+		adminPageDataResult.setStartNavi(startNavi);
+		adminPageDataResult.setEndNavi(endNavi);
+		adminPageDataResult.setPageTotalCount(pageTotalCount);
+		adminPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return adminPageDataResult;
+	}
 	
 
 
@@ -231,13 +318,6 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		ArrayList<YNMStoreInfo>list = adminDAO.storeList(sqlSession);
 		return list;
 	}
-
-	//관리자 리스트
-	public ArrayList<YNMAdmin> adminList() {
-		ArrayList<YNMAdmin>list = adminDAO.adminList(sqlSession);
-		return list;
-	}
-
 	//관리자 강등
 	public int dounGrade(String ad_id) {
 		int list = adminDAO.dounGrade(sqlSession,ad_id);
@@ -249,8 +329,6 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		int list = adminDAO.upGrade(sqlSession,ad_id);
 		return list;
 	}
-
-
 
 	//공지사항 글내용
 	public Notice noticeView(int noticeNo) {
@@ -290,7 +368,4 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		int result = adminDAO.storeNo(sqlSession,owStoreInfoPk);
 		return result;
 	}
-
-
-
 }

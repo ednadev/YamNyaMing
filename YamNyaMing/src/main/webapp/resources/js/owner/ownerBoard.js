@@ -29,7 +29,7 @@ $(document).ready(function() {
 			data.append("file", file);
 			console.log(data);
 			$.ajax({
-				url: "/uploadBoardPhoto.do",
+				url: "/adminPhoto.do",
 				data: data,
 				cache: false,
 				type: "POST",
