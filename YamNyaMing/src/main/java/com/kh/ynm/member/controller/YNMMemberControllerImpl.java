@@ -1029,14 +1029,14 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			check.setStoreCateDetailName(storeCateDetailNameList);
 		}
 		if(owBudget!=null) {
-			ArrayList<String> owBudgetList = new ArrayList<>();
+			ArrayList<String> owBudgetList = new ArrayList<String>();
 			for (int i = 0; i<owBudget.length;i++ ) {
 				owBudgetList.add(owBudget[i]);
 			}
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
-			ArrayList<String> owSubInfoList = new ArrayList<>();
+			ArrayList<String> owSubInfoList = new ArrayList<String>();
 			for(int i = 0; i<owSubInfo.length;i++)
 			{
 				owSubInfoList.add(owSubInfo[i]);
@@ -1044,7 +1044,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
-			ArrayList<String> owDrinkListInfoList = new ArrayList<>();
+			ArrayList<String> owDrinkListInfoList = new ArrayList<String>();
 			for(int i = 0; i<owDrinkListInfo.length;i++)
 			{
 				owDrinkListInfoList.add(owDrinkListInfo[i]);

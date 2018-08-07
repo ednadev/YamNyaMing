@@ -20,7 +20,7 @@
 </head>
 <body>
 	<header id="owner-signUp-header">
-		<h1><a href="/index.jsp">YamNyamCompany</a></h1>
+		<h1><a href="/ownerMyPage.do">YamNyamCompany</a></h1>
 	</header>
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">

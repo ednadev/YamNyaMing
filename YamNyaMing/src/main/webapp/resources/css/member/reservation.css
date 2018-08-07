@@ -48,7 +48,7 @@ input[type=number]
 }
 
 .quantity input {
-  width: 40px;
+  width: 200px;
   height: 42px;
   line-height: 1.65;
   float: left;
@@ -110,7 +110,7 @@ input[type=number]
 	margin-right:10px;
 	font-weight:bold;
 	color:#555;
-	margin-left:15px;
+	margin-left:30px;
 }
 .date-time>label{
 	float:left;
@@ -126,9 +126,10 @@ input[type=number]
 	padding:10px;
 	border:1px solid #ddd;
 	color:#555;
+	width:200px;
 }
 #datePicker{
-	margin-right:15px;
+	margin-right:30px;
 }
 .name-tel{
 	clear:both;
@@ -143,15 +144,12 @@ input[type=number]
 .name-tel>input{
 	height:22px;
 	padding:10px;
-	width:143px;
+	width:300px;
 	border:1px solid #ddd;
 	color:#555;
 }
 .name-tel>input[type="text"]{
-	margin-right:10px;
-}
-.name-tel>input[type="tel"]{
-	width:197px;
+	margin-right:30px;
 }
 .tel-confirm{
 	float:right;
@@ -172,11 +170,12 @@ input[type=number]
 }
 .text>textarea{
 	resize:none;
-	width:487px;
+	width:846px;
 	height:100px;
 	margin-top:10px;
 	border:1px solid #ddd;
 	padding:10px;
+	color:#555;
 }
 #myModal>.modal-content>form{
 	margin-left:12px;

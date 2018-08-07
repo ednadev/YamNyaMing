@@ -118,7 +118,7 @@ function check(){   //비밀번호 조건문
 
 <body>
 	<header id="owner-signUp-header">
-		<h1 style="font-size:1.2em;padding:15px 10px;"><a href="/index.jsp">YamNyaMing 관리자</a></h1>
+		<h1 style="font-size:1.2em;padding:15px 10px;"><a href="/ynmAdmin.do">YamNyaMing 관리자</a></h1>
 	</header>
 	<div class="wrapper">
 		<nav id="owner-signUp-nav">

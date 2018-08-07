@@ -695,16 +695,13 @@ function showSlides(n) {
 			};  
 
 			//지도를 생성합니다    
-			var map = new daum.maps.Map(mapContainer, mapOption); 
-			
-			
-/* 			
+			var map = new daum.maps.Map(mapContainer, mapOption);
 
 			//주소-좌표 변환 객체를 생성합니다
 			var geocoder = new daum.maps.services.Geocoder();
-
+			
 			//주소로 좌표를 검색합니다
-			geocoder.addressSearch('${store.owStoreAddr}', function(result, status) {
+			geocoder.addressSearch(${store.owStoreAddr}, function(result, status) {
 
 			// 정상적으로 검색이 완료됐으면 
 			 if (status === daum.maps.services.Status.OK) {
@@ -726,7 +723,8 @@ function showSlides(n) {
 			    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			    map.setCenter(coords);
 			} 
-			});  */
+			});			
+
 			</script>
 		</div>
 

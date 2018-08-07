@@ -10,8 +10,8 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=1">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=5">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=6">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -1271,7 +1271,8 @@
 				<button>리뷰쓰기</button>
 			</div>
 		</c:forEach>
-		<script>
+		<script>	
+		
 			 function popupPost(value){
 	              var reserve = document.reserve;
 	              var pop = window.open;
@@ -1286,7 +1287,6 @@
 	              reserve.submit(); */
 	           }
         </script>  	
-        ${pageNaviData.startNavi}  그리고 ${pageNaviData.endNavi}
 		<c:if test="${pageNaviData!=null}">
 			<div id="pagingNumber">
 				<c:if test="${pageNaviData.startNavi!=1}">
@@ -1447,7 +1447,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 35%;
+    width: 900px;
 }
 
 /* The Close Button */
@@ -1465,9 +1465,44 @@ body {font-family: Arial, Helvetica, sans-serif;}
     cursor: pointer;
 }
 
-@media (max-width:1200px){
+@media (max-width:960px){
 	.modal-content{
-		width:36%;
+		width:290px;
+	}
+	#myModal>.modal-content>form{
+		margin-left:0px;
+	}
+	.date-time>label{
+		line-height:initial;
+	}
+	.date-time>input{
+		padding:2px;
+	}
+	.date-time{
+		overflow:hidden;
+		margin-bottom:5px;
+	}
+	.quantity{
+		overflow:hidden;
+		margin:0px;
+	}
+	.quantity>label{
+		margin-left:0px;
+	}
+	.quantity>input[type="number"]{
+		padding-left:5px;
+		width:184px;
+	}
+	.name-tel{
+		line-height:2;
+	}
+	.name-tel>input{
+		width:265px;
+		padding:5px;
+	}
+	.text>textarea{
+		width:262px;
+		height:65px;
 	}
 }
 

@@ -10,7 +10,6 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/member/lightslider.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
@@ -20,6 +19,7 @@
 </head>
 <body>
 	<header id="owner-main-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 		</h1>

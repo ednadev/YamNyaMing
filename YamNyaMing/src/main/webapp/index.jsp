@@ -24,7 +24,15 @@
 			}
 			 
 		}
+		
 	</script>
+	<style>
+	@media (max-width:960px){
+		#member-main-header>ul>li:nth-child(2){
+			display:none;
+		}
+	}
+	</style>
 </head>
 <body>
 	

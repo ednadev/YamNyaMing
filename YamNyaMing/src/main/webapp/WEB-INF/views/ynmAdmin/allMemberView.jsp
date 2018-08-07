@@ -19,6 +19,7 @@
 </head>
 <body>
 	<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>

@@ -9,9 +9,12 @@ html,body{height:100%;}
 	overflow:hidden;
 }
 #admin-login-header>h1{
-	font-size:1.2em;
-	padding:15px 10px;
+	font-size:1.4em;
+	padding:15px 10px 15px 0px;
 	float:left;
+}
+#admin-login-header>h1:nth-child(3){
+	float:right;
 }
 #admin-login-header>h1>a{
 	color:white;
@@ -259,4 +262,13 @@ html,body{height:100%;}
 }
 .container-fluid>center>.panel-body>.table>tbody>tr>td{
 	padding:10px;
+}
+#pagingNumber>form{
+	text-align:center;
+}
+#pagingNumber>form>input{
+	background-color:#555;
+	border:none;
+	color:white;
+	padding:5px;
 }
