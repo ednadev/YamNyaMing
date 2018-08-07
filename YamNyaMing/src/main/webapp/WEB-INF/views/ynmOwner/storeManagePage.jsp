@@ -300,7 +300,7 @@
 			console.log(data.result); */
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
-				if(i==${storeTapType}){
+				if(i=="${storeTapType}"){
 					storeDivArr[i].style.display = "block";
 				}
 				else storeDivArr[i].style.display="none";

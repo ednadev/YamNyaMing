@@ -1019,11 +1019,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setPlace(place);
 		
 		if(storeCateDetailName!=null) {
-			List<String> list = Arrays.asList(storeCateDetailName);
-					
 			ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
-			for (String data : list) {
-				storeCateDetailNameList.add(data);
+			for (int i = 0; i<storeCateDetailName.length;i++) {
+				storeCateDetailNameList.add(storeCateDetailName[i]);
 			}
 			
 			check.setStoreCateDetailName(storeCateDetailNameList);
@@ -1067,8 +1065,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		int naviCountPerPage = 5; //2.
 		
 		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
-		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, check);
-	
+		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, searchList.size(), check);
 		System.out.println("검색 결과 " + searchList.size());
 		System.out.println("네비 정보 " + qpd.getStartNavi() + " " + qpd.getEndNavi());
 		

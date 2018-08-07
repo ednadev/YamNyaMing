@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -96,19 +97,19 @@
 		</div>
 	</section>
 	<script>
-		window.onload=function(){
+		/* window.onload=function(){
 			var storeDivArr = document.getElementsByClassName("store-info-div");
-		/* 	var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
-			console.log(data.result); */
+		var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
+			console.log(data.result);
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
-				if(i==${storeTapType}){
+				if(i=="${storeTapType}"){
 					storeDivArr[i].style.display = "block";
 				}
 				else storeDivArr[i].style.display="none";
 			}
-			menuChangeMode("menu_title_${firstMenutitle}");
-		}
+			 menuChangeMode("menu_title_" + "${firstMenutitle}"); 
+		} */
 		
 		
 	</script>	

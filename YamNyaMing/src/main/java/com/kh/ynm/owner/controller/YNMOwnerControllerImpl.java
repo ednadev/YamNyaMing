@@ -422,6 +422,17 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		else return "ynmOwner/ynmOwnerError/ownerInfoUpdateFail";
 	}
 
+	@RequestMapping("/ownerMyPage.do")
+	public ModelAndView myPageMain(HttpSession session, HttpServletRequest request)
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			view = storeManageEnrollList(session, request);
+			view.setViewName("ynmOwner/ownerMyPage");
+		}
+		return view;
+	}
+	
 	public ModelAndView storeManageEnrollList(HttpSession session, HttpServletRequest request)
 	{
 		ModelAndView view = new ModelAndView();
