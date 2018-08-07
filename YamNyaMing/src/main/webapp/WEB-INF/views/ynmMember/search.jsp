@@ -1195,7 +1195,7 @@
 	</div>
 	<input type="submit" value="상세정보 검색하기">
 	</form>
-	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
+	<h4>총 <span>${pageNaviData.recordTotalCount }</span>개가 검색되었습니다</h4>
 	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
 	<div class="search-page">
 		<c:forEach items="${searchList}" var="search">
@@ -1286,7 +1286,6 @@
 	              reserve.submit(); */
 	           }
         </script>  	
-        ${pageNaviData.startNavi}  그리고 ${pageNaviData.endNavi}
 		<c:if test="${pageNaviData!=null}">
 			<div id="pagingNumber">
 				<c:if test="${pageNaviData.startNavi!=1}">

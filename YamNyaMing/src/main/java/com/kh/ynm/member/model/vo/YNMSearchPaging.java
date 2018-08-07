@@ -9,8 +9,8 @@ public class YNMSearchPaging {
 	String food;
 	String place;
 	ArrayList<String> storeCateDetailName;
-	ArrayList<String> owBudget;
-	ArrayList<String> owSubInfo;
+	ArrayList<String> owBudget ;
+	ArrayList<String> owSubInfo ;
 	ArrayList<String> owDrinkListInfo;
 	
 	HashMap<String, ArrayList<String>> searchMap = new HashMap<String, ArrayList<String>>();

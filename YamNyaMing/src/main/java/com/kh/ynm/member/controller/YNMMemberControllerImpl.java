@@ -1019,24 +1019,22 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setPlace(place);
 		
 		if(storeCateDetailName!=null) {
-			List<String> list = Arrays.asList(storeCateDetailName);
-					
 			ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
-			for (String data : list) {
-				storeCateDetailNameList.add(data);
+			for (int i = 0; i<storeCateDetailName.length;i++) {
+				storeCateDetailNameList.add(storeCateDetailName[i]);
 			}
 			
 			check.setStoreCateDetailName(storeCateDetailNameList);
 		}
 		if(owBudget!=null) {
-			ArrayList<String> owBudgetList = new ArrayList<>();
+			ArrayList<String> owBudgetList = new ArrayList<String>();
 			for (int i = 0; i<owBudget.length;i++ ) {
 				owBudgetList.add(owBudget[i]);
 			}
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
-			ArrayList<String> owSubInfoList = new ArrayList<>();
+			ArrayList<String> owSubInfoList = new ArrayList<String>();
 			for(int i = 0; i<owSubInfo.length;i++)
 			{
 				owSubInfoList.add(owSubInfo[i]);
@@ -1044,7 +1042,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
-			ArrayList<String> owDrinkListInfoList = new ArrayList<>();
+			ArrayList<String> owDrinkListInfoList = new ArrayList<String>();
 			for(int i = 0; i<owDrinkListInfo.length;i++)
 			{
 				owDrinkListInfoList.add(owDrinkListInfo[i]);
@@ -1067,8 +1065,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		int naviCountPerPage = 5; //2.
 		
 		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
-		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, check);
-	
+		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, searchList.size(), check);
 		System.out.println("검색 결과 " + searchList.size());
 		System.out.println("네비 정보 " + qpd.getStartNavi() + " " + qpd.getEndNavi());
 		

@@ -17,7 +17,7 @@
             from owner_store_photo_tb
             where  ow_store_photo_pk = (select min(ow_store_photo_pk)  from owner_store_photo_tb
             where ow_store_info_fk = ow_store_info_pk and ow_photo_type_fk = 3)) as owPhotoRoute
-        from owner_store_info_tb st, owner_store_detail_tb dt,
+        from owner_store_info_tb st, owner_store_detail_tb dt,store_category_main_tb,store_category_detail_tb,
         (select row_number() over(order by ow_store_info_pk desc) as num from owner_store_info_tb)
         where ow_store_index = ow_store_info_pk
        	and num between #{start} and #{end}
@@ -35,32 +35,32 @@
 	             <foreach item="detailName" collection="storeCateDetailName" open="(" separator="," close=")">
 	                #{detailName}
 	             </foreach>
-	        </if>	
-	        <if test="owBudget!=null and owBudget.size>0">
+	        </if>		
+	      	<if test="owBudget!=null and owBudget.size>0">
 				 and ow_budget in 
-				 <foreach item="item" collection="owBudget" open="(" separator="," close=")">
-				 	#{item}
+				 <foreach item="budget" collection="owBudget" open="(" separator="," close=")">
+				 	#{budget}
 				 </foreach>
 			</if>
 			<if test="owSubInfo!=null and owSubInfo.size>0">
 				 and ow_sub_info in 
-				 <foreach item="owSubInfo" collection="owSubInfo" open="(" separator="," close=")">
-				 	#{owSubInfo}
+				 <foreach item="subInfo" collection="owSubInfo" open="(" separator="," close=")">
+				 	#{subInfo}
 				 </foreach>
 			</if>
 			<if test="owDrinkListInfo!=null and owDrinkListInfo.size>0">
 				 and ow_drink_list_info in 
-				 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
-				 	#{owDrinkListInfo}
+				 <foreach item="drinkListInfo" collection="owDrinkListInfo" open="(" separator="," close=")">
+				 	#{drinkListInfo}
 				 </foreach>
-			</if>
+			</if> 
 		<!-- </trim> -->
 	</select>
 	
 	<select id="searchCount" parameterType="searchPaging" resultType="int"> 
-		select count(*)
-		from owner_store_info_tb st, owner_store_detail_tb dt
-		 where ow_store_index = ow_store_info_pk
+		select count(distinct ow_store_info_pk)
+		from owner_store_info_tb st, owner_store_detail_tb dt,store_category_main_tb,store_category_detail_tb
+		where ow_store_index = ow_store_info_pk
        <!--  <trim prefix="where" prefixOverrides="AND|OR"> -->
 			<if test="food!=null and food!=''">
 				and store_cate_main_name = #{food}
@@ -73,26 +73,26 @@
 		    <if test="storeCateDetailName!=null and storeCateDetailName.size>0">
 	             and store_cate_detail_name in 
 	             <foreach item="detailName" collection="storeCateDetailName" open="(" separator="," close=")">
-	                '#{detailName}'
+	                #{detailName}
 	             </foreach>
 	        </if>		
 	      	<if test="owBudget!=null and owBudget.size>0">
 				 and ow_budget in 
-				 <foreach item="owBudget" collection="owBudget" open="(" separator="," close=")">
-				 	'${owBudget}'
+			  	 <foreach item="budget" collection="owBudget" open="(" separator="," close=")">
+				 	#{budget}
 				 </foreach>
 			</if>
 		
 			<if test="owSubInfo!=null and owSubInfo.size>0">
 				 and ow_sub_info in 
-				 <foreach item="owSubInfo" collection="owSubInfo" open="(" separator="," close=")">
-				 	'${owSubInfo}'
+				 <foreach item="subInfo" collection="owSubInfo" open="(" separator="," close=")">
+				 	#{subInfo}
 				 </foreach>
 			</if>
 			<if test="owDrinkListInfo!=null and owDrinkListInfo.size>0">
 				 and ow_drink_list_info in 
-				 <foreach item="owDrinkListInfo" collection="owDrinkListInfos.owDrinkListInfo" open="(" separator="," close=")">
-				 	'${owDrinkListInfo}'
+				 <foreach item="drinkListInfo" collection="owDrinkListInfo" open="(" separator="," close=")">
+				 	#{drinkListInfo}
 				 </foreach>
 			</if> 
 		<!-- </trim> -->

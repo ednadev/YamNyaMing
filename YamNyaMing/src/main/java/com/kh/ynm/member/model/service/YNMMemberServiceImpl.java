@@ -246,8 +246,7 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMSearch> searchList = memberDAO.getCurrentPage(sqlSession, check);
 		return searchList;
 	}
-	public YNMSearchPaging searchPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, YNMSearchPaging check) {
-		int recordTotalCount =memberDAO.getPageNavi(sqlSession, check);
+	public YNMSearchPaging searchPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage,int recordTotalCount,  YNMSearchPaging check) {
 			
 		int pageTotalCount = 0;
 
