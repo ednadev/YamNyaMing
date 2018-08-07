@@ -305,4 +305,9 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMStoreReview>)list;
 	}
 
+	public ArrayList<YNMSearch> storeAllList(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("search.storeAllList",memberEntireNo);
+		return (ArrayList<YNMSearch>)list;
+	}
+
 }

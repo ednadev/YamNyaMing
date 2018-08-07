@@ -36,6 +36,7 @@
 		<h1>
 		
 			<a href="/index.jsp">YamNyaMing</a>
+			<a href="/test.do?memberEntireNo=1">다른</a>
 		</h1>
 
 		<ul>

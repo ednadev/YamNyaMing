@@ -10,9 +10,9 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=8">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=9">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=7"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=8"></script>
 </head>
 <script>
 function openmodal(storeReviewNo){
@@ -340,10 +340,10 @@ function openImagemodal(storeReviewNo){
 
 					<span onclick="openOtherTab(event,'Review')">리뷰 ${info.reviewTotal}</span>
 					<span onclick="openOtherTab(event,'Like')">찜한 매장${info.jjimTotal}</span>
-					<span id="myBtn" >팔로워 ${info.followTotal}</span>
+					<span id="myBtn" onclick="followModal();">팔로워 ${info.followTotal}</span>
 					<div id="myModal" class="modal">
 					  <div class="modal-content">
-					    <span class="close">&times;</span>
+					    <span class="close"  onclick="followClose();">&times;</span>
 					    <div class="tab">
 					    	<button class="tablink click" onclick="openModal(event,'Follower')">팔로워</button>
 		   					 <button class="tablink" onclick="openModal(event,'Following')">팔로잉</button>
@@ -356,13 +356,18 @@ function openImagemodal(storeReviewNo){
 					    		</div>
 					    		<div>
 					    			<p>${fry.memberNickName}</p>
-					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" id="${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
-					<c:if test="${fry.followerChk==0}">
-						<button id="${fry.memberNickName}" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fry.memberNickName }','${fry.memberId}');">팔로우</button>
-					</c:if>
-					<c:if test="${fry.followerChk==1}">
-						<button  style="background-color:#fb0; color:white;" id="${fry.memberNickName }" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fry.memberNickName }','${fry.memberId}');">팔로우</button>
-					</c:if>
+					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" name="reviewL_${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
+							<c:if test="${sessiocScope.member!=null }">
+							<c:if test="${fry.followerChk==0}">
+							<button name="rbtn_${fry.memberNickName}" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','rbtn_${fry.memberNickName }','reviewL_${fry.memberId}');">팔로우</button>
+							</c:if>
+							<c:if test="${fry.followerChk==1}">
+							<button  style="background-color:#fb0; color:white;" name="rbtn_${fry.memberNickName }" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','rbtn_${fry.memberNickName }','reviewL_${fry.memberId}');">팔로우</button>
+							</c:if>
+							</c:if>
+							<c:if test="${sessionScope.member==null }">
+							<button name="rbtn_${fry.memberNickName}" onclick="nomember();">팔로우</button>
+							</c:if>
 					    	
 								
 					    		</div>
@@ -382,13 +387,19 @@ function openImagemodal(storeReviewNo){
 					    		</div>
 					    		<div>
 					    			<p>${fy.memberNickName}</p>
-					    			<p>${fy.reviewTotal} 리뷰, <label style="color:black;" id="${fy.memberEntireNo}">${fy.followTotal}</label> 팔로워</p>
-					    				<c:if test="${fy.followChk==0}">
-						<button id="${fy.memberEmail}" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fy.memberEmail}','${fy.memberEntireNo }');">팔로우</button>
+					    			<p>${fy.reviewTotal} 리뷰, <label style="color:black;" name="fil_${fy.memberEntireNo}">${fy.followTotal}</label> 팔로워</p>
+					  <c:if test="${sessionScope.member!=null }">
+					   <c:if test="${fy.followChk==0}">
+						<button name="filbtn_${fy.memberEmail}" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','filbtn_${fy.memberEmail}','fil_${fy.memberEntireNo }');">팔로우</button>
 					</c:if>
 					<c:if test="${fy.followChk==1}">
-						<button id="${fy.memberEmail}" style="background-color:#fb0; color:white;" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','${fy.memberEmail}','${fy.memberEntireNo }');">팔로우</button>
+						<button name="filbtn_${fy.memberEmail}" style="background-color:#fb0; color:white;" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','filbtn_${fy.memberEmail}','fil_${fy.memberEntireNo }');">팔로우</button>
 					</c:if>
+					</c:if>
+					
+						<c:if test="${sessionScope.member==null }">
+							<button name="rbtn_${fry.memberNickName}" onclick="nomember();">팔로우</button>
+							</c:if>
 					    			
 					    		</div>
 					    	</div>
@@ -396,7 +407,7 @@ function openImagemodal(storeReviewNo){
 					    </div>
 					  </div>
 					</div>
-					<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
+			
 				
 					
 			</div>
@@ -416,12 +427,417 @@ function openImagemodal(storeReviewNo){
 				<button class="tablink-review" onclick="openReviewTab(event,'jjimReview')">${info.memberNickName} 님이 찜한 리뷰</button>
 			</div>
 			<div id="writeReview" class="tabInfo-review">
-			gdgdgd		
+					<c:forEach items="${review}" var="r">
+			<div  id="review_u_${r.storeReviewNo + 0.1 }">
+				<div>
+					<div id="profile-image">
+					
+						<c:if test="${r.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}">
+						</c:if>
+					</div>
+					<div>
+						<p>${r.memberNickName}</p>
+						<p>리뷰${r.reviewTotal},팔로워<label name="fLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
+					</div>
+				
+					<c:if test="${r.myfollowChk==0 && sessionScope.member.memberEntireNo!=null}">
+						<button name="fbtn_${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','fbtn_${r.memberEntireNo}','fLabel_${r.memberEntireNo}');">팔로우</button>
+					</c:if>
+					<c:if test="${r.myfollowChk==1 && sessionScope.member.memberEntireNo!=null}">
+					<button name="fbtn_${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','fbtn_${r.memberEntireNo}','fLabel_${r.memberEntireNo}');">팔로우</button>
+					</c:if>
+					
+				
+					
+					<c:if test="${sessionScope.member.memberEntireNo==null}">
+					<button onclick="nomember();">팔로우</button>
+					</c:if>
+				</div>
+				<div>
+					<p>
+						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
+						<span class="star-full"></span>
+						</c:forEach>
+						<c:forEach var="i" begin="1" end="${5- r.reviewStar}" step="1">
+						<span class="star-yellow2"></span>
+						</c:forEach>
+						
+						${r.reviewStar} / 
+						<c:choose>
+							<c:when test="${r.reviewStar ==1}">
+								실망이에요. 집에서 먹는게 나을 뻔 했어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==2}">
+								평균이하! 이정도 레스토랑은 어디에나 있죠.
+							</c:when>
+							<c:when test="${r.reviewStar ==3}">
+								보통이에요. 이정도면 괜찮네요.
+							</c:when>
+							<c:when test="${r.reviewStar ==4}">
+								인상적이네요.꼭 추천하고 싶어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==5}">
+								완벽 그 자체!! 환상적이에요.
+							</c:when>
+						</c:choose>
+					</p>
+					<p>${r.reviewContent}</p>
+					<div>
+					<c:forEach items="${r.photoObjList}" var="photo">
+						<div>
+	
+							<img onclick="openImagemodal('${r.storeReviewNo}');" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
+						</div>
+						</c:forEach>
+					</div>
+					
+					
+					
+					<p onclick="likeopenmodal('${r.storeReviewNo}');" style="cursor:pointer;">
+					<c:if test="${r.memberLikeInfo!=null}">
+						<c:forEach items='${r.memberLikeInfo}' var="li" >
+						<label>${li.memberName}</label>
+						</c:forEach>
+						<c:if test="${r.likeTotal >=3}">
+						님 외 ${r.likeTotal - 2}명이 좋아합니다.
+						</c:if>
+						<c:if test="${r.likeTotal <= 2}">
+						님이 좋아합니다.
+						</c:if>
+						
+					</c:if>
+					
+					</p>
+					<p>
+				<%-- 		
+						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>좋아요</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>	 
+						 && sessionScope.member.memberEntireNo != r.memberEntireNo 
+						--%>	
+					<c:if test="${sessionScope.member!=null}">
+
+							
+				 			<c:if test="${r.myLikeChk==0}">
+				 				<button name="${r}" onmouseover="likeover(${r});" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+				 				<div name="${r}"></div>
+				 				<p name="${r}">좋아요</p>
+				 				<p name="${r}" id="${r}">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 			<c:if test="${r.myLikeChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
+					 				<p name="${r}" style="color:white;">좋아요</p>
+					 				<p name="${r}" id="${r}" style="color:white;">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 		<button onclick="nomember();"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>				
+					</c:if>
+					
+	<%-- 					<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>찜하기</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>		
+					 --%>
+					
+							<c:if test="${sessionScope.member!=null}">
+				 			<c:if test="${r.myJjimChk==0}">
+				 				<button name="${r}" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+								<div name="${r}"></div>
+								<p name="${r}">찜하기</p>
+								<p name="${r}" id="${r}${r}">${r.jjimTotal}</p>
+								</button>
+				 			</c:if>
+				 			<c:if test="${r.myJjimChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
+					 				<p name="${r}" style="color:white;">찜하기</p>
+					 				<p name="${r}" id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 	<button onclick="nomember();"><div></div>
+					<p>찜하기</p>
+					<p id="${r}${r}">${r.jjimTotal}</p>
+					</button>				
+					</c:if>
+
+  				</div>
+  								<div>
+  					<div class="underImage">
+  						<c:if test="${sessionScope.member==null }">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo==1}">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo!=1}">
+  							<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
+  						</c:if>
+  					</div>
+  				
+  				
+  					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
+					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
+  					<input type="text" class="reviewText" id="${r.storeReviewNo + 0.2}" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<c:if test="${sessionScope.member!=null }">
+  					<input type="button" class="underButton" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','myReview');" value="등록">
+  					</c:if>
+  					<c:if test="${sessionScope.member==null }">
+  					<input type="button" class="underButton" onclick="nomember();" value="등록">
+  					</c:if>
+
+  				</div>
+
+  				<c:forEach items="${r.ysurList}" var="under">
+  				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
+  				<div class="underBox">
+  					<div class="underImageBox">
+						<c:if test="${under.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${under.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
+						</c:if>
+  					</div>
+  					
+  					
+  					<div >
+  					<label class="undernick">${under.memberNickName}</label>
+					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
+  					</div>
+  				</div>
+  				</c:if>
+  				</c:forEach>
+  				
+			</div>
+			</c:forEach>
 				
 			</div>
 			<div id="jjimReview" class="tabInfo-review">
-			
-			fghjtyhfghfr
+							<c:forEach items="${jjimReview}" var="r">
+				<div  id="review_u_${r.storeReviewNo + 0.5 }">
+				<div>
+					<div id="profile-image">
+					
+						<c:if test="${r.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${r.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}">
+						</c:if>
+					</div>
+					<div>
+						<p>${r.memberNickName}</p>
+						<p>리뷰${r.reviewTotal},팔로워<label name="jfLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
+					</div>
+				
+					<c:if test="${r.myfollowChk==0 && sessionScope.member.memberEntireNo!=null}">
+						<button name="jfbtn_${r.memberEntireNo}" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','jfbtn_${r.memberEntireNo}','jfLabel_${r.memberEntireNo}');">팔로우</button>
+					</c:if>
+					<c:if test="${r.myfollowChk==1 && sessionScope.member.memberEntireNo!=null}">
+					<button name="jfbtn_${r.memberEntireNo}" style="background-color:#fb0; color:white;" onclick="follow('${r.memberEntireNo }','${sessionScope.member.memberEntireNo}','jfbtn_${r.memberEntireNo}','jfLabel_${r.memberEntireNo}');">팔로우</button>
+					</c:if>
+					
+				
+					
+					<c:if test="${sessionScope.member.memberEntireNo==null}">
+					<button onclick="nomember();">팔로우</button>
+					</c:if>
+				</div>
+				<div>
+					<p>
+						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
+						<span class="star-full"></span>
+						</c:forEach>
+						<c:forEach var="i" begin="1" end="${5- r.reviewStar}" step="1">
+						<span class="star-yellow2"></span>
+						</c:forEach>
+						
+						${r.reviewStar} / 
+						<c:choose>
+							<c:when test="${r.reviewStar ==1}">
+								실망이에요. 집에서 먹는게 나을 뻔 했어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==2}">
+								평균이하! 이정도 레스토랑은 어디에나 있죠.
+							</c:when>
+							<c:when test="${r.reviewStar ==3}">
+								보통이에요. 이정도면 괜찮네요.
+							</c:when>
+							<c:when test="${r.reviewStar ==4}">
+								인상적이네요.꼭 추천하고 싶어요.
+							</c:when>
+							<c:when test="${r.reviewStar ==5}">
+								완벽 그 자체!! 환상적이에요.
+							</c:when>
+						</c:choose>
+					</p>
+					<p>${r.reviewContent}</p>
+					<div>
+					<c:forEach items="${r.photoObjList}" var="photo">
+						<div>
+	
+							<img onclick="openImagemodal('${r.storeReviewNo}');" style="width:100%; height:100%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${photo.photoViewRoute}'>
+						</div>
+						</c:forEach>
+					</div>
+					
+					
+					
+					<p onclick="likeopenmodal('${r.storeReviewNo}');" style="cursor:pointer;">
+					<c:if test="${r.memberLikeInfo!=null}">
+						<c:forEach items='${r.memberLikeInfo}' var="li" >
+						<label>${li.memberName}</label>
+						</c:forEach>
+						<c:if test="${r.likeTotal >=3}">
+						님 외 ${r.likeTotal - 2}명이 좋아합니다.
+						</c:if>
+						<c:if test="${r.likeTotal <= 2}">
+						님이 좋아합니다.
+						</c:if>
+						
+					</c:if>
+					
+					</p>
+					<p>
+				<%-- 		
+						<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>좋아요</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>	 
+						 && sessionScope.member.memberEntireNo != r.memberEntireNo 
+						--%>	
+					<c:if test="${sessionScope.member!=null}">
+
+							
+				 			<c:if test="${r.myLikeChk==0}">
+				 				<button name="${r}" onmouseover="likeover(${r});" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+				 				<div name="${r}"></div>
+				 				<p name="${r}">좋아요</p>
+				 				<p name="${r}" id="${r}">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 			<c:if test="${r.myLikeChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="like('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/like-white.png'></div>
+					 				<p name="${r}" style="color:white;">좋아요</p>
+					 				<p name="${r}" id="${r}" style="color:white;">${r.likeTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 		<button onclick="nomember();"><div></div><p>좋아요</p><p id="${r}">${r.likeTotal}</p></button>				
+					</c:if>
+					
+	<%-- 					<c:if test="${sessionScope.member.memberEntireNo eq r.memberEntireNo }">
+								<button onclick="sameMember();">
+				 				<div></div>
+				 				<p>찜하기</p>
+				 				<p id="${r}">${r.likeTotal}</p>
+				 				</button>
+						</c:if>		
+					 --%>
+					
+							<c:if test="${sessionScope.member!=null}">
+				 			<c:if test="${r.myJjimChk==0}">
+				 				<button name="${r}" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+								<div name="${r}"></div>
+								<p name="${r}">찜하기</p>
+								<p name="${r}" id="${r}${r}">${r.jjimTotal}</p>
+								</button>
+				 			</c:if>
+				 			<c:if test="${r.myJjimChk==1}">
+				 				<button name="${r}" style="background-color:#fb0;" onclick="jjim('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}','${r}${r}','${r}');">
+					 				<div name="${r}"><img style="width:100%; height:100%;" src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'></div>
+					 				<p name="${r}" style="color:white;">찜하기</p>
+					 				<p name="${r}" id="${r}${r}" style="color:white;">${r.jjimTotal}</p>
+				 				</button>
+				 			</c:if>
+				 						
+					</c:if>
+					
+					<c:if test="${sessionScope.member==null}">
+				 	<button onclick="nomember();"><div></div>
+					<p>찜하기</p>
+					<p id="${r}${r}">${r.jjimTotal}</p>
+					</button>				
+					</c:if>
+
+  				</div>
+  								<div>
+  					<div class="underImage">
+  						<c:if test="${sessionScope.member==null }">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo==1}">
+  							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
+  						</c:if>
+  						<c:if test="${sessionScope.member!=null && sessionScope.member.memberUploadPhotoNo!=1}">
+  							<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src='${pageContext.request.contextPath}/resources/image/member/${r.photoViewRoute}'>
+  						</c:if>
+  					</div>
+  				
+  				
+  					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
+					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
+  					<input type="text" class="reviewText" id="${r.storeReviewNo + 0.5}" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<c:if test="${sessionScope.member!=null }">
+  					<input type="button" class="underButton" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
+  					</c:if>
+  					<c:if test="${sessionScope.member==null }">
+  					<input type="button" class="underButton" onclick="nomember();" value="등록">
+  					</c:if>
+
+  				</div>
+
+  				<c:forEach items="${r.ysurList}" var="under">
+  				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
+  				<div class="underBox">
+  					<div class="underImageBox">
+						<c:if test="${under.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${under.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
+						</c:if>
+  					</div>
+  					
+  					
+  					<div >
+  					<label class="undernick">${under.memberNickName}</label>
+					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
+  					</div>
+  				</div>
+  				</c:if>
+  				</c:forEach>
+  				
+			</div>
+			</c:forEach>
 			</div>			
 			
 			
@@ -443,7 +859,7 @@ function openImagemodal(storeReviewNo){
 	            </script>  	            
 			
 	
-			<c:forEach items="${search.noticelist}" var="search">
+			<c:forEach items="${storeAllList}" var="search">
 				<c:forEach items="${favorite}" var="f">
 				<c:if test="${f.owStoreInfoNo eq search.owStoreInfoPk}">
 				<div class="search-result">
@@ -454,6 +870,7 @@ function openImagemodal(storeReviewNo){
 					</form>
 							<div>
 								<p>대기인원 0 추천${search.favoriteTotal}</p>
+								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
@@ -464,6 +881,13 @@ function openImagemodal(storeReviewNo){
 								<c:if test="${search.favoriteChk!=1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+									</div>
+								</c:if>
+								</c:if>
+								<c:if test="${sessionScope.member==null}">
+									<div class="heart" onclick="nomember();">
 										<img style="width: 100%; height: 100%; cursor: pointer;"
 											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 									</div>

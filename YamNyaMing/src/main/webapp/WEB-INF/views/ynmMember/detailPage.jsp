@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=7">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/detail.css?ver=9">             
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -71,17 +71,21 @@ function openImagemodal(storeReviewNo){
 		success : function(data){
 			console.log(data);
   			$("#reviewImageDetail").remove();
+  			$("#slideBtn").remove();
 			var html="";
-			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
-			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="width:200%; height:100%; display:block;">';
+			html +='<div id="reviewImageDetail" style="display:flex;justify-content:center;">';
+			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="height:90%; display:block;">';
 			if(data.length>1){
 			for(var i=1; i<data.length; i++){
-				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="width:200%; height:100%; display:none;">';
+				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="height:90%; display:none;">';
 			}	
 			}
+			
+		html+='</div>';	
+		html+='<div id="slideBtn">';
 		html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
 		html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
-		html+='</div>';
+		html+='</div>';	
 		$("#reviewDetail").append(html);	 
 				 
 			
@@ -91,20 +95,67 @@ function openImagemodal(storeReviewNo){
 }
 
 function insertUnderReview(storeReviewNo,memberEntireNo){
-		var underReviewContent=$("#"+storeReviewNo).val();
+		var underReviewContentId=parseInt(storeReviewNo)+0.2;
+		var underReviewContent=document.getElementById(underReviewContentId).value;
 		var divId=parseInt(storeReviewNo)+0.1;
-		console.log(divId);
+	
 	 		$.ajax({
 				url : "/storeUnderReviewInsert.do",
 				data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
 				success : function(data){
-					
-					if(data==1){
-					
-					}
+ 						console.log(data);
+						
+						var html="";
+						html +='<div>';
+						html +='<div class="underImage">';
+						
+						if(data.memberUploadPhotoNo==1){
+							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">';
+						}else{
+							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data.photoViewRoute+'">';
+						}
+						html+='</div>';
+						html+='<label class="undernick">'+data.memberNickName+'</label>';
+						html+='<input type="text" id="underReviewContent" class="reviewText" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
+						html+='</div>';
+						
+						var e = document.createElement('div');
+						e.innerHTML = html;
+						document.getElementById('review_u_'+divId).append(e.firstChild);
+
 				}
 			}); 
 		}
+		
+		
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlidesPhoto");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "flex";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
 </script>
 <body>
 <header id="member-search-header">
@@ -381,38 +432,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo){
 			  </c:forEach>
 			  </div>
 
-			</div>
-
-<script>
-var slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlidesPhoto");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "flex";
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
-}
-</script>			
+			</div>		
 			
 
 		
@@ -471,7 +491,7 @@ function showSlides(n) {
 			</c:if>
 
 				<c:forEach items="${review}" var="r">
-			<div>
+			<div  id="review_u_${r.storeReviewNo + 0.1 }">
 				<div>
 					<div id="profile-image">
 					
@@ -500,7 +520,7 @@ function showSlides(n) {
 					<button onclick="nomember();">팔로우</button>
 					</c:if>
 				</div>
-				<div id="${r.storeReviewNo + 0.1 }">
+				<div>
 					<p>
 						<c:forEach var="i" begin="1" end="${r.reviewStar}" step="1">
 						<span class="star-full"></span>
@@ -552,10 +572,6 @@ function showSlides(n) {
 						님이 좋아합니다.
 						</c:if>
 						
-					</c:if>
-					
-					<c:if test="${r.memberLikeInfo==null}">
-						<label>0</label>명이 좋아합니다.
 					</c:if>
 					</p>
 					<p>
@@ -628,28 +644,8 @@ function showSlides(n) {
 					</c:if>
 
   				</div>
-
-  				<c:forEach items="${r.ysurList}" var="under">
-  				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
-  				<div>
-  					<div>
-						<c:if test="${under.memberUploadPhotoNo eq 1}">
-						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
-						</c:if>
-						<c:if test="${under.memberUploadPhotoNo ne 1}">	
-						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
-						</c:if>
-  					</div>
-  						<label>${under.memberNickName}</label>
-  				
-  					<input type="text" id="underReviewContent" name="underReviewContent" value="${under.underReviewContent}" readonly>
-  					
-  				</div>
-  				</c:if>
-  				</c:forEach>
-  				
-  				<div>
-  					<div>
+  								<div>
+  					<div class="underImage">
   						<c:if test="${sessionScope.member==null }">
   							<img style="width:100%; height:100%; border-radius:50%;" src='${pageContext.request.contextPath}/resources/image/member/profile.png'>
   						</c:if>
@@ -664,15 +660,36 @@ function showSlides(n) {
   				
   					<input type="hidden" name="storeReviewNo" value="${r.storeReviewNo}">
 					<input type="hidden" name="memberEntireNo" value="${sessionScope.member.memberEntireNo}">
-  					<input type="text" id="${r.storeReviewNo}" name="underReviewContent" placeholder="댓글을 입력해주세요">
+  					<input type="text" class="reviewText" id="${r.storeReviewNo + 0.2}" name="underReviewContent" placeholder="댓글을 입력해주세요">
   					<c:if test="${sessionScope.member!=null }">
-  					<input type="button" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
+  					<input type="button" class="underButton" onclick="insertUnderReview('${r.storeReviewNo}','${sessionScope.member.memberEntireNo}');" value="등록">
   					</c:if>
   					<c:if test="${sessionScope.member==null }">
-  					<input type="button" onclick="nomember();" value="등록">
+  					<input type="button" class="underButton" onclick="nomember();" value="등록">
   					</c:if>
 
   				</div>
+
+  				<c:forEach items="${r.ysurList}" var="under">
+  				<c:if test="${under.storeReviewNo==r.storeReviewNo}">
+  				<div class="underBox">
+  					<div class="underImageBox">
+						<c:if test="${under.memberUploadPhotoNo eq 1}">
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">
+						</c:if>
+						<c:if test="${under.memberUploadPhotoNo ne 1}">	
+						<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/${under.photoViewRoute}">
+						</c:if>
+  					</div>
+  					
+  					
+  					<div >
+  					<label class="undernick">${under.memberNickName}</label>
+					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
+  					</div>
+  				</div>
+  				</c:if>
+  				</c:forEach>
   				
 			</div>
 			</c:forEach>
@@ -768,7 +785,6 @@ function showSlides(n) {
 							<div id="reviewDetail">
 		
 							</div>
-							<div id="reviewContentDetail"></div> 
 					</div>
 			</div>
 
@@ -776,7 +792,61 @@ function showSlides(n) {
 								 
 			</section>
 
-<footer id="member-main-footer">
+	<style>
+	
+.undernick{
+    margin-left: 12px;
+    margin-top: 34px;
+    color: black;
+    display:block;
+	}
+	
+.reviewText {
+	padding: 10px;
+	width: 785px;
+	border-radius: 7px;
+	border: 1px solid #ddd;
+	color: black;
+	margin-left: 10px;
+	margin-top: 27px;
+}
+.underButton{
+	padding:10px;
+	border-radius:7px;
+	border:none;
+	color:white;
+	background-color:#555;
+	cursor:pointer;
+}
+.underImage{
+	width:50px;
+	height:50px;
+	background-color:gray;
+	border-radius:50%;
+	display:inline-block;
+	float:left;
+	margin-top:20px;
+}
+.underBox{
+	display:flex;
+	border-bottom:1px solid #ddd;
+	padding-bottom:15px;
+}
+.underImageBox{
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	display:inline-block;
+	margin-top:20px;
+}
+.underinput{
+	margin-left:11px;
+	border:none;
+	color:#555;
+}
+</style>
+
+	<footer id="member-main-footer">
 	<div>
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>
