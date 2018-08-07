@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
+import com.kh.ynm.member.model.vo.YNMMember;
 import com.kh.ynm.member.model.vo.YNMMemberNaverLogin;
 
 /**
@@ -24,6 +26,10 @@ import com.kh.ynm.member.model.vo.YNMMemberNaverLogin;
  */
 @Controller
 public class LoginController {
+	
+	@Autowired
+	@Qualifier(value="ynmMemberService")
+	private YNMMemberServiceImpl ynmMemberServiceImpl;
 	/* NaverLoginBO */
 	private NaverLoginBo naverLoginBo;
 	private String apiResult = null;
@@ -62,31 +68,49 @@ public class LoginController {
 	    apiResult = naverLoginBo.getUserProfile(oauthToken);
 	    System.out.println(apiResult);
 		model.addAttribute("result", apiResult);
-		YNMMemberNaverLogin ymnl=new YNMMemberNaverLogin();
-        
         //JSON데이터를 넣어 JSON Object 로 만들어 준다.
         try {
-        	
         	JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(apiResult);
 			JSONObject responseInfoArray = (JSONObject) jsonObject.get("response");
-		
+        	YNMMember vo=new YNMMember();
+    		vo.setMemberId("naver"+(responseInfoArray.get("id")).toString());
+    		vo.setMemberPw("naverPw");
+    		YNMMember ymnls=new YNMMember();
+    		ymnls=ynmMemberServiceImpl.selectOneMember(vo);
+
+        	if(ymnls!=null) {
+                String viewPath=ynmMemberServiceImpl.viewPath(ymnls.getMemberUploadPhotoNo());
+                ymnls.setPhotoViewRoute(viewPath);
+            	session.setAttribute("member", ymnls);
+        	}else {
+        	YNMMember ymnl=new YNMMember();
+        	ymnl.setMemberId("naver"+(responseInfoArray.get("id")).toString());
+			ymnl.setMemberPw("naverPw");
+			ymnl.setMemberName((responseInfoArray.get("name")).toString());
+			ymnl.setMemberNickName("Naver"+(responseInfoArray.get("nickname")).toString());
+			ymnl.setMemberGender((responseInfoArray.get("gender")).toString());
+			ymnl.setMemberEmail("Naver"+(responseInfoArray.get("email")).toString());
+			ymnl.setMemberUploadPhotoNo(1);
+			ymnl.setMemberPhone("00000000000");
 			
-			ymnl.setNaverId((responseInfoArray.get("id")).toString());
-			ymnl.setNaverNickName((responseInfoArray.get("nickname")).toString());
-            ymnl.setNaverImage((responseInfoArray.get("profile_image")).toString());
-            ymnl.setAge((responseInfoArray.get("age")).toString());
-			ymnl.setGender((responseInfoArray.get("gender")).toString());
-			ymnl.setEmail((responseInfoArray.get("email")).toString());
-			ymnl.setName((responseInfoArray.get("name")).toString());
-			ymnl.setBirthday((responseInfoArray.get("birthday")).toString());
+			String memberBirth="1992"+"-"+"11"+"-"+"16";
+			java.sql.Date birth = java.sql.Date.valueOf(memberBirth);
+			ymnl.setMemberBirth(birth);
+			
+//			ymnl.((responseInfoArray.get("birthday")).toString());
+			
+			int result=ynmMemberServiceImpl.signUpMember(ymnl);
+			String viewPath=ynmMemberServiceImpl.viewPath(ymnl.getMemberUploadPhotoNo());
+            ymnl.setPhotoViewRoute(viewPath);
+			session.setAttribute("member", ymnl);
+        	}
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		
-		session.setAttribute("naver", ymnl);
 
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "ynmMember/naverSuccess";

@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=10">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=11">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=1"></script>
 
@@ -132,17 +132,19 @@ function openImagemodal(storeReviewNo){
 			console.log(data);
   			$("#reviewImageDetail").remove();
 			var html="";
-			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
-			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="width:200%; height:100%; display:block;">';
+			html +='<div id="reviewImageDetail" style="display:flex;justify-content:center;">';
+			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="height:90%; display:block;">';
 			if(data.length>1){
 			for(var i=1; i<data.length; i++){
-				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="width:200%; height:100%; display:none;">';
+				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="height:90%; display:none;">';
 			}	
 			}
-		html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
-		html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
-		html+='</div>';
-		$("#reviewDetail").append(html);	 
+			html+='</div>';	
+			html+='<div id="slideBtn">';
+			html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
+			html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
+			html+='</div>';	
+			$("#reviewDetail").append(html); 
 				 
 			
 		}
@@ -1131,7 +1133,7 @@ function openImagemodal(storeReviewNo){
 					}
 				</script>
 		
-				<div id="imageModal" class="modal">
+		<div id="imageModal" class="modal">
 				<div class="imagemodal-content">
 					<span class="close" onclick="closeimagemodal();">&times;</span>
 					<div class="tab">
@@ -1141,11 +1143,10 @@ function openImagemodal(storeReviewNo){
 							<div id="reviewDetail">
 		
 							</div>
-							<div id="reviewContentDetail"></div> 
 					</div>
 			</div>
 
-		</div>	
+		</div>				
 	
 </section>
 <footer id="member-main-footer">
