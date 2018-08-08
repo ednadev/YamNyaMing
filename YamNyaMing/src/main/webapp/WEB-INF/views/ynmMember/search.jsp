@@ -12,7 +12,7 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=6">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=2"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=4"></script>
@@ -1207,7 +1207,7 @@
 						<input type="submit" value="">
 					</form>
 							<div>
-								<p>대기인원 ${search.storeWaitNum} 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
+								<p>대기인원 ${search.storeWaitNum} 추천<label style="color:white;" id="faNum_${search.owStoreInfoPk}">${search.favoriteTotal}</label></p>
 								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
