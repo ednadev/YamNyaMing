@@ -4,18 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>얌냐밍</title>
 </head>
 <body>
 
 
-비밀번호를 변경해주세요
+
 
 <form action="/passwordUpdateMember.do">
-비밀번호 변경칸<input type="text" name="memberPw">
+<p>비밀번호를 변경해주세요</p>
+<input type="password" name="memberPw">
 <input type="submit" value="비밀번호 변경">
 </form>
-<input type="text" id="memberPwre">
 
 </body>
 </html>
