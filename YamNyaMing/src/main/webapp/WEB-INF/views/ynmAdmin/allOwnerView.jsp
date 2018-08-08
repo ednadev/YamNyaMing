@@ -21,6 +21,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+<style>li {float: left;}</style>
 </head>
 <body>
 	<header id="admin-login-header">
@@ -111,6 +112,11 @@
 </div>
 <!-- 내용끝 -->
  <!-- 페이지 -->
+  <div class="text-center marg-top" align="right">
+<ul class="pagination" style="list-style:none;
+    margin:0;
+    padding:0;">
+ 
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
@@ -122,29 +128,30 @@
 						</c:if>
 						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/allOwnerView.do" method="post">
+								<li><form action="/allOwnerView.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/allOwnerView.do" method="post">
+								<li><form action="/allOwnerView.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/allOwnerView.do" method="post">	
+							<li><form action="/allOwnerView.do" method="post">	
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
-							</form>
+							</form><li>
 						</c:if>
 					</div>
 			
 				</c:if>
 		
-
+</ul>
+</div>
 <script>
 function goPage(pages, lines) {
     location.href = '?' + "pages=" + pages;

@@ -19,7 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
+<style>li {float: left;}</style>
 </head>
 <body>
 	<header id="admin-login-header">
@@ -42,10 +42,10 @@
 	<table class="table table-list-search"  style="overflow: auto">
   <thead>
     <tr>
-      <th>아이디</th>
-      <th>닉네임</th>
-      <th>등급</th>
-      <th>변경</th>
+      <th style="width:150px;">아이디</th>
+      <th style="width:150px;">닉네임</th>
+      <th style="width:150px;">등급</th>
+      <th style="width:150px;">변경</th>
     </tr>
   </thead>
     <c:forEach items="${list}" var="m">
@@ -88,6 +88,10 @@
 </table>
 <!-- 내용끝 -->
  <!-- 페이지 -->
+ <div class="text-center marg-top" align="right">
+ <ul class="pagination" style="list-style:none;
+    margin:0;
+    padding:0;">
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
@@ -99,29 +103,30 @@
 						</c:if>
 						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/adminList.do" method="post">
+								<li><form action="/adminList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/adminList.do" method="post">
+								<li><form action="/adminList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/adminList.do" method="post">	
+							<li><form action="/adminList.do" method="post">	
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
-							</form>
+							</form></li>
 						</c:if>
 					</div>
 			
 				</c:if>
 		
-
+</ul>
+</div>
 <script>
 function goPage(pages, lines) {
     location.href = '?' + "pages=" + pages;

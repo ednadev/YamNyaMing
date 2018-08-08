@@ -472,7 +472,10 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		{
 			//
 			int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
+			Notice n = new Notice();
 			vo.setOwEntireFk(owEntirePk);
+			n.setNoticeNo(owEntirePk);
+			System.out.println(owEntirePk);
 			//페이징 
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
@@ -484,6 +487,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			view.addObject("storeList", list);
 			view.addObject("pageNaviData", pageNavi);
 			view.setViewName("ynmAdmin/owStoreList");
+			request.setAttribute("StoreInfo", n);
 			return view;
 		}
 		else
@@ -508,6 +512,4 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		int result = ynmAdminServiceImpl.storeYes(owStoreInfoPk);
 		return "ynmAdmin/adminSuccess/storeYesNo";
 	}
-	
-
 }

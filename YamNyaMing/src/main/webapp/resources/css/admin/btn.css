@@ -1,6 +1,6 @@
+
 .paging-num {
-font-family: 'Sunflower';
-	width: 80px;
+	width: 60px;
 	display: inline-block;
 	color: #ecf0f1;
 	text-decoration: none;
@@ -8,7 +8,7 @@ font-family: 'Sunflower';
 	border: solid 1px #FFBB00;
 	background: #FFBB00;
 	padding: 16px 18px 14px;
-	font-size: 20px;
+	font-size: 10px;
 	-webkit-transition: all 0.1s;
 	-moz-transition: all 0.1s;
 	transition: all 0.1s;
