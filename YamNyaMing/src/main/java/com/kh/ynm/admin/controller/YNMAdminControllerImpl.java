@@ -100,7 +100,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+			int recordCountPerPage = 6; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<YNMOwner> list = ynmAdminServiceImpl.OwnerSearch(combo,keyword,currentPage,recordCountPerPage);
 			CouponPageData pageNavi = ynmAdminServiceImpl.owSearchGetTotal(combo,keyword,currentPage,recordCountPerPage,naviCountPerPage);
@@ -125,7 +125,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+			int recordCountPerPage = 6; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<YNMMember> list= ynmAdminServiceImpl.MemberSearchPaging(combo,keyword,currentPage,recordCountPerPage);
 			CouponPageData pageNavi = ynmAdminServiceImpl.memSearchGetTotal(combo,keyword,currentPage,recordCountPerPage,naviCountPerPage);
@@ -392,7 +392,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		int currentPage = 1;
 		if(request.getParameter("currentPage")==null) currentPage=1;
 		else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-		int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+		int recordCountPerPage = 6; //1. 1페이지에10개씩보이게
 		int naviCountPerPage = 5; //2.
 		ArrayList<YNMAdmin> list = ynmAdminServiceImpl.adminListPaging(currentPage,recordCountPerPage);
 		CouponPageData pageNavi = ynmAdminServiceImpl.adminGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
@@ -417,7 +417,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+			int recordCountPerPage = 6; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<Notice> noticeList = ynmAdminServiceImpl.noticeListPaging(currentPage,recordCountPerPage);
 			CouponPageData pageNavi = ynmAdminServiceImpl.noticeGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
@@ -440,7 +440,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 				int currentPage = 1;
 				if(request.getParameter("currentPage")==null) currentPage=1;
 				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-				int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
+				int recordCountPerPage = 8; //1. 1페이지에10개씩보이게
 				int naviCountPerPage = 5; //2.
 				ArrayList<YNMMember> list = ynmAdminServiceImpl.memberListPaging(currentPage,recordCountPerPage);
 				CouponPageData pageNavi = ynmAdminServiceImpl.memberGetTotal(currentPage,recordCountPerPage,naviCountPerPage);
@@ -464,7 +464,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 				int currentPage = 1;
 				if(request.getParameter("currentPage")==null) currentPage=1;
 				else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-				int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+				int recordCountPerPage = 8; //1. 1페이지에10개씩보이게
 				int naviCountPerPage = 5; //2.
 				ArrayList<YNMOwner> list = ynmAdminServiceImpl.ownerListPaging(currentPage,recordCountPerPage);
 				CouponPageData pageNavi = ynmAdminServiceImpl.ownerGetTotal(currentPage,recordCountPerPage,naviCountPerPage);

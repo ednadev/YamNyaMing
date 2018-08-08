@@ -18,6 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/adminBoard.js"></script>
+<style>li {float: left;}</style>
+</head>
 <!-- include jquery -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 

@@ -57,7 +57,6 @@
 <textarea name="boardInfo" class="summernote" placeholder="내용을 입력해주세요." value="" required></textarea>
 <input type="hidden" value="${sessionScope.admin.ad_id}" id="ad_id" name="ad_id"/>
 <input type="hidden" value="${sessionScope.admin.ad_nickname}" id="ad_nickname" name="ad_nickname"/>
-
 <input type="submit" value="글쓰기" class="btn">
 <input type="button" value="취소" class="btn" onclick="history.back(-1);">
 
