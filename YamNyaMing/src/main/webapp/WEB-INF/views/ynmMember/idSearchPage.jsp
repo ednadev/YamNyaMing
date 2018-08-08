@@ -21,8 +21,8 @@
 					name="loginSelect" id="ownerSelect" value="owner"
 					onclick="radioIdSearchType(this);"><label for="ownerSelect">점장</label>
 			</p>
-			<input type="text" name="memberEmail" placeholder="이메일">
-			<input type="text" name="memberName" placeholder="이름">
+			<input type="text" name="memberEmail" placeholder="이메일" style="color:black;">
+			<input type="text" name="memberName" placeholder="이름" style="color:black;">
 
 			<input type="submit" value="아이디 찾기">
 		</form>

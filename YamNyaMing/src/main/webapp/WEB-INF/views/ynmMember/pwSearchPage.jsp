@@ -21,8 +21,8 @@
 					name="loginSelect" id="ownerSelect" value="owner"
 					onclick="radioPwSearchType(this);"><label for="ownerSelect">점장</label>
 			</p>
-			<input type="text" name="memberId" placeholder="아이디">
-			<input type="text" name="memberEmail" placeholder="이메일">
+			<input type="text" name="memberId" placeholder="아이디" style="color:black;">
+			<input type="text" name="memberEmail" placeholder="이메일" style="color:black;">
 
 			<input type="submit" value="비밀번호 재설정">
 		</form>

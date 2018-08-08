@@ -156,8 +156,8 @@ function googleLogin()
 					name="loginSelect" id="ownerSelect" value="owner"
 					onclick="radioLoginType(this);"><label for="ownerSelect">점장</label>
 			</p>
-			<input type="text" name="memberId" id="memeberId" placeholder="아이디">
-			<input type="password" name="memberPw" placeholder="비밀번호">
+			<input type="text" name="memberId" id="memeberId" placeholder="아이디" style="color:black;">
+			<input type="password" name="memberPw" placeholder="비밀번호" style="color:black;">
 			<p>
 				<input type="checkbox" id="idCheck"><label for="idCheck">아이디
 					기억하기</label>
