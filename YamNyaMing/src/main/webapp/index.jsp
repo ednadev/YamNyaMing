@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 <!-- 	<script>
@@ -37,8 +38,8 @@
 					loginCheck('member,${sessionScope.member.memberEntireNo}');
 			</c:if>
 			setInterval(function(){ 
-				
-			}, 1000);
+				bookCheck("${sessionScope.member.memberEntireNo}");
+			}, 3000);
 		}
 	</script>
 </head>
