@@ -1,0 +1,58 @@
+@charset "UTF-8";
+#owner-section-board{
+	/* margin-left:10%; */
+}
+/*쿠폰 목록 보여주기*/
+#boardList{
+	padding:20px;
+	margin-bottom:30px;
+}
+/*쿠폰 테이블*/
+#keywords {
+  margin: 0 auto;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  width:90%;
+}
+#keywords thead {
+  cursor: pointer;
+  background: #fb0;
+}
+#keywords thead tr th { 
+  font-weight: bold;
+  padding: 12px 30px;
+  padding-left: 42px;
+}
+
+#keywords tbody tr td {
+  text-align: center;
+  padding: 15px 10px;
+  max-width:350px; 	
+}
+
+#boardWriteBtn{
+	float:right;
+	margin-right:5%;
+	background-color: black;
+    padding: 10px;
+    border-radius: 7px;
+    border:0px;
+}
+
+#submitBoardBtn{
+	margin-right:5%;
+	float:right;
+	color:white;
+	background-color: black;
+    padding: 10px;
+    border-radius: 7px;
+    border:0px;
+}
+input[type="text"]{
+    font-size: 0.9em;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #999;
+    width: 300px;
+    padding-bottom:2px;
+}

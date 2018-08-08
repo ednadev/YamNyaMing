@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,14 +10,15 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/bookManagePage.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/bookManagePage.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=2">
 <link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.min.css?ver=3" />
 <link rel='stylesheet' type='text/css' href="${pageContext.request.contextPath}/resources/css/owner/fullcalendar.print.min.css?ver=3" media='print' />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/owner/ownerInfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=3"></script>
+<script src="${pageContext.request.contextPath}/resources/js/owner/ownerBookManage.js?ver=4"></script>
 
 <script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/moment.min.js"></script>
 <script type='text/javascript' src="${pageContext.request.contextPath}/resources/js/jquery/jquery.min.js?ver=1"></script>
@@ -28,6 +30,10 @@
 	}
 	.fc-event, .fc-event-dot *{
 		color:white;
+	}
+	.fc-event {
+    position: relative;
+	    border:0px;
 	}
 </style>
 <script>
@@ -57,12 +63,12 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
-	
+	<section id="store-select-detail">
 		<div>
-			<c:if test="${storeTitleInfo!=null}">
+			<c:if test="${fn:length(storeTitleInfo)>0}">
 				<c:forEach var="storeList" items="${storeTitleInfo}">
 					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
-					<form action="/storeInfoPage.do" method="post" class="design-card">
+					<form action="/reservationManage.do" method="post" class="design-card">
 						<jsp:include page="storeTitleInfo.jsp">
 							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
 						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
@@ -78,18 +84,24 @@
 				</c:forEach>
 			</c:if>
 			<!-- 없을 때 -->
-			<c:if test="${storeTitleInfo==null}">
+			<c:if test="${fn:length(storeTitleInfo)==0}">
 				등록된 가게가 없습니다.
 			</c:if>
-		</div>	
+		</div>
+	   	<!-- 일반 손님 웨이팅 -->
+		<h2 style="margin-left:10%; margin-top:20px; margin-bottom:20px; display:inline-block;">일반손님 대기 리스트</h2>
+		<button id="refreshBookBtn" onclick="watingListLoad();"><h3>예약갱신</h3></button>
+		<hr>
+	 	<div id="waitingList">
+	 	</div>
+		
+	 	<!-- 단체 손님 웨이팅 -->
+	 	<h2 style="margin-left:10%; margin-top:20px; margin-bottom:20px;">단체손님 예약 리스트</h2>
+		<hr>
+		<div id='calendar'></div>
+	</section>
 	
 	
-	<!-- 일반 손님 웨이팅 -->
-	<button onclick="watingListLoad();">새로고침(1분마다 새로고침 됩니다.)</button>
- 	<div id="waitingList">
-           
- 	</div>
- 	<div id='calendar'></div> 
 	<footer id="owner-main-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>

@@ -28,7 +28,7 @@
     	<select name="food" id="food">
     	<c:choose>
     		<c:when test="${food eq '한식'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식" selected>한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -39,7 +39,7 @@
 	    		<option value="기타">기타</option>   		
     		</c:when>
     		<c:when test="${food eq '중식'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식" selected>중식</option>
 	    		<option value="일식">일식</option>
@@ -50,7 +50,7 @@
 	    		<option value="기타">기타</option>   	
     		</c:when>
     		<c:when test="${food eq '일식'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식" selected>일식</option>
@@ -61,7 +61,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '양식'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -72,7 +72,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when> 
     		<c:when test="${food eq '뷔페'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -83,7 +83,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>
     		<c:when test="${food eq '디저트'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -94,7 +94,7 @@
 	    		<option value="기타">기타</option>     		
     		</c:when>  
     		<c:when test="${food eq '술집'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -105,7 +105,7 @@
 	    		<option value="기타">기타</option>    		
     		</c:when>  
     		<c:when test="${food eq '기타'}">
-	     		<option disabled>음식 종류 선택</option>
+	     		<option value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -116,7 +116,7 @@
 	    		<option value="기타" selected>기타</option>    		
     		</c:when>     		  		  		    		   		    		    		
     		<c:otherwise>
-	     		<option selected disabled>음식 종류 선택</option>
+	     		<option selected value="">음식 종류 선택</option>
 	    		<option value="한식">한식</option>
 	    		<option value="중식">중식</option>
 	    		<option value="일식">일식</option>
@@ -164,7 +164,7 @@
 		var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 		var title = new Array();
 		var name = "";
-		for (var i = 0; i < Object.keys( ${resultMap}).length; i++) {
+		for (var i = 0; i < Object.keys(${resultMap}).length; i++) {
 			title[i] = ${resultMap}[i].owStoreName;
 			name = title[i];
 			console.log("검색 갯수 " +  Object.keys( ${resultMap}).length);

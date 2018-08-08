@@ -4,6 +4,7 @@
 
 var boardTap;
 $(document).ready(function() {
+	console.log("새로고침");
 	boardTap = document.getElementsByClassName("board-area");
 	console.log(boardTap);
 	boardTap[0].style.display = "block";

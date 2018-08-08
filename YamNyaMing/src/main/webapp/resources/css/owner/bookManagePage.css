@@ -48,6 +48,21 @@
 	margin-bottom:10px;
 }
 
+#refreshBookBtn{
+	float:right;
+	margin-right:10%;
+    background-color: #fb0;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#watingList{
+	display: flex;
+    justify-content: center;
+}
+
 .watinInnerBtn{
 	float:right;
 	width=100%;
