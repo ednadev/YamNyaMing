@@ -181,10 +181,10 @@ public class CommonControllerImpl implements CommonController {
 	
 	public String bookState(String bookState)
 	{
-		switch(bookState)
-		{
-			
-		}
+//		switch(bookState)
+//		{
+//			
+//		}
 		return "";
 	}
 	

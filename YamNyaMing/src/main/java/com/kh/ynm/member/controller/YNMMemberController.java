@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -41,17 +43,16 @@ public interface YNMMemberController {
 	public String setting(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	public String pwCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	//예약 table
-	public ModelAndView bookInsert(YNMBook yb, HttpSession session, HttpServletRequest request);
+	public ModelAndView bookInsert(HttpSession session, HttpServletRequest request);
 	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 	//리뷰 table
 	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			MultipartHttpServletRequest multi) throws IOException;
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response);
-	public String reviewDetail(HttpServletRequest request, HttpSession session);
+	public JSONArray reviewDetail(HttpServletRequest request, HttpSession session);
 	//대댓글 table
-	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			YNMStoreUnderReview ysur);
+	public 	JSONObject storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//좋아요 table
 	public String likeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//찜하기 table
@@ -60,6 +61,7 @@ public interface YNMMemberController {
 	public String followInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 	//즐겨찾기 table
 	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+
 
 
 

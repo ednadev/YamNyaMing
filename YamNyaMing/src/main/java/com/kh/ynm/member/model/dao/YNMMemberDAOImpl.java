@@ -179,54 +179,13 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.selectOne("member.settingInfo",memberEntireNo);
 	}
 	
-	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
-			YNMSearchPaging check) {
-		int start=currentPage*recordCountPerPage-(recordCountPerPage-1);
-		
-		int end=currentPage*recordCountPerPage;
-		
-		check.setStart(start);
-		check.setEnd(end);
-		
-		List list=sqlSession.selectList("search.searchList",check);
-
+	public ArrayList<YNMSearch> getCurrentPage(SqlSessionTemplate sqlSession , YNMSearchPaging check) {
+		List list=sqlSession.selectList("search.searchList", check);
 		return (ArrayList<YNMSearch>)list;
 	}
 
-	public YNMSearchPaging getPageNavi(SqlSessionTemplate sqlSession, int currentPage, int recordCountPerPage,
-			int naviCountPerPage, YNMSearchPaging check) {
-		int recordTotalCount=0;
-		recordTotalCount=sqlSession.selectOne("search.searchCount",check);
-		int pageTotalCount=0;
-		
-		if(recordTotalCount%recordCountPerPage!=0) {
-			pageTotalCount=recordTotalCount/recordCountPerPage+1;
-		}else {
-			pageTotalCount=recordTotalCount/recordCountPerPage;
-		}
-		
-		if(currentPage<1) {
-			currentPage=1;
-		}else if(currentPage>pageTotalCount) {
-			currentPage=pageTotalCount;
-		}
-		
-		int startNavi=((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
-		
-		int endNavi=startNavi + naviCountPerPage -1;
-		
-		if(endNavi>pageTotalCount) {
-			endNavi=pageTotalCount;
-		}
-	
-		YNMSearchPaging sp =new YNMSearchPaging();
-		sp.setCurrentPage(currentPage);
-		sp.setEndNavi(endNavi);
-		sp.setStartNavi(startNavi);
-		sp.setPageTotalCount(pageTotalCount);
-		sp.setRecordTotalCount(recordTotalCount);
-		
-		return sp;
+	public int getPageNavi(SqlSessionTemplate sqlSession, YNMSearchPaging check) {
+		return sqlSession.selectOne("search.searchCount",check);
 	}
 
 	public YNMSearch detailPage(SqlSessionTemplate sqlSession, YNMSearch vo) {
@@ -280,9 +239,8 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMMember>)list;
 	}
 
-	public ArrayList<YNMSearch> starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
-		List list=sqlSession.selectList("review.starAvg",owStoreInfoPk);
-		return (ArrayList<YNMSearch>)list;
+	public YNMSearch starAvg(SqlSessionTemplate sqlSession, int owStoreInfoPk) {
+		return sqlSession.selectOne("review.starAvg",owStoreInfoPk);
 	}
 
 	public int favoriteChk(SqlSessionTemplate sqlSession, YNMFavorite yf) {
@@ -335,6 +293,21 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 
 	public YNMStoreReview reviewDetail(SqlSessionTemplate sqlSession, String parameter) {
 		return sqlSession.selectOne("review.reviewDetail",parameter);
-	}	
+	}
+
+	public ArrayList<YNMStoreUnderReview> underReview(SqlSessionTemplate sqlSession, int storeReviewNo) {
+		List list=sqlSession.selectList("underReview.underReviewAll",storeReviewNo);
+		return (ArrayList<YNMStoreUnderReview>)list;
+	}
+
+	public ArrayList<YNMStoreReview> jjimMyInfoReviewCheck(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("review.jjimMyInfoReviewCheck",memberEntireNo);
+		return (ArrayList<YNMStoreReview>)list;
+	}
+
+	public ArrayList<YNMSearch> storeAllList(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("search.storeAllList",memberEntireNo);
+		return (ArrayList<YNMSearch>)list;
+	}
 
 }

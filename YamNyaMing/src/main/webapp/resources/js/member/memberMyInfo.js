@@ -59,6 +59,21 @@ function openReviewTab(event, tabName){
 	event.currentTarget.className += " click";
 }
 
+//Other Tab
+function openOtherTab(event, tabName){
+	var i, x, tablinks;
+	x = document.getElementsByClassName("tabInfo");
+	for (i=0; i<x.length; i++){
+		x[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablink");
+	for(i=0; i<x.length; i++){
+		tablinks[i].className = tablinks[i].className.replace(" click", "");
+	}
+	document.getElementById(tabName).style.display="block";
+	event.currentTarget.className += " click";
+}
+
 //기본정보 변경
 function pwChange(){
 	var element = document.getElementById("pwChange");
@@ -94,21 +109,24 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+
+function followClose()
+{
+
+	var modal = document.getElementById('myModal');
+	modal.style.display = "none";
+}
+
+function followModal(){
+	var modal = document.getElementById('myModal');
+	modal.style.display = "block";
 }
 
 
@@ -195,42 +213,6 @@ function favorite(memberEntireNo,owStoreInfoPk){
 			}else{
 				alert("실패");
 			}	
-		}
-	});	
-}
-
-function follow(memberEntireNo,userMemberEntireNo,btnId,labelId){
-	$.ajax({
-		url : "/followInsert.do",
-		data : {memberEntireNo : memberEntireNo,userMemberEntireNo:userMemberEntireNo},
-		dataType:'json',
-		success : function(data){
-			if(data==1){
-				alert("팔로우 해제");
-				var follow=document.getElementById(btnId);
-				var followNum=document.getElementById(labelId);
-				var result=parseInt(followNum.innerHTML)-1;
-				var followlabel=document.getElementById(labelId);
-				
-				followlabel.innerHTML=result;
-				follow.style.backgroundColor="white";
-				follow.style.color="#fb0";
-				follow.style.border="1px solid #fb0";
-				
-			
-			}else if(data==2){
-				var follow=document.getElementById(btnId);
-				var followNum=document.getElementById(labelId);
-				var result=parseInt(followNum.innerHTML)+1;
-				var followlabel=document.getElementById(labelId);
-					followlabel.innerHTML=result;
-				follow.style.backgroundColor="#fb0";
-				follow.style.color="white";
-				
-				
-			}else{
-				alert("실패");
-			}
 		}
 	});	
 }
@@ -512,3 +494,147 @@ $(document).keyup(function() {
 			}
 		}
 	}
+	
+
+	function like(storeReviewNo,memberEntireNo,pId){
+		var name=document.getElementsByName(pId);
+		console.log(name[0]);
+		$.ajax({
+				url : "/likeInsert.do",
+				data : {memberEntireNo : memberEntireNo,storeReviewNo:storeReviewNo},
+				dataType:'json',
+				success : function(data){
+					if(data==1){
+						var like=document.getElementById(pId).innerHTML;
+						var result=parseInt(like)-1;
+						document.getElementById(pId).innerHTML=result;
+						name[0].style.backgroundColor="white";
+						name[0].style.border="1px solid #fb0";
+						name[1].innerHTML="";
+						name[1].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/like.png'>");
+						name[2].style.color="#fb0";
+						name[3].style.color="#fb0";
+						
+					}else if(data==2){
+						var like=document.getElementById(pId).innerHTML;
+						var result=parseInt(like)+1;
+						document.getElementById(pId).innerHTML=result;
+						name[0].style.backgroundColor="#fb0";
+						name[1].innerHTML="";
+						name[1].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/like-white.png'>");
+						name[2].style.color="white";
+						name[3].style.color="white";
+						
+					}else{
+						alert("실패");
+					}	
+				}
+			});	
+		
+	}
+	function jjim(storeReviewNo,memberEntireNo,pId,jjimName){
+		var name=document.getElementsByName(jjimName);
+		console.log(name[4]);
+		$.ajax({
+			url : "/jjimInsert.do",
+			data : {memberEntireNo : memberEntireNo,storeReviewNo:storeReviewNo},
+			dataType:'json',
+			success : function(data){
+				if(data==1){
+					alert("찜 해제");
+					var jjim=document.getElementById(pId).innerHTML;
+					var result=parseInt(jjim)-1;
+					document.getElementById(pId).innerHTML=result;
+					
+					name[4].style.backgroundColor="white";
+					name[4].style.border="1px solid #fb0";
+					name[5].innerHTML="";
+					name[5].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart-yellow.png'>");
+					name[6].style.color="#fb0";
+					name[7].style.color="#fb0";
+					
+				}else if(data==2){
+					alert("찜 했다");
+					var jjim=document.getElementById(pId).innerHTML;
+					var result=parseInt(jjim)+1;
+					document.getElementById(pId).innerHTML=result;
+					name[4].style.backgroundColor="#fb0";
+					name[5].innerHTML="";
+					name[5].insertAdjacentHTML('beforeend', "<img style=width:100%;height:100%; src='resources/image/member/search/heart.png'>");
+					name[6].style.color="white";
+					name[7].style.color="white";
+					
+				}else{
+					alert("실패");
+				}
+			}
+		});	
+	}
+
+	function follow(memberEntireNo,userMemberEntireNo,btnName,labelName){
+		$.ajax({
+			url : "/followInsert.do",
+			data : {memberEntireNo : memberEntireNo,userMemberEntireNo:userMemberEntireNo},
+			dataType:'json',
+			success : function(data){
+				if(data==1){
+					alert("팔로우 해제");
+					var follow=document.getElementsByName(btnName);
+					var followNum=document.getElementsByName(labelName);
+					var result=parseInt(followNum[0].innerHTML)-1;
+					var followlabel=document.getElementsByName(labelName);
+					for(var i=0; i<followlabel.length; i++){
+						followlabel[i].innerHTML=result;
+					}
+					
+					for(var i=0; i<follow.length; i++){
+					follow[i].style.backgroundColor="white";
+					follow[i].style.color="#fb0";
+					follow[i].style.border="1px solid #fb0";
+					}
+				}else if(data==2){
+					var follow=document.getElementsByName(btnName);
+					var followNum=document.getElementsByName(labelName);
+					var result=parseInt(followNum[0].innerHTML)+1;
+					var followlabel=document.getElementsByName(labelName);
+					for(var i=0; i<followlabel.length; i++){
+						followlabel[i].innerHTML=result;
+					}
+					
+					for(var i=0; i<follow.length; i++){
+					follow[i].style.backgroundColor="#fb0";
+					follow[i].style.color="white";
+					}
+					
+				}else{
+					alert("실패");
+				}
+			}
+		});	
+	}
+	
+	
+	function closemodal(){
+		var modal = document.getElementById('likeModal');
+		modal.style.display = "none";
+	}
+	function closeimagemodal(){
+		var modal = document.getElementById('imageModal');
+		modal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		var modal = document.getElementById('likeModal');
+		   if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+	}
+	window.onclick = function(event) {
+		var modal = document.getElementById('imageModal');
+		   if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+	}
+function nomember()
+{
+	alert("로그인후 이용해주세요");
+}

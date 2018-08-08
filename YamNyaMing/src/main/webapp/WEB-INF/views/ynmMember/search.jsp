@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=8">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=6">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
@@ -189,13 +190,23 @@
 	}	
 	</script>
 	
+	<script>
+	function searchDetail(){
+		var x = document.getElementById("searchDetail");
+		if(x.style.display === "none"){
+			x.style.display = "block";
+		}else{
+			x.style.display = "none";
+		}
+	}
+	</script>	
 	
 	<div class="member-search-wrapper">
-	<h2>자세히 검색</h2>
+	<h2 onclick="searchDetail();">자세히 검색</h2>
 	<c:forEach items="${search.storeCateDetailName}" var="s">
 		${s}
 	</c:forEach>
-	<form action="/search.do" method="get">
+	<form action="/search.do" method="get" id="searchDetail">
 	<c:choose>
 		<c:when test="${food eq '한식' }">
 		<input type="hidden" name="place" value="홍대">
@@ -305,11 +316,7 @@
 				<c:otherwise>
 					<input type="checkbox" id="stew" name="storeCateDetailName" value="찌개,전골"><label for="stew">찌개,전골</label>
 				</c:otherwise>
-			</c:choose>								
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>		
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '추어탕' || storeCateDetailName[1] eq '추어탕' || storeCateDetailName[2] eq '추어탕' 
 								|| storeCateDetailName[3] eq '추어탕' || storeCateDetailName[4] eq '추어탕' || storeCateDetailName[5] eq '추어탕'
@@ -423,11 +430,7 @@
 				<c:otherwise>
 					<input type="checkbox" id="stirFry" name="storeCateDetailName" value="볶음요리"><label for="stirFry">볶음요리</label>
 				</c:otherwise>
-			</c:choose>					
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>								
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '해산물요리' || storeCateDetailName[1] eq '해산물요리' || storeCateDetailName[2] eq '해산물요리' 
 								|| storeCateDetailName[3] eq '해산물요리' || storeCateDetailName[4] eq '해산물요리' || storeCateDetailName[5] eq '해산물요리'
@@ -534,7 +537,7 @@
 				<c:otherwise>
 					<input type="checkbox" id="snackBar" name="storeCateDetailName" value="분식"><label for="snackBar">분식</label>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>												
 		</div>
 	</div>	
 
@@ -643,19 +646,15 @@
 				<c:otherwise>
 					<input type="checkbox" id="japaneseFry" name="storeCateDetailName" value="일식튀김,꼬치"><label for="japaneseFry">일식튀김,꼬치</label>
 				</c:otherwise>
-			</c:choose>							
-		</div>
-	</div>
-	<div class="detailSearch">
-		<div>
+			</c:choose>
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '초밥,롤' || storeCateDetailName[1] eq '초밥,롤' || storeCateDetailName[2] eq '초밥,롤'
 								|| storeCateDetailName[3] eq '초밥,롤' || storeCateDetailName[4] eq '초밥,롤' || storeCateDetailName[5] eq '초밥,롤'
 								|| storeCateDEtailName[6] eq '초밥,롤' || storeCateDetailName[7] eq '초밥,롤' || storeCateDetailName[8] eq '초밥,롤'}">
-					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤" checked><label for="sushi" style="margin-left:119px;">초밥,롤</label>		
+					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤" checked><label for="sushi">초밥,롤</label>		
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤"><label for="sushi" style="margin-left:119px;">초밥,롤</label>		
+					<input type="checkbox" id="sushi" name="storeCateDetailName" value="초밥,롤"><label for="sushi">초밥,롤</label>		
 				</c:otherwise>
 			</c:choose>	
 			<c:choose>
@@ -668,9 +667,10 @@
 				<c:otherwise>
 					<<input type="checkbox" id="riceBowl" name="storeCateDetailName" value="덮밥"><label for="riceBowl">덮밥</label>
 				</c:otherwise>
-			</c:choose>						
+			</c:choose>												
 		</div>
-	</div>			
+	</div>
+		
 		
 		</c:when>
 		<c:when test="${food eq '양식'}">
@@ -750,20 +750,15 @@
 				<c:otherwise>
 					<input type="checkbox" id="franceFood" name="storeCateDetailName" value="프랑스음식"><label for="franceFood">프랑스음식</label>
 				</c:otherwise>
-			</c:choose>				
-		</div>
-	</div>
-	
-	<div class="detailSearch">
-		<div>
+			</c:choose>		
 			<c:choose>
 				<c:when test="${storeCateDetailName[0] eq '이탈리아음식' || storeCateDetailName[1] eq '이탈리아음식' || storeCateDetailName[2] eq '이탈리아음식'
 								|| storeCateDetailName[3] eq '이탈리아음식' || storeCateDetailName[4] eq '이탈리아음식' || storeCateDetailName[5] eq '이탈리아음식'
 								|| storeCateDetailName[6] eq '이탈리아음식' || storeCateDetailName[7] eq '이탈리아음식' || storeCateDetailName[8] eq '이탈리아음식'}">
-					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식" checked><label for="italyFood" style="margin-left:119px;">이탈리아음식</label>
+					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식" checked><label for="italyFood">이탈리아음식</label>
 				</c:when>
 				<c:otherwise>
-					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식"><label for="italyFood" style="margin-left:119px;">이탈리아음식</label>
+					<input type="checkbox" id="italyFood" name="storeCateDetailName" value="이탈리아음식"><label for="italyFood">이탈리아음식</label>
 				</c:otherwise>
 			</c:choose>		
 			<c:choose>
@@ -834,9 +829,10 @@
 				<c:otherwise>
 					<input type="checkbox" id="germanyFood" name="storeCateDetailName" value="독일음식"><label for="germanyFood">독일음식</label>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>							
 		</div>
-	</div>				
+	</div>
+			
 			
 		</c:when>
 
@@ -1199,10 +1195,10 @@
 	</div>
 	<input type="submit" value="상세정보 검색하기">
 	</form>
-	<h4>총 <span>${search.recordTotalCount }</span>개가 검색되었습니다</h4>
+	<h4>총 <span>${pageNaviData.recordTotalCount }</span>개가 검색되었습니다</h4>
 	<p><span>대기순</span> | <span>추천순</span> | <span>별점순</span></p>
 	<div class="search-page">
-		<c:forEach items="${search.noticelist}" var="search">
+		<c:forEach items="${searchList}" var="search">
 			<div class="search-result">
 				<div class="search-result-img" style="background-image:url('${pageContext.request.contextPath}/${search.owPhotoRoute}');">
 					<form action="/detailPage.do" method="get">
@@ -1210,7 +1206,8 @@
 						<input type="submit" value="">
 					</form>
 							<div>
-								<p>대기인원 0 추천${search.favoriteTotal}</p>
+								<p>대기인원 0 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
+								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
@@ -1221,6 +1218,13 @@
 								<c:if test="${search.favoriteChk!=1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
 										onclick="favorite('${sessionScope.member.memberEntireNo}','${search.owStoreInfoPk}');">
+										<img style="width: 100%; height: 100%; cursor: pointer;"
+											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
+									</div>
+								</c:if>
+								</c:if>
+								<c:if test="${sessionScope.member==null}">
+									<div class="heart" onclick="nomember();">
 										<img style="width: 100%; height: 100%; cursor: pointer;"
 											src='${pageContext.request.contextPath}/resources/image/member/search/heart.png'>
 									</div>
@@ -1257,60 +1261,63 @@
 					</div>
 					<div>${search.owStoreComment}</div>
 				</div>
-				<script>
-				 function popupPost(value){
-	               var reserve = document.reserve;
-	               var pop = window.open;
-				   var windowW = 560;
-				   var windowH = 560;
-				   var left = Math.ceil((window.screen.width - windowW) / 2);
-				   var top = Math.ceil((window.screen.height - windowH) / 2);
-				   console.log(value);
-	               pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
-	               /* reserve.target="popup";
-	               reserve.method="get";
-	               reserve.submit(); */
-	            }
-	            </script>  	            
+		            
 	                
+	            <!-- 
 	           	<form action="reservation.do" method="get" name="reserve">
 	               <input type="button" onclick="popupPost(${search.owStoreInfoPk})" value="예약하기">
-	            </form>
-	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}');">예약하기</button>
-				<button>리뷰쓰기</button>
+	            </form> -->
+	            <button id="myBtn" onclick="modalPopup('${search.owStoreName}','${search.owStoreAddrFirst}','${search.owStoreAddrFinal}','${search.storeCateMainName }','${search.owStoreInfoPk}');">예약하기</button>
+				<button>리뷰쓰기 </button>
 			</div>
 		</c:forEach>
-				<c:if test="${search!=null}">
-					<div id="pagingNumber">
-						<c:if test="${search.startNavi!=1}">
-							<form action="/search.do" method="post">
-								<input type="hidden"  name="currentPage" value="${search.startNavi-1}"> 
-								<input type="submit" class="paging-num" value="<">
-							</form>
-						</c:if>
-						<c:forEach var="i" begin="${search.startNavi}"
-							end="${search.endNavi}">
-							<c:if test="${search.currentPage==i}">
-								<form action="/search.do" method="post">
-									<input type="hidden" name="currentPage" value="${i}"> 
-									<input type="submit" class="paging-num-select" value="${i}">
-								</form>
-							</c:if>
-							<c:if test="${search.currentPage!=i}">
-								<form action="/search.do" method="post">
-									<input type="hidden" name="currentPage" value="${i}"> 
-									<input type="submit" class="paging-num" value="${i}">
-								</form>
-							</c:if>
-						</c:forEach>
-						<c:if test="${search.endNavi!=search.pageTotalCount}">
-							<form action="/search.do" method="post">
-								<input type="hidden" name="currentPage"	value="${search.endNavi+1}"> 
-								<input type="submit"  class="paging-num"  value=">">
-							</form>
-						</c:if>
-					</div>
+		<script>	
+		
+			 function popupPost(value){
+	              var reserve = document.reserve;
+	              var pop = window.open;
+			   var windowW = 560;
+			   var windowH = 560;
+			   var left = Math.ceil((window.screen.width - windowW) / 2);
+			   var top = Math.ceil((window.screen.height - windowH) / 2);
+			   console.log(value);
+	              pop("/reservation.do?owStoreInfoPk="+value,"popup","top=" + top + ", left=" + left + ", height=" + windowH + ", width=" + windowW + ", toolbar='no'");
+	              /* reserve.target="popup";
+	              reserve.method="get";
+	              reserve.submit(); */
+	           }
+        </script>  	
+		<c:if test="${pageNaviData!=null}">
+			<div id="pagingNumber">
+				<c:if test="${pageNaviData.startNavi!=1}">
+					<form action="/search.do" method="post">
+						<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
+						<input type="submit" class="paging-num" value="<">
+					</form>
 				</c:if>
+				<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
+					<c:if test="${pageNaviData.currentPage==i}">
+						<form action="/search.do" method="post">
+							<input type="hidden" name="currentPage" value="${i}"> 
+							<input type="submit" class="paging-num-select" value="${i}">
+						</form>
+					</c:if>
+					<c:if test="${pageNaviData.currentPage!=i}">
+						<form action="/search.do" method="post">
+							<input type="hidden" name="currentPage" value="${i}"> 
+							<input type="submit" class="paging-num" value="${i}">
+						</form>
+					</c:if>
+				    
+				</c:forEach>
+				<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
+					<form action="/search.do" method="post">
+						<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
+						<input type="submit" class="paging-num"  value=">">
+					</form>
+				</c:if>
+			</div>
+		</c:if>
 	</div>
 	</div>
 	
@@ -1320,10 +1327,103 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <p id="modalValue"></p>
+	<c:if test="${reservationResult==null}">    
+    
+		<form action="/bookInsert.do" method="post">
+		<div id="title"></div>
+			<input type="hidden" name="bookOrderCount" value="1">
+			<%-- <input type="text" name="storeEntireNo" value="${reservation.owStoreAddrFirst}"> --%>
+			<div class="check">
+				<input type="radio" name="bookType" value="s" id="personal" checked><label for="personal">일반</label>
+				<input type="radio" name="bookType" value="g" id="group"><label for="group">단체</label>
+			</div>
+			<div class="date-time">
+				<label for="datePicker">날짜</label>
+				<input type="date" name="bookDateAndTime1" id="datePicker">
+			</div>
+			<div class="date-time">
+				<label for="timePicker">시간</label>
+				<input type='time' name="bookDateAndTime2" value='now'>
+			</div>	
+			<div class="quantity">
+				<label for="personPicker">인원</label>
+				<input type="number" min="1" max="100" step="1" value="1" id="personPicker" name="bookPartyCount">
+			</div>
+			<div class="name-tel">
+				<h2>성함</h2>
+				<input type="text" placeholder="성함을 입력해주세요">
+				<h2>전화번호</h2>
+				<input type="tel" placeholder="전화번호 입력해주세요">
+			</div>	
+			<div class="text" style="clear:both;">
+				<textarea name="bookOption" placeholder="요청사항을 적어주세요">
+					
+				</textarea>
+			</div>
+			<input type="submit" value="예약 접수">		
+			<script>
+		    jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+		    jQuery('.quantity').each(function() {
+		      var spinner = jQuery(this),
+		        input = spinner.find('input[type="number"]'),
+		        btnUp = spinner.find('.quantity-up'),
+		        btnDown = spinner.find('.quantity-down'),
+		        min = input.attr('min'),
+		        max = input.attr('max');
+	
+		      btnUp.click(function() {
+		        var oldValue = parseFloat(input.val());
+		        if (oldValue >= max) {
+		          var newVal = oldValue;
+		        } else {
+		          var newVal = oldValue + 1;
+		        }
+		        spinner.find("input").val(newVal);
+		        spinner.find("input").trigger("change");
+		      });
+	
+		      btnDown.click(function() {
+		        var oldValue = parseFloat(input.val());
+		        if (oldValue <= min) {
+		          var newVal = oldValue;
+		        } else {
+		          var newVal = oldValue - 1;
+		        }
+		        spinner.find("input").val(newVal);
+		        spinner.find("input").trigger("change");
+		      });
+	
+		    });
+		    
+		    document.getElementById('datePicker').valueAsDate = new Date();
+		    
+		    $(function(){     
+		    	  var d = new Date(),        
+		    	      h = d.getHours(),
+		    	      m = d.getMinutes();
+		    	  if(h < 10) h = '0' + h; 
+		    	  if(m < 10) m = '0' + m; 
+		    	  $('input[type="time"][value="now"]').each(function(){ 
+		    	    $(this).attr({'value': h + ':' + m});
+		    	  });
+		    	});
+			</script>
+		</form>
+		
+	</c:if>		
+	<c:if test="${reservationResult!=null}">
+		<c:if test="${reservationResult>0}">
+			<button onclick="self.close()"> 예약을 완료했습니다.</button>
+		</c:if>
+		<c:if test="${reservationResult==0}">
+			<button onclick="self.close()"> 예약 실패했습니다.</button>
+		</c:if>
+	</c:if>
+			   
   </div>
 
 </div>	
+
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -1348,7 +1448,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 900px;
 }
 
 /* The Close Button */
@@ -1365,6 +1465,48 @@ body {font-family: Arial, Helvetica, sans-serif;}
     text-decoration: none;
     cursor: pointer;
 }
+
+@media (max-width:960px){
+	.modal-content{
+		width:290px;
+	}
+	#myModal>.modal-content>form{
+		margin-left:0px;
+	}
+	.date-time>label{
+		line-height:initial;
+	}
+	.date-time>input{
+		padding:2px;
+	}
+	.date-time{
+		overflow:hidden;
+		margin-bottom:5px;
+	}
+	.quantity{
+		overflow:hidden;
+		margin:0px;
+	}
+	.quantity>label{
+		margin-left:0px;
+	}
+	.quantity>input[type="number"]{
+		padding-left:5px;
+		width:184px;
+	}
+	.name-tel{
+		line-height:2;
+	}
+	.name-tel>input{
+		width:265px;
+		padding:5px;
+	}
+	.text>textarea{
+		width:262px;
+		height:65px;
+	}
+}
+
 </style>
 <script>
 // Get the modal
@@ -1377,9 +1519,14 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
-function modalPopup(storeIndex,storeAddr) {
+function modalPopup(storeName,storeAddrFirst,storeAddrFinal,storeCateMainName,owStoreInfoPk) {
+	console.log(owStoreInfoPk);
     modal.style.display = "block";
-    $('#modalValue').html(storeIndex + storeAddr);
+    $('#title').html(
+    		"<h1>" + storeName + "</h1>"
+    		+"<p>" + storeAddrFirst + " > " + storeAddrFinal + " ㆍ " + storeCateMainName + "</p>"
+    		+"<input type='hidden' name='storeEntireNo' value='"+owStoreInfoPk+"'>"
+    );
 }
 
 // When the user clicks on <span> (x), close the modal

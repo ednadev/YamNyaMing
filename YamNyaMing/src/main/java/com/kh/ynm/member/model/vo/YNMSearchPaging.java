@@ -1,6 +1,7 @@
 package com.kh.ynm.member.model.vo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class YNMSearchPaging {
@@ -8,12 +9,14 @@ public class YNMSearchPaging {
 	String food;
 	String place;
 	ArrayList<String> storeCateDetailName;
-	ArrayList<String> owBudget;
-	ArrayList<String> owSubInfo;
+	ArrayList<String> owBudget ;
+	ArrayList<String> owSubInfo ;
 	ArrayList<String> owDrinkListInfo;
+	
+	HashMap<String, ArrayList<String>> searchMap = new HashMap<String, ArrayList<String>>();
 
-	int start;
-	int end;
+	private int start;
+	private int end;
 	private ArrayList<YNMSearch> noticelist = new ArrayList<YNMSearch>();
 	private String pageNavi;
 	private int startNavi;
@@ -24,9 +27,12 @@ public class YNMSearchPaging {
 	public YNMSearchPaging() {
 		// TODO Auto-generated constructor stub
 	}
-	public YNMSearchPaging(String keyword, String food, String place, ArrayList<String> storeCateDetailName, ArrayList<String> owBudget,
-			ArrayList<String> owSubInfo, ArrayList<String> owDrinkListInfo, int start, int end, ArrayList<YNMSearch> noticelist,
-			String pageNavi, int startNavi, int endNavi, int currentPage, int pageTotalCount, int recordTotalCount) {
+	
+	public YNMSearchPaging(String keyword, String food, String place, ArrayList<String> storeCateDetailName,
+			ArrayList<String> owBudget, ArrayList<String> owSubInfo, ArrayList<String> owDrinkListInfo, int start,
+			int end, ArrayList<YNMSearch> noticelist, String pageNavi, int startNavi, int endNavi, int currentPage,
+			int pageTotalCount, int recordTotalCount) {
+		super();
 		this.keyword = keyword;
 		this.food = food;
 		this.place = place;
@@ -44,6 +50,17 @@ public class YNMSearchPaging {
 		this.pageTotalCount = pageTotalCount;
 		this.recordTotalCount = recordTotalCount;
 	}
+	
+	
+	
+	public HashMap<String, ArrayList<String>> getSearchMap() {
+		return searchMap;
+	}
+
+	public void setSearchMap(String key,  ArrayList<String> value) {
+		this.searchMap.put(key, value);
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -67,24 +84,28 @@ public class YNMSearchPaging {
 	}
 	public void setStoreCateDetailName(ArrayList<String> storeCateDetailNameList) {
 		this.storeCateDetailName = storeCateDetailNameList;
+		setSearchMap("detailName", this.storeCateDetailName );
 	}
 	public ArrayList<String> getOwBudget() {
 		return owBudget;
 	}
 	public void setOwBudget(ArrayList<String> owBudget) {
 		this.owBudget = owBudget;
+		setSearchMap("budget", this.owBudget );
 	}
 	public ArrayList<String> getOwSubInfo() {
 		return owSubInfo;
 	}
 	public void setOwSubInfo(ArrayList<String> owSubInfo) {
 		this.owSubInfo = owSubInfo;
+		setSearchMap("subInfo", this.owSubInfo );
 	}
 	public ArrayList<String> getOwDrinkListInfo() {
 		return owDrinkListInfo;
 	}
 	public void setOwDrinkListInfo(ArrayList<String> owDrinkListInfo) {
 		this.owDrinkListInfo = owDrinkListInfo;
+		setSearchMap("drinkList", this.owDrinkListInfo );
 	}
 	public int getStart() {
 		return start;

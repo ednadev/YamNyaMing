@@ -25,6 +25,7 @@
 </head>
 <body>
 	<header id="owner-main-header">
+	<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 	<h1>
 		<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 	</h1>

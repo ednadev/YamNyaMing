@@ -14,7 +14,7 @@ public interface YNMOwnerViewController {
 	public String storeEnrollOwner();
 	
 	// 점주 마이페이지
-	public String ownerMyPage();
+//	public String ownerMyPage();
 	
 	// 마이페이지 - 정보관리
 	public String ownerInfoPage();

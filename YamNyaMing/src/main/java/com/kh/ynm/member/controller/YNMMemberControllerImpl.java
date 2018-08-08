@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.ynm.common.MyFileRenamePolicy;
 import com.kh.ynm.common.controller.CommonControllerImpl;
+import com.kh.ynm.common.model.vo.YNMTotalRefModel;
 import com.kh.ynm.member.controller.YNMMemberController;
 import com.kh.ynm.member.model.service.YNMMemberServiceImpl;
 
@@ -52,6 +54,7 @@ import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMReviewLike;
 import com.kh.ynm.member.model.vo.YNMStoreReview;
 import com.kh.ynm.member.model.vo.YNMStoreUnderReview;
+import com.kh.ynm.owner.model.vo.OwnerUploadPhoto;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 @Controller
@@ -79,6 +82,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		vo.setMemberId(request.getParameter("memberId"));
 		vo.setMemberPw(request.getParameter("memberPw"));
 		YNMMember ym=ynmMemberServiceImpl.selectOneMember(vo);
+		String viewPath=ynmMemberServiceImpl.viewPath(ym.getMemberUploadPhotoNo());
+		ym.setPhotoViewRoute(viewPath);
+		
 		HttpSession session=request.getSession();
 
 		if(CommonControllerImpl.loginType==true) {
@@ -93,6 +99,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}else {
 			if(ym!=null) {
 				session.setAttribute("member", ym);
+				YNMMemberSetting yms=ynmMemberServiceImpl.settingInfo(ym.getMemberEntireNo());
+				session.setAttribute("set", yms);
 				return "redirect:/index.jsp";
 			}else {
 				return "ynmMember/memberError/loginError";
@@ -329,6 +337,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@RequestMapping(value="/memberInfo.do")
 	public ModelAndView memberInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView view=new ModelAndView();
 		YNMMember vo=new YNMMember();
 		session=request.getSession(false);
 		if(((YNMMember)session.getAttribute("member"))!=null) {
@@ -401,13 +410,59 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				}
 			}
 			}
+			//내 정보 리뷰
+			ArrayList<YNMStoreReview> ysrList=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMStoreReview> ysrList2=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMFollow> foList=null;
+			ArrayList<YNMReviewLike> lList=null;
+			ArrayList<YNMReviewJjim> jList=null;
+			ArrayList<YNMStoreReview> myYsrList=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMFollow> foList2=null;
+			ArrayList<YNMReviewLike> lList2=null;
+			ArrayList<YNMReviewJjim> jList2=null;
+			ArrayList<YNMStoreReview> jjimYsrList=new ArrayList<YNMStoreReview>();
+			if(session.getAttribute("member")!=null) {
+				YNMMember member = (YNMMember)session.getAttribute("member");
+					jjimYsrList=ynmMemberServiceImpl.jjimMyInfoReviewCheck(memberEntireNo);
+					myYsrList=ynmMemberServiceImpl.myInfoReviewCheck(memberEntireNo);
+					ysrList=ysrListGet(myYsrList);
+					ysrList2=ysrListGet(jjimYsrList);
+					foList= fListGet(ysrList, member.getMemberEntireNo());
+					lList=lListGet(ysrList, member.getMemberEntireNo());
+					jList=jListGet(ysrList, member.getMemberEntireNo());
+					foList2= fListGet(jjimYsrList, member.getMemberEntireNo());
+					lList2=lListGet(jjimYsrList, member.getMemberEntireNo());
+					jList2=jListGet(jjimYsrList, member.getMemberEntireNo());
+				
+			}
 			
-		
-			ModelAndView view=new ModelAndView();
-			
+			ArrayList<YNMSearch> storeAllList = ynmMemberServiceImpl.storeAllList(memberEntireNo);
+			if(storeAllList.size()>0) 
+			{
+				if(storeAllList.size()>0) {
+					for(int i=0; i<storeAllList.size(); i++){
+						YNMSearch ys=ynmMemberServiceImpl.starAvg(storeAllList.get(i).getOwStoreInfoPk());
+						if(ys!=null) {
+							storeAllList.get(i).setStarAvg(ys.getStarAvg());
+						}
+					}
+				}
+				//search page 가게 찜여부 확인
+				for(int i=0; i<storeAllList.size(); i++) {
+					YNMFavorite yf = new YNMFavorite();
+					yf.setMemberEntireNo(memberEntireNo);
+					yf.setOwStoreInfoNo(storeAllList.get(i).getOwStoreInfoPk());
+					int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+					int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(storeAllList.get(i).getOwStoreInfoPk());
+					storeAllList.get(i).setFavoriteChk(favoriteChk);
+					storeAllList.get(i).setFavoriteTotal(favoriteTotal);
+				}
+			}
+
 			if(ym!=null) {
-				view=reviewCheck(request,response);
-				view=search(session,request);
+				view.addObject("storeAllList",storeAllList);
+				view.addObject("jjimReview",ysrList2);
+				view.addObject("review",ysrList);
 				view.addObject("followerYm",followerYmList);
 				view.addObject("followingYm",followingYmList);
 				view.addObject("favorite",fList);
@@ -420,7 +475,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			else {
 				return null;
 			}
-		}
+			}
 		else {
 			return null;
 		}
@@ -432,9 +487,11 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@Override
 	@RequestMapping(value="/updateMemberPhoto.do")
 	public ModelAndView updateMemberPhoto(@RequestParam("avatarPhoto") MultipartFile file,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		YNMMember vo=new YNMMember();
 		YNMMember ym=new YNMMember();
 		ModelAndView view=new ModelAndView();
 		if(((YNMMember)session.getAttribute("member"))!=null) {
+			vo=ynmMemberServiceImpl.selectOneMember2(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		ym.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 		}
 		if(file.getSize()>0) {
@@ -472,7 +529,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			
 			ym.setMemberUploadPhotoNo(ymupIndex.getUploadPhotoNo());
 			int result2=ynmMemberServiceImpl.updateMemberPhoto(ym);
-
+			
 			if(result2>0) {
 				view=memberInfo(session,request,response);
 				view.setViewName("ynmMember/myInfo");
@@ -631,96 +688,56 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			view.setViewName("ynmMember/Error");
 		}
 		return view;
-
-
-
+	}
+	
+	public ArrayList<YNMFollow> fList(int memberNo)
+	{
+		
+		return null;
 	}
 
 	//리뷰 정보 가져오기
 	@Override
 	@RequestMapping(value="/reviewCheck.do")
 	public ModelAndView reviewCheck(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView view=new ModelAndView();
 		HttpSession session=request.getSession(false);
-		YNMMemberUploadPhoto ymup=new YNMMemberUploadPhoto();
-		ArrayList<YNMStoreReview> ysrList=new ArrayList<YNMStoreReview>();
-		YNMStoreReview ysr=new YNMStoreReview();
-		YNMFollow yf=new YNMFollow();
-		if(request.getParameter("owStoreInfoPk")!=null) {
-		int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("owStoreInfoPk"));
-		ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
-		}
-		else{
-			int memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
-			ysrList=ynmMemberServiceImpl.myInfoReviewCheck(memberEntireNo);
-		}
-		
-		ArrayList<YNMFollow> fList=null;
-		ArrayList<YNMReviewLike> lList=null;
-		ArrayList<YNMReviewJjim> jList=null;
-		int starSum=0;
-		float starAvg=0;
-		if(!ysrList.isEmpty()) {
-		for(int i=0; i<ysrList.size(); i++ ) {
-				starSum+=ysrList.get(i).getReviewStar();
+			ArrayList<YNMStoreReview> ysrList=new ArrayList<YNMStoreReview>();
+			int OwnerStoreEntireNo=Integer.parseInt(request.getParameter("owStoreInfoPk"));
+			ysrList=ynmMemberServiceImpl.storeReviewCheck(OwnerStoreEntireNo);
+			ArrayList<YNMFollow> fList=null;
+			ArrayList<YNMReviewLike> lList=null;
+			ArrayList<YNMReviewJjim> jList=null;
+			ysrList=ysrListGet(ysrList);
+			if(session.getAttribute("member")!=null) {
+			YNMMember member = (YNMMember)session.getAttribute("member");
+			fList= fListGet(ysrList, member.getMemberEntireNo());
+			lList=lListGet(ysrList, member.getMemberEntireNo());
+			jList=jListGet(ysrList, member.getMemberEntireNo());
 			}
-		starAvg=(float)starSum/ysrList.size();
-		}
-		if(session.getAttribute("member") !=null) {
-			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-			fList=ynmMemberServiceImpl.followInfo(memberNo);
-			if(fList.size()==0) {
-				fList=null;
-			}else {
-				for(int i=0; i<ysrList.size(); i++) {
-					for(int j=0; j<fList.size(); j++) {
-						if(ysrList.get(i).getMemberEntireNo()==fList.get(j).getFollowMemberIdNo()) {
-								ysrList.get(i).setMyfollowChk(1);
-								break;
-							
-						}
-					}
+			// 평점 구하기
+			int starSum=0;
+			float starAvg=0;
+			if(!ysrList.isEmpty()) {
+			for(int i=0; i<ysrList.size(); i++ ) {
+					starSum+=ysrList.get(i).getReviewStar();
 				}
+				starAvg=(float)starSum/ysrList.size();
 			}
-		}
-		if(session.getAttribute("member") !=null) {
-			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-			lList=ynmMemberServiceImpl.likeInfo(memberNo);
-			if(lList.size()==0) {
-				lList=null;
+			if(!ysrList.isEmpty()) {
+				view.addObject("starAvg",starAvg);
+				view.addObject("review",ysrList);
+				return view;
+	
 			}else {
-				for(int i=0; i<ysrList.size(); i++) {
-					for(int j=0; j<lList.size(); j++) {
-						if(ysrList.get(i).getStoreReviewNo()==lList.get(j).getStoreReviewNo()) {
-							if(memberNo==lList.get(j).getMemberEntireNo())
-							{
-								ysrList.get(i).setMyLikeChk(1);
-								break;
-							}
-						}
-					}
-				}
+				
+				view.addObject("noReview"," 등록된 리뷰가 없습니다.");
+				return view;
+	
 			}
-		}
-		if(session.getAttribute("member") !=null) {
-			int memberNo=(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-			jList=ynmMemberServiceImpl.jjimInfo(memberNo);
-
-			if(jList.size()==0) {
-				jList=null;
-			}else {
-				for(int i=0; i<ysrList.size(); i++) {
-					for(int j=0; j<jList.size(); j++) {
-						if(ysrList.get(i).getStoreReviewNo()==jList.get(j).getStoreReviewNo()) {
-							if(memberNo==jList.get(j).getMemberEntireNo())
-							{
-								ysrList.get(i).setMyJjimChk(1);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
+	}
+	
+	public ArrayList<YNMStoreReview> ysrListGet(ArrayList<YNMStoreReview> ysrList){
 		StringBuilder strBuilder = new StringBuilder();
 		String[] imgArr;
 		for(int i=0; i<ysrList.size(); i++) {
@@ -731,6 +748,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 		ArrayList<YNMMemberUploadPhoto> imgList = ynmMemberServiceImpl.reviewImageList(imgArr);
 
+		
 		for(int i = 0; i<ysrList.size();i++)
 		{
 			YNMStoreReview tempStoreReview = ysrList.get(i);
@@ -747,47 +765,123 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			if(ysrList.get(i).getMemberLikeInfo().size()==0) {
 				ysrList.get(i).setMemberLikeInfo(null);
 			}
+			
 			if(imgList!=null && !imgList.isEmpty())
 			{
 				for(int j =0 ; j<imgList.size();j++) 
 				{
-					YNMMemberUploadPhoto tempPhoto = imgList.get(j);
+					YNMMemberUploadPhoto tempPhoto = imgList.get(j);//''1,2,3, 이미지 스트링
 					for(int s = 0; s<tempStoreReview.getReviewImgArr().length;s++)
 					{
 						String[] tempImgArr = tempStoreReview.getReviewImgArr();
 						if(tempImgArr[s].equals(tempPhoto.getUploadPhotoNo()+""))
 						{
-
 							ysrList.get(i).setPhotoObjList(imgList.get(j));
 						}
 					}
 				}
 			}
 		}
-
-
-		ModelAndView view=new ModelAndView();
-		if(!ysrList.isEmpty()) {
-			view.addObject("starAvg",starAvg);
-			view.addObject("review",ysrList);
-			view.addObject("follow",fList);
-			view.addObject("lList",lList);
-			view.addObject("jList",jList);
-			return view;
-
-		}else {
-			
-			view.addObject("noReview"," 등록된 리뷰가 없습니다.");
-			return view;
-
+		
+		if(ysrList.size()>0) {
+		for(int i=0; i<ysrList.size();i++) {
+			ArrayList<YNMStoreUnderReview> ysurList=ynmMemberServiceImpl.underReview(ysrList.get(i).getStoreReviewNo());
+				ysrList.get(i).setYsurList(ysurList);
+		}	
 		}
+		return ysrList;
 	}
+	
+	public ArrayList<YNMFollow> fListGet(ArrayList<YNMStoreReview> ysrList,  int memberEntireNo ){
+		int memberNo=memberEntireNo;
+		ArrayList<YNMFollow> fList = ynmMemberServiceImpl.followInfo(memberNo);
+		if(fList.size()==0) {
+			fList=null;
+		}else {
+			for(int i=0; i<ysrList.size(); i++) {
+				for(int j=0; j<fList.size(); j++) {
+					if(ysrList.get(i).getMemberEntireNo()==fList.get(j).getFollowMemberIdNo()) {
+							ysrList.get(i).setMyfollowChk(1);
+							break;
+						
+					}
+				}
+			}
+		}
+		return fList;
+	}
+	
+	public ArrayList<YNMReviewLike> lListGet(ArrayList<YNMStoreReview> ysrList,  int memberEntireNo ){
+			int memberNo=memberEntireNo;
+			ArrayList<YNMReviewLike> lList=ynmMemberServiceImpl.likeInfo(memberNo);
+			if(lList.size()==0) {
+				lList=null;
+			}else {
+				for(int i=0; i<ysrList.size(); i++) {
+					for(int j=0; j<lList.size(); j++) {
+						if(ysrList.get(i).getStoreReviewNo()==lList.get(j).getStoreReviewNo()) {
+							if(memberNo==lList.get(j).getMemberEntireNo())
+							{
+								ysrList.get(i).setMyLikeChk(1);
+								break;
+							}
+						}
+					}
+				}
+			}
+		
+		return lList;
+	}
+	
+	public ArrayList<YNMReviewJjim> jListGet(ArrayList<YNMStoreReview> ysrList,  int memberEntireNo) {
+			int memberNo=memberEntireNo;
+			ArrayList<YNMReviewJjim> jList=ynmMemberServiceImpl.jjimInfo(memberNo);
+
+			if(jList.size()==0) {
+				jList=null;
+			}else {
+				for(int i=0; i<ysrList.size(); i++) {
+					for(int j=0; j<jList.size(); j++) {
+						if(ysrList.get(i).getStoreReviewNo()==jList.get(j).getStoreReviewNo()) {
+							if(memberNo==jList.get(j).getMemberEntireNo())
+							{
+								ysrList.get(i).setMyJjimChk(1);
+								break;
+							}
+						}
+					}
+				}
+			}
+	return jList;
+}
+	
 	//리뷰 대댓글 작성
+	@ResponseBody
 	@Override
 	@RequestMapping(value="/storeUnderReviewInsert.do")
-	public String storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,YNMStoreUnderReview ysur) {
+	public JSONObject storeUnderReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
+		int memberEntireNo=Integer.parseInt(request.getParameter("memberEntireNo"));
+		String underReviewContent=request.getParameter("underReviewContent");
+		YNMStoreUnderReview ysur=new YNMStoreUnderReview();
+		ysur.setMemberEntireNo(memberEntireNo);
+		ysur.setStoreReviewNo(storeReviewNo);
+		ysur.setUnderReviewContent(underReviewContent);
+		System.out.println(storeReviewNo);
+		System.out.println(memberEntireNo);
+		System.out.println(underReviewContent);
+		
 		int result=ynmMemberServiceImpl.storeUnderReviewInsert(ysur);
-		return null;
+
+			YNMMember ym = (YNMMember)session.getAttribute("member");
+			JSONObject obj = new JSONObject();
+			
+			obj.put("memberNickName", ym.getMemberNickName());
+			obj.put("photoViewRoute",ym.getPhotoViewRoute());
+			obj.put("memberUploadPhotoNo",ym.getMemberUploadPhotoNo());
+			obj.put("underReviewContent",ysur.getUnderReviewContent());
+		return obj;
+		
 	}
 	//좋아요 
 	@Override
@@ -936,6 +1030,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	// 사용자 검색
 	@RequestMapping(value="/search.do")
 	public ModelAndView search(HttpSession session, HttpServletRequest request) {
+		
 		ModelAndView view=new ModelAndView();
 		String keyword = request.getParameter("keyword");
 		String food = request.getParameter("food");
@@ -955,19 +1050,34 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		check.setPlace(place);
 		
 		if(storeCateDetailName!=null) {
-			ArrayList<String> StoreCateDetailNameList = new ArrayList<>(Arrays.asList(storeCateDetailName));
-			check.setStoreCateDetailName(StoreCateDetailNameList);
+			ArrayList<String> storeCateDetailNameList = new ArrayList<String>();
+			for (int i = 0; i<storeCateDetailName.length;i++) {
+				storeCateDetailNameList.add(storeCateDetailName[i]);
+			}
+			
+			check.setStoreCateDetailName(storeCateDetailNameList);
 		}
 		if(owBudget!=null) {
-			ArrayList<String> owBudgetList = new ArrayList<>(Arrays.asList(owBudget));
+			ArrayList<String> owBudgetList = new ArrayList<String>();
+			for (int i = 0; i<owBudget.length;i++ ) {
+				owBudgetList.add(owBudget[i]);
+			}
 			check.setOwBudget(owBudgetList);
 		}
 		if(owSubInfo!=null) {
-			ArrayList<String> owSubInfoList = new ArrayList<>(Arrays.asList(owSubInfo));
+			ArrayList<String> owSubInfoList = new ArrayList<String>();
+			for(int i = 0; i<owSubInfo.length;i++)
+			{
+				owSubInfoList.add(owSubInfo[i]);
+			}
 			check.setOwSubInfo(owSubInfoList);
 		}
 		if(owDrinkListInfo!=null) {
-			ArrayList<String> owDrinkListInfoList = new ArrayList<>(Arrays.asList(owDrinkListInfo));
+			ArrayList<String> owDrinkListInfoList = new ArrayList<String>();
+			for(int i = 0; i<owDrinkListInfo.length;i++)
+			{
+				owDrinkListInfoList.add(owDrinkListInfo[i]);
+			}
 			check.setOwDrinkListInfo(owDrinkListInfoList);
 		}
 		
@@ -982,58 +1092,46 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		{
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
-
-		YNMSearchPaging qpd=ynmMemberServiceImpl.search(currentPage,check);
-		int starNum=0;
-		float starAvg=0;
-		if(qpd!=null) {
-			if(qpd.getNoticelist().size()>0) {
-				for(int i=0; i<qpd.getNoticelist().size(); i++){
-					ArrayList<YNMSearch> ys=ynmMemberServiceImpl.starAvg(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-					for(int j=0; j<ys.size(); j++) {
-					starNum+=ys.get(j).getStarPoint();
-					starAvg=(float)starNum/ys.size();
+		int recordCountPerPage = 2; //1. 1페이지에10개씩보이게
+		int naviCountPerPage = 5; //2.
+		
+		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
+		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, searchList.size(), check);
+		System.out.println("검색 결과 " + searchList.size());
+		System.out.println("네비 정보 " + qpd.getStartNavi() + " " + qpd.getEndNavi());
+		
+		if(searchList.size()>0) 
+		{
+			if(searchList.size()>0) {
+				for(int i=0; i<searchList.size(); i++){
+					YNMSearch ys=ynmMemberServiceImpl.starAvg(searchList.get(i).getOwStoreInfoPk());
+					if(ys!=null) {
+						searchList.get(i).setStarAvg(ys.getStarAvg());
 					}
-					qpd.getNoticelist().get(0).setStarAvg(starAvg);
 				}
 			}
-		
-		//search page 가게 찜여부 확인
-		for(int i=0; i<qpd.getNoticelist().size(); i++) {
-		int memberEntireNo=0;
-		//로그인한 사용자 찜 여부 확인
-		session=request.getSession(false);
-		if(((YNMMember)session.getAttribute("member"))!=null) {
-		memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
-		}
-		YNMFavorite yf=new YNMFavorite();
-		yf.setMemberEntireNo(memberEntireNo);
-		yf.setOwStoreInfoNo(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-		int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
-		int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(qpd.getNoticelist().get(i).getOwStoreInfoPk());
-		qpd.getNoticelist().get(i).setFavoriteChk(favoriteChk);
-		qpd.getNoticelist().get(i).setFavoriteTotal(favoriteTotal);
-		}
-		
-		
-		JSONObject resultMap=new JSONObject();
-		//JSONObject객체 자체가 기본적으로 MAP형태이기 때문에 키:값 형태로 사용하면 됨
-		int index = 0;
-		while(index<(qpd.getNoticelist()).size()) {
-			YNMSearch search = qpd.getNoticelist().get(index);
-			JSONObject result = new JSONObject();
-			result.put("owStoreInfoPk", search.getOwStoreInfoPk());
-			result.put("owStoreName", search.getOwStoreName());
-			result.put("owStoreAddr", search.getOwStoreAddr());
-			resultMap.put(index, result);
-			index++;
-		}
+			//search page 가게 찜여부 확인
+			for(int i=0; i<searchList.size(); i++) {
+				int memberEntireNo=0;
+				//로그인한 사용자 찜 여부 확인
+				session=request.getSession(false);
+				if(((YNMMember)session.getAttribute("member"))!=null) {
+					memberEntireNo=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
+				}
+				YNMFavorite yf = new YNMFavorite();
+				yf.setMemberEntireNo(memberEntireNo);
+				yf.setOwStoreInfoNo(searchList.get(i).getOwStoreInfoPk());
+				int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+				int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(searchList.get(i).getOwStoreInfoPk());
+				searchList.get(i).setFavoriteChk(favoriteChk);
+				searchList.get(i).setFavoriteTotal(favoriteTotal);
+			}
 			view.addObject("storeCateDetailName",storeCateDetailName);
 			view.addObject("owBudget",owBudget);
 			view.addObject("owSubInfo",owSubInfo);
 			view.addObject("owDrinkListInfo",owDrinkListInfo);
-			view.addObject("resultMap",resultMap);
-			view.addObject("search",qpd);
+			view.addObject("searchList", searchList);
+			view.addObject("pageNaviData",qpd);
 			view.setViewName("ynmMember/search");
 			return view;
 		}else {
@@ -1089,7 +1187,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@RequestMapping(value="/reservation.do")
 	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) {
 		YNMSearch vo = new YNMSearch();
-		System.out.println(request.getParameter("owStoreInfoPk"));
 		vo.setOwStoreInfoPk(Integer.parseInt(request.getParameter("owStoreInfoPk")));
 		YNMSearch reservation = ynmMemberServiceImpl.detailPage(vo);
 
@@ -1103,9 +1200,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	}   
 	//좋아요한 사람들 
 	@ResponseBody
-
 	@RequestMapping(value="/likeTotalMemberInfo.do")
-	public String likeTotalMemberInfo(HttpServletRequest request, HttpServletResponse response) {
+	public JSONArray likeTotalMemberInfo(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session=request.getSession(false);
 		int storeReviewNo=Integer.parseInt(request.getParameter("storeReviewNo"));
 		ArrayList<YNMMember> likeMemberList=ynmMemberServiceImpl.likeTotalMemberInfo(storeReviewNo);
@@ -1129,29 +1225,44 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					}
 				}
 		}
+		JSONArray objArr = new JSONArray();
+		for(int i = 0; i<likeMemberList.size();i++) {
+			YNMMember ym = likeMemberList.get(i);
+			JSONObject obj = new JSONObject();
 			
-			String str = "";
-
-	        ObjectMapper mapper = new ObjectMapper();
-	        try {
-	            str = mapper.writeValueAsString(likeMemberList);
-	        } catch (Exception e) {
-	            System.out.println("first() mapper   ::    " + e.getMessage());
-	        }
-		if(!likeMemberList.isEmpty()) {
-				
-			return str;
+			obj.put("memberEntireNo", ym.getMemberEntireNo());
+			obj.put("memberNickName", ym.getMemberNickName());
+			obj.put("followTotal", ym.getFollowTotal());
+			obj.put("reviewTotal",ym.getReviewTotal());
+			obj.put("photoViewRoute",ym.getPhotoViewRoute());
+			obj.put("followChk", ym.getFollowChk());
+			obj.put("memberUploadPhotoNo",ym.getMemberUploadPhotoNo());
+			objArr.add(obj);
 		}
-		return str;
+		return objArr;
 	}  
 	
 	//예약하기 삽입
 	@Override
 	@RequestMapping(value="/bookInsert.do")
-	public ModelAndView bookInsert(YNMBook yb, HttpSession session, HttpServletRequest request) {
-		yb.setMemberEntireNo( ((YNMMember)session.getAttribute("member")).getMemberEntireNo() );
+	public ModelAndView bookInsert(HttpSession session, HttpServletRequest request) {
+		
+		YNMBook yb=new YNMBook();
+		yb.setMemberEntireNo( ((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+		
 		String bookDate = request.getParameter("bookDateAndTime1");
 		String bookTime = request.getParameter("bookDateAndTime2");
+		String bookOrderCount=request.getParameter("bookOrderCount");
+		String storeEntireNo=request.getParameter("storeEntireNo");
+		String bookType=request.getParameter("bookType");
+		String bookPartyCount=request.getParameter("bookPartyCount");
+		String bookOption=request.getParameter("bookOption");
+		
+		yb.setBookOrderCount(Integer.parseInt(bookOrderCount));
+		yb.setStoreEntireNo(Integer.parseInt(storeEntireNo));
+		yb.setBookType(bookType);
+		yb.setBookPartyCount(Integer.parseInt(bookPartyCount));
+		yb.setBookOption(bookOption);
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -1169,7 +1280,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ModelAndView view = new ModelAndView();
 		int result = ynmMemberServiceImpl.bookInsert(yb);
 		view.addObject("reservationResult", result);
-		view.setViewName("ynmMember/reservation");
+		view.setViewName("ynmMember/search");
 		return view;
 	}
 
@@ -1196,7 +1307,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	
 	@RequestMapping(value="/test.do")
 	public ModelAndView test(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-
+		System.out.println(request.getParameter("memberEntireNo")+"gd");
 			int memberEntireNo=(Integer.parseInt(request.getParameter("memberEntireNo")));
 
 			YNMMember ym=ynmMemberServiceImpl.selectOneMember2(memberEntireNo);
@@ -1258,11 +1369,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				}
 				
 			}
-			
-			if(((YNMMember)session.getAttribute("member"))!=null) {
 				if(followerList.size()>0 || followingList.size()>0) {
-				followingList2=ynmMemberServiceImpl.followInfo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-				followerList2=ynmMemberServiceImpl.followerInfo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
+				followingList2=ynmMemberServiceImpl.followInfo(memberEntireNo);
+				followerList2=ynmMemberServiceImpl.followerInfo(memberEntireNo);
 				for(int i=0; i<followingList.size(); i++) {
 					for(int j=0; j<followingList2.size(); j++) {
 						if(followingList.get(i).getFollowMemberIdNo()==followingList2.get(j).getFollowMemberIdNo()) {
@@ -1279,11 +1388,69 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				}
 				
 			}
+
+			//내 정보 리뷰
+			ArrayList<YNMStoreReview> ysrList=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMStoreReview> ysrList2=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMFollow> foList=null;
+			ArrayList<YNMReviewLike> lList=null;
+			ArrayList<YNMReviewJjim> jList=null;
+			ArrayList<YNMStoreReview> myYsrList=new ArrayList<YNMStoreReview>();
+			ArrayList<YNMFollow> foList2=null;
+			ArrayList<YNMReviewLike> lList2=null;
+			ArrayList<YNMReviewJjim> jList2=null;
+			ArrayList<YNMStoreReview> jjimYsrList=new ArrayList<YNMStoreReview>();
+		
+					jjimYsrList=ynmMemberServiceImpl.jjimMyInfoReviewCheck(memberEntireNo);
+					myYsrList=ynmMemberServiceImpl.myInfoReviewCheck(memberEntireNo);
+					ysrList=ysrListGet(myYsrList);
+					ysrList2=ysrListGet(jjimYsrList);
+					foList= fListGet(ysrList,memberEntireNo);
+					lList=lListGet(ysrList, memberEntireNo);
+					jList=jListGet(ysrList, memberEntireNo);
+					foList2= fListGet(jjimYsrList, memberEntireNo);
+					lList2=lListGet(jjimYsrList,memberEntireNo);
+					jList2=jListGet(jjimYsrList,memberEntireNo);
+				
+			
+			ArrayList<YNMSearch> storeAllList = ynmMemberServiceImpl.storeAllList(memberEntireNo);
+			if(storeAllList.size()>0) 
+			{
+				if(storeAllList.size()>0) {
+					for(int i=0; i<storeAllList.size(); i++){
+						YNMSearch ys=ynmMemberServiceImpl.starAvg(storeAllList.get(i).getOwStoreInfoPk());
+						if(ys!=null) {
+							storeAllList.get(i).setStarAvg(ys.getStarAvg());
+						}
+					}
+				}
+				//search page 가게 찜여부 확인
+				for(int i=0; i<storeAllList.size(); i++) {
+					int memberEntireNo2=0;
+					//로그인한 사용자 찜 여부 확인
+					session=request.getSession(false);
+					if(((YNMMember)session.getAttribute("member"))!=null) {
+						memberEntireNo2=((YNMMember)session.getAttribute("member")).getMemberEntireNo();
+					}
+					YNMFavorite yf = new YNMFavorite();
+					yf.setMemberEntireNo(memberEntireNo2);
+					yf.setOwStoreInfoNo(storeAllList.get(i).getOwStoreInfoPk());
+					int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
+					int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(storeAllList.get(i).getOwStoreInfoPk());
+					storeAllList.get(i).setFavoriteChk(favoriteChk);
+					storeAllList.get(i).setFavoriteTotal(favoriteTotal);
+				}
 			}
+			System.out.println(ysrList.size());
+			System.out.println(storeAllList.get(0).getFavoriteTotal());
+			
 		
 			ModelAndView view=new ModelAndView();
 			view=search(session,request);
 			if(ym!=null) {
+				view.addObject("storeAllList",storeAllList);
+				view.addObject("jjimReview",ysrList2);
+				view.addObject("review",ysrList);
 				view.addObject("followerYm",followerYmList);
 				view.addObject("followingYm",followingYmList);
 				view.addObject("favorite",fList);
@@ -1299,25 +1466,22 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	@ResponseBody
 	@Override
 	@RequestMapping(value="/reviewDetail.do")
-	public String reviewDetail(HttpServletRequest request, HttpSession session) {
+	public JSONArray reviewDetail(HttpServletRequest request, HttpSession session) {
 		
 		YNMStoreReview ysr=ynmMemberServiceImpl.reviewDetail(request.getParameter("storeReviewNo"));
 		String [] imgArr=ysr.getReviewImgList().split(",");
 		ArrayList<YNMMemberUploadPhoto> imgList = ynmMemberServiceImpl.reviewImageList(imgArr);
-		System.out.println(imgList.get(0).getUploadPhotoNo());
-		String str = "";
-
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            str = mapper.writeValueAsString(imgList);
-        } catch (Exception e) {
-            System.out.println("first() mapper   ::    " + e.getMessage());
-        }
-	if(!imgList.isEmpty()) {
+		
+		JSONArray objArr = new JSONArray();
+		for(int i = 0; i<imgList.size();i++) {
+			YNMMemberUploadPhoto ym = imgList.get(i);
+			JSONObject obj = new JSONObject();
 			
-		return str;
-	}
-	return str;
+			obj.put("photoViewRoute", ym.getPhotoViewRoute());
+
+			objArr.add(obj);
+		}
+		return objArr;
 	}
 	
 	

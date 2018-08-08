@@ -11,10 +11,6 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 	<script>
-		window.onload = fucntion()
-		{
-			/* firstLoadAlert(); */
-		}
 		function firstLoadAlert()
 		{
 			if(typeof Android !=="undefined" && Android !== null){
@@ -24,20 +20,29 @@
 			}
 			 
 		}
+		
 	</script>
+	<style>
+	@media (max-width:960px){
+		#member-main-header>ul>li:nth-child(2){
+			display:none;
+		}
+	}
+	</style>
 </head>
 <body>
 	
 	<header id="member-main-header">
 		<h1>
+		
 			<a href="/index.jsp">YamNyaMing</a>
-			<a href="/test.do?memberEntireNo=4">다른</a>
+			<a href="/test.do?memberEntireNo=1">다른</a>
 		</h1>
 
 		<ul>
-			<c:if test="${sessionScope.totalRefModel==null}">
+			<%-- <c:if test="${sessionScope.totalRefModel==null}">
 				<script>location.href="/totalRefLoad.do"</script>
-			</c:if>
+			</c:if> --%>
 			<c:if test="${sessionScope.naver!=null}" var="result">
 				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
 				<li><a href="/memberInfo.do">마이페이지</a></li>

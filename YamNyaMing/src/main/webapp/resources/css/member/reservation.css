@@ -2,9 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 *{margin:0;text-decoration:none;list-style:none;outline:none;font-family: 'Nanum Gothic', sans-serif;}
 
-body{
-	padding:20px;
-}
 #title{
 	border-bottom:1px solid #ddd;
 	padding-bottom:10px;
@@ -21,6 +18,18 @@ body{
 	color:#555;
 	font-weight:bold;
 }
+
+.check{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.check>label{
+	color:#555;
+	margin-left:5px;
+	margin-right:10px;
+	font-size:0.9em;
+}
+
 .quantity {
   position: relative;
   margin:10px;
@@ -39,7 +48,7 @@ input[type=number]
 }
 
 .quantity input {
-  width: 40px;
+  width: 200px;
   height: 42px;
   line-height: 1.65;
   float: left;
@@ -49,6 +58,7 @@ input[type=number]
   padding-left: 15px;
   border: 1px solid #ddd;
   padding-right:15px;
+  color:#555;
 }
 
 .quantity input:focus {
@@ -100,7 +110,7 @@ input[type=number]
 	margin-right:10px;
 	font-weight:bold;
 	color:#555;
-	margin-left:15px;
+	margin-left:30px;
 }
 .date-time>label{
 	float:left;
@@ -109,32 +119,37 @@ input[type=number]
 	margin-right:10px;
 	font-weight:bold;
 	color:#555;
-	margin-left:15px;
 }
 .date-time>input{
 	float:left;
 	height:22px;
 	padding:10px;
 	border:1px solid #ddd;
+	color:#555;
+	width:200px;
+}
+#datePicker{
+	margin-right:30px;
 }
 .name-tel{
 	clear:both;
 	padding-top:10px;
 }
+.name-tel>h2{
+	display:inline;
+	color:#555;
+	font-size:1em;
+	margin-right:5px;
+}
 .name-tel>input{
 	height:22px;
 	padding:10px;
-	width:154px;
+	width:300px;
+	border:1px solid #ddd;
+	color:#555;
 }
-.name-tel>input:nth-child(1){
-	margin-right:5px;
-}
-.name-tel>input[type="button"]{
-	height:45px;
-	background-color:#555;
-	border:none;
-	color:white;
-	font-weight:bold;
+.name-tel>input[type="text"]{
+	margin-right:30px;
 }
 .tel-confirm{
 	float:right;
@@ -153,7 +168,22 @@ input[type=number]
 	font-weight:bold;
 	width:154px;
 }
-input[type="submit"]{
-	width:100%;
-	
+.text>textarea{
+	resize:none;
+	width:846px;
+	height:100px;
+	margin-top:10px;
+	border:1px solid #ddd;
+	padding:10px;
+	color:#555;
+}
+#myModal>.modal-content>form{
+	margin-left:12px;
+}
+#myModal>.modal-content>form>input[type="submit"]{
+	width:97.8%;
+	color:white;
+	border:none;
+	background-color:#555;
+	padding:10px;
 }

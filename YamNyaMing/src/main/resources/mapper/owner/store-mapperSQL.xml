@@ -237,7 +237,7 @@
 
 	<select id="storeIndexWithOwIndex" resultType="int">
 		select
-		ow_store_info_pk
+		min(ow_store_info_pk)
 		from owner_store_info_tb
 		where ow_entire_fk = #{ownerIndex}
 	</select>

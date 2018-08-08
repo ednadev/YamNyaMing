@@ -7,7 +7,7 @@
 
 <script>
 	alert("로그인후에 이용 할 수 있습니다.");
-	location.href="redirect:/";
+	location.href="redirect:/index";
 </script>
 </head>
 <body>

@@ -90,6 +90,11 @@
 	font-weight:bold;
 	margin-right:15px;
 }
+
+
+
+/* 지도 */
+
 #member-search-section{
 	padding-top:76.8px;
 }
@@ -111,13 +116,17 @@
 	margin-top:30px;
 }
 #member-search-section>.member-search-wrapper>form>.detailSearch{
-	display:flex;
-	margin:10px 20px 30px;
+	margin:10px 20px;
 }
 #member-search-section>.member-search-wrapper>form>.detailSearch>h3{
 	color:black;
 	font-size:1em;
 	margin-right:20px;
+	float:left;
+	margin-top:15px;
+}
+#member-search-section>.member-search-wrapper>form>.detailSearch>div{
+	overflow:hidden;
 }
 #member-search-section>.member-search-wrapper>form>.detailSearch>div>input{
 	display:none;
@@ -129,6 +138,9 @@
 	color:#bcbcbc;
 	border-radius:10px;
 	font-size:0.9em;
+	float:left;
+	margin-right:5px;
+	margin-top:5px;
 }
 #member-search-section>.member-search-wrapper>form>.detailSearch>div>input:checked+label{
 	background-color:#fb0;
@@ -269,14 +281,14 @@
 	width:150px;
 	height:40px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(4){
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(3){
 	background-color:#fb0;
 	border:none;
 	color:white;
 	display:inline-block;
 	margin-left:7px;
 }
-#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(5){
+#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(4){
 	background-color:white;
 	border:1px solid #ddd;
 	margin-right:7px;
@@ -331,4 +343,114 @@
 	color:white;
 	padding:10px;
 	cursor:pointer;
+}
+
+
+/* 모바일 페이지 */
+
+@media (max-width:960px){
+	#member-search-header{
+		background-color:white;
+		position:initial;
+	}
+	#member-search-header>h1{
+		text-align:center;
+		margin:0;
+		float:none;
+		padding:8px;
+		font-size:1.3em;
+		background-color:#fb0;
+	}
+	#member-search-header>form{
+		position:initial;
+		transform:initial;
+		height:160px;
+		line-height:0;
+		text-align:center;
+	}
+	#member-search-header>form>select{
+		width:95%;
+		border:1px solid #ddd;
+		margin:10px auto 0;
+		color:#555;
+	}
+	#member-search-header>form>input[type="text"]{
+		border:1px solid #ddd;
+		display:block;
+		width:95%;
+		margin:0 auto;
+		margin-top:8px;
+		color:#555;
+		padding:5px 0px;
+	}
+	#member-search-header>form>input[type="submit"]{
+		background-color:#555;
+		width:95%;
+		margin:0 auto;
+		color:white;
+		margin-top:10px;
+		font-weight:bold;
+	}
+	#member-search-header>ul{
+		display:none;
+	}
+	#member-search-section{
+		padding-top:0px;
+	}
+	#member-search-section>#map{
+		display:none;
+	}
+	.member-search-wrapper{
+		width:auto;
+	}
+	#member-search-section>.member-search-wrapper>h2:hover{
+		cursor:pointer;
+	}
+	#member-search-section>.member-search-wrapper>form{
+		display:none;
+	}
+	#member-search-section>.member-search-wrapper>form>.detailSearch>h3{
+		float:initial;
+		margin-bottom:5px;
+	}
+	#member-search-section>.member-search-wrapper>form>input{
+		width:95%;
+		margin:2.5%;
+		font-size:0.9em;
+		border-radius:5px;
+	}
+	#member-search-section>.member-search-wrapper>h4{
+		margin-top:30px;
+		margin-bottom:20px;
+	}
+	#member-search-section>.member-search-wrapper>p{
+		display:none;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result{
+		width:100%;
+		margin-right:7px;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img{
+		width:100%;
+		margin-right:7px;
+		height:120px;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>form>input[type="submit"]{
+		width:100%;
+		height:120px;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-img>div:nth-child(2){
+		right:7px;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>.search-result-text{
+		display:none;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(4){
+		display:none;
+	}
+	#member-search-section>.member-search-wrapper>.search-page>.search-result>button:nth-child(3){
+		width:100%;
+		font-size:0.9em;
+		font-weight:bold;
+	}
 }

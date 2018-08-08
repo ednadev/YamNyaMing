@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=5">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=1">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -15,8 +17,9 @@
 </head>
 <body>
 	<header id="owner-main-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
-			<a href="/mainOwner.do">YamNyaMing 관리</a>
+			<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 		</h1>
 		<p>
 			<a href="/storeEnrollOwner.do">입점 신청하기</a>
@@ -40,7 +43,7 @@
 			<c:if test="${storeTitleInfo!=null}">
 				<c:forEach var="storeList" items="${storeTitleInfo}">
 					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
-					<form action="/storeInfoPage.do" method="post">
+					<form action="/storeInfoPage.do" method="post" class="design-card">
 						<jsp:include page="storeTitleInfo.jsp">
 							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
 						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
@@ -51,7 +54,7 @@
 						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
 						</jsp:include>
 						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
-						<input type="submit" value="가게 정보 확인하기">
+						<input type="submit" value="${storeList.owStoreName}">
 					</form>
 				</c:forEach>
 			</c:if>
@@ -59,12 +62,12 @@
 			<c:if test="${storeTitleInfo==null}">
 				등록된 가게가 없습니다.
 			</c:if>
-			<hr style="clear:both;">
-			페이징
+		</div>
+		<!-- 
 			<c:if test="${pageNaviData!=null}">
 				<div id="pagingNumber">
 					<c:if test="${pageNaviData.startNavi!=1}">
-						<form action="/couponManage.do" method="post">
+						<form action="/ownerMyPage.do" method="post">
 							<input type="hidden"  name="currentPage" value="${pageNaviData.startNavi-1}"> 
 							<input type="submit" class="paging-num" value="<">
 						</form>
@@ -72,46 +75,46 @@
 					<c:forEach var="i" begin="${pageNaviData.startNavi}"
 						end="${pageNaviData.endNavi}">
 						<c:if test="${pageNaviData.currentPage==i}">
-							<form action="/couponManage.do" method="post">
+							<form action="/ownerMyPage.do" method="post">
 								<input type="hidden" name="currentPage" value="${i}"> 
 								<input type="submit" class="paging-num-select" value="${i}">
 							</form>
 						</c:if>
 						<c:if test="${pageNaviData.currentPage!=i}">
-							<form action="/couponManage.do" method="post">
+							<form action="/ownerMyPage.do" method="post">
 								<input type="hidden" name="currentPage" value="${i}"> 
 								<input type="submit" class="paging-num" value="${i}">
 							</form>
 						</c:if>
 					</c:forEach>
 					<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-						<form action="/couponManage.do" method="post">
+						<form action="/ownerMyPage.do" method="post">
 							<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 							<input type="submit"  class="paging-num"  value=">">
 						</form>
 					</c:if>
 				</div>
-			</c:if>
-		</div>
+			</c:if>		
+		 -->
 	</section>
 	<script>
-		window.onload=function(){
+		/* window.onload=function(){
 			var storeDivArr = document.getElementsByClassName("store-info-div");
-		/* 	var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
-			console.log(data.result); */
+		var data = {"result":"success","menuExplain":"?? ??!","menuCate":"????","menuTitle":"????","menuCost":"7000","menuId":"1533176031706_1_????","storeIndex":5};
+			console.log(data.result);
 			for(var i = 0; i<storeDivArr.length;i++)
 			{
-				if(i==${storeTapType}){
+				if(i=="${storeTapType}"){
 					storeDivArr[i].style.display = "block";
 				}
 				else storeDivArr[i].style.display="none";
 			}
-			menuChangeMode("menu_title_${firstMenutitle}");
-		}
+			 menuChangeMode("menu_title_" + "${firstMenutitle}"); 
+		} */
 		
 		
 	</script>	
-	<footer id="owner-main-footer">
+	<footer id="owner-fixed-footer">
 		<h2>YamNyaMing</h2>
 		<p>Immediately Reservation!</p>
 		<address>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,6 +36,7 @@
 </head>
 <body>
 	<header id="owner-main-header">
+<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>	
 		<h1>
 			<a href="/ownerMyPage.do">YamNyaMing 관리</a>
 		</h1>
@@ -55,6 +57,32 @@
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
+	
+		<div>
+			<c:if test="${storeTitleInfo!=null}">
+				<c:forEach var="storeList" items="${storeTitleInfo}">
+					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
+					<form action="/storeInfoPage.do" method="post" class="design-card">
+						<jsp:include page="storeTitleInfo.jsp">
+							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
+						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
+						  	<jsp:param name="storeTip" value="${storeList.owStoreTip}"/>
+						  	<jsp:param name="storeAbsRoute" value="${storeList.owPhotoRoute}"/>
+						  	<jsp:param name="storePhoto" value="${storeList.owPhotoViewRoute}"/>
+						  	<jsp:param name="storeStarPoint" value="${storeList.storeStarPoint}"/>
+						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
+						</jsp:include>
+						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
+						<input type="submit" value="${storeList.owStoreName}">
+					</form>
+				</c:forEach>
+			</c:if>
+			<!-- 없을 때 -->
+			<c:if test="${storeTitleInfo==null}">
+				등록된 가게가 없습니다.
+			</c:if>
+		</div>	
+	
 	
 	<!-- 일반 손님 웨이팅 -->
 	<button onclick="watingListLoad();">새로고침(1분마다 새로고침 됩니다.)</button>

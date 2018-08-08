@@ -9,9 +9,12 @@ html,body{height:100%;}
 	overflow:hidden;
 }
 #admin-login-header>h1{
-	font-size:1.2em;
-	padding:15px 10px;
+	font-size:1.4em;
+	padding:15px 10px 15px 0px;
 	float:left;
+}
+#admin-login-header>h1:nth-child(3){
+	float:right;
 }
 #admin-login-header>h1>a{
 	color:white;
@@ -52,6 +55,9 @@ html,body{height:100%;}
 #admin-main-footer{
 	background-color:rgba(0,0,0,0.8);
 	padding:10px;
+	position:fixed;
+	width:100%;
+	bottom:0;
 }
 #admin-main-footer>h2,
 #admin-main-footer>p{
@@ -172,4 +178,97 @@ html,body{height:100%;}
 #admin-main-board>table{
 	border-bottom:1px solid black;
 	width:200px;
+}
+
+/* 관리자 정보 */
+.row{
+	width:960px;
+	margin:0 auto;
+}
+.row>.panel>.panel-heading>center>h4{
+	background-color:#ddd;
+	padding:20px;
+	margin-top:50px;
+}
+.panel-body{
+	display:flex;
+	border:1px solid #ddd;
+}
+.panel-body>.col-md-4>img{
+	border-radius:50%;
+	margin:40px;
+}
+.panel-body>.col-md-8>.container{
+	margin:20px;
+}
+.panel-body>.col-md-8>.details{
+	margin-left:45px;
+}
+.table-list-search{
+	width:100%;
+	border-collapse:collapse;
+	border:none;
+}
+.table-list-search>thead{
+	border-bottom:1px solid #555;
+}
+.table-list-search>thead>tr>th{
+	padding:10px;
+	text-align:left;
+}
+.table-list-search>tbody>tr>td{
+	padding:10px;
+}
+
+/* 회원 관리 */
+.container-fluid>.panel>.panel-heading>.row{
+	background-color:#ddd;
+	width:96%;
+	margin:1%;
+	padding:1%;
+	display:flex;
+}
+.container-fluid>.panel>.panel-heading>.row>.col-xs-12>h2{
+	margin-top:15px;
+}
+.container-fluid>.panel>.panel-heading>.row>div>div>div{
+	margin-left:200px;
+}
+.container-fluid>.panel>.panel-heading>.row>div>div>div>label{
+	line-height:2;
+	font-weight:bold;
+}
+.container-fluid>.panel>.panel-heading>.row>div>div>div>.form-group>.input-group>form>select,
+.container-fluid>.panel>.panel-heading>.row>div>div>div>.form-group>.input-group>form>input{
+	padding:5px;
+}
+.container-fluid>.panel>.panel-heading>.row>div>div>div>.form-group>.input-group>form>input[type="submit"]{
+	border:none;
+	background-color:black;
+	color:white;
+	padding:7px;
+}
+.container-fluid>center>.panel-body>.table{
+	width:100%;
+	border-collapse:collapse;
+	border:none;
+}
+.container-fluid>center>.panel-body>.table>thead{
+	border-bottom:1px solid #555;
+}
+.container-fluid>center>.panel-body>.table>thead>tr>th{
+	padding:10px;
+	text-align:left;
+}
+.container-fluid>center>.panel-body>.table>tbody>tr>td{
+	padding:10px;
+}
+#pagingNumber>form{
+	text-align:center;
+}
+#pagingNumber>form>input{
+	background-color:#555;
+	border:none;
+	color:white;
+	padding:5px;
 }

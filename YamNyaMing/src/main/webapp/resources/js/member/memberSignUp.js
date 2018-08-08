@@ -391,6 +391,7 @@ function memberNameChk()
 			var reader=new FileReader();
 			reader.onload=function(e){
 				$("#avatarImg").attr("src",e.target.result);
+				$("#avatarImg").attr("style","background-color:white");
 			}
 			reader.readAsDataURL(f);
 		});

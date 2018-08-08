@@ -30,11 +30,6 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 		return "ynmOwner/storeEnrollOwner";
 	}
 
-	@Override
-	@RequestMapping(value="/ownerMyPage.do")
-	public String ownerMyPage() {
-		return "ynmOwner/ownerMyPage";
-	}	
 	
 	//점장 : 점장 메인 페이지로 이동
 	@RequestMapping(value="/mainOwner.do")
