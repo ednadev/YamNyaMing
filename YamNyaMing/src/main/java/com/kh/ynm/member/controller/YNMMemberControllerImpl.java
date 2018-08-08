@@ -284,6 +284,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
+	
+	
+	
 	//내정보 비밀번호 변경
 	@Override
 	@RequestMapping(value="/pwChange.do")
@@ -518,6 +521,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return objArr;
 				
 		}
+				
 	
 	//내정보 이미지 수정하기
 	@ResponseBody
@@ -1191,6 +1195,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
 		ArrayList<YNMSearch> menuImg = ynmMemberServiceImpl.detailPageMenu(vo);
+		int storeWaitNum=ynmMemberServiceImpl.storeWaitNum(Integer.parseInt(request.getParameter("owStoreInfoPk")));
+		store.setStoreWaitNum(storeWaitNum);
 		int size=storeImg.size();
 		int menuSize = menuImg.size();
 		int memberEntireNo=0;

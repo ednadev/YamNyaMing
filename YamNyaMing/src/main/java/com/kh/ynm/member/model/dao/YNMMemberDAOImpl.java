@@ -324,4 +324,8 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return (ArrayList<YNMBook>)list;
 	}
 
+	public int deleteBook(SqlSessionTemplate sqlSession, int bookNo) {
+		return sqlSession.delete("book.deleteBook",bookNo);
+	}
+
 }

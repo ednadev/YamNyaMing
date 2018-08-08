@@ -35,7 +35,7 @@ function likeopenmodal(storeReviewNo){
             html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
             }
             html += '<div>';
-            html += '<p>'+data[i].memberNickName+'</p>';
+            html += '<p><a style="color:black;" href="/otherMember.do?memberEntireNo='+data[i].memberEntireNo+'">'+data[i].memberNickName+'</a></p>';
             html += '<p>'+data[i].reviewTotal+' 리뷰,<label name='+(data[i].memberEntireNo+0.1)+' style="color:black;">'+data[i].followTotal+'</label>  팔로워</p>';
 			if(data[i].followChk==1){
             html += '<button style="background-color:#fb0; color:white;" name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
@@ -261,10 +261,35 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
     	</c:if>
     	<input type="submit" value="검색">
     </form>	
-	<ul>
-        <li><a href="/loginMember.do">로그인</a></li>
-        <li><a href="/enrollMember.do">회원가입</a></li>
-    </ul>
+<ul>
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
+			<c:if test="${sessionScope.naver!=null}" var="result">
+				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+		
+			<c:if test="${sessionScope.member!=null}" var="result">
+				<li>${sessionScope.member.memberNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+
+			<c:if test="${sessionScope.owner!=null}" var="result">
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
+				<li><a href="/ownerLogout.do">로그아웃</a></li>
+			</c:if>
+			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
+				<li><a href="/loginMember.do">로그인</a></li>
+				<li><a href="/adminLogin.do">관리자 로그인</a><li>
+
+
+				<li><a href="/enrollMember.do">회원가입</a></li>
+			</c:if>
+		</ul>
 
 </header>
 <section id="member-myinfo-section">
@@ -402,7 +427,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
 					    		<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fry.photoViewRoute}'>
 					    		</div>
 					    		<div>
-					    			<p>${fry.memberNickName}</p>
+					    			<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${fry.memberEntireNo}">${fry.memberNickName}</a></p>
 					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" name="reviewL_${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
 							<c:if test="${sessionScope.member!=null }">
 							<c:if test="${fry.followerChk==0}">
@@ -433,7 +458,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
 					    			<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fy.photoViewRoute}'>
 					    		</div>
 					    		<div>
-					    			<p>${fy.memberNickName}</p>
+					    			<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${fy.memberEntireNo}">${fy.memberNickName}</a></p>
 					    			<p>${fy.reviewTotal} 리뷰, <label style="color:black;" name="fil_${fy.memberEntireNo}">${fy.followTotal}</label> 팔로워</p>
 					  <c:if test="${sessionScope.member!=null }">
 					   <c:if test="${fy.followChk==0}">
@@ -487,7 +512,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
 						</c:if>
 					</div>
 					<div>
-						<p>${r.memberNickName}</p>
+						<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${r.memberEntireNo}">${r.memberNickName}</a></p>
 						<p>리뷰${r.reviewTotal},팔로워<label name="fLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
 				
@@ -669,7 +694,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
   					
   					
   					<div >
-  					<label class="undernick">${under.memberNickName}</label>
+  					<label class="undernick"><a href="/otherMember.do?memberEntireNo=${under.memberEntireNo}" style="color:black;">${under.memberNickName}</a></label>
 					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
   					</div>
   				</div>
@@ -694,7 +719,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
 						</c:if>
 					</div>
 					<div>
-						<p>${r.memberNickName}</p>
+						<p><a href="/otherMember.do?memberEntireNo=${r.memberEntireNo}" style="color:black;">${r.memberNickName}</a></p>
 						<p>리뷰${r.reviewTotal},팔로워<label name="jfLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
 				
@@ -876,7 +901,7 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
   					
   					
   					<div >
-  					<label class="undernick">${under.memberNickName}</label>
+  					<label class="undernick"><a style="color:black;" href="/otherMember.do?memberEntireNo=${under.memberEntireNo}">${under.memberNickName}</a></label>
 					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
   					</div>
   				</div>
