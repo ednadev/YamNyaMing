@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,7 +41,7 @@
 	</nav>
 	<section id="store-select-detail">
 		<div>
-			<c:if test="${storeTitleInfo!=null}">
+			<c:if test="${fn:length(storeTitleInfo)>0}">
 				<c:forEach var="storeList" items="${storeTitleInfo}">
 					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
 					<form action="/storeInfoPage.do" method="post" class="design-card">
@@ -59,7 +60,7 @@
 				</c:forEach>
 			</c:if>
 			<!-- 없을 때 -->
-			<c:if test="${storeTitleInfo==null}">
+			<c:if test="${fn:length(storeTitleInfo)==0}">
 				등록된 가게가 없습니다.
 			</c:if>
 		</div>

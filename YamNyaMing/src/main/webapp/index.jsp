@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<script src="http://code.jquery.com/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
 <!-- 	<script>
@@ -25,7 +26,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=3"></script>
 	<style>
 	@media (max-width:960px){
-		#member-main-header>ul>li:nth-child(2){
+		#member-main-header>ul>li.mobile-hidden{
+			display:none;
+		}
+		#member-main-footer>a{
 			display:none;
 		}
 	}
@@ -37,8 +41,8 @@
 					loginCheck('member,${sessionScope.member.memberEntireNo}');
 			</c:if>
 			setInterval(function(){ 
-				
-			}, 1000);
+				bookCheck("${sessionScope.member.memberEntireNo}");
+			}, 3000);
 		}
 	</script>
 </head>
@@ -70,7 +74,7 @@
 			</c:if>
 			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
 				<li><a href="/loginMember.do">로그인</a></li>
-				<li><a href="/adminLogin.do">관리자 로그인</a><li>
+				<li class="mobile-hidden"><a href="/adminLogin.do">관리자 로그인</a><li>
 
 
 				<li><a href="/enrollMember.do">회원가입</a></li>

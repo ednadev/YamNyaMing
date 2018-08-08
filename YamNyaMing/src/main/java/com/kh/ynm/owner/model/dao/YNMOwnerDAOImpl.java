@@ -200,13 +200,13 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public ArrayList<YNMBook> bookCheck(SqlSessionTemplate sqlSession, int storeIndex) {
-		List list = sqlSession.selectList("book.myBookCheck", storeIndex);
+		List list = sqlSession.selectList("book.myBookStoreIndex", storeIndex);
 		return (ArrayList<YNMBook>)list;
 	}
 
 	@Override
 	public ArrayList<Integer> bookStoreIndex(SqlSessionTemplate sqlSession, int memberIndex) {
-		List list = sqlSession.selectList("book.myBookStoreIndex", memberIndex);
+		List list = sqlSession.selectList("book.myBookCheck", memberIndex);
 		return (ArrayList<Integer>)list;
 	}
 

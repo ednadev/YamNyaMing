@@ -76,7 +76,7 @@
 				<div>휴대전화</div>
 				<div>
 					<input type="tel" name="memberPhone" placeholder="휴대폰 번호">
-					<p>회원님의 보안 강화 및 편리한 서비스를 제공해 드리기 위해 휴대전화 인증을 하고 있습니다.</p>
+					<p>휴대폰 번호를 입력해주세요.</p>
 				</div>
 			</div>			
 			<div class="signUp-table">

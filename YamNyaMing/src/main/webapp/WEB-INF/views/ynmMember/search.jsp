@@ -192,7 +192,8 @@
 		for (var i = 0; i < Object.keys( ${resultMap}).length; i++) {
 			title[i] = ${resultMap}[i].owStoreName;
 			name = title[i];
-			console.log(name);
+			console.log("검색 갯수 " +  Object.keys( ${resultMap}).length);
+			
 			geocoder.addressSearch(${resultMap}[i].owStoreAddr, function(result,status){
 				if(status === daum.maps.services.Status.OK){				
 					x[i] = result[0].x;
