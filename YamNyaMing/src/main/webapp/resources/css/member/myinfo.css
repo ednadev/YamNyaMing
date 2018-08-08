@@ -824,12 +824,6 @@
 	background-color:#555;
 }
 
-.undernick{
-    margin-left: 12px;
-    margin-top: 34px;
-    color: black;
-    display:block;
-	}
 	
 .reviewText {
 	padding: 10px;
@@ -848,6 +842,12 @@
 	background-color:#555;
 	cursor:pointer;
 }
+.undernick{
+    margin-left: 12px;
+    margin-top: 34px;
+    color: black;
+    display:block;
+	}
 .underImage{
 	width:50px;
 	height:50px;
@@ -863,6 +863,7 @@
 	padding-bottom:15px;
 }
 .underImageBox{
+	background-color:gray;
 	width:50px;
 	height:50px;
 	border-radius:50%;
@@ -1167,4 +1168,38 @@
 	width:20px;
 	height:20px;
 	display:inline-block;
+}
+
+.booknick{
+    margin-left: 12px;
+    margin-top: 34px;
+    color: black;
+    display:block;
+	}
+.underImage{
+	width:50px;
+	height:50px;
+	background-color:gray;
+	border-radius:50%;
+	display:inline-block;
+	float:left;
+	margin-top:20px;
+}
+.bookBox{
+	display:flex;
+	border-bottom:1px solid #ddd;
+	padding-bottom:15px;
+}
+.bookImageBox{
+	background-color:gray;
+	width:100px;
+	height:100px;
+	display:inline-block;
+	margin-top:20px;
+	border-radius:50%;
+}
+.bookinput{
+	margin-left:11px;
+	border:none;
+	color:#555;
 }

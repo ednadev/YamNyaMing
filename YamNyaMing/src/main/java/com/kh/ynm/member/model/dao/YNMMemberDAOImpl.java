@@ -49,8 +49,8 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 		return sqlSession.insert("book.bookInfo",yb);
 	}
 
-	public ArrayList<YNMBook> bookselect(SqlSessionTemplate sqlSession, YNMBook vo) {
-		List list=sqlSession.selectList("book.bookCheck",vo);
+	public ArrayList<YNMBook> bookselect(SqlSessionTemplate sqlSession,int memberEntireNo) {
+		List list=sqlSession.selectList("book.bookCheck",memberEntireNo);
 		return (ArrayList<YNMBook>)list;
 	}
 
@@ -308,6 +308,20 @@ public class YNMMemberDAOImpl implements YNMMemberDAO{
 	public ArrayList<YNMSearch> storeAllList(SqlSessionTemplate sqlSession, int memberEntireNo) {
 		List list=sqlSession.selectList("search.storeAllList",memberEntireNo);
 		return (ArrayList<YNMSearch>)list;
+	}
+
+	public int storeWaitNum(SqlSessionTemplate sqlSession, int storeEntireNo) {
+		return sqlSession.selectOne("book.storeWaitNum",storeEntireNo);
+	}
+
+	public ArrayList<YNMMember> waitList(SqlSessionTemplate sqlSession, int storeEntireNo) {
+		List list=sqlSession.selectList("member.waitList",storeEntireNo);
+		return (ArrayList<YNMMember>)list;
+	}
+
+	public ArrayList<YNMBook> bookLastselect(SqlSessionTemplate sqlSession, int memberEntireNo) {
+		List list=sqlSession.selectList("book.bookLastselect",memberEntireNo);
+		return (ArrayList<YNMBook>)list;
 	}
 
 }

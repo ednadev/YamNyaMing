@@ -66,8 +66,8 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 
 	}
 	//예약정보 가져오기
-	public ArrayList bookselect(YNMBook vo) {
-		ArrayList list=memberDAO.bookselect(sqlSession,vo);
+	public ArrayList bookselect(int memberEntireNo) {
+		ArrayList list=memberDAO.bookselect(sqlSession,memberEntireNo);
 		return list;
 
 	}
@@ -408,6 +408,18 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 	//사용자가 찜한 가게 목록
 	public ArrayList<YNMSearch> storeAllList(int memberEntireNo) {
 		ArrayList<YNMSearch> list=memberDAO.storeAllList(sqlSession,memberEntireNo);
+		return list;
+	}
+	public int storeWaitNum(int storeEntireNo) {
+		int result=memberDAO.storeWaitNum(sqlSession,storeEntireNo);
+		return result;
+	}
+	public ArrayList<YNMMember> waitList(int storeEntireNo) {
+		ArrayList<YNMMember> list=memberDAO.waitList(sqlSession,storeEntireNo);
+		return list;
+	}
+	public ArrayList<YNMBook> bookLastselect(int memberEntireNo) {
+		ArrayList<YNMBook> list=memberDAO.bookLastselect(sqlSession,memberEntireNo);
 		return list;
 	}
 

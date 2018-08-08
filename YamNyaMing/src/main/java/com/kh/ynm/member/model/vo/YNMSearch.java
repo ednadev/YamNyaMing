@@ -22,8 +22,16 @@ public class YNMSearch {
 	private float starAvg;
 	private int favoriteTotal;
 	private int favoriteChk;
+	private int storeWaitNum;
 	
 	
+	
+	public int getStoreWaitNum() {
+		return storeWaitNum;
+	}
+	public void setStoreWaitNum(int storeWaitNum) {
+		this.storeWaitNum = storeWaitNum;
+	}
 	public YNMSearch() {
 		// TODO Auto-generated constructor stub
 	}

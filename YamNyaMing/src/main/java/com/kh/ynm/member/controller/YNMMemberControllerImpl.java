@@ -346,6 +346,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 			YNMMember ym=ynmMemberServiceImpl.selectOneMember2(memberEntireNo);
 			String viewPath=ynmMemberServiceImpl.viewPath(ym.getMemberUploadPhotoNo());
+	
 
 			int reservationTotal=ynmMemberServiceImpl.reservationTotal(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
 			int jjimTotal=ynmMemberServiceImpl.memberJjimTotal(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
@@ -458,8 +459,20 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					storeAllList.get(i).setFavoriteTotal(favoriteTotal);
 				}
 			}
-
+			//예약 확인
+			ArrayList<YNMBook> ybList=ynmMemberServiceImpl.bookselect(memberEntireNo);
+			if(ybList.size()>0) {
+				for(int i=0; i<ybList.size(); i++) {
+					int storeWaitNum=ynmMemberServiceImpl.storeWaitNum(ybList.get(i).getStoreEntireNo());
+					ybList.get(i).setBookTotal(storeWaitNum);
+				}
+			}
+			
+			ArrayList<YNMBook> ybLastList=ynmMemberServiceImpl.bookLastselect(memberEntireNo);
+			
 			if(ym!=null) {
+				view.addObject("lastBook",ybLastList);
+				view.addObject("book",ybList);
 				view.addObject("storeAllList",storeAllList);
 				view.addObject("jjimReview",ysrList2);
 				view.addObject("review",ysrList);
@@ -481,6 +494,31 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
+	
+	
+	//대기중인 사람들 
+		@ResponseBody
+		@RequestMapping(value="/storeWaitNum.do")
+		public JSONArray storeWaitNum(HttpServletRequest request, HttpServletResponse response) {
+				int storeEntireNo=Integer.parseInt(request.getParameter("storeEntireNo"));
+				ArrayList<YNMMember> waitList=ynmMemberServiceImpl.waitList(storeEntireNo);
+				
+				JSONArray objArr = new JSONArray();
+				for(int i = 0; i<waitList.size();i++) {
+					YNMMember ym = waitList.get(i);
+					JSONObject obj = new JSONObject();
+					
+					obj.put("memberEntireNo", ym.getMemberEntireNo());
+					obj.put("memberNickName", ym.getMemberNickName());
+					obj.put("photoViewRoute",ym.getPhotoViewRoute());
+					obj.put("memberUploadPhotoNo",ym.getMemberUploadPhotoNo());
+					obj.put("bookDateTime",ym.getBookDateAndTime2());
+					objArr.add(obj);
+		
+		}
+		return objArr;
+				
+		}
 	
 	//내정보 이미지 수정하기
 	@ResponseBody
@@ -1097,8 +1135,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		
 		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
 		YNMSearchPaging qpd= ynmMemberServiceImpl.searchPageNavi(currentPage,recordCountPerPage,naviCountPerPage, searchList.size(), check);
-		System.out.println("검색 결과 " + searchList.size());
-		System.out.println("네비 정보 " + qpd.getStartNavi() + " " + qpd.getEndNavi());
+		
 		
 		if(searchList.size()>0) 
 		{
@@ -1110,6 +1147,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					}
 				}
 			}
+			
 			//search page 가게 찜여부 확인
 			for(int i=0; i<searchList.size(); i++) {
 				int memberEntireNo=0;
@@ -1123,8 +1161,10 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				yf.setOwStoreInfoNo(searchList.get(i).getOwStoreInfoPk());
 				int favoriteChk=ynmMemberServiceImpl.favoriteChk(yf);
 				int favoriteTotal=ynmMemberServiceImpl.favoriteTotal(searchList.get(i).getOwStoreInfoPk());
+				int storeWaitNum=ynmMemberServiceImpl.storeWaitNum(searchList.get(i).getOwStoreInfoPk());
 				searchList.get(i).setFavoriteChk(favoriteChk);
 				searchList.get(i).setFavoriteTotal(favoriteTotal);
+				searchList.get(i).setStoreWaitNum(storeWaitNum);
 			}
 			view.addObject("storeCateDetailName",storeCateDetailName);
 			view.addObject("owBudget",owBudget);
@@ -1284,26 +1324,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return view;
 	}
 
-	//예약정보 가져오기
-	@Override
-	@RequestMapping(value="/bookselect.do")
-	public Object bookselect(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		session=request.getSession(false);
-		YNMBook vo=new YNMBook();
-		vo.setMemberEntireNo(((YNMMember)session.getAttribute("member")).getMemberEntireNo());
-		ArrayList list=ynmMemberServiceImpl.bookselect(vo);
-		ModelAndView view=new ModelAndView();
-		if(!list.isEmpty()) {
 
-			view.addObject("bookInfo",list);
-			view.setViewName("ynmMember/info");
-			return view;
-		}
-		else {
-
-		}
-		return null;
-	}	
 	
 	@RequestMapping(value="/test.do")
 	public ModelAndView test(HttpSession session,HttpServletRequest request, HttpServletResponse response) {

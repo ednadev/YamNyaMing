@@ -109,8 +109,8 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			storeInfo.setOwStoreName(request.getParameter("owStoreName"));
 			String tel = request.getParameter("regionTel")+request.getParameter("owTel");
 			storeInfo.setOwStoreTel(tel);
-			storeInfo.setOwBigTypeFk(YNMTotalRefModel.getCateMainIndex(request.getParameter("owStoreBigType")));
-			storeInfo.setOwSmallTypeFk(YNMTotalRefModel.getCateDetailIndex(request.getParameter("owStoreSmallType")));
+			storeInfo.setOwBigTypeFk(Integer.parseInt(request.getParameter("owStoreBigType")));
+			storeInfo.setOwSmallTypeFk(Integer.parseInt(request.getParameter("owStoreSmallType")));
 			storeInfo.setOwStoreMapInfo("");
 			storeInfo.setOwStoreUrl(request.getParameter("owStoreUrl"));
 			String addr = request.getParameter("postNum") + request.getParameter("addrStreet") + request.getParameter("detailAddr");

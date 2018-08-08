@@ -10,9 +10,9 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=11">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=14">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=3"></script>
 
 </head>
 <script>
@@ -41,7 +41,7 @@ function likeopenmodal(storeReviewNo){
 		dataType:"json",
 		success : function(data){
 		if(data.length>0){
-			$("#likeTotalNum").html(data[0].likeTotal);
+			$("#waitTotalNum").html("${b.bookTotal}");
 			$(".profile-follow").remove();
 			for(var i=0; i<data.length; i++){
 			var html = '';
@@ -64,7 +64,7 @@ function likeopenmodal(storeReviewNo){
             $("#liker").after(html);
 			}
 		}else{
-			$("#likeTotalNum").html("");
+			$("#waitTotalNum").html("");
 			$(".profile-follow").remove();
 		}
 			
@@ -96,19 +96,21 @@ function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
 			success : function(data){
 						console.log(data);
 					
- 					var html="";
-					html +='<div>';
-					html +='<div class="underImage">';
-					
-					if(data.memberUploadPhotoNo==1){
-						html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">';
-					}else{
-						html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data.photoViewRoute+'">';
-					}
-					html+='</div>';
-					html+='<label class="undernick">'+data.memberNickName+'</label>';
-					html+='<input type="text" id="underReviewContent" class="reviewText" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
-					html+='</div>';
+						var html="";
+						html +='<div class="underBox">';
+						html +='<div class="underImageBox">';
+						
+						if(data.memberUploadPhotoNo==1){
+							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">';
+						}else{
+							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data.photoViewRoute+'">';
+						}
+						html+='</div>';
+						html+='<div>';
+						html+='<label class="undernick">'+data.memberNickName+'</label>';
+						html+='<input type="text" class="underinput" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
+						html+='</div>';
+						html+='</div>';
 					
 					var e = document.createElement('div');
 					e.innerHTML = html;
@@ -150,6 +152,46 @@ function openImagemodal(storeReviewNo){
 		}
 	});	
 	
+}
+
+function waitRefresh(storeEntireNo){
+	$.ajax({
+		url : "/storeWaitNum.do",
+		data : {storeEntireNo:storeEntireNo},
+		dataType:"json",
+		success : function(data){
+			console.log("대기 인원 데이터 " + data);
+			if(data.length>0){
+				$("#waitTotalNum").html(data[0].likeTotal);
+				$(".profile-follow").remove();
+				for(var i=0; i<data.length; i++){
+				var html = '';
+	            html += '<div class="profile-follow "id="profile-follow">';
+	            if(data[i].memberUploadPhotoNo==1){
+	            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/profile.png"></div>';
+	            }else{
+	            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
+	            }
+	            html += '<div>';
+	            html += '<p>'+data[i].memberNickName+'</p><p>예약 시간 '+data[i].bookDateTime+'</p>';
+	            html += '</div>';
+	            html += '</div>';
+	            $("#waiter").after(html);
+				}
+			}else{
+				$("#waitTotalNum").html("");
+				$(".profile-follow").remove();
+			}
+				 
+			
+		}
+	});	
+}
+function waitModal(storeEntireNo){
+	var modal = document.getElementById('waitNumModal');
+		modal.style.display = "block";
+
+
 }
 
 </script>
@@ -460,7 +502,7 @@ function openImagemodal(storeReviewNo){
 					    </div>
 					  </div>
 					</div>
-					<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=5"></script>
+				
 				
 					
 			</div>
@@ -480,11 +522,50 @@ function openImagemodal(storeReviewNo){
 				<button class="tablink-reservation click" onclick="openReservationTab(event,'visitedReservation')">방문 예정 예약</button>
 				<button class="tablink-reservation" onclick="openReservationTab(event,'goneReservation')">지나간 예약</button>
 			</div>
-			<div id="visitedReservation" class="tabInfo-reservation">
-				방문 예정 예약
+			<div id="visitedReservation" class="tabInfo-reservation" style="display:block;">
+			<c:forEach items="${book}" var="b">
+			<div class="bookBox">
+  					<div class="bookImageBox">
+						<img id="img" style="border-radius:50%;width:100%; height:100%;" name=img src="${pageContext.request.contextPath}/${b.owPhotoViewRoute}">
+	
+  					</div>
+  					<div >
+  					<label class="booknick"><a href="/detailPage.do?owStoreInfoPk=${b.storeEntireNo}">${b.owStoreName}</a></label>
+  					<label class="booknick">${b.bookDateAndTime2}</label>
+  					<label class="bookNum" onclick="waitModal('${b.storeEntireNo}');">${b.bookTotal}명 대기중</label>
+						
+					<script>
+					storeIndex('${b.storeEntireNo}');
+				
+					</script>
+  					</div>
+  					
+  				</div>
+				</c:forEach>
+				<script>
+				
+				loadWaitList();
+				</script>
+				
+				
+				
 			</div>
-			<div id="goneReservation" class="tabInfo-reservation">
-				지나간 예약
+			<div id="goneReservation" class="tabInfo-reservation" style="display:none;">
+					<c:forEach items="${lastBook}" var="lb">
+			<div class="bookBox">
+  					<div class="bookImageBox">
+						<img id="img"  style="border-radius:50%; width:100%; height:100%;" name=img src="${pageContext.request.contextPath}/${lb.owPhotoViewRoute}">
+	
+  					</div>
+  					<div >
+  					<label class="booknick"><a href="/detailPage.do?owStoreInfoPk=${lb.storeEntireNo}">${lb.owStoreName}</a></label>
+  					<label class="booknick">${lb.bookDateAndTime2}</label>
+						
+  					</div>
+  					
+  				</div>
+				</c:forEach>
+
 			</div>
 		</div>
 		<div id="Coupon" class="tabInfo" style="display:none;">			
@@ -495,7 +576,7 @@ function openImagemodal(storeReviewNo){
 			<div id="usedCoupon" class="tabInfo-coupon">
 				사용 예정 쿠폰
 			</div>
-			<div id="goneCoupon" class="tabInfo-coupon">
+			<div id="goneCoupon" class="tabInfo-coupon" style="display:none;">
 				이미 사용한 쿠폰
 			</div>
 		</div>
@@ -714,7 +795,7 @@ function openImagemodal(storeReviewNo){
 			
 				
 			</div>
-			<div id="jjimReview" class="tabInfo-review">
+			<div id="jjimReview" class="tabInfo-review" style="display:none;">
 				<c:forEach items="${jjimReview}" var="r">
 				<div  id="review_u_${r.storeReviewNo + 0.5 }">
 				<div>
@@ -1146,7 +1227,19 @@ function openImagemodal(storeReviewNo){
 					</div>
 			</div>
 
-		</div>				
+		</div>	
+		
+		<div id="waitNumModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="waitclosemodal();">&times;</span>
+					<div class="tab">
+						<button class="likemodaltablink click">대기 중인 사람들<label id="waitTotalNum"></label> </button>
+					</div>
+					<div id="waiter" class="likemodaltabInfo">
+	
+					</div>
+			</div>
+		</div>					
 	
 </section>
 <footer id="member-main-footer">
