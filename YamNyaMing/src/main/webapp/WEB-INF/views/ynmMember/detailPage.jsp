@@ -15,7 +15,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=7"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=8"></script>
 </head>
 <script>
 function openmodal(storeReviewNo){
@@ -300,7 +300,7 @@ function showSlides(n) {
 		<div class="member-detail-wrapper">
 			<h3>${store.owStoreName}</h3>
 			<p>${store.owStoreAddrFirst} > ${store.owStoreAddrFinal} ㆍ ${store.storeCateDetailName}</p>
-			<p>대기인원 0 추천<label style="color:white;" id="stroeFavoriteNum"> ${store.favoriteTotal}</label> </p>
+			<p>대기인원 0 추천<label style="color:white;" id="faNum_${store.owStoreInfoPk}"> ${store.favoriteTotal}</label> </p>
 			<c:if test="${sessionScope.member!=null}">
 			<c:if test="${favoriteChk==1}">
 			<div class="heart" id="${store.owStoreInfoPk}" onclick="favorite('${sessionScope.member.memberEntireNo}','${store.owStoreInfoPk}');">

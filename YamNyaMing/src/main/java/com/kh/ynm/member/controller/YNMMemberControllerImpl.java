@@ -1325,9 +1325,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 
 	
-	@RequestMapping(value="/test.do")
+	@RequestMapping(value="/otherMember.do")
 	public ModelAndView test(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(request.getParameter("memberEntireNo")+"gd");
+		System.out.println(request.getParameter("memberEntireNo"));
 			int memberEntireNo=(Integer.parseInt(request.getParameter("memberEntireNo")));
 
 			YNMMember ym=ynmMemberServiceImpl.selectOneMember2(memberEntireNo);
@@ -1461,8 +1461,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					storeAllList.get(i).setFavoriteTotal(favoriteTotal);
 				}
 			}
-			System.out.println(ysrList.size());
-			System.out.println(storeAllList.get(0).getFavoriteTotal());
 			
 		
 			ModelAndView view=new ModelAndView();

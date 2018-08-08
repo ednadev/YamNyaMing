@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=14">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=16">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=3"></script>
 
@@ -163,10 +163,10 @@ function waitRefresh(storeEntireNo){
 			console.log("대기 인원 데이터 " + data);
 			if(data.length>0){
 				$("#waitTotalNum").html(data[0].likeTotal);
-				$(".profile-follow").remove();
+				$(".waitprofile-follow").remove();
 				for(var i=0; i<data.length; i++){
 				var html = '';
-	            html += '<div class="profile-follow "id="profile-follow">';
+	            html += '<div class="waitprofile-follow "id="waitprofile-follow">';
 	            if(data[i].memberUploadPhotoNo==1){
 	            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/profile.png"></div>';
 	            }else{
@@ -180,7 +180,7 @@ function waitRefresh(storeEntireNo){
 				}
 			}else{
 				$("#waitTotalNum").html("");
-				$(".profile-follow").remove();
+				$(".waitprofile-follow").remove();
 			}
 				 
 			
@@ -532,7 +532,7 @@ function waitModal(storeEntireNo){
   					<div >
   					<label class="booknick"><a href="/detailPage.do?owStoreInfoPk=${b.storeEntireNo}">${b.owStoreName}</a></label>
   					<label class="booknick">${b.bookDateAndTime2}</label>
-  					<label class="bookNum" onclick="waitModal('${b.storeEntireNo}');">${b.bookTotal}명 대기중</label>
+  					<label class="bookNum" style="margin-left:12px;" onclick="waitModal('${b.storeEntireNo}');">${b.bookTotal}명 대기중</label>
 						
 					<script>
 					storeIndex('${b.storeEntireNo}');
@@ -1230,12 +1230,12 @@ function waitModal(storeEntireNo){
 		</div>	
 		
 		<div id="waitNumModal" class="modal">
-				<div class="modal-content">
+				<div class="waitmodal-content">
 					<span class="close" onclick="waitclosemodal();">&times;</span>
-					<div class="tab">
-						<button class="likemodaltablink click">대기 중인 사람들<label id="waitTotalNum"></label> </button>
+					<div class="waittab">
+						<button class="waittablink click">대기 중인 사람들<label id="waitTotalNum"></label> </button>
 					</div>
-					<div id="waiter" class="likemodaltabInfo">
+					<div id="waiter" class="waittabInfo">
 	
 					</div>
 			</div>
