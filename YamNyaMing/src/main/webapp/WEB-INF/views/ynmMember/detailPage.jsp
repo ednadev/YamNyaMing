@@ -106,8 +106,8 @@ function insertUnderReview(storeReviewNo,memberEntireNo){
  						console.log(data);
 						
 						var html="";
-						html +='<div>';
-						html +='<div class="underImage">';
+						html +='<div class="underBox">';
+						html +='<div class="underImageBox">';
 						
 						if(data.memberUploadPhotoNo==1){
 							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">';
@@ -115,13 +115,17 @@ function insertUnderReview(storeReviewNo,memberEntireNo){
 							html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data.photoViewRoute+'">';
 						}
 						html+='</div>';
+						html+='<div>';
 						html+='<label class="undernick">'+data.memberNickName+'</label>';
-						html+='<input type="text" id="underReviewContent" class="reviewText" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
+						html+='<input type="text" class="underinput" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
+						html+='</div>';
 						html+='</div>';
 						
 						var e = document.createElement('div');
 						e.innerHTML = html;
 						document.getElementById('review_u_'+divId).append(e.firstChild);
+		
+
 
 				}
 			}); 
@@ -683,7 +687,7 @@ function showSlides(n) {
   					</div>
   					
   					
-  					<div >
+  					<div>
   					<label class="undernick">${under.memberNickName}</label>
 					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
   					</div>
@@ -838,6 +842,7 @@ function showSlides(n) {
 	border-radius:50%;
 	display:inline-block;
 	margin-top:20px;
+	background-color:gray;
 }
 .underinput{
 	margin-left:11px;

@@ -1207,7 +1207,7 @@
 						<input type="submit" value="">
 					</form>
 							<div>
-								<p>대기인원 0 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
+								<p>대기인원 ${search.storeWaitNum} 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
 								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"

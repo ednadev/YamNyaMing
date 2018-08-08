@@ -14,13 +14,45 @@
 	<!--To_char(mb_regDate,'YYYY-MM-DD HH24:MI:SS') -->
 	
 	<select id="bookCheck" resultType="books">
-		select 
+	     select 
+		mb_book_pk as bookNo,
+		mb_entire_fk as memberEntireNo,
+        store_entire_fk as storeEntireNo,
+		To_char(mb_book_date_time,'YYYY-MM-DD HH24:MI') as bookDateAndTime2,
+		mb_book_order_count as bookOrderCount,
+		mb_book_party_count as bookPartyCount,
+		mb_book_type as bookType,
+		mb_book_option as bookOption,
+		mb_book_state as bookState,
+		mb_book_deposit as bookDeposit,
+		ow_store_name as owStoreName,
+        (select ow_photo_route ||'\'||OW_REMAKE_NAME from owner_store_photo_tb where ow_store_photo_pk=substr(ow_store_head_photo,1,1)) as owPhotoViewRoute
 		
+		from member_book_tb b,owner_store_info_tb o,owner_store_detail_tb d
+        where o.ow_store_info_pk=b.store_entire_fk and 
+                o.ow_store_info_pk=d.ow_store_index and
+        mb_entire_fk=#{memberEntireNo}  and mb_book_date_time > sysdate
 		
-		from member_book_tb m,owner_store_info_tb o
-		 
-		 where m.ow_entire_fk=o.ow_entire_fk and mb_entire_fk=#{memberEntireNo}
+	</select>
+	<select id="bookLastselect" resultType="books">
+	    select 
+		mb_book_pk as bookNo,
+		mb_entire_fk as memberEntireNo,
+        store_entire_fk as storeEntireNo,
+		To_char(mb_book_date_time,'YYYY-MM-DD HH24:MI') as bookDateAndTime2,
+		mb_book_order_count as bookOrderCount,
+		mb_book_party_count as bookPartyCount,
+		mb_book_type as bookType,
+		mb_book_option as bookOption,
+		mb_book_state as bookState,
+		mb_book_deposit as bookDeposit,
+		ow_store_name as owStoreName,
+        (select ow_photo_route ||'\'||OW_REMAKE_NAME from owner_store_photo_tb where ow_store_photo_pk=substr(ow_store_head_photo,1,1)) as owPhotoViewRoute
 		
+		from member_book_tb b,owner_store_info_tb o,owner_store_detail_tb d
+        where o.ow_store_info_pk=b.store_entire_fk and 
+                o.ow_store_info_pk=d.ow_store_index and
+        mb_entire_fk=#{memberEntireNo}  and sysdate > mb_book_date_time 
 	</select>
 	
 	<select id="myBookCheck" resultType="int">
@@ -46,6 +78,16 @@
 		from member_book_tb
 		where mb_book_pk = #{memberIndex} and MB_BOOK_STATE in ('w', 'r')
 		and MB_BOOK_DATE_TIME > sysdate 
+	</select>
+	
+		
+	<select id="storeWaitNum" resultType="int">
+		select
+		count(*)
+		from
+		member_book_tb
+		where
+		store_entire_fk=#{storeEntireNo} and mb_book_state='w' and mb_book_date_time > sysdate
 	</select>
 
 

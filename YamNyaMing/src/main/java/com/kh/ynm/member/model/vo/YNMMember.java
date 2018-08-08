@@ -25,9 +25,18 @@ public class YNMMember {
 	private int likeTotal;
 	private int followChk=0;
 	private int followerChk=0;
+	private String bookDateAndTime2;
 	
 	
 	
+	
+	
+	public String getBookDateAndTime2() {
+		return bookDateAndTime2;
+	}
+	public void setBookDateAndTime2(String bookDateAndTime2) {
+		this.bookDateAndTime2 = bookDateAndTime2;
+	}
 	public int getFollowerChk() {
 		return followerChk;
 	}

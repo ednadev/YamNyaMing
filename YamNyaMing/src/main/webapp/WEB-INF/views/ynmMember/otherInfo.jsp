@@ -10,13 +10,13 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=9">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/otherInfo.css?ver=11">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=8"></script>
 </head>
 <script>
-function openmodal(storeReviewNo){
-	var modal = document.getElementById('myModal');
+function likeopenmodal(storeReviewNo){
+	var modal = document.getElementById('likeModal');
 	modal.style.display = "block";
 	$.ajax({
 		url : "/likeTotalMemberInfo.do",
@@ -69,23 +69,70 @@ function openImagemodal(storeReviewNo){
 			console.log(data);
   			$("#reviewImageDetail").remove();
 			var html="";
-			html +='<div id="reviewImageDetail" style="width:50%; height:550px;">';
-			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="width:200%; height:100%; display:block;">';
+			html +='<div id="reviewImageDetail" style="display:flex;justify-content:center;">';
+			html +='<img class="reviewImages" src="/resources/image/member/'+data[0].photoViewRoute+'"style="height:90%; display:block;">';
 			if(data.length>1){
 			for(var i=1; i<data.length; i++){
-				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="width:200%; height:100%; display:none;">';
+				html +='<img class="reviewImages" src="/resources/image/member/'+data[i].photoViewRoute+'" style="height:90%; display:none;">';
 			}	
 			}
-		html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
-		html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
-		html+='</div>';
-		$("#reviewDetail").append(html);	 
+			html+='</div>';	
+			html+='<div id="slideBtn">';
+			html+='<button onclick="plusreviewDivs(-1)">&lt;</button>';
+			html+='<button onclick="plusreviewDivs(1)">&gt;</button>';
+			html+='</div>';	
+			$("#reviewDetail").append(html); 
 				 
 			
 		}
 	});	
 	
 }
+
+function insertUnderReview(storeReviewNo,memberEntireNo,reviewType){
+	
+	var underReviewContentId=null;
+	var divId=null;
+	var reviewChk=reviewType;
+	console.log(reviewChk);
+	if(reviewChk=="myReview"){
+	underReviewContentId=parseInt(storeReviewNo)+0.2;
+	divId=parseInt(storeReviewNo)+0.1;
+	}else{
+	underReviewContentId=parseInt(storeReviewNo)+0.5;
+	divId=parseInt(storeReviewNo)+0.5;
+	}
+	
+	var underReviewContent=document.getElementById(underReviewContentId).value;
+
+ 		$.ajax({
+			url : "/storeUnderReviewInsert.do",
+			data : {storeReviewNo:storeReviewNo,memberEntireNo:memberEntireNo,underReviewContent:underReviewContent},
+			success : function(data){
+						console.log(data);
+					
+ 					var html="";
+					html +='<div>';
+					html +='<div class="underImage">';
+					
+					if(data.memberUploadPhotoNo==1){
+						html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="${pageContext.request.contextPath}/resources/image/member/profile.png">';
+					}else{
+						html +='<img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data.photoViewRoute+'">';
+					}
+					html+='</div>';
+					html+='<label class="undernick">'+data.memberNickName+'</label>';
+					html+='<input type="text" id="underReviewContent" class="reviewText" name="underReviewContent" value="'+data.underReviewContent+'" readonly>';
+					html+='</div>';
+					
+					var e = document.createElement('div');
+					e.innerHTML = html;
+					document.getElementById('review_u_'+divId).append(e.firstChild); 
+
+			}
+		}); 
+	}
+	
 </script>
 <body>
 <header id="member-search-header">
@@ -357,7 +404,7 @@ function openImagemodal(storeReviewNo){
 					    		<div>
 					    			<p>${fry.memberNickName}</p>
 					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" name="reviewL_${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
-							<c:if test="${sessiocScope.member!=null }">
+							<c:if test="${sessionScope.member!=null }">
 							<c:if test="${fry.followerChk==0}">
 							<button name="rbtn_${fry.memberNickName}" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','rbtn_${fry.memberNickName }','reviewL_${fry.memberId}');">팔로우</button>
 							</c:if>
@@ -938,6 +985,33 @@ function openImagemodal(storeReviewNo){
 	
 	
 	</div>
+			<div id="likeModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closemodal();">&times;</span>
+					<div class="tab">
+						<button class="likemodaltablink click">이 댓글을 좋아하는 사람들<label id="likeTotalNum"></label> </button>
+					</div>
+					<div id="liker" class="likemodaltabInfo">
+	
+					</div>
+			</div>
+
+		</div>	
+		
+					<div id="imageModal" class="modal">
+				<div class="imagemodal-content">
+					<span class="close" onclick="closeimagemodal();">&times;</span>
+					<div class="tab">
+						<button class="likemodaltablink click">댓글에 등록된 사진</button>
+					</div>
+					<div id="Follower" class="likemodaltabInfo">
+							<div id="reviewDetail">
+		
+							</div>
+					</div>
+			</div>
+
+		</div>	
 </section>
 
 <footer id="member-main-footer">

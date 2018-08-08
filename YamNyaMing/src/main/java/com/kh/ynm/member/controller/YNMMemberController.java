@@ -44,7 +44,6 @@ public interface YNMMemberController {
 	public String pwCheck(HttpServletRequest request, HttpServletResponse response, Model model);
 	//예약 table
 	public ModelAndView bookInsert(HttpSession session, HttpServletRequest request);
-	public Object bookselect(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 	//리뷰 table
 	public ModelAndView storeReviewInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,

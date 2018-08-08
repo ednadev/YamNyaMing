@@ -180,7 +180,7 @@
 
 	<delete id="deleteJjim">
 		delete from member_review_jjim_tb where
-		mb_entire_fk=#{memberEntireNo}
+		mb_entire_fk=#{memberEntireNo} and  mb_store_review_fk=#{storeReviewNo}
 	</delete>
 
 	<select id="followInfo" resultType="follow">

@@ -1,3 +1,28 @@
+var storeIndexArr=[];
+
+
+function storeIndex(stIndex)
+{	
+
+	storeIndexArr.push(stIndex);
+	
+}
+function loadWaitList()
+{
+	setInterval(function(){
+		bookCheckInterval();
+	}, 3000);
+}
+function bookCheckInterval()
+{	
+	for(var i=0; i<storeIndexArr.length; i++)
+	{
+		
+			waitRefresh(storeIndexArr[i]);
+		
+	}
+}
+
 //TAB!!
 function openTab(event, tabName){
 	var i, x, tablinks;
@@ -127,6 +152,13 @@ function followClose()
 function followModal(){
 	var modal = document.getElementById('myModal');
 	modal.style.display = "block";
+}
+
+function waitclosemodal()
+{
+
+	var modal = document.getElementById('waitNumModal');
+	modal.style.display = "none";
 }
 
 
@@ -634,6 +666,15 @@ $(document).keyup(function() {
 		        modal.style.display = "none";
 		    }
 	}
+	window.onclick = function(event) {
+		var modal = document.getElementById('waitNumModal');
+		   if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+	}
+	
+	
+	
 function nomember()
 {
 	alert("로그인후 이용해주세요");

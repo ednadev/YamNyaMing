@@ -687,9 +687,70 @@
 	border-radius:50%;
 	display:inline-block;
 	margin-top:20px;
+	background-color:gray;
 }
 .underinput{
 	margin-left:11px;
 	border:none;
 	color:#555;
+}
+
+.imagemodal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width:65%;
+    overflow:auto;
+    height:700px;
+}
+#reviewDetail{
+	width:100%;
+	height:550px;
+	float:left;
+}
+#reviewImageDetail{
+	width:100%; 
+	height:550px; 
+	float:left;
+}
+.imagemodal-content>.tab{
+	float:left;
+}
+.imagemodal-content>.tab>.likemodaltablink{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-size:1em;
+	font-weight:bold;
+}
+.imagemodal-content>.tab>.click{
+	color:#fb0;
+}
+.imagemodal-content>.likemodaltabInfo{
+	clear:both;
+	border-top:1px solid #999;
+	margin-top:15px;
+	padding-top:10px;
+	padding-left:5px;
+	
+}
+
+.modal-content>.tab>.likemodaltablink{
+	background-color:white;
+	border:none;
+	color:#555;
+	font-size:1em;
+	font-weight:bold;
+}
+.modal-content>.tab>.click{
+	color:#fb0;
+}
+.modal-content>.likemodaltabInfo{
+	clear:both;
+	border-top:1px solid #999;
+	margin-top:15px;
+	padding-top:10px;
+	padding-left:5px;
+	
 }
