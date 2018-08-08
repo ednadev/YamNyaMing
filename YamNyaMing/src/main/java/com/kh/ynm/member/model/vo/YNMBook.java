@@ -26,11 +26,22 @@ public class YNMBook {
 	private String owPhotoViewRoute;
 	private float storeStarPoint;
 	private int bookTotal;
+	private String bookerName;
 	
 	
 	
 	
 	
+	public String getBookerName() {
+		return bookerName;
+	}
+
+
+	public void setBookerName(String bookerName) {
+		this.bookerName = bookerName;
+	}
+
+
 	public int getBookTotal() {
 		return bookTotal;
 	}

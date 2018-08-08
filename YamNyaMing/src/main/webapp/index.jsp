@@ -23,7 +23,7 @@
 		}
 		
 	</script> -->
-<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=3"></script>
+<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=6"></script>
 	<style>
 	@media (max-width:960px){
 		#member-main-header>ul>li.mobile-hidden{

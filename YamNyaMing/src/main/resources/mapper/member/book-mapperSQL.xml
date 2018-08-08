@@ -63,21 +63,13 @@
 	</select>
 	
 	<select id="myBookStoreIndex" resultType="books">
-		select 
-			MB_BOOK_PK as bookNo,
-			MB_ENTIRE_FK as memberEntireNo,
-            STORE_ENTIRE_FK as storeEntireNo,
-            MB_BOOK_DATE as bookDate,
-            MB_BOOK_ORDER_COUNT as bookOrderCount,
-            MB_BOOK_PARTY_COUNT as bookPartyCount,
-            MB_BOOK_TYPE as bookType,
-            MB_BOOK_OPTION as bookOption,
-            MB_BOOK_STATE as bookState,
-            MB_BOOK_DEPOSIT as bookDeposit,
-            MB_BOOK_DATE_TIME as bookDateAndTime
-		from member_book_tb
-		where mb_book_pk = #{memberIndex} and MB_BOOK_STATE in ('w', 'r')
-		and MB_BOOK_DATE_TIME > sysdate 
+		 select 
+        (select OW_STORE_NAME from owner_store_info_tb where OW_STORE_INFO_PK  = #{storeIndex}) as owStoreName,
+        (select count(*)  from member_book_tb  where  STORE_ENTIRE_FK  = #{storeIndex} and MB_BOOK_STATE in ('w', 'r') AND MB_BOOK_DATE_TIME > sysdate) as bookOrderCount,
+        (select OW_NAME from owner_entire_tb where OW_ENTIRE_PK = mb_entire_fk) as bookerName
+        from member_book_tb
+         where  STORE_ENTIRE_FK = #{storeIndex} and MB_BOOK_STATE in ('w', 'r') 
+         AND MB_BOOK_DATE_TIME > sysdate
 	</select>
 	
 		
