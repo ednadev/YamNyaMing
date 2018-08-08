@@ -10,18 +10,19 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/member/member.css?ver=1">
-	<script>
+<!-- 	<script>
 		function firstLoadAlert()
 		{
 			if(typeof Android !=="undefined" && Android !== null){
-				Android.firstLoadTest();
+				var userId = "안녕Android?";
+				Android.firstLoadTest(userId);
 			}else{
 				alert("Not viewing in webView!!");
 			}
-			 
 		}
 		
-	</script>
+	</script> -->
+<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=3"></script>
 	<style>
 	@media (max-width:960px){
 		#member-main-header>ul>li:nth-child(2){
@@ -29,16 +30,23 @@
 		}
 	}
 	</style>
+	
+	<script>
+		window.onload= function(){
+			<c:if test="${sessionScope.member!=null}" var="result">
+					loginCheck('member,${sessionScope.member.memberEntireNo}');
+			</c:if>
+			setInterval(function(){ 
+				
+			}, 1000);
+		}
+	</script>
 </head>
 <body>
-	
 	<header id="member-main-header">
 		<h1>
-		
 			<a href="/index.jsp">YamNyaMing</a>
-			<a href="/test.do?memberEntireNo=1">다른</a>
 		</h1>
-
 		<ul>
 			<c:if test="${sessionScope.totalRefModel==null}">
 				<script>location.href="/totalRefLoad.do"</script>
@@ -76,6 +84,7 @@
 			<input type="text" name="keyword" placeholder="키워드를 입력해주세요"> 
 			<input type="submit" value="검색">
 		</form>
+		 <!-- <button onclick="firstLoadAlert();">안드로이드 테스트</button> -->
 	</header>
 	<section id="member-main-section">
 		<article>

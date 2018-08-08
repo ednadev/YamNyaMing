@@ -55,15 +55,14 @@
 		set 
 			ow_coupon_name = #{owCouponName},
 			OW_COUPON_COUNT = #{owCouponCount},
-			OW_COUPON_START_DATE = #{owCouponStartDate},
-			OW_COUPON_EXPIRE_DATE = #{owCouponExpireDate},
+<!-- 			OW_COUPON_START_DATE = #{owCouponStartDate},
+			OW_COUPON_EXPIRE_DATE = #{owCouponExpireDate}, -->
 			OW_COUPON_DETAIL = #{owCouponDetail}
 		where
 		OW_COUPON_INFO_PK = #{owCouponInfoPk}
 	</update>
 	<!--쿠폰의 페이징 -->
-	<select id="couponList" resultType="couponEnrollData"
-		parameterType="couponPageData">
+	<select id="couponList" resultType="couponEnrollData" parameterType="couponPageData">
 	    select   
         ow_coupon_info_pk as owCouponInfoPk,   
         ow_entire_fk as owEntireFk,   

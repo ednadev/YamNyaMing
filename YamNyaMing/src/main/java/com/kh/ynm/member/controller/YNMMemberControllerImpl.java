@@ -95,7 +95,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			}else {
 				return "ynmMember/fail";
 			}
-
 		}else {
 			if(ym!=null) {
 				session.setAttribute("member", ym);
@@ -1496,6 +1495,5 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 	public String adminMain() {
 		return "ynmAdmin/mainAdmin";
 	}
-
 }
 

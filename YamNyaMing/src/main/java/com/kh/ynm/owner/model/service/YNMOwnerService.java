@@ -116,5 +116,10 @@ public interface YNMOwnerService {
 	// 쿠폰 업데이트
 	public int couponUpdate(CouponEnroll couponEnroll);
 
+	// 예약 확인
+	public ArrayList<YNMBook> bookCheck(int memberIndex);
+
+	// 로그인한 사람이 예약한 가게의 인덱스들.
+	public ArrayList<Integer> bookedStoreIndex(int memberIndex);
 	
 }

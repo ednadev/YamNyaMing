@@ -62,6 +62,9 @@ function couponEnroll()
 		var couponStartData =  $('#couponStartDateId').val();
 		var couponExpireDate =  $('#couponEndDateId').val();
 		var couponExplain = $('#couponDetail').val();
+		
+		console.log("시작일 " + couponStartData);
+		console.log("종료일 " + couponExpireDate);
 		$.ajax({
 			url:"/couponEnroll.do",
 			data : {
@@ -103,18 +106,20 @@ function couponUpdate()
 	var couponIndex = $('#couponIndexVal').val();
 	var couponName = $('#owCouponNameUpdate').val();
 	var couponCount =  $('#couponCountUpdate').val();
-	var couponStartData =  $('#sdateN').val();
-	var couponExpireDate =  $('#edateN').val();
+//	var couponStartData =  $('#couponStartDateId').val();
+//	var couponExpireDate =  $('#couponEndDateId').val();
 	var couponExplain = $('#couponDetailUpdate').val();
 	
-	console.log(couponStartData);
+	
+	console.log("시작일 " + couponStartData);
+	console.log("종료일 " + couponExpireDate);
 	$.ajax({
 		url:"/couponUpdate.do",
 		data : {
 			couponIndex : couponIndex,
 			couponName : couponName,
 			couponCount: couponCount,
-			couponStartData: couponStartData,
+			couponStartDate: couponStartData,
 			couponExpireDate: couponExpireDate,
 			couponExplain : couponExplain
 	   },

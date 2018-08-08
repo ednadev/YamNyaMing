@@ -278,7 +278,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 						}
 						detailInfo.setOwStoreMenuInfoDetail(menuInfoList);
 						break;
-				
 				}
 				detailInfo.setOwStoreCostType("ko");
 				
@@ -393,10 +392,12 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
 			
+			int storeIndex = currentSelectStoreIndex(session);
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
-			ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , 1);
-			CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , 1);
+			ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , storeIndex);
+//			System.out.println("확인 " + couponList.get(0).getOwCouponDuringDate());
+			CouponPageData pageNavi = ynmOwnerServiceImpl.couponPageNavi(currentPage,recordCountPerPage,naviCountPerPage,owner.getOwEntirePk() , storeIndex);
 			view.addObject("couponListData", couponList);
 			view.addObject("pageNaviData", pageNavi);
 			view.setViewName("ynmOwner/couponManagePage");
@@ -423,15 +424,17 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
 			Date startDate= new Date();
 			Date expireDate= new Date();
-			try {
-				startDate = sdf.parse(request.getParameter("couponStartData"));
-				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			couponEnroll.setOwCouponStartDate(startDate);
-			couponEnroll.setOwCouponExpireDate(expireDate);
+			System.out.println("업데이트 " + request.getParameter("couponStartDate"));
+//			try {
+//				startDate = sdf.parse(request.getParameter("couponStartDate"));
+//				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+//			couponEnroll.setOwCouponStartDate(startDate);
+//			couponEnroll.setOwCouponExpireDate(expireDate);
 			couponEnroll.setOwCouponDetail(request.getParameter("couponExplain"));
 			
 			int result = ynmOwnerServiceImpl.couponUpdate(couponEnroll);
@@ -1225,4 +1228,22 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		return view;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/bookCheck.do")
+	public JSONArray bookCheck(HttpSession session, HttpServletRequest request)
+	{
+		JSONArray resultObj = new JSONArray();
+		if(session.getAttribute("member")!=null)
+		{
+			int memberIndex = Integer.parseInt(request.getParameter("memberIndex"));
+			ArrayList<Integer> bookedStoreIndex = ynmOwnerServiceImpl.bookedStoreIndex(memberIndex);
+			for(int i = 0; i<bookedStoreIndex.size();i++)
+			{
+				ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookCheck(bookedStoreIndex.get(i));
+				
+			}
+			
+		}
+		return resultObj;
+	}
 }

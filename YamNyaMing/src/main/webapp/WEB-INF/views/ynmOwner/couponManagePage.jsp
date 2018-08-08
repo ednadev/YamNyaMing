@@ -19,7 +19,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=3"></script>
+	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=4"></script>
 	
 <!-- DatePicker -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -188,9 +188,9 @@
 									</td>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}"> ${coupon.owCouponDuringDate} </span>
-										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" name="couponStartDate" value="${coupon.owCouponStartDate}" placeholder="${coupon.owCouponStartDate}" id="sdateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
+										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponStartDate" value="${coupon.owCouponStartDate}" placeholder="${coupon.owCouponStartDate}" id="sdateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
 				
-										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" name="couponExpireDate" value="${coupon.owCouponExpireDate}" placeholder="${coupon.owCouponExpireDate}" id="edateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
+										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponExpireDate" value="${coupon.owCouponExpireDate}" placeholder="${coupon.owCouponExpireDate}" id="edateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
 									</td>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}">${coupon.owCouponDetail}</span>

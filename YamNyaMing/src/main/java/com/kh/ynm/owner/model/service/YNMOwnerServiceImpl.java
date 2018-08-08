@@ -363,6 +363,16 @@ public class YNMOwnerServiceImpl implements YNMOwnerService{
 		return ynmOwnerDAO.couponUpdate(sqlSession , couponEnroll);
 	}
 
+	@Override
+	public ArrayList<YNMBook> bookCheck(int storeIndex) {
+		return ynmOwnerDAO.bookCheck(sqlSession, storeIndex);
+	}
+
+	@Override
+	public ArrayList<Integer> bookedStoreIndex(int memberIndex) {
+		return ynmOwnerDAO.bookStoreIndex(sqlSession, memberIndex);
+	}
+
 
 	
 }

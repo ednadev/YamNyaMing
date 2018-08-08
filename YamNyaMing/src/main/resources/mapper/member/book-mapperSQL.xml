@@ -23,6 +23,30 @@
 		
 	</select>
 	
+	<select id="myBookCheck" resultType="int">
+		select 
+            STORE_ENTIRE_FK
+		from member_book_tb m, owner_store_info_tb o
+		where STORE_ENTIRE_FK = #{storeIndex} and MB_BOOK_STATE in ('w', 'r'); 
+	</select>
+	
+	<select id="myBookStoreIndex" resultType="books">
+		select 
+			MB_BOOK_PK as bookNo,
+			MB_ENTIRE_FK as 
+            STORE_ENTIRE_FK as 
+            MB_BOOK_DATE as 
+            MB_BOOK_ORDER_COUNT as 
+            MB_BOOK_PARTY_COUNT
+            MB_BOOK_TYPE as 
+            MB_BOOK_OPTION as 
+            MB_BOOK_STATE as 
+            MB_BOOK_DEPOSIT as 
+            MB_BOOK_DATE_TIME as 
+		from member_book_tb
+		where mb_book_pk = #{memberIndex} and MB_BOOK_STATE in ('w', 'r')
+		and MB_BOOK_DATE_TIME > sysdate 
+	</select>
 
 
 </mapper>
