@@ -61,6 +61,8 @@ public interface YNMMemberController {
 	//즐겨찾기 table
 	public String favoriteInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
+	public String deleteBook(HttpServletRequest request, HttpServletResponse response);
+
 
 
 

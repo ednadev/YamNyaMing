@@ -155,6 +155,25 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return view;
 		}
 	}
+	
+	
+	//아이디 찾기
+	@ResponseBody
+	@Override
+	@RequestMapping(value="/deleteBook.do")
+	public String deleteBook(HttpServletRequest request, HttpServletResponse response) {
+		int bookNo=Integer.parseInt(request.getParameter("bookNo"));
+		int result=ynmMemberServiceImpl.deleteBook(bookNo);
+		
+		if(result>0) {
+			String chk="1";
+			return chk;
+		}else {
+			String chk="0";
+			return chk;
+		}
+		
+	}
 
 	//비밀번호 찾기
 	@Override

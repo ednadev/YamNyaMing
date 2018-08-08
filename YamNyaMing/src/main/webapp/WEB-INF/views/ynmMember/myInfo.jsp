@@ -33,9 +33,20 @@ $(document).ready(function(){
 });
 
 function deleteBook(bookNo){
+	if(confirm("예약을 취소 하시겠습니까?")){
 	var id="book_"+bookNo;
 	console.log(id);
-	
+	$.ajax({
+		url : "/deleteBook.do",
+		data : {bookNo:bookNo},
+		success : function(data){
+			if(data==1){
+				$("#"+id).remove();
+			}
+			
+		}
+	});	
+	}
 	
 }
 
