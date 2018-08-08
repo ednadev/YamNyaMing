@@ -92,13 +92,21 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	@RequestMapping(value="/OwnerSearch.do")
 	public Object OwnerSearch(HttpServletRequest request, HttpSession session) 
 	{
+		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("admin")!=null) {
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
-			ModelAndView view = new ModelAndView();
-			ArrayList<YNMOwner> list = ynmAdminServiceImpl.OwnerSearch(combo,keyword);
+			System.out.println(keyword);
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<YNMOwner> list = ynmAdminServiceImpl.OwnerSearch(combo,keyword,currentPage,recordCountPerPage);
+			CouponPageData pageNavi = ynmAdminServiceImpl.owSearchGetTotal(combo,keyword,currentPage,recordCountPerPage,naviCountPerPage);
 			view.addObject("list",list);
-			view.setViewName("ynmAdmin/allOwnerView");
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/ownerSearch");
 			return view;
 		}
 		else
@@ -110,13 +118,20 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 	@RequestMapping(value="/MemberSearch.do")
 	public Object MemberSearch(HttpServletRequest request, HttpSession session) 
 	{
+		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("admin")!=null) {
 			String combo = request.getParameter("combo");
 			String keyword = request.getParameter("keyword");
-			ModelAndView view = new ModelAndView();
-			ArrayList<YNMMember> list= ynmAdminServiceImpl.MemberSearch(combo,keyword);
+			int currentPage = 1;
+			if(request.getParameter("currentPage")==null) currentPage=1;
+			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
+			int recordCountPerPage = 10; //1. 1페이지에10개씩보이게
+			int naviCountPerPage = 5; //2.
+			ArrayList<YNMMember> list= ynmAdminServiceImpl.MemberSearchPaging(combo,keyword,currentPage,recordCountPerPage);
+			CouponPageData pageNavi = ynmAdminServiceImpl.memSearchGetTotal(combo,keyword,currentPage,recordCountPerPage,naviCountPerPage);
 			view.addObject("list",list);
-			view.setViewName("ynmAdmin/allMemberView");
+			view.addObject("pageNaviData", pageNavi);
+			view.setViewName("ynmAdmin/memberSearch");
 			return view;
 		}
 		else 

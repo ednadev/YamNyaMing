@@ -14,24 +14,10 @@ public class BoardPaging {
 	private int recordTotalCount;
 	private int owEntirePk;
 	private int storeEntireFk;
+	private String keyword;
+	private String combo;
 	
 	public BoardPaging() {}
-
-	public BoardPaging(int startPage, int endPage, ArrayList<Notice> couponList, String pageNavi, int startNavi,
-			int endNavi, int currentPage, int pageTotalCount, int recordTotalCount, int owEntirePk, int storeEntireFk) {
-		super();
-		this.startPage = startPage;
-		this.endPage = endPage;
-		this.couponList = couponList;
-		this.pageNavi = pageNavi;
-		this.startNavi = startNavi;
-		this.endNavi = endNavi;
-		this.currentPage = currentPage;
-		this.pageTotalCount = pageTotalCount;
-		this.recordTotalCount = recordTotalCount;
-		this.owEntirePk = owEntirePk;
-		this.storeEntireFk = storeEntireFk;
-	}
 
 	public int getStartPage() {
 		return startPage;
@@ -120,6 +106,24 @@ public class BoardPaging {
 	public void setStoreEntireFk(int storeEntireFk) {
 		this.storeEntireFk = storeEntireFk;
 	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getCombo() {
+		return combo;
+	}
+
+	public void setCombo(String combo) {
+		this.combo = combo;
+	}
+
+	
 	
 
 //	public CouponPageData pagingList(int currentPage, ManagerSellSearch mss) {

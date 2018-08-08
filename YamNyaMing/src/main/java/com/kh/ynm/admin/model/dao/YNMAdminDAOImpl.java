@@ -33,19 +33,13 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
     	return sqlSession.selectOne("admin.adminIdCheck",vo);
     }
     //점주 검색
-	public ArrayList<YNMOwner> OwnerSearch(SqlSessionTemplate sqlSession,String combo,String keyword) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("combo", combo);
-		map.put("keyword", keyword);
-		List list = sqlSession.selectList("admin.ownerSearch",map);
+	public ArrayList<YNMOwner> OwnerSearch(SqlSessionTemplate sqlSession, BoardPaging ownerPageData) {
+		List list = sqlSession.selectList("admin.ownerSearch",ownerPageData);
 		return (ArrayList<YNMOwner>) list;
 	}
 	//멤버 검색
-	public ArrayList<YNMMember> MemberSearch(SqlSessionTemplate sqlSession,String combo,String keyword) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("combo", combo);
-		map.put("keyword", keyword);
-		List list = sqlSession.selectList("admin.memberSearch",map);
+	public ArrayList<YNMMember> MemberSearchPaging(SqlSessionTemplate sqlSession, BoardPaging memberPageData) {
+		List list = sqlSession.selectList("admin.memberSearch",memberPageData);
 		return (ArrayList<YNMMember>) list;
 	}
 	//관리자 로그인
@@ -120,6 +114,15 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 	public int adminGetTotal(SqlSessionTemplate sqlSession, BoardPaging adminPageData) {
 		return sqlSession.selectOne("admin.adminTotal", adminPageData);
 	}
+	//점주 검색페이징(토탈)
+	public int owSearchGetTotal(SqlSessionTemplate sqlSession, BoardPaging adminPageData) {
+		return sqlSession.selectOne("admin.owSearchGetTotal", adminPageData);
+	}
+	//멤버 검색페이징(토탈)
+	public int memSearchGetTotal(SqlSessionTemplate sqlSession, BoardPaging adminPageData) {
+		return sqlSession.selectOne("admin.memSearchGetTotal", adminPageData);
+	}
+	
 	//글보기
 	public Notice noticeView(SqlSessionTemplate sqlSession, int noticeNo) {
 		return sqlSession.selectOne("admin.noticeView", noticeNo);
@@ -155,6 +158,9 @@ public class YNMAdminDAOImpl implements YNMAdminDAO{
 		int list = sqlSession.update("admin.storeNo",owStoreInfoPk);
 		return list;
 	}
+
+
+	
 	
 
 	

@@ -47,7 +47,14 @@
                       <div class="panel-heading">  <center><h4 >관리자 정보</h4></div></center>
                        <div class="panel-body">
                       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
+                      <c:choose>
+                      <c:when  test="${sessionScope.admin.ad_id eq 'admin'}">
                        <img alt="User Pic" src="https://ssl.pstatic.net/mimgnews/image/433/2017/08/30/0000034841_001_20170830102242631.jpg" id="profile-image1" class="img-circle img-responsive" style="height:300px;"> 
+                      </c:when>
+                      <c:otherwise>
+                      <img alt="User Pic" src="http://cfile2.uf.tistory.com/image/996A673359815F60253F4C" id="profile-image1" class="img-circle img-responsive" style="height:300px;"> 
+                      </c:otherwise>
+                      </c:choose>
                       </div>
                       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
                           <div class="container" style="padding-top:89px;">

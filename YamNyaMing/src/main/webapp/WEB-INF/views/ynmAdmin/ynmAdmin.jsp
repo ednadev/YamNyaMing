@@ -12,10 +12,14 @@
 </head>
 <body>
 <header id="admin-login-header">
-	<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
-	<h1><a href="/ynmAdmin.do">YamNyaMing 관리자</a></h1>
-	<h1><a href="/enrollAdmin.do" id="enroll">회원가입</a></h1>
-</header>
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
+		<h1>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
+		</h1>
+		<p>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
+		</p>
+	</header>
 <section id="admin-login-section">
 	<h2>로그인</h2>
 	<form action="/adminLogin2.do" method="post">

@@ -15,7 +15,15 @@
 <script src="${pageContext.request.contextPath}/resources/js/admin/adminEnroll.js?ver=1"></script>
 </head>
 <body>
-<header id="owner-signUp-header"><h1><a href="/index.jsp">YamNyamCompany</a></h1></header>
+<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
+		<h1>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
+		</h1>
+		<p>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
+		</p>
+	</header>
 <!-- 시작 -->
 <div class="wrapper"><nav id="owner-signUp-nav"><h2>관리자 가입하기</h2></nav>
 
