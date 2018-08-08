@@ -1234,26 +1234,21 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		JSONArray objArr = new JSONArray();
 		if(session.getAttribute("member")!=null)
 		{
-			int memberIndex = Integer.parseInt(request.getParameter("memberIndex"));
-			ArrayList<Integer> bookedStoreIndex = ynmOwnerServiceImpl.bookedStoreIndex(memberIndex);
+			if(request.getParameter("memberIndex")!=null) {
+				int memberIndex = Integer.parseInt(request.getParameter("memberIndex"));
+				ArrayList<Integer> bookedStoreIndex = ynmOwnerServiceImpl.bookedStoreIndex(memberIndex);
 			
-		
-			for(int i = 0; i<bookedStoreIndex.size();i++)
-			{
-				ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookCheck(bookedStoreIndex.get(i).intValue());
-				for(int j = 0; j<bookList.size();j++)
+				for(int i = 0; i<bookedStoreIndex.size();i++)
 				{
-					JSONObject obj = new JSONObject();
-					obj.put("bookNo", bookList.get(j).getBookNo());
-					obj.put("mbIndex", bookList.get(j).getMemberEntireNo());
-					obj.put("storeIndex", bookList.get(j).getStoreEntireNo());
-					obj.put("bookDate", bookList.get(j).getBookDate());
-					obj.put("bookOrderCount", bookList.get(j).getBookOrderCount());
-					obj.put("partCount", bookList.get(j).getBookPartyCount());
-					obj.put("bookOption", bookList.get(j).getBookOption());
-					obj.put("bookState", bookList.get(j).getBookState());
-					obj.put("dateAndTime", bookList.get(j).getBookDateAndTime());
-					objArr.add(obj);
+					ArrayList<YNMBook> bookList = ynmOwnerServiceImpl.bookCheck(bookedStoreIndex.get(i).intValue());
+					for(int j = 0; j<bookList.size();j++)
+					{
+						JSONObject obj = new JSONObject();
+						obj.put("storeName", bookList.get(j).getOwStoreName());
+						obj.put("bookOrderCount", bookList.get(j).getBookOrderCount());
+						obj.put("memberName", bookList.get(j).getBookerName());
+						objArr.add(obj);
+					}
 				}
 			}
 			
