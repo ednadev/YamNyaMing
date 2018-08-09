@@ -141,10 +141,35 @@
     	</c:if>
     	<input type="submit" value="검색">
     </form>	
-	<ul>
-        <li><a href="/loginMember.do">로그인</a></li>
-        <li><a href="/enrollMember.do">회원가입</a></li>
-    </ul>
+<ul>
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
+			<c:if test="${sessionScope.naver!=null}" var="result">
+				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+		
+			<c:if test="${sessionScope.member!=null}" var="result">
+				<li>${sessionScope.member.memberNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+
+			<c:if test="${sessionScope.owner!=null}" var="result">
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
+				<li><a href="/ownerLogout.do">로그아웃</a></li>
+			</c:if>
+			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
+				<li><a href="/loginMember.do">로그인</a></li>
+				<li><a href="/adminLogin.do">관리자 로그인</a><li>
+
+
+				<li><a href="/enrollMember.do">회원가입</a></li>
+			</c:if>
+		</ul>
 
 </header>
 <section id="member-search-section">

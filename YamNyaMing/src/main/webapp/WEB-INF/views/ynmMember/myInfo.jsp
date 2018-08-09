@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=14">             
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=16">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=3"></script>
 
@@ -32,6 +32,24 @@ $(document).ready(function(){
 	'${setting.myinfoStoreJjim}'=='y' ? document.getElementsByName('StoreJjim')[0].checked=true :document.getElementsByName('StoreJjim')[1].checked=true;
 });
 
+function deleteBook(bookNo){
+	if(confirm("예약을 취소 하시겠습니까?")){
+	var id="book_"+bookNo;
+	console.log(id);
+	$.ajax({
+		url : "/deleteBook.do",
+		data : {bookNo:bookNo},
+		success : function(data){
+			if(data==1){
+				$("#"+id).remove();
+			}
+			
+		}
+	});	
+	}
+	
+}
+
 function likeopenmodal(storeReviewNo){
 	var modal = document.getElementById('likeModal');
 	modal.style.display = "block";
@@ -52,7 +70,7 @@ function likeopenmodal(storeReviewNo){
             html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
             }
             html += '<div>';
-            html += '<p>'+data[i].memberNickName+'</p>';
+            html += '<p><a style="color:black;" href="/otherMember.do?memberEntireNo='+data[i].memberEntireNo+'">'+data[i].memberNickName+'</a></p>';
             html += '<p>'+data[i].reviewTotal+' 리뷰,<label name='+(data[i].memberEntireNo+0.1)+' style="color:black;">'+data[i].followTotal+'</label>  팔로워</p>';
 			if(data[i].followChk==1){
             html += '<button style="background-color:#fb0; color:white;" name="'+data[i].memberEntireNo+'" onclick="follow('+data[i].memberEntireNo+',${sessionScope.member.memberEntireNo},'+data[i].memberEntireNo+','+(data[i].memberEntireNo+0.1)+')">팔로우</button>';
@@ -163,24 +181,24 @@ function waitRefresh(storeEntireNo){
 			console.log("대기 인원 데이터 " + data);
 			if(data.length>0){
 				$("#waitTotalNum").html(data[0].likeTotal);
-				$(".profile-follow").remove();
+				$(".waitprofile-follow").remove();
 				for(var i=0; i<data.length; i++){
 				var html = '';
-	            html += '<div class="profile-follow "id="profile-follow">';
+	            html += '<div class="waitprofile-follow "id="waitprofile-follow">';
 	            if(data[i].memberUploadPhotoNo==1){
 	            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/profile.png"></div>';
 	            }else{
 	            html += '<div id="profile-follow-image"><img id="img" style="width:100%; height:100%; border-radius:50%;" name=img src="/resources/image/member/'+data[i].photoViewRoute+'"></div>';	
 	            }
 	            html += '<div>';
-	            html += '<p>'+data[i].memberNickName+'</p><p>예약 시간 '+data[i].bookDateTime+'</p>';
+	            html += '<p><a style="color:black;" href="/otherMember.do?memberEntireNo='+data[i].memberEntireNo+'">'+data[i].memberNickName+'</a></p>';
 	            html += '</div>';
 	            html += '</div>';
 	            $("#waiter").after(html);
 				}
 			}else{
 				$("#waitTotalNum").html("");
-				$(".profile-follow").remove();
+				$(".waitprofile-follow").remove();
 			}
 				 
 			
@@ -467,7 +485,7 @@ function waitModal(storeEntireNo){
 					    		<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fry.photoViewRoute}'>
 					    		</div>
 					    		<div>
-					    			<p>${fry.memberNickName}</p>
+					    			<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${fry.memberEntireNo}">${fry.memberNickName}</a></p>
 					    			<p>${fry.reviewTotal} 리뷰, <label style="color:black;" name="mreview_${fry.memberId}">${fry.followTotal}</label> 팔로워</p>
 					<c:if test="${fry.followChk==0}">
 						<button name="mreview_${fry.memberNickName}" onclick="follow('${fry.memberEntireNo }','${sessionScope.member.memberEntireNo}','mreview_${fry.memberNickName }','mreview_${fry.memberId}');">팔로우</button>
@@ -493,7 +511,7 @@ function waitModal(storeEntireNo){
 					    			<img style="border-radius:50%;width:100%; height:100%;"src='${pageContext.request.contextPath}/resources/image/member/${fy.photoViewRoute}'>
 					    		</div>
 					    		<div>
-					    			<p>${fy.memberNickName}</p>
+					    			<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${fy.memberEntireNo}">${fy.memberNickName}</a></p>
 					    			<p>${fy.reviewTotal} 리뷰, <label style="color:black;" name="ireview_${fy.memberEntireNo}">${fy.followTotal}</label> 팔로워</p>
 					    			<button name="ireview_${fy.memberEmail}" style="background-color:#fb0; color:white;" onclick="follow('${fy.memberEntireNo }','${sessionScope.member.memberEntireNo}','ireview_${fy.memberEmail}','ireview_${fy.memberEntireNo }');">팔로우</button>
 					    		</div>
@@ -524,16 +542,16 @@ function waitModal(storeEntireNo){
 			</div>
 			<div id="visitedReservation" class="tabInfo-reservation" style="display:block;">
 			<c:forEach items="${book}" var="b">
-			<div class="bookBox">
+			<div class="bookBox" id="book_${b.bookNo}">
   					<div class="bookImageBox">
 						<img id="img" style="border-radius:50%;width:100%; height:100%;" name=img src="${pageContext.request.contextPath}/${b.owPhotoViewRoute}">
 	
   					</div>
-  					<div >
+  					<div>
   					<label class="booknick"><a href="/detailPage.do?owStoreInfoPk=${b.storeEntireNo}">${b.owStoreName}</a></label>
   					<label class="booknick">${b.bookDateAndTime2}</label>
-  					<label class="bookNum" onclick="waitModal('${b.storeEntireNo}');">${b.bookTotal}명 대기중</label>
-						
+  					<label class="bookNum" style="margin-left:12px;" onclick="waitModal('${b.storeEntireNo}');">${b.bookTotal}명 대기중</label>
+					<label onclick="deleteBook('${b.bookNo}')">예약취소</label>
 					<script>
 					storeIndex('${b.storeEntireNo}');
 				
@@ -600,7 +618,7 @@ function waitModal(storeEntireNo){
 						</c:if>
 					</div>
 					<div>
-						<p>${r.memberNickName}</p>
+						<p><a href="/otherMember.do?memberEntireNo=${r.memberEntireNo}" style="color:black;">${r.memberNickName}</a></p>
 						<p>리뷰${r.reviewTotal},팔로워<label name="fLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
 				
@@ -782,7 +800,7 @@ function waitModal(storeEntireNo){
   					
   					
   					<div >
-  					<label class="undernick">${under.memberNickName}</label>
+  					<label class="undernick"><a style="color:black;" href="/otherMember.do?memberEntireNo=${under.memberEntireNo}">${under.memberNickName}</a></label>
 					<input type="text" class="underinput" name="underReviewContent" value="${under.underReviewContent}" readonly>
   					</div>
   				</div>
@@ -809,7 +827,7 @@ function waitModal(storeEntireNo){
 						</c:if>
 					</div>
 					<div>
-						<p>${r.memberNickName}</p>
+						<p><a style="color:black;" href="/otherMember.do?memberEntireNo=${r.memberEntireNo}">${r.memberNickName}</a></p>
 						<p>리뷰${r.reviewTotal},팔로워<label name="jfLabel_${r.memberEntireNo}" style="color:black;">${r.followTotal}</label></p>				
 					</div>
 				
@@ -1230,12 +1248,12 @@ function waitModal(storeEntireNo){
 		</div>	
 		
 		<div id="waitNumModal" class="modal">
-				<div class="modal-content">
+				<div class="waitmodal-content">
 					<span class="close" onclick="waitclosemodal();">&times;</span>
-					<div class="tab">
-						<button class="likemodaltablink click">대기 중인 사람들<label id="waitTotalNum"></label> </button>
+					<div class="waittab">
+						<button class="waittablink click">대기 중인 사람들<label id="waitTotalNum"></label> </button>
 					</div>
-					<div id="waiter" class="likemodaltabInfo">
+					<div id="waiter" class="waittabInfo">
 	
 					</div>
 			</div>

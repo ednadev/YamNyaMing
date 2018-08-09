@@ -422,6 +422,10 @@ public class YNMMemberServiceImpl implements YNMMemberService{
 		ArrayList<YNMBook> list=memberDAO.bookLastselect(sqlSession,memberEntireNo);
 		return list;
 	}
+	public int deleteBook(int bookNo) {
+		int result=memberDAO.deleteBook(sqlSession,bookNo);
+		return result;
+	}
 
 
 

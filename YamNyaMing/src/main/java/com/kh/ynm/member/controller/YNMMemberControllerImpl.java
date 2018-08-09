@@ -155,6 +155,25 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 			return view;
 		}
 	}
+	
+	
+	//아이디 찾기
+	@ResponseBody
+	@Override
+	@RequestMapping(value="/deleteBook.do")
+	public String deleteBook(HttpServletRequest request, HttpServletResponse response) {
+		int bookNo=Integer.parseInt(request.getParameter("bookNo"));
+		int result=ynmMemberServiceImpl.deleteBook(bookNo);
+		
+		if(result>0) {
+			String chk="1";
+			return chk;
+		}else {
+			String chk="0";
+			return chk;
+		}
+		
+	}
 
 	//비밀번호 찾기
 	@Override
@@ -284,6 +303,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		}
 
 	}
+	
+	
+	
 	//내정보 비밀번호 변경
 	@Override
 	@RequestMapping(value="/pwChange.do")
@@ -518,6 +540,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		return objArr;
 				
 		}
+				
 	
 	//내정보 이미지 수정하기
 	@ResponseBody
@@ -1191,6 +1214,8 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		YNMSearch store = ynmMemberServiceImpl.detailPage(vo);
 		ArrayList<YNMSearch> storeImg = ynmMemberServiceImpl.detailPageImg(vo);
 		ArrayList<YNMSearch> menuImg = ynmMemberServiceImpl.detailPageMenu(vo);
+		int storeWaitNum=ynmMemberServiceImpl.storeWaitNum(Integer.parseInt(request.getParameter("owStoreInfoPk")));
+		store.setStoreWaitNum(storeWaitNum);
 		int size=storeImg.size();
 		int menuSize = menuImg.size();
 		int memberEntireNo=0;
@@ -1325,9 +1350,9 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 
 
 	
-	@RequestMapping(value="/test.do")
+	@RequestMapping(value="/otherMember.do")
 	public ModelAndView test(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(request.getParameter("memberEntireNo")+"gd");
+		System.out.println(request.getParameter("memberEntireNo"));
 			int memberEntireNo=(Integer.parseInt(request.getParameter("memberEntireNo")));
 
 			YNMMember ym=ynmMemberServiceImpl.selectOneMember2(memberEntireNo);
@@ -1461,8 +1486,6 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 					storeAllList.get(i).setFavoriteTotal(favoriteTotal);
 				}
 			}
-			System.out.println(ysrList.size());
-			System.out.println(storeAllList.get(0).getFavoriteTotal());
 			
 		
 			ModelAndView view=new ModelAndView();

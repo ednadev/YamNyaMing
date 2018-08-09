@@ -254,7 +254,7 @@
 		ph
         where mb.mb_upload_photo_fk=ph.mb_upload_photo_pk and
                 mb.mb_entire_pk=b.mb_entire_fk and
-                store_entire_fk=#{storeEntireNo}
+                store_entire_fk=#{storeEntireNo} and mb_book_date_time > sysdate
 	</select>
 
 	<select id="favoriteChk" resultType="int">

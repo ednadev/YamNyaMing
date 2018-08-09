@@ -142,7 +142,8 @@
 		    store_cate_main_name as storeCateMainName,
 		    ow_store_table_info as owStoreTableInfo,
 		    ow_sub_info as owSubInfo,
-		    ow_drink_list_info as owDrinkListInfo
+		    ow_drink_list_info as owDrinkListInfo,
+			rownum
 		from owner_store_info_tb info, owner_store_photo_tb photo, store_category_detail_tb cate, 
 				owner_store_detail_tb detail, store_category_main_tb maincate
 		where photo.ow_store_info_fk = info.ow_store_info_pk
@@ -151,6 +152,7 @@
 		and maincate.store_cate_main_pk = info.ow_store_big_type_fk
 		and ow_photo_type_fk = 3
 		and ow_store_info_pk = #{owStoreInfoPk}
+		and rownum=1
 	</select>
 	
 	<select id="detailPageImg" resultType="search">

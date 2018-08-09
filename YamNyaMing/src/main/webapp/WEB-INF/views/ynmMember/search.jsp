@@ -12,7 +12,7 @@
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=6">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=2"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=4"></script>
@@ -136,10 +136,35 @@
     	</c:if>
     	<input type="submit" value="검색">
     </form>	
-	<ul>
-        <li><a href="/loginMember.do">로그인</a></li>
-        <li><a href="/enrollMember.do">회원가입</a></li>
-    </ul>
+<ul>
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
+			<c:if test="${sessionScope.naver!=null}" var="result">
+				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+		
+			<c:if test="${sessionScope.member!=null}" var="result">
+				<li>${sessionScope.member.memberNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+
+			<c:if test="${sessionScope.owner!=null}" var="result">
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
+				<li><a href="/ownerLogout.do">로그아웃</a></li>
+			</c:if>
+			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
+				<li><a href="/loginMember.do">로그인</a></li>
+				<li><a href="/adminLogin.do">관리자 로그인</a><li>
+
+
+				<li><a href="/enrollMember.do">회원가입</a></li>
+			</c:if>
+		</ul>
 
 </header>
 <section id="member-search-section">
@@ -1208,7 +1233,7 @@
 						<input type="submit" value="">
 					</form>
 							<div>
-								<p>대기인원 ${search.storeWaitNum} 추천<label style="color:white;" id="stroeFavoriteNum">${search.favoriteTotal}</label></p>
+								<p>대기인원 ${search.storeWaitNum} 추천<label style="color:white;" id="faNum_${search.owStoreInfoPk}">${search.favoriteTotal}</label></p>
 								<c:if test="${sessionScope.member!=null}">
 								<c:if test="${search.favoriteChk==1}">
 									<div class="heart" id="${search.owStoreInfoPk}"
