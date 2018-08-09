@@ -61,7 +61,8 @@
 			</c:if>
 			<!-- 없을 때 -->
 			<c:if test="${fn:length(storeTitleInfo)==0}">
-				등록된 가게가 없습니다.
+				<img src="${pageContext.request.contextPath}/resources/image/member/search/store.png" style="width:64px;height:64px;margin-right:20px;margin-top:200px;">
+				<p style="margin-top:225px;">등록된 가게가 없습니다.</p>
 			</c:if>
 		</div>
 		<!-- 

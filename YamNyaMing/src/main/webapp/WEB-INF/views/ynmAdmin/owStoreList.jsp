@@ -11,27 +11,46 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=4">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+
+<style>
+	.col-lg-4{
+		width:960px;
+		margin:0 auto;
+		margin-top:20px;
+		margin-bottom:20px;
+		line-height:2;
+	}
+	.col-lg-4>.thumbnail>.caption>.tag{
+		font-weight:bold;
+	}
+	.caption>div>.form>input[type="submit"].storeYesno{
+		color:white;
+		padding:5px;
+		font-size:0.9em;
+	}
+</style>
 </head>
 
 <body>
-	<header id="admin-login-header">
+<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
-			<a href="/adminInfo.do">YamNyaMing 관리자</a>
+			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="/logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
 		<ul>
 	        <li><a href="/adminInfo.do">관리자 정보</a></li>
 			<li><a href="/allMemberView.do">회원 관리</a></li>
-			<li><a href="/allOwnerView.do">점장 관리</a></li>
+			<li><a href="/allOwnerView.do" style="border-bottom:3px solid #fb0;">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
@@ -63,7 +82,7 @@
                    <a style="color:red;">사이트 없음</a>
                    </c:if>
                    <div>영업시간 : ${storeInfo.owStoreWorkingTime}</div>
-                   <div>주소 : ${storeInfo.owStoreAddr }</div><br>
+                   <div>주소 : ${storeInfo.owStoreAddr }</div>
                    <div>Tell : ${storeInfo.owStoreTel}</div><br>
                    <div>${storeInfo.storeTableInfo}</div>
                    <div>

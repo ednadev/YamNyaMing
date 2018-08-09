@@ -19,10 +19,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
+<style>
+	#admin-login-header>h1{
+		padding:0;
+		margin:0;
+		margin-top:17px;
+		font-weight:bold;
+		font-size:1.6em;
+	}
+	#admin-login-header>p{
+		font-size:1em;
+	}
+	#admin-login-header>p>a{
+		color:black;
+	}
+	#admin-main-nav>ul>li>a{
+		color:black;
+		font-size:1.1em;
+	}
+	#admin-main-nav>ul>li>a:hover{
+		color:black;
+	}
+	.panel-success{
+		border-color:white;
+	}
+	.panel-success>.panel-heading{
+		background-color:white;
+	}
+	.panel-success>.panel-heading>.row>.col-xs-12{
+		width:218px;
+	}
+	.container-fluid>center>.panel-body>.table>thead>tr>th{
+		text-align:center;
+	}
+	.text-center>.glyphicon{
+		margin-right:15px;
+	}
+	.container-fluid>center>.panel-body>.table>tbody>tr>td{
+		text-align:center;
+	}
+</style>
 </head>
 <body>
-	<header id="admin-login-header">
+<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
@@ -33,7 +73,7 @@
 	<nav id="admin-main-nav">
 		<ul>
 			<li><a href="/adminInfo.do">관리자 정보</a></li>
-			<li><a href="/allMemberView.do">회원 관리</a></li>
+			<li><a href="/allMemberView.do" style="border-bottom:3px solid #fb0;">회원 관리</a></li>
 			<li><a href="/allOwnerView.do">점장 관리</a></li>
 			<li><a href="/boardAdmin.do">게시판</a></li>
 			<li><a href="/statAdmin.do">통계</a></li>

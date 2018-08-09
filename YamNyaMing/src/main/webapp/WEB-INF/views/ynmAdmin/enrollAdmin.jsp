@@ -8,14 +8,18 @@
 <title>얌냐밍</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=3">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=1">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/prettydropdowns?ver=1">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=2">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/admin/adminEnroll.js?ver=1"></script>
 </head>
 <body>
-<header id="owner-signUp-header"><h1><a href="/index.jsp">YamNyamCompany</a></h1></header>
+<header id="admin-login-header">
+	<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
+	<h1><a href="/ynmAdmin.do">YamNyaMing 관리자</a></h1>
+</header>
 <!-- 시작 -->
 <div class="wrapper"><nav id="owner-signUp-nav"><h2>관리자 가입하기</h2></nav>
 
@@ -27,7 +31,7 @@
 			<div class="signUp-table"><div>아이디</div><div>
           	    <input type="text" name="ad_id" id="ad_id" required/>
            	    <input type="button" name="idck" id="idck" class="btn" value="CHECK" onclick="idCheck();" onkeydown="idCheck();"/>  
-                <p id="idch">얌냐밍에서 이용하실 아이디를 입력해주세요. 5~20자의 영문,숫자만 가능합니다.</p></div>
+                <p id="idch">5~20자의 영문,숫자만 가능합니다.</p></div>
             </div>
 			<!-- 비밀번호 -->
 			<div class="signUp-table"><div>비밀번호</div><div>
