@@ -25,7 +25,55 @@
 <!-- include summernote -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owner/summernote/summernote.css?ver=1">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/owner/summernote/summernote.js?ver=1"></script>
-
+<style>
+	#owner-main-header>h1{
+		padding:0;
+		margin:0;
+		margin-top:17px;
+		font-weight:bold;
+		font-size:1.6em;
+	}
+	#owner-main-header>p{
+		font-size:1em;
+	}
+	#owner-main-header>p>a{
+		color:black;
+	}
+	#owner-main-nav>ul>li>a{
+		color:black;
+		font-size:1.1em;
+	}
+	#owner-main-nav>ul>li>a:hover{
+		color:black;
+	}
+	.panel-success{
+		border-color:white;
+	}
+	.panel-success>.panel-heading{
+		background-color:white;
+	}
+	.panel-success>.panel-heading>.row>.col-xs-12{
+		width:218px;
+	}
+	.container-fluid>center>.panel-body>.table>thead>tr>th{
+		text-align:center;
+	}
+	.text-center>.glyphicon{
+		margin-right:15px;
+	}
+	.container-fluid>center>.panel-body>.table>tbody>tr>td{
+		text-align:center;
+	}
+	.board-area>button{
+		margin-left:20px;
+		background-color:#555;
+		border:none;
+		padding:11px;
+		color:white;
+		border-radius:5px;
+		margin-bottom:10px;
+	}
+</style>
 </head>
 <body>
 	<header id="owner-main-header">
@@ -46,7 +94,7 @@
 			<li><a href="/storeManage.do">음식점 관리</a></li>
 			<li><a href="/reservationManage.do">예약 관리</a></li>
 			<li><a href="/couponManage.do">쿠폰 관리</a></li>
-			<li><a href="/boardOwner.do">게시판 관리</a></li>
+			<li><a href="/boardOwner.do" style="border-bottom:3px solid #fb0;">게시판 관리</a></li>
 			<li><a href="/analysisOwner.do">통계 관리</a></li>
 		</ul>
 	</nav>
