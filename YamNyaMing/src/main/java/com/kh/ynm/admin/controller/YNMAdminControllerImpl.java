@@ -485,6 +485,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("admin")!=null) 
 		{
+			
 			//
 			int owEntirePk = Integer.parseInt(request.getParameter("owEntirePk"));
 			Notice n = new Notice();
@@ -495,10 +496,10 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 3; //1. 1페이지에10개씩보이게
+			int recordCountPerPage = 2; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.storeListPaging(currentPage,recordCountPerPage,vo);
-			CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage);		
+			CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage,vo);		
 			view.addObject("storeList", list);
 			view.addObject("pageNaviData", pageNavi);
 			view.setViewName("ynmAdmin/owStoreList");
