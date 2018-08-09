@@ -303,7 +303,7 @@ select count(*) from MEMBER_ENTIRE_TB
 <!--가게 신청목록 페이지 넘버링 -->
 
 <select id="storeTotal" parameterType="PageData" resultType="int">
-select count(*) from OWNER_STORE_INFO_TB
+select count(*) from OWNER_STORE_INFO_TB where OW_ENTIRE_FK = #{owEntirePk} 
 </select>
 
 <!-- 점주목록 페이징 넘버링 -->
