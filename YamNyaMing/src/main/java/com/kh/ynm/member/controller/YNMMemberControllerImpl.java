@@ -1129,7 +1129,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		{
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int recordCountPerPage = 2; //1. 1페이지에10개씩보이게
+		int recordCountPerPage = 9; //1. 1페이지에10개씩보이게
 		int naviCountPerPage = 5; //2.
 		
 		ArrayList<YNMSearch> searchList = ynmMemberServiceImpl.getSearchList(currentPage, recordCountPerPage, check);
