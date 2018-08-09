@@ -34,6 +34,9 @@
         mb_entire_fk=#{memberEntireNo}  and mb_book_date_time > sysdate
 		
 	</select>
+	<update id="deleteBook">
+		update member_book_tb set mb_book_type='f' where mb_book_pk=#{bookNo}
+	</update>
 	<select id="bookLastselect" resultType="books">
 	    select 
 		mb_book_pk as bookNo,
