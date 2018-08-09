@@ -200,7 +200,7 @@
 			</thead>
 
 			<tbody>
-			<c:forEach items="${list2}" var="store" step="1" end="10">
+		<c:forEach items="${list2}" var="store" step="1" end="9">
 			<tr>
 			<td>${store.name}</td>
 			<td><center>${store.book}</center></td>
@@ -208,7 +208,7 @@
 			<td><center>${store.jjim}</center></td>
 			<td><center>${store.favorite}</center></td>
 			</tr>
-			</c:forEach>																						
+			</c:forEach>																					
 			</tbody>
 			</table>
 		</div>

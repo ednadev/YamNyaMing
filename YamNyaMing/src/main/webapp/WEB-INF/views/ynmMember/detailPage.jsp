@@ -16,6 +16,18 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=506d35ab67392611ab5c3ecf1938286e&libraries=services"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=8"></script>
+<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=1"></script>
+	<script>
+		window.onload= function(){
+			<c:if test="${sessionScope.member!=null}" var="result">
+					loginCheck('member,${sessionScope.member.memberEntireNo}');
+			
+				setInterval(function(){ 
+					bookCheck("${sessionScope.member.memberEntireNo}");
+				}, 30000);
+			</c:if>
+		}
+	</script>
 </head>
 <script>
 function openmodal(storeReviewNo){

@@ -297,6 +297,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		if(result>0)
 		{
 			YNMOwner resultOwner = ynmOwnerServiceImpl.selectOneOwner(owner);
+			System.out.println(resultOwner.getOwId() + " 회원가입 체크 " + (resultOwner==null));
 			if(resultOwner!=null)
 			{
 				session.setAttribute("owner", resultOwner);
@@ -304,15 +305,18 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				{
 					session.removeAttribute("member");
 				}
+				System.out.println("회원가입 체크 2");
 				return "redirect:/";
 			}
 			else
 			{// 로그인 실패.
+				System.out.println("회원가입 체크 3");
 				return "ynmOwner/ynmOwnerError/ownerLoginFail";
 			}
 		}
 		else
 		{
+			System.out.println("회원가입 체크 4");
 			return "ynmOwner/signUpFail";
 		}
 	}

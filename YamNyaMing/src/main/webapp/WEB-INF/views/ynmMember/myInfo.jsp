@@ -13,7 +13,7 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/myinfo.css?ver=16">             
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberMyInfo.js?ver=3"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=1"></script>
 </head>
 <script>
 
@@ -30,6 +30,16 @@ $(document).ready(function(){
 	'${setting.myinfoReviewOpen}'=='y' ? document.getElementsByName('reviewOpen')[0].checked=true :document.getElementsByName('reviewOpen')[1].checked=true;
 	'${setting.myinfoReviewJjim}'=='y' ? document.getElementsByName('ReviewJjim')[0].checked=true :document.getElementsByName('ReviewJjim')[1].checked=true;
 	'${setting.myinfoStoreJjim}'=='y' ? document.getElementsByName('StoreJjim')[0].checked=true :document.getElementsByName('StoreJjim')[1].checked=true;
+	
+	<c:if test="${sessionScope.member!=null}" var="result">
+		loginCheck('member,${sessionScope.member.memberEntireNo}');
+	
+
+	setInterval(function(){ 
+		bookCheck("${sessionScope.member.memberEntireNo}");
+	}, 30000);
+	</c:if>
+
 });
 
 function deleteBook(bookNo){
@@ -340,10 +350,35 @@ function waitModal(storeEntireNo){
     	</c:if>
     	<input type="submit" value="검색">
     </form>	
-	<ul>
-        <li><a href="/loginMember.do">로그인</a></li>
-        <li><a href="/enrollMember.do">회원가입</a></li>
-    </ul>
+<ul>
+			<c:if test="${sessionScope.totalRefModel==null}">
+				<script>location.href="/totalRefLoad.do"</script>
+			</c:if>
+			<c:if test="${sessionScope.naver!=null}" var="result">
+				<li>${sessionScope.naver.naverNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+		
+			<c:if test="${sessionScope.member!=null}" var="result">
+				<li>${sessionScope.member.memberNickName}님 환영합니다.</li>
+				<li><a href="/memberInfo.do">마이페이지</a></li>
+				<li><a href="/logout.do">로그아웃</a></li>
+			</c:if>
+
+			<c:if test="${sessionScope.owner!=null}" var="result">
+				<li>${sessionScope.owner.owName} 사장님 환영합니다.</li>
+				<li><a href="/ownerMyPage.do">관리페이지</a></li>
+				<li><a href="/ownerLogout.do">로그아웃</a></li>
+			</c:if>
+			<c:if test="${sessionScope.owner==null && sessionScope.member==null && sessionScope.naver==null}" var="result">
+				<li><a href="/loginMember.do">로그인</a></li>
+				<li class="mobile-hidden"><a href="/adminLogin.do">관리자 로그인</a><li>
+
+
+				<li><a href="/enrollMember.do">회원가입</a></li>
+			</c:if>
+		</ul>
 
 </header>
 

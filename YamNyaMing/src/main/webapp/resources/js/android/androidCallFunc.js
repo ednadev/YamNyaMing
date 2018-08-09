@@ -13,7 +13,7 @@ function loginCheck(myLoginInfo)
 function sendBookInfo(bookState)
 {
 	if(typeof Android !=="undefined" && Android !== null){
-		Android.bookCheck(bookState+"안녕");
+		Android.bookCheck(bookState);
 	}
 }
 
@@ -27,6 +27,7 @@ function bookCheck(memberIndex)
 		type : "post",
 		success : function(data){
 			var result = "";
+			
 			for(var i = 0; i<data.length;i++)
 			{
 				result+= data[i].storeName+",";
@@ -34,7 +35,9 @@ function bookCheck(memberIndex)
 				result+= data[i].memberName+" ";
 			}
 			console.log(result);
-			sendBookInfo(result);
+			if(data[0].memberName!=null){
+				sendBookInfo(result);
+			}
 		},
 		error : function(){
 			console.log("실패");	

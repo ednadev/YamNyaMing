@@ -23,7 +23,7 @@
 		}
 		
 	</script> -->
-<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=6"></script>
+
 	<style>
 	@media (max-width:960px){
 		#member-main-header>ul>li.mobile-hidden{
@@ -34,16 +34,22 @@
 		}
 	}
 	</style>
-	
+	<script src="${pageContext.request.contextPath}/resources/js/android/androidCallFunc.js?ver=1"></script>
 	<script>
+		var firstCheck;
 		window.onload= function(){
 			<c:if test="${sessionScope.member!=null}" var="result">
 					loginCheck('member,${sessionScope.member.memberEntireNo}');
+			
+				setTimeout(function(){ 
+					bookCheck("${sessionScope.member.memberEntireNo}");
+				}, 100);
+				setInterval(function(){ 
+					bookCheck("${sessionScope.member.memberEntireNo}");
+				}, 30000);
 			</c:if>
-			setInterval(function(){ 
-				bookCheck("${sessionScope.member.memberEntireNo}");
-			}, 3000);
 		}
+		
 	</script>
 </head>
 <body>

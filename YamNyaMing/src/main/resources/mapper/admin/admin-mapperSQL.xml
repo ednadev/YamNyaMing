@@ -88,28 +88,28 @@ from admin_info_tb where ADMIN_ID = #{ad_id} and ADMIN_PASSWORD = #{ad_password}
 <!-- 통계 -->
 <select id="statAdmin" resultType="statistics">
 SELECT
-    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='M')as boy, 
-    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER='F')as girl,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 10 and 19)as age1020,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 20 and 29)as age2030,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 30 and 39)as age3040,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 40 and 49)as age4050,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb) between 50 and 59)as age5060,
-    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE (SELECT nvl(TRUNC(MONTHS_BETWEEN(sysdate, TO_DATE(to_char(MB_BIRTH,'yyyy'),'yyyy'))/12), 0) age FROM MEMBER_entire_tb)>=60)as age60,
-    (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 09 and 10)as time0910,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER in 'M')as boy, 
+    (SELECT COUNT(*) FROM MEMBER_entire_tb where MB_GENDER in 'F')as girl,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1999 and 2999)as age1020,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1989 and 1998)as age2030,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1979 and 1988)as age3040,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1969 and 1978)as age4050,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1959 and 1968)as age5060,
+    (SELECT COUNT(*) FROM MEMBER_entire_tb WHERE to_char(MB_BIRTH,'yyyy') between 1 and 1958)as age60,
+    (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 0 and 10)as time0910,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 11 and 12)as time1112,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 13 and 14)as time1314,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 15 and 16)as time1516,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 17 and 18)as time1718,
     (select count(*) from MEMBER_BOOK_TB where to_char (MB_BOOK_DATE,'hh24') between 19 and 24)as time1924,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=1)as korea,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=2)as china,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=3)as japan,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=4)as usa,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=5)as buffet,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=6)as dessert,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=7)as bar,
-    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK=8)as other,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 1)as korea,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 2)as china,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 3)as japan,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 4)as usa,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 5)as buffet,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 6)as dessert,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 7)as bar,
+    (select count(*) from OWNER_STORE_INFO_TB where OW_STORE_BIG_TYPE_FK in 8)as other,
     (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-6) as owall6day,
     (select COUNT(*) FROM MEMBER_entire_tb where MB_REGDATE between sysdate-300 and sysdate-6) as memall6day,
     (select COUNT(*) FROM OWNER_ENTIRE_TB where OW_REGDATE between sysdate-300 and sysdate-5) as owall5day,
@@ -176,11 +176,11 @@ FROM DUAL
 select 
 distinct 
 ow_store_name as name,
-(select count(ow_store_info_pk) from member_book_tb where STORE_ENTIRE_FK = ow_store_info_pk) as book,
-(select avg(ow_store_review_star) from member_store_review_tb where ow_store_info_fk = ow_store_info_pk)as grade,
-(select count(mb_favorite_pk) from member_favorite_tb where ow_store_info_fk = ow_store_info_pk)as favorite,
-(select count(ow_store_jjim_check)from member_store_review_tb where ow_store_info_pk = ow_store_info_fk and ow_store_jjim_check='j')as jjim
-from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk = b.STORE_ENTIRE_FK order by book desc
+(select count(ow_store_info_pk) from member_book_tb where STORE_ENTIRE_FK in ow_store_info_pk) as book,
+(select avg(ow_store_review_star) from member_store_review_tb where ow_store_info_fk in ow_store_info_pk)as grade,
+(select count(mb_favorite_pk) from member_favorite_tb where ow_store_info_fk in ow_store_info_pk)as favorite,
+(select count(ow_store_jjim_check)from member_store_review_tb where ow_store_info_pk in ow_store_info_fk and ow_store_jjim_check='j')as jjim
+from owner_store_info_tb o left join member_book_tb b on o.ow_store_info_pk in b.STORE_ENTIRE_FK order by book desc
 </select>
 
 

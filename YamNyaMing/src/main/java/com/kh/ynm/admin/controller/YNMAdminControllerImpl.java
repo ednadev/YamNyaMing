@@ -495,7 +495,7 @@ public class YNMAdminControllerImpl implements YNMAdminController{
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
-			int recordCountPerPage = 3; //1. 1페이지에10개씩보이게
+			int recordCountPerPage = 2; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<StoreInfoPageData> list = ynmAdminServiceImpl.storeListPaging(currentPage,recordCountPerPage,vo);
 			CouponPageData pageNavi = ynmAdminServiceImpl.storePageNavi(currentPage,recordCountPerPage,naviCountPerPage);		

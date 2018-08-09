@@ -102,7 +102,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 				session.setAttribute("set", yms);
 				return "redirect:/index.jsp";
 			}else {
-				return "ynmMember/memberError/loginError";
+				return "ynmOwner/ynmOwnerError/ownerLoginFail";
 			}
 		}
 	}
@@ -1344,7 +1344,7 @@ public class YNMMemberControllerImpl implements YNMMemberController{
 		ModelAndView view = new ModelAndView();
 		int result = ynmMemberServiceImpl.bookInsert(yb);
 		view.addObject("reservationResult", result);
-		view.setViewName("ynmMember/search");
+		view.setViewName("redirect:/");
 		return view;
 	}
 
