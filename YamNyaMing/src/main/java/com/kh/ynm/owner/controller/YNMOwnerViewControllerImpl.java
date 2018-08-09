@@ -40,11 +40,11 @@ public class YNMOwnerViewControllerImpl implements YNMOwnerViewController{
 	// 점장 가게 관리 페이지
 	
 	// 점장 예약 관리 페이지
-	@Override
-	@RequestMapping(value="/reservationManage.do")
-	public String bookMngPage() {
-		return "ynmOwner/bookManagePage";
-	}
+//	@Override
+//	@RequestMapping(value="/reservationManage.do")
+//	public String bookMngPage() {
+//		return "ynmOwner/bookManagePage";
+//	}
 
 
 

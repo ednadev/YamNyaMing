@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,14 +13,16 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/owner/owner.css?ver=4">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=1">
+	href="${pageContext.request.contextPath}/resources/css/owner/ownerCoupon.css?ver=2">
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/owner/storeTitleInfo.css?ver=2">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=4"></script>
+	src="${pageContext.request.contextPath}/resources/js/owner/ownerCoupon.js?ver=1"></script>
 	
 <!-- DatePicker -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -102,8 +105,31 @@
 		<li><a href="/analysisOwner.do">통계 관리</a></li>
 	</ul>
 	</nav>
-	<section id="owner-coupon-section">
-	<div>
+	<section id="store-select-detail">
+		<div>
+			<c:if test="${fn:length(storeTitleInfo)>0}">
+				<c:forEach var="storeList" items="${storeTitleInfo}">
+					<!-- 해당 가게의 정보를 아래에 뿌려줌 -->
+					<form action="/couponManage.do" method="post" class="design-card">
+						<jsp:include page="storeTitleInfo.jsp">
+							<jsp:param name="storeIndex" value="${storeList.owStoreInfoPk}"/>
+						  	<jsp:param name="storeName" value="${storeList.owStoreName}"/>
+						  	<jsp:param name="storeTip" value="${storeList.owStoreTip}"/>
+						  	<jsp:param name="storeAbsRoute" value="${storeList.owPhotoRoute}"/>
+						  	<jsp:param name="storePhoto" value="${storeList.owPhotoViewRoute}"/>
+						  	<jsp:param name="storeStarPoint" value="${storeList.storeStarPoint}"/>
+						  	<jsp:param name="contextRoute" value="${pageContext.request.contextPath}"/>
+						</jsp:include>
+						<input type="hidden" name="storeIndex" value="${storeList.owStoreInfoPk}">
+						<input type="submit" value="${storeList.owStoreName}">
+					</form>
+				</c:forEach>
+			</c:if>
+			<!-- 없을 때 -->
+			<c:if test="${fn:length(storeTitleInfo)==0}">
+				등록된 가게가 없습니다.
+			</c:if>
+		</div>
 		<div id="coupon-enroll">
 			<h2>쿠폰 등록</h2>
 			<form action="/couponEnroll.do" method="post">
@@ -173,7 +199,7 @@
 									</td>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}">${coupon.owCouponName}</span>
-										<input type="text" id="owCouponNameUpdate" class="coupon_edit_${coupon.owCouponInfoPk}" name="owCouponName" value="${coupon.owCouponName}" style="display:none;">
+										<input type="text" id="owCouponNameUpdate" class="coupon_edit_${coupon.owCouponInfoPk}" name="owCouponName" value="${coupon.owCouponName}" style="display:none; height:35px;">
 									</td>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}">
@@ -188,10 +214,11 @@
 									</td>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}"> ${coupon.owCouponDuringDate} </span>
-										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponStartDate" value="${coupon.owCouponStartDate}" placeholder="${coupon.owCouponStartDate}" id="sdateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
+										<span class="coupon_edit_${coupon.owCouponInfoPk}"> ${coupon.owCouponDuringDate} </span>
+										
+										<%-- <input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponStartDate" value="${coupon.owCouponDuringDate}" placeholder="${coupon.owCouponStartDate}"  style="width:30%; height:35px; display:none;"><!-- id="sdateN" onkeydown="dateCheck();" onchange="dateCheck();" --> --%>
 				
-										<input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponExpireDate" value="${coupon.owCouponExpireDate}" placeholder="${coupon.owCouponExpireDate}" id="edateN" onkeydown="dateCheck();" onchange="dateCheck();" style="width:30%; height:35px; display:none;">
-									</td>
+										<%-- <input type="text" class="coupon_edit_${coupon.owCouponInfoPk}" readonly name="couponExpireDate" value="${coupon.owCouponExpireDate}" placeholder="${coupon.owCouponExpireDate}" style="width:30%; height:35px; display:none;"><!-- id="edateN" onkeydown="dateCheck();" onchange="dateCheck();"  -->									</td> --%>
 									<td>
 										<span class="coupon_${coupon.owCouponInfoPk}">${coupon.owCouponDetail}</span>
 										<input type="text" id="couponDetailUpdate" class="coupon_edit_${coupon.owCouponInfoPk}" name="menuCost" value="${coupon.owCouponDetail}" style="display:none; height:35px;">
@@ -205,7 +232,6 @@
 								</tr>
 							</c:forEach>
 						</c:if>
-
 					</tbody>
 				</table>
 				<c:if test="${pageNaviData!=null}">
@@ -241,7 +267,6 @@
 				</c:if>
 			</div>
 		</div>
-	</div>
 	</section>
 	<footer id="owner-main-footer">
 	<h2>YamNyaMing</h2>

@@ -386,12 +386,16 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 		ModelAndView view = new ModelAndView();
 		if(session.getAttribute("owner")!=null) {
 			YNMOwner owner = (YNMOwner)session.getAttribute("owner");
+			view = storeManageEnrollList(session, request);
+			int storeIndex = (request.getParameter("storeIndex")!=null)?
+					 Integer.parseInt(request.getParameter("storeIndex")):
+						 currentSelectStoreIndex(session);
+			session.setAttribute("currentStoreIndex", storeIndex);
 			
 			int currentPage = 1;
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
 			
-			int storeIndex = currentSelectStoreIndex(session);
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.
 			ArrayList<CouponEnroll> couponList = ynmOwnerServiceImpl.couponListPaging(currentPage,recordCountPerPage, owner.getOwEntirePk() , storeIndex);
@@ -423,7 +427,6 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			couponEnroll.setOwCouponCount(Integer.parseInt(request.getParameter("couponCount")));
 			Date startDate= new Date();
 			Date expireDate= new Date();
-			System.out.println("업데이트 " + request.getParameter("couponStartDate"));
 //			try {
 //				startDate = sdf.parse(request.getParameter("couponStartDate"));
 //				expireDate = sdf.parse(request.getParameter("couponExpireDate"));
@@ -484,7 +487,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			view = storeManageEnrollList(session, request);
 			view.setViewName("ynmOwner/ownerMyPage");
 		}else {
-			view.setViewName("ynmOwner/notLogin");
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
@@ -506,7 +509,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			view.addObject("storeTitleInfo", storeInfoList);
 			view.addObject("pageNaviData",spd);
 		}else {
-			view.setViewName("ynmOwner/");
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
@@ -620,7 +623,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			}
 			else System.out.println("일반정보 업데이트 실패");
 		}else {
-			view.setViewName("ynmOwner/");
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
@@ -780,7 +783,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				}
 			}
 		}else {
-			view.setViewName("ynmOwner/notLoginError");
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
@@ -939,7 +942,7 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 				view.setViewName("ynmOwner/storeManagePage");
 			}
 		}else {
-			view.setViewName("ynmOwner/notLoginError");
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
 		}
 		return view;
 	}
@@ -964,6 +967,26 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			return "fail";
 		}
 	}
+	@RequestMapping(value="/reservationManage.do")
+	public ModelAndView reserVationManage(HttpSession session,  HttpServletRequest request)
+	{
+		ModelAndView view = new ModelAndView();
+		if(session.getAttribute("owner")!=null) {
+			int storeIndex = (request.getParameter("storeIndex")!=null)?
+					 Integer.parseInt(request.getParameter("storeIndex")):
+						 currentSelectStoreIndex(session);
+			session.setAttribute("currentStoreIndex", storeIndex);
+			view = storeManageEnrollList(session, request);
+			
+			view.setViewName("ynmOwner/bookManagePage");
+		}else
+		{
+			view.setViewName("ynmOwner/ynmOwnerError/notLoginError");
+		}
+		return view;
+	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping("/bookListInStore.do")
@@ -1194,7 +1217,11 @@ public class YNMOwnerControllerImpl implements YNMOwnerController{
 			if(request.getParameter("currentPage")==null) currentPage=1;
 			else currentPage=Integer.parseInt(request.getParameter("currentPage"));
 			
-			int storeIndex = currentSelectStoreIndex(session);
+			view = storeManageEnrollList(session, request);
+			int storeIndex = (request.getParameter("storeIndex")!=null)?
+					 Integer.parseInt(request.getParameter("storeIndex")):
+						 currentSelectStoreIndex(session);
+			session.setAttribute("currentStoreIndex", storeIndex);
 			
 			int recordCountPerPage = 5; //1. 1페이지에10개씩보이게
 			int naviCountPerPage = 5; //2.

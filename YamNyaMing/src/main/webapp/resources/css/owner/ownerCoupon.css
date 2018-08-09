@@ -54,11 +54,11 @@ h2{
 }
 
 /*쿠폰 리스트 div*/
-#owner-section-coupon{
+/* #owner-section-coupon{
 	clear:both;
 	min-height:230px;
 	margin-bottom:30px;
-}
+} */
 /*쿠폰 목록 보여주기*/
 #enrollCouponList{
 	padding:20px;

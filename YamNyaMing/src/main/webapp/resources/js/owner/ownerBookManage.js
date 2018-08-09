@@ -19,6 +19,10 @@ function watingListLoad()
 		type : "post",
 		success : function(data){
 			$('#waitingList').html("");
+			if(data.length==0)
+			{
+				$('#waitingList').html("<h3 style=' padding:20px; display: flex;justify-content: center;'>대기중인 손님이 없습니다.</h3>");
+			}
 			for(var i = 0; i<data.length;i++)
 			{
 				bookMap.set(i, data);
@@ -188,7 +192,7 @@ function bookListLoad()
 					calendar.fullCalendar('unselect');
 				},
 		         eventRender: function(event, element) {
-		            element.append( "<div class='fc-content'><span class='fc-title' style=' background-color: #cecece; color: white;border-radius: 7px; width:100%;'>예약 삭제</span></div>" );
+		            element.append( "<div class='fc-content'><span class='fc-title' style=' background-color:black; color: white;border-radius: 7px; width:100%; display: flex; justify-content: center;'>예약 삭제</span></div>" );
 		            element.find(".fc-title").click(function() {
 		            	var bookIndex =element[0].children[0].children[1].children[0].children[0].innerHTML;
 		            	var bookTitle = bookIndex.split("-")[0];

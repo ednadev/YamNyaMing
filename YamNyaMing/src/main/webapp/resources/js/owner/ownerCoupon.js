@@ -106,8 +106,8 @@ function couponUpdate()
 	var couponIndex = $('#couponIndexVal').val();
 	var couponName = $('#owCouponNameUpdate').val();
 	var couponCount =  $('#couponCountUpdate').val();
-//	var couponStartData =  $('#couponStartDateId').val();
-//	var couponExpireDate =  $('#couponEndDateId').val();
+	var couponStartData =  $('#couponStartDateId').val();
+	var couponExpireDate =  $('#couponEndDateId').val();
 	var couponExplain = $('#couponDetailUpdate').val();
 	
 	
@@ -127,7 +127,7 @@ function couponUpdate()
 		success : function(data){	
 			if(data==1)
 			{
-				alert("쿠폰등록 성공");
+				alert("쿠폰 정보 변경 성공");
 				var couponSpanArr = document.getElementsByClassName('coupon_'+couponIndex);
 				couponSpanArr[0].innerHTML = couponName;
 				couponSpanArr[1].innerHTML = couponCount;

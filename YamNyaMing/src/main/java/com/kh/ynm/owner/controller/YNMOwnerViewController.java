@@ -23,7 +23,7 @@ public interface YNMOwnerViewController {
 //	public String storeMngPage();
 	
 	// 마이페이지 - 예약 관리
-	public String bookMngPage();
+//	public String bookMngPage();
 	
 	// 마이페이지 - 쿠폰 관리
 //	public String couponMngPage();
