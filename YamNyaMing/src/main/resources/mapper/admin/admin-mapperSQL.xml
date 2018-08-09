@@ -22,30 +22,32 @@ WHERE ADMIN_ID = #{ad_id}
 
 
 <!-- 점주 검색 -->
-<select id="ownerSearch" parameterType="map" resultType="owner">
-SELECT OW_ID as owId,
-	   OW_NAME as owName,
-	   OW_EMAIL as owEmail,
-	   OW_PHONE as phone,
-	   OW_REGDATE as owRegDate, 
-	   OW_BANK_ACCOUNT as owBankAccount 
-	   FROM OWNER_ENTIRE_TB 
-<where>
+<select id="ownerSearch" parameterType="PageData" resultType="owner">
+SELECT  
+OW_ENTIRE_PK as owEntirePk,
+OW_ID as owId,
+OW_NAME as owName,
+OW_EMAIL as owEmail,
+OW_PHONE as phone,
+OW_REGDATE as owRegDate, 
+OW_BANK_ACCOUNT as owBankAccount 
+FROM (select OWNER_ENTIRE_TB.*,row_number() over(order by OW_ENTIRE_PK desc) as num from OWNER_ENTIRE_TB)
+where
 <choose>
 <when test="combo == 'OwnerName'">
-OW_NAME LIKE '%'|| #{keyword} ||'%' 
+OW_NAME LIKE '%'|| #{keyword} ||'%'
 </when>
 <otherwise>
-OW_ID LIKE '%'|| #{keyword} ||'%' 
+OW_ID LIKE '%'|| #{keyword} ||'%'
 </otherwise>
 </choose>
-</where>
 </select>
 
 
 <!-- 사용자 검색 -->
-<select id="memberSearch" parameterType="map" resultType="members">
+<select id="memberSearch" parameterType="PageData" resultType="members">
 SELECT 
+MB_ENTIRE_PK as memberEntireNo,
 mb_id as memberId,
 mb_name as memberName,
 mb_nickname as memberNickName,
@@ -55,7 +57,7 @@ mb_email as memberEmail,
 mb_phone as memberPhone,
 mb_regDate as memberRegDate,
 MB_UPLOAD_PHOTO_FK as memberUploadPhotoNo
-from member_entire_tb
+from (select member_entire_tb.*,row_number() over(order by MB_ENTIRE_PK desc) as num from member_entire_tb)
 where 
 <choose>
 <when test="combo == 'MemberName'">
@@ -65,7 +67,7 @@ mb_name LIKE '%'|| #{keyword} ||'%'
 mb_nickname LIKE '%'|| #{keyword} ||'%' 
 </when>
 <otherwise>
-mb_id LIKE '%'|| #{keyword} ||'%'  
+mb_id LIKE '%'|| #{keyword} ||'%'
 </otherwise>
 </choose>
 </select>
@@ -313,7 +315,41 @@ select count(*) from OWNER_ENTIRE_TB
 <!-- 관리자 목록 페이징 넘버림 -->
 <select id="adminTotal" parameterType="PageData" resultType="int">
 select count(*) from ADMIN_INFO_TB
+
 </select>
+
+<!-- 멤버검색 목록 페이징 넘버림 -->
+<select id="memSearchGetTotal" parameterType="PageData" resultType="int">
+select count(*) from MEMBER_ENTIRE_TB
+where 
+<choose>
+<when test="combo == 'MemberName'">
+mb_name LIKE '%'|| #{keyword} ||'%'
+</when>
+<when test="combo == 'MemberNickName'">
+mb_nickname LIKE '%'|| #{keyword} ||'%'
+</when>
+<otherwise>
+mb_id LIKE '%'|| #{keyword} ||'%'
+</otherwise>
+</choose>
+</select>
+
+<!-- 점주검색 목록 페이징 넘버림 -->
+<select id="owSearchGetTotal" parameterType="PageData" resultType="int">
+select count(*) from OWNER_ENTIRE_TB
+where
+<choose>
+<when test="combo == 'OwnerName'">
+OW_NAME LIKE '%'|| #{keyword} ||'%'
+</when>
+<otherwise>
+OW_ID LIKE '%'|| #{keyword} ||'%'
+</otherwise>
+</choose>
+</select>
+
+
 <!-- 공지사항 보기 -->
 <select id="noticeView" parameterType="int" resultType="notice">
 select

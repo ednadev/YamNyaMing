@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.kh.ynm.admin.model.vo.*"
-	%>
+	pageEncoding="UTF-8" import="com.kh.ynm.admin.model.vo.*"%>
 <% YNMAdmin ad = (YNMAdmin)session.getAttribute("admin");%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -10,19 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=3">
+<script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+<style>li {float: left;}</style>
 </head>
 <body>
 	<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
@@ -39,7 +33,7 @@
 			<li><a href="/statAdmin.do">통계</a></li>
 		</ul>
 	</nav>
-	<table class="table table-list-search"  style="overflow: auto">
+	<table class="table table-list-search">
   <thead>
     <tr>
       <th>아이디</th>
@@ -54,11 +48,7 @@
       <td>${m.ad_id}</td>
       <td>${m.ad_nickname}</td>
       <td>
-      <c:choose>
-      <c:when test="${m.ad_grade eq '2'}">
-             수락 대기
-      </c:when>
-      
+      <c:choose><c:when test="${m.ad_grade eq '2'}">수락 대기</c:when>
       <c:otherwise>
              관리자
       </c:otherwise>
@@ -66,8 +56,6 @@
      </td>
       <td>
       <c:choose>
-      
-      
       <c:when test="${m.ad_grade eq '2'}">
       <form action="/upGrade.do">
       <input type="hidden" id="ad_id" name="ad_id" class="ad_id" value="${m.ad_id}"/>
@@ -79,15 +67,13 @@
       <input type="hidden" id="ad_id" name="ad_id" class="ad_id" value="${m.ad_id}"/>
       <input type="submit" class="paging-num" value="강등"/>
       </form>
-      </c:otherwise>
-      </c:choose>
-     </td>
-    </tr>
-	</c:forEach>
-  </tbody>
-</table>
+ </c:otherwise></c:choose></td></tr></c:forEach></tbody></table>
 <!-- 내용끝 -->
  <!-- 페이지 -->
+ <div class="text-center marg-top" align="right">
+ <ul class="pagination" style="list-style:none;
+    margin:0;
+    padding:0;">
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
@@ -99,29 +85,30 @@
 						</c:if>
 						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/adminList.do" method="post">
+								<li><form action="/adminList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/adminList.do" method="post">
+								<li><form action="/adminList.do" method="post">
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/adminList.do" method="post">	
+							<li><form action="/adminList.do" method="post">	
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
-							</form>
+							</form></li>
 						</c:if>
 					</div>
 			
 				</c:if>
 		
-
+</ul>
+</div>
 <script>
 function goPage(pages, lines) {
     location.href = '?' + "pages=" + pages;

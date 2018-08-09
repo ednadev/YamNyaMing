@@ -10,19 +10,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=1">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=1">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css?ver=3">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/btn.css?ver=3">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/admin/admin.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>li {float: left;}</style>
 </head>
 <body>
 	<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
@@ -73,7 +74,7 @@
         </div>
       </div>
 <center>
-<div class="panel-body table-responsive">
+<div class="panel-body table-responsive" style="width:100%; height:545px;">
         <table class="table table-hover">
 				<thead>
 				<tr>
@@ -120,6 +121,10 @@
 </div>
 <!-- 내용끝 -->
  <!-- 페이지 -->
+  <div class="text-center marg-top" align="right">
+<ul class="pagination" style="list-style:none;
+    margin:0;
+    padding:0;">
     <c:if test="${pageNaviData!=null}">
     	
 					<div id="pagingNumber">
@@ -132,29 +137,31 @@
 						</c:if>
 						<c:forEach var="i" begin="${pageNaviData.startNavi}" end="${pageNaviData.endNavi}">
 							<c:if test="${pageNaviData.currentPage==i}">
-								<form action="/allMemberView.do" method="post">
+								<li><form action="/allMemberView.do" method="post">
 								   <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 							<c:if test="${pageNaviData.currentPage!=i}">
-								<form action="/allMemberView.do" method="post">
+								<li><form action="/allMemberView.do" method="post">
 								    <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> -->
 									<input type="hidden" name="currentPage" value="${i}"> 
 									<input type="submit" class="paging-num" value="${i}">
-								</form>
+								</form></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pageNaviData.endNavi!=pageNaviData.pageTotalCount}">
-							<form action="/allMemberView.do" method="post">	
+							<li><form action="/allMemberView.do" method="post">	
 							  <!--  <input type="hidden" value="${o.owEntirePk}" id="owEntirePk" name="owEntirePk"/> --> 
 								<input type="hidden" name="currentPage"	value="${pageNaviData.endNavi+1}"> 
 								<input type="submit"  class="paging-num"  value=">">
-							</form>
+							</form></li>
 						</c:if>
 					</div>
 				</c:if>
+</ul>
+</div>
 <script>
 function goPage(pages, lines) {
     location.href = '?' + "pages=" + pages;

@@ -32,17 +32,7 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	//점주 검색
-	public ArrayList<YNMOwner> OwnerSearch(String combo, String keyword) {
-		ArrayList<YNMOwner> list = adminDAO.OwnerSearch(sqlSession,combo,keyword);
-		return list;
-	}
 
-	//일반 사용자 검색
-	public ArrayList<YNMMember>  MemberSearch(String combo, String keyword) {
-		ArrayList<YNMMember>list = adminDAO.MemberSearch(sqlSession,combo,keyword);
-		return list;
-	}
 
 	//관리자 회원가입
 	public int enrollAdmin(YNMAdmin vo) {
@@ -88,6 +78,32 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		ownerPageData.setEndPage(end);
 		return adminDAO.ownerListPaging(sqlSession,ownerPageData);		
 	}
+		
+	//일반 사용자검색 전체보기
+		public ArrayList<YNMMember> MemberSearchPaging(String combo, String keyword, int currentPage, int recordCountPerPage) 
+		{
+			int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+			int end = currentPage*recordCountPerPage;
+			BoardPaging memberPageData = new BoardPaging();
+			memberPageData.setStartPage(start);
+			memberPageData.setEndPage(end);
+			memberPageData.setCombo(combo);
+			memberPageData.setKeyword(keyword);
+			return adminDAO.MemberSearchPaging(sqlSession,memberPageData);
+		}
+		
+		//점주검색 전체보기
+		public ArrayList<YNMOwner> OwnerSearch(String combo, String keyword,int currentPage, int recordCountPerPage)
+		{
+			int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+			int end = currentPage*recordCountPerPage;
+			BoardPaging ownerPageData = new BoardPaging();
+			ownerPageData.setStartPage(start);
+			ownerPageData.setEndPage(end);
+			ownerPageData.setCombo(combo);
+			ownerPageData.setKeyword(keyword);
+			return adminDAO.OwnerSearch(sqlSession,ownerPageData);		
+		}
 	//가게리스트
 	public ArrayList<StoreInfoPageData> storeListPaging(int currentPage, int recordCountPerPage, StoreInfoPageData vo)
 	{
@@ -298,7 +314,85 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		
 		return adminPageDataResult;
 	}
-	
+	//오너검색 페이징
+	public CouponPageData owSearchGetTotal(String combo, String keyword, int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging adminPageData = new BoardPaging();
+		adminPageData.setCombo(combo);
+		adminPageData.setKeyword(keyword);
+		int recordTotalCount = adminDAO.owSearchGetTotal(sqlSession, adminPageData);
+		int pageTotalCount = 0;
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData adminPageDataResult = new CouponPageData();
+		adminPageDataResult.setCurrentPage(currentPage);
+		adminPageDataResult.setStartNavi(startNavi);
+		adminPageDataResult.setEndNavi(endNavi);
+		adminPageDataResult.setPageTotalCount(pageTotalCount);
+		adminPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return adminPageDataResult;
+	}
+	//멤버검색 페이징
+	public CouponPageData memSearchGetTotal(String combo, String keyword, int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		BoardPaging adminPageData = new BoardPaging();
+		adminPageData.setCombo(combo);
+		adminPageData.setKeyword(keyword);
+		int recordTotalCount = adminDAO.memSearchGetTotal(sqlSession, adminPageData);
+		int pageTotalCount = 0;
+		if(recordTotalCount%recordCountPerPage!=0)
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage+1;
+		}else
+		{
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		if(currentPage<1)
+		{
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount)
+		{
+			currentPage = pageTotalCount;					
+		}
+
+		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+		int endNavi = startNavi+naviCountPerPage-1;
+		
+		if(endNavi>pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+		CouponPageData adminPageDataResult = new CouponPageData();
+		adminPageDataResult.setCurrentPage(currentPage);
+		adminPageDataResult.setStartNavi(startNavi);
+		adminPageDataResult.setEndNavi(endNavi);
+		adminPageDataResult.setPageTotalCount(pageTotalCount);
+		adminPageDataResult.setRecordTotalCount(recordTotalCount);
+		
+		return adminPageDataResult;
+	}
+
 
 
 	//관리자 로그인
@@ -368,4 +462,9 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 		int result = adminDAO.storeNo(sqlSession,owStoreInfoPk);
 		return result;
 	}
+
+
+
+	
+
 }

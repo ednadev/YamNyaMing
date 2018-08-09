@@ -13,10 +13,7 @@ import com.kh.ynm.owner.model.vo.YNMOwner;
 import com.kh.ynm.owner.model.vo.YNMStoreInfo;
 
 public interface YNMAdminService {
-	//점주 검색
-	public ArrayList<YNMOwner> OwnerSearch(String combo, String keyword);
-	//사용자 검색
-	public ArrayList<YNMMember>  MemberSearch(String combo, String keyword);
+
 	//관리자 회원가입
 	public int enrollAdmin(YNMAdmin vo);
 	//아이디 중복확인

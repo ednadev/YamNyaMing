@@ -23,10 +23,6 @@ public interface YNMAdminController {
 	public String insertMember(HttpServletRequest request, HttpSession session,YNMAdmin vo);
 	//회원가입 아이디 체크
 	public String adminIdCheck(HttpServletRequest request, HttpServletResponse response,YNMAdmin vo);
-	//점주 검색
-	public Object OwnerSearch(HttpServletRequest request, HttpSession session);
-	//멤버 검색
-	public Object MemberSearch(HttpServletRequest request, HttpSession session);
 	//로그인 페이지로 이동
 	public String adminLogin(HttpSession session,YNMAdmin vo);
 	//로그인

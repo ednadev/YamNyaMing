@@ -19,10 +19,7 @@ public interface YNMAdminDAO {
 	public int insertAdmin(YNMAdmin vo, SqlSessionTemplate sqlSession);
 	//회원가입 아이디체크
 	public YNMAdmin adminIdCheck(SqlSessionTemplate sqlSession,YNMAdmin vo);
-	//점주 검색
-	public ArrayList<YNMOwner> OwnerSearch(SqlSessionTemplate sqlSession,String combo,String keyword);
-	//멤버 검색
-	public ArrayList<YNMMember> MemberSearch(SqlSessionTemplate sqlSession,String combo,String keyword);
+
 	//관리자 로그인
 	public YNMAdmin adminLogin(SqlSessionTemplate sqlSession, YNMAdmin vo);
 	//통계(그래프/회원수)

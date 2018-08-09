@@ -32,11 +32,12 @@
 </head>
 <body>
 	<header id="admin-login-header">
+		<a href="/index.jsp"><img src="${pageContext.request.contextPath}/resources/image/plate-white.png" style="width:44px;float:left;margin:10px;"></a>
 		<h1>
 			<a href="/ynmAdmin.do">YamNyaMing 관리자</a>
 		</h1>
 		<p>
-			[${sessionScope.admin.ad_nickname}] 님 안녕하세요  <a href="/logoutAdmin.do">로그아웃</a>
+			[${sessionScope.admin.ad_nickname}] 님 안녕하세요 <a href="/logoutAdmin.do">로그아웃</a>
 		</p>
 	</header>
 	<nav id="admin-main-nav">
@@ -56,7 +57,6 @@
 <textarea name="boardInfo" class="summernote" placeholder="내용을 입력해주세요." value="" required></textarea>
 <input type="hidden" value="${sessionScope.admin.ad_id}" id="ad_id" name="ad_id"/>
 <input type="hidden" value="${sessionScope.admin.ad_nickname}" id="ad_nickname" name="ad_nickname"/>
-
 <input type="submit" value="글쓰기" class="btn">
 <input type="button" value="취소" class="btn" onclick="history.back(-1);">
 
