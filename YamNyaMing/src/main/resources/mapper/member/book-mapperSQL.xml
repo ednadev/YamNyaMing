@@ -31,11 +31,11 @@
 		from member_book_tb b,owner_store_info_tb o,owner_store_detail_tb d
         where o.ow_store_info_pk=b.store_entire_fk and 
                 o.ow_store_info_pk=d.ow_store_index and
-        mb_entire_fk=#{memberEntireNo}  and mb_book_date_time > sysdate
+        mb_entire_fk=#{memberEntireNo}  and mb_book_date_time > sysdate and mb_book_state = 'w'
 		
 	</select>
 	<update id="deleteBook">
-		update member_book_tb set mb_book_type='f' where mb_book_pk=#{bookNo}
+		update member_book_tb set mb_book_state='f' where mb_book_pk=#{bookNo}
 	</update>
 	<select id="bookLastselect" resultType="books">
 	    select 
@@ -55,7 +55,7 @@
 		from member_book_tb b,owner_store_info_tb o,owner_store_detail_tb d
         where o.ow_store_info_pk=b.store_entire_fk and 
                 o.ow_store_info_pk=d.ow_store_index and
-        mb_entire_fk=#{memberEntireNo}  and sysdate > mb_book_date_time 
+        mb_entire_fk=#{memberEntireNo}  and sysdate > mb_book_date_time and mb_book_state = 'f'
 	</select>
 	
 	<select id="myBookCheck" resultType="int">
