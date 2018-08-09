@@ -330,12 +330,15 @@
 /* 페이징처리 */
 #pagingNumber{
 	clear:both;
-}
-#pagingNumber>form{
+	overflow:hidden;
 	display:flex;
 	justify-content:center;
+}
+#pagingNumber>form{
 	padding-top:20px;
 	padding-bottom:30px;
+	float:left;
+	margin-right:5px;
 }
 #pagingNumber>form>input{
 	border:none;

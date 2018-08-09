@@ -159,7 +159,10 @@ public class YNMOwnerDAOImpl implements YNMOwnerDAO{
 
 	@Override
 	public int ynmSelectStoreIndex(SqlSessionTemplate sqlSession, int ownerIndex) {
-		return sqlSession.selectOne("stores.storeIndexWithOwIndex", ownerIndex);
+		if(sqlSession.selectOne("stores.storeIndexWithOwIndex", ownerIndex)!=null) {
+			int result = sqlSession.selectOne("stores.storeIndexWithOwIndex", ownerIndex);
+			return result;
+		}else return 0;
 	}
 
 	@Override

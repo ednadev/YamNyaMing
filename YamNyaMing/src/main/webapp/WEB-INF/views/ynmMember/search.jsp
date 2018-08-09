@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <title>얌냐밍</title>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=2">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/search.css?ver=3">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservation.css?ver=6">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/member/memberDetail.js?ver=2"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>

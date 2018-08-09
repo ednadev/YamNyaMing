@@ -279,8 +279,7 @@
 		from (select owner_board_info_tb.*,row_number() over(order by
 		OW_BOARD_INFO_PK desc) as num
 		from owner_board_info_tb where OW_STORE_INFO_FK=#{storeIndex})
-		where num
-		between #{startPage} and #{endPage}
+		where num between #{startPage} and #{endPage}
 	</select>
 
 	<select id="boardCountTotal" parameterType="couponPageData"
