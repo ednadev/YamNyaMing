@@ -34,8 +34,6 @@ public interface YNMAdminService {
 	public CouponPageData noticeGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage);
 	//멤버목록 페이징
 	public CouponPageData memberGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage);
-	//가게리스트 페이징
-	public CouponPageData storePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage);
 	//관리자목록 페이징
 	public CouponPageData adminGetTotal(int currentPage, int recordCountPerPage, int naviCountPerPage);
 	//관리자 로그인

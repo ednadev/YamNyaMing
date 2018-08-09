@@ -241,8 +241,9 @@ public class YNMAdminServiceImpl implements YNMAdminService{
 	}
 
 	//가게리스트 페이징
-	public CouponPageData storePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+	public CouponPageData storePageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage, StoreInfoPageData vo) {
 		BoardPaging storePageData = new BoardPaging();
+		storePageData.setOwEntirePk(vo.getOwEntireFk());
 		int recordTotalCount = adminDAO.storeGetTotal(sqlSession, storePageData);
 		int pageTotalCount = 0;
 		if(recordTotalCount%recordCountPerPage!=0)
